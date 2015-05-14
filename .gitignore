@@ -26,3 +26,7 @@
 *.exe
 *.out
 *.app
+*.root
+
+#build directory
+build*
