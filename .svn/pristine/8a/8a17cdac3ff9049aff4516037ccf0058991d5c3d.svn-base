@@ -1,0 +1,278 @@
+: # feed this into perl *-*-perl-*-*
+    eval 'exec perl -S $0 "$@"'
+    if $running_under_some_shell;
+
+################################################
+#
+#  Copied 4-19-2011 from Qweak batchman version
+#  Juliette M. Mammei
+#
+################################################
+
+use Cwd;
+use Cwd 'abs_path';
+use File::Find ();
+use File::Basename;
+
+use Getopt::Std;
+
+### Declare variables explicitly so "my" not needed
+use strict 'vars';
+use vars qw($original_cwd $executable $script_dir $uname
+	    $analysis_directory $real_path_to_analysis $scratch_directory
+	    $Default_Analysis_Options $analysis_option_list $batch_option_list
+	    $opt_h $opt_E $opt_n $opt_r $opt_O $opt_Q $opt_B $opt_R $batch_queue
+	    $rootfile_stem $rootfile_name $geo_macro_base $geo_macro $geo_dat_base $gun_macro
+	    @discards $first $last $step $nstep $name_i $process_id $process $physList $physListname $beamEn
+	    $input_file @input_files $command_file $nevents $nsims $sim $geo_macro_name $geo_file
+            $print $ncolls $minThick $maxThick $shldIncrement $nThick $shldThick $shldMat $shldMatname
+	    );
+
+###  Set up some basic environment variables.
+$original_cwd = cwd();
+$executable = basename $0;
+chdir dirname  $0 or die "Can't cd to the script directory: $!\n";
+$script_dir = cwd();
+chdir $original_cwd;
+
+###  Get the QWANALYSIS and QWSCRATCH directories
+$analysis_directory = $ENV{PREXDIR};
+$real_path_to_analysis = abs_path($analysis_directory);
+crashout("The ANALYSIS directory, $analysis_directory, does not exist.  Exiting")
+    if (! -d $analysis_directory);
+$uname = $ENV{USER};
+$scratch_directory  = "/volatile/halla/parity/jmammei/PREx_ROOTfiles/";
+
+###  Check useful environment variables and set them to defaults if they
+###  do not exist.  The existence of the SCRATCH directory has already
+###  been verified.
+crashout("The SCRATCH directory, $scratch_directory, does not exist.  Exiting")
+    if (! -d $scratch_directory);
+
+###  Get the option flags.
+getopts('hnr:E:O:T:B:R:');
+
+
+$Default_Analysis_Options = "";
+
+if ($#ARGV > -1){
+    print STDERR "Unknown arguments specified: @ARGV\nExiting.\n";
+    displayusage();
+    exit;
+}
+
+if ($opt_h){
+    displayusage();
+    exit;
+}
+
+if ($opt_E ne ""){
+    $executable = $opt_E;
+} else {
+    $executable = "bin/Linux-g++/moller_sim";
+}
+
+if ($opt_B ne ""){
+    $batch_option_list = $opt_B;
+} else {
+    $batch_option_list = "";
+}
+
+if ($opt_Q ne ""){
+    $batch_queue = $opt_Q;
+} else {
+    $batch_queue = "parity";
+}
+
+$rootfile_stem = undef;
+if ($opt_R ne ""){
+    $rootfile_stem = $opt_R;
+} else {
+    $rootfile_stem = "prexsim_shld";
+}
+
+################################################################
+### Here need to create a prerun macro for each geometry
+### to be used in the study 
+
+#-------------------------------------
+#User input needed:
+
+$physList="QGSP_BERT_HP";
+$physListname="_QGSP";
+
+$beamEn = 1.05;
+$geo_file ="prexMother";
+
+
+#$shldMat="concrete";
+#$shldMatname="conc";
+$shldMat="polyethylene";
+#$shldMatname="_poly";
+#$shldMat="borpoly";
+#$shldMatname="_prexborpoly";
+#$shldMat="iron";
+#$shldMatname="Fe";
+#$shldMat="hallC";
+#$shldMatname="_prexpolycrete";
+
+$geo_macro_base = "prexMother";
+
+$nevents = 1000000;
+$nsims = 10;
+
+$print = 1;
+
+$name_i="_test";
+
+$ncolls = 4;
+#$minThick=0;
+#$maxThick=0;
+$minThick=20;
+$maxThick=20;
+$shldIncrement=10;
+
+$nThick=($maxThick-$minThick)/$shldIncrement+1;
+
+#-------------------------------------
+
+$process_id = ("_5");
+$process = ("5");
+
+my $j=0;
+for ($j=0;$j<$nThick;$j++){
+
+    $shldThick=$minThick+$shldIncrement*$j;
+    $geo_macro_name="$geo_macro_base$shldThick";
+    $geo_macro = "geometry_mac/$geo_macro_name$name_i.mac";
+    if ($print>0) {print STDERR "$geo_macro\n";}
+
+    open(GEOFILE, ">$geo_macro") or die "$geo_macro: $!";
+    print GEOFILE  "/control/verbose 2\n";
+    print GEOFILE  "/run/verbose 0\n";
+    print GEOFILE  "/tracking/verbose 0\n";
+
+    print GEOFILE  "/moller/det/readGeometryFromFile true\n";
+    print GEOFILE  "/moller/det/setDetectorFileName geometry/$geo_file.gdml\n";
+    print GEOFILE  "/moller/det/setNumberofCollimators $ncolls\n";
+    print GEOFILE  "/moller/det/setShieldMaterial $shldMat\n";
+
+    print GEOFILE  "/testhadr/CutsAll          0.7 mm\n";
+    print GEOFILE  "/testhadr/Physics          PHYSLIST\n";
+    print GEOFILE  "/run/initialize\n";
+
+    close GEOFILE;
+
+
+################################################################
+### Need here a loop over a number of sims (to get stats)
+
+my $k=0;
+for ($k=0;$k<$nsims; $k++){
+
+################################################################
+### Need here a loop over process (ee, ep and ine) to create
+### the gun.mac because that has the rootfile name in it...
+
+
+    $sim = "_sim_$k";
+    $gun_macro = "gun_mac/$geo_macro_name$name_i$sim.mac";
+    $rootfile_name ="$rootfile_stem$geo_macro_name$name_i$sim";
+
+    if ($print>0) {print STDERR "$gun_macro  ";}
+
+    open(GUNFILE, ">$gun_macro") or die "$gun_macro: $!";
+    print GUNFILE  "/moller/ana/rootfilename $rootfile_name\n";
+    print GUNFILE  "/gun/particle e-\n";
+    print GUNFILE  "/gun/energy $beamEn GeV\n";
+    print GUNFILE  "/moller/gun/gen $process\n";
+    print GUNFILE  "/run/beamOn $nevents\n";
+    close GUNFILE;
+
+    $command_file ="command_files/$geo_macro_name$process_id$name_i$sim.jsub";
+
+    if ($print>0) {print STDERR "$command_file  ";}
+    open(JOBFILE, ">$command_file") or die "$command_file: $!";
+    print JOBFILE  "PROJECT: parity\n";
+    print JOBFILE  "TRACK: simulation \n";
+    print JOBFILE  "OPTIONS: $analysis_directory $scratch_directory $executable $geo_macro $gun_macro $physList\n";
+    print JOBFILE  "MEMORY: 1600 MB\n";
+    print JOBFILE  "DISK_SPACE: 1600 MB\n";
+    print JOBFILE  "JOBNAME: prexsim_mod\n";
+    print JOBFILE  "MAIL: $ENV{USER}\@jlab.org\n";
+    print JOBFILE  "COMMAND: $analysis_directory/batch/batch.csh\n";
+    print JOBFILE  "TIME: 4320\n";
+    print JOBFILE  "OS: linux64\n";
+    close JOBFILE;
+
+	if ($opt_n){
+	    print "Ready to submit $command_file\n";
+	} else {
+	    print "Submitting $command_file\n";
+	    my $rc=system("jsub","$command_file");
+	}
+}
+    if ($print>0) {print STDERR "\n"};
+}
+exit;
+
+
+################################################
+################################################
+################################################
+sub crashout ($) {
+    my ($tmpline) = @_;
+    die("\*\*\tThe environment is not correctly set up to run batchsub.pl;\n".
+	"\*\*\tyou might need to source env_jlabcue first.\n".
+	"\*\*\tParticularly:\n\*\*\t\t$tmpline");
+}
+
+################################################
+sub displayusage {
+    print STDERR
+	"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
+	"batchsub.pl is a job submission tool for MOLLER simulations on\n",
+	"the JLab batch farm computer cluster.\n\n",
+	"Usage:\n\tqwbatchsub.pl -h\n",
+	"\tqwbatchsub.pl [-n] [-F <goodruns file>] [-T <track>]\n",
+	"\t              [-O <simulation options>] [-B <batch options>]\n",
+	"\t              [-R <rootfile stem>] [-r <run range>]\n",
+	"\t              [-E <executable>] \n\n",
+	"Options:\n",
+	"\t-h\n",
+	"\t\tPrint usage information\n",
+	"\t-n\n",
+	"\t\tDon't  actually run  the job  submission  commands;\n",
+	"\t\tjust create the \'command\' files for them.\n",
+	"\t-r <run range>\n",
+	"\t\tThis flag  specifies the numbers  of the runs to be\n",
+	"\t\tanalyzed.  Three formats are permitted:\n",
+	"\t-E <executable>\n",
+	"\t\tThis specifies the  name of the analysis executable\n",
+	"\t\tused;  it defaults to be  \"qwparity\".   Check the\n",
+	"\t\tanalyzer documentation for other possible analyzers.\n",
+	"\t-R <rootfile stem>\n",
+	"\t\tThis specifies the stem of  ROOT files  to be copied\n",
+	"\t\tto the MSS directory; defaults to \"Qweak\".\n",
+	"\t-T <track>\n",
+	"\t\tThis  specifies the  name of the batch  queue to be\n",
+	"\t\tused;  it defaults to be  \"one_pass\".   Check the\n",
+	"\t\tbatch  system documentation for the  other possible\n",
+	"\t\tvalues.\n",
+	"\t-B <batch options>\n",
+	"\t-O <simulation option>\n",
+	"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n";
+
+    my @optionlines = split  /(.{40,}?)( -)|$/, $Default_Analysis_Options;
+    my ($line, $preline);
+    foreach $line (@optionlines){
+	next if ($line =~ /^$/);
+	if ($line =~ /^ -$/){
+	    $preline = "-";
+	} else {
+	    print STDERR
+		"\t\t  $preline$line\n";
+	    $preline = "";
+	}
+    }
+}

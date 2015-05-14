@@ -1,0 +1,24 @@
+/control/verbose 2
+/run/verbose 0
+/tracking/verbose 0
+# HepRepFile diriver
+#/vis/open HepRepFile
+/moller/gun/setConstSeed true
+/moller/det/readGeometryFromFile true
+#crex geometry
+#/moller/det/setDetectorFileName geometry/crexMother_noshld.gdml
+#/moller/det/setDetectorFileName geometry/crexMother.gdml
+#/moller/det/setDetectorFileName geometry/crexMother_test_coll.gdml
+#/moller/det/setDetectorFileName geometry/targetDaughter.gdml
+#/moller/det/setDetectorFileName geometry/crexMother_new.gdml
+/moller/det/setDetectorFileName geometry/crexMother_target_assembly.gdml
+#/moller/det/setDetectorFileName geometry/crexMother_target_assembly_design1.gdml
+#
+#/moller/det/setNumberofCollimators 3
+/moller/det/setNumberofCollimators 2
+
+/moller/det/setShieldMaterial polyethylene
+/testhadr/CutsAll          0.7 mm
+/testhadr/Physics          PHYSLIST
+/run/initialize
+

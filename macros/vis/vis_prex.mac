@@ -1,0 +1,63 @@
+#
+# Macro file for the initialization phase of "moller_mod.cc"
+# when runing in interactive mode
+#
+# Sets some default verbose
+#
+
+#/control/verbose 1
+
+#
+# create empty scene
+#
+
+/vis/open OGLIX 1200x800
+#/vis/open OGLIQt
+
+#
+# Create a scene handler for a specific graphics system
+# (Edit the next line(s) to choose another graphic system)
+#
+
+/vis/drawVolume
+
+#
+# draw scene
+#
+
+/vis/viewer/set/lightsThetaPhi 40 5 deg
+/vis/viewer/set/style s
+#/vis/viewer/set/viewpointThetaPhi 330 30
+/vis/viewer/set/viewpointThetaPhi 90 0
+/vis/viewer/panTo 5.5 0.
+#/vis/viewer/scaleTo  1000. 1000. 1.
+/vis/viewer/scaleTo  50. 50. 1.
+
+
+#/vis/viewer/zoom 1
+#/vis/viewer/flush
+
+
+#/vis/disable
+
+
+#/gun/particle e-
+#/gun/energy 1.05 GeV
+##/gun/energy 4.46 GeV
+#/moller/gun/gen 5
+
+#/vis/scene/endOfEventAction accumulate 1000
+#/vis/modeling/trajectories/create/drawByParticleID
+#/vis/modeling/trajectories/drawByParticleID-0/set e- blue
+#/vis/modeling/trajectories/drawByParticleID-0/set e+ cyan
+#/vis/modeling/trajectories/drawByParticleID-0/set gamma green
+#/vis/modeling/trajectories/drawByParticleID-0/set neutron red
+#/vis/modeling/trajectories/drawByParticleID-0/set proton yellow
+
+#/vis/modeling/trajectories/select drawByParticleID-0
+#/vis/scene/add/trajectories
+#/run/beamOn 1
+
+#
+#/vis/enable
+#/vis/reviewKeptEvents

@@ -1,0 +1,16 @@
+#/moller/ana/rootfilename crex_no_DS_blocker
+#/moller/ana/rootfilename crex_with_DS_blocker
+#/moller/ana/rootfilename crex_with_DS_blocker_design_1
+#/moller/ana/rootfilename crex_with_DS_blocker_alum
+#/moller/ana/rootfilename crex_with_DS_blocker_alum_Xoffset_5mm
+/moller/ana/rootfilename test_tmp
+
+
+#
+/gun/particle e-
+/gun/energy 2.2 GeV
+/moller/gun/gen 5
+#
+/run/beamOn 1000000
+#/run/beamOn 500000
+#/run/beamOn 10000

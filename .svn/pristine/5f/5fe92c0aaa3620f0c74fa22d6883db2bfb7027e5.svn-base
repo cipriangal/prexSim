@@ -1,0 +1,333 @@
+#define mollerClass_cxx
+#include "mollerClass.h"
+#include <TH3.h>
+#include <TH2.h>
+#include <TStyle.h>
+#include <TCanvas.h>
+#include <TMath.h>
+#include <iostream>
+#include <TGaxis.h>
+#include <TProfile2D.h>
+#include <TF1.h>
+#include <TPaveLabel.h>
+#include "profile.h"
+
+using namespace std;
+
+Int_t eventtype=-1;  //This comes from 0=moller, 1=proton, 2=inelastic
+Int_t num_thrown=0;
+char inifilename[256];
+
+void SetupHist(TH1F* histo, Int_t colorint) 
+{
+  //histo->Sumw2();
+  if (colorint==0) colorint=kRed;
+  else if (colorint==1) colorint=kGreen;
+  else if (colorint==2) colorint=kBlue;
+  histo->SetLineColor(colorint);
+  //histo->SetMarkerColor(colorint);
+  //histo->SetMarkerStyle(20);
+  histo->StatOverflows(0);
+}
+
+void PrintHist(TH1F* histo[], char* histoname, Int_t numhistos, Bool_t dology, Bool_t debug)
+{
+  if (debug) {
+    Printf("Debug: %s\n",histoname);
+    for  (int i=0; i<numhistos; i++) {
+      printf("  %f,",histo[i]->GetEntries());
+    }
+    printf("\n");
+  }
+
+  TCanvas printcanvas("printcanvas","canvas",640,480);
+  printcanvas.SetLogy(dology);
+  Double_t minnum=1e-9, maxnum=0;
+  for (int i=0; i<numhistos; i++) {
+    minnum = TMath::Min(minnum,histo[i]->GetMinimum(0));
+    maxnum = TMath::Max(maxnum,histo[i]->GetMaximum());
+    //		printf("new min = %f\n",minnum);
+  }
+  maxnum = histo[0]->GetMaximum();
+  printf("min = %f, max = %f\n",minnum, maxnum); 
+
+  Double_t xmin=0.75, xmax=0.999;  
+  Double_t ymax=0.999, deltay=0.045, ymin=ymax-deltay;
+  char label[256][numhistos];
+  TPaveLabel *pt[numhistos];
+  TPaveLabel *pt_main = new TPaveLabel(xmin,ymin,xmax,ymax,"Entries  Mean  RMS","NDC");
+  pt_main->SetBorderSize(1);
+  pt_main->SetFillColor(0);
+  for (Int_t j = 0; j < numhistos; j++) {
+    Int_t i = numhistos - 1 - j;
+    sprintf(label[i],"%.0f  %.4g  %.4g",histo[i]->GetEntries(),histo[i]->GetMean(),histo[i]->GetRMS());
+    pt[i] = new TPaveLabel(xmin,ymin,xmax,ymax,label[i],"NDC");
+    pt[i]->SetBorderSize(1);
+    pt[i]->SetFillColor(0);
+    histo[i]->SetMinimum(minnum);
+    histo[i]->SetMaximum(1.05*maxnum);
+    histo[i]->GetXaxis()->SetTitleOffset(1.2);
+    pt[i]->SetTextColor(kBlack);
+    histo[i]->SetLineColor(kBlack);
+    histo[i]->Draw();
+    pt[i]->Draw();
+  }
+
+  printcanvas.Print(histoname);
+}
+
+void PrintHist2D(TH2F* histo[], char* histoname)
+{
+  TCanvas printcanvas("printcanvas","canvas",640,480);
+  histo[0]->SetMarkerColor(kRed);
+  histo[1]->SetMarkerColor(kGreen);
+  histo[2]->SetMarkerColor(kBlue);
+  histo[0]->SetLineColor(kRed);
+  histo[1]->SetLineColor(kGreen);
+  histo[2]->SetLineColor(kBlue);
+  histo[3]->Draw();
+  char histoname2[200];
+  snprintf(histoname2,200,"%s_black.gif",histoname);
+  printcanvas.Print(histoname2);
+  histo[0]->Draw();
+  snprintf(histoname2,200,"%s_red.gif",histoname);
+  printcanvas.Print(histoname2);
+  histo[1]->Draw();
+  snprintf(histoname2,200,"%s_green.gif",histoname);
+  printcanvas.Print(histoname2);
+  histo[2]->Draw();
+  snprintf(histoname2,200,"%s_blue.gif",histoname);
+  printcanvas.Print(histoname2);
+  histo[3]->Draw("box");
+  histo[0]->Draw("box,same");
+  histo[1]->Draw("box,same");
+  histo[2]->Draw("box,same");
+
+  printcanvas.Print(histoname);
+}
+
+void mollerClass::Loop()
+{
+
+  if (fChain == 0) return;
+
+  Long64_t nentries = fChain->GetEntriesFast();
+
+  TCanvas canvas("canvas","canvas",640,480);
+
+  //	Double_t pi = TMath::Pi();
+  gROOT->SetStyle("Plain");
+  gStyle->SetOptStat(kFALSE);
+  gStyle->SetPalette(1,0);
+  gStyle->SetTitleBorderSize(0);
+  gStyle->SetCanvasBorderMode(0);
+
+  Int_t num_detectors = 2;
+  char plotname[200],outdir[200],namestem[200],plottype[10];
+
+
+  snprintf(namestem,200,"%sdets%i_",outdir,num_detectors);
+  GetPrivateProfileString ("General", "outdir", "output", outdir, 200, inifilename);
+  GetPrivateProfileString ("General", "plottype", ".gif", plottype, 20, inifilename);
+
+
+  TH1F* rate_total=new TH1F("rate_total","Total rate for 85  #muA;detector number;rate   [Hz]",num_detectors,0,num_detectors);
+  TH1F* num_events=new TH1F("num_events","Number of Moller e^{-}  in 1 hour at 85  #muA;detector number",num_detectors,0,num_detectors);
+  TH1F* error=new TH1F("error","Uncertainty in 1 hour at 85  #muA;detector number;#Delta A_{T}   (ppm)",num_detectors,0,num_detectors);
+
+  rate_total->SetMarkerStyle(20);
+  num_events->SetMarkerStyle(20);
+  error->SetMarkerStyle(20);
+  rate_total->Sumw2();
+  num_events->Sumw2();
+  error->Sumw2();
+
+
+  Int_t numhistos = 1;
+  TH1F *Eprime_det_hist[numhistos], *theta_lab_hist[numhistos], *r_hist[numhistos];
+  char name[200];
+
+  // **** Setup the 1D histograms
+  snprintf(name,200,"Eprime_det_%i",eventtype);
+  Eprime_det_hist[0]=new TH1F(name,";E'_{det}   (GeV);rate   (GHz)",105,0,1.05);
+  SetupHist(Eprime_det_hist[0],0);
+
+  snprintf(name,200,"theta_lab_%i",eventtype);
+  theta_lab_hist[0]=new TH1F(name,";#theta_{lab}   (degrees);rate   (GHz)", 18000, 0.,180.);
+  SetupHist(theta_lab_hist[0],0);
+
+  snprintf(name,200,"r_%i",eventtype);
+  r_hist[0]=new TH1F(name,";r   (m);rate   (GHz)",200,0.0,30.0);
+  SetupHist(r_hist[0],0);
+
+  // *****  Here begins the loop
+  Long_t totalevents=0, numevcut_rcut=0, numevcut_thetacut=0, numevcut_volumecut=0,numevcut_kinecut=0,numevallpass=0;
+  Double_t total_power_int=0;
+  Double_t total_power=0;
+  Double_t dump_power=0;
+  Double_t hall_power=0;
+
+  Long64_t nbytes = 0, nb = 0;
+  for (Long64_t jentry=0; jentry<nentries;jentry++) {
+    Long64_t ientry = LoadTree(jentry);
+    if (ientry < 0) break;
+    nb = fChain->GetEntry(jentry);   nbytes += nb;
+    // if (Cut(ientry) < 0) continue;
+
+    totalevents++;
+
+    Double_t r = sqrt(x*x+y*y)/1000.;
+    Double_t R = sqrt(x*x+y*y+z*z)/1000.;
+    Double_t theta_lab ;
+    if (z>=0){
+      theta_lab=asin(r/R)*180./3.1415926;
+    } else if (z<0){
+      theta_lab=180.-asin(r/R)*180./3.1415926;
+    }
+    Double_t rate_GHz = 1./num_thrown;
+    Bool_t rcut = (r>=0);// 
+    Bool_t thetacut = (theta_lab>=0.);
+    Bool_t thetacut_1 = (theta_lab>=0.95);
+    Bool_t thetacut_2 = (theta_lab<0.95);
+    Bool_t kinecut = kineE>0.000001;
+    //Bool_t volumecut = ((volume==0)&&(type==0)&&track>1);
+    Bool_t volumecut = (volume==0);
+
+    Bool_t maincut = volumecut;
+
+    if (! rcut) numevcut_rcut++;
+    if (! thetacut) numevcut_thetacut++;
+    if (! volumecut) numevcut_volumecut++;
+    if (! kinecut) numevcut_kinecut++;
+
+    if (maincut) { // This is for stuff that may not make into the detectors
+      //cout<<kineE/1000<<", "<<theta_lab*1000<<", "<<r<<endl;
+      Eprime_det_hist[0]->Fill(kineE/1000,rate_GHz);
+      theta_lab_hist[0]->Fill(theta_lab,kineE*rate_GHz);
+      total_power+=kineE*rate_GHz;
+      if (thetacut_1) hall_power+=kineE*rate_GHz;
+      if (thetacut_2) dump_power+=kineE*rate_GHz;
+      r_hist[0]->Fill(r,rate_GHz);
+    }
+  }
+
+  total_power_int=theta_lab_hist[0]->Integral();
+
+  snprintf(plotname,200,"%sEprime_det%s",outdir,plottype);
+  PrintHist(Eprime_det_hist,plotname,1,1,1);
+
+  snprintf(plotname,200,"%stheta_lab%s",outdir,plottype);
+  PrintHist(theta_lab_hist,plotname,1,1,1);
+
+  snprintf(plotname,200,"%sr%s",outdir,plottype);
+  PrintHist(r_hist,plotname,1,0,1);
+
+  printf("Total number of events       = %8li\n", totalevents);
+  printf("number not passing rcut      = %8li\n", numevcut_rcut);
+  printf("number not passing thetacut  = %8li\n", numevcut_thetacut);
+  printf("number not passing volumecut = %8li\n", numevcut_volumecut);
+  printf("number not passing kinecut   = %8li\n", numevcut_kinecut);
+
+  cout<<endl<<"From int: "<<total_power_int<<", from total: "<<total_power<<endl;
+  cout<<"From dump: "<<dump_power<<", from hall: "<<hall_power<<endl;
+
+  // Write some output to file
+  char rootoutfilename[256];
+  GetPrivateProfileString ("General", "rootoutfile", "defaultout.root", rootoutfilename, 256, inifilename);
+  TFile *outfile=new TFile(rootoutfilename,"update");
+  if (outfile->IsZombie()) {
+    cerr << "\nError opening file " <<  rootoutfilename << endl << endl;
+    exit(-1);
+  }
+  Eprime_det_hist[0]->Write("", TObject::kOverwrite);
+  theta_lab_hist[0]->Write("", TObject::kOverwrite);
+  r_hist[0]->Write("", TObject::kOverwrite);
+  outfile->Close();
+
+	
+
+}
+
+
+int main(int argc,char **argv)
+{
+
+  if (argc < 2) {
+    cerr << "\nToo few arguements!\nuseage: mollerClass inputfile\n\n";
+    exit(-1);
+    //snprintf(inifilename,100,"fitsignal.ini");
+  }
+
+
+
+  for (int i=0; i<argc; i++) {
+    cout << argv[i] << " ";
+  }
+  cout << "\n";
+  if (argc < 2) {
+    cerr << "\nuseage:  mollerClass\n\n";
+    exit(-1);
+  } else {
+    snprintf(inifilename,256,argv[1]);
+    TGaxis::SetMaxDigits(3); 
+    gROOT->SetStyle("Plain");
+    gStyle->SetOptStat(kFALSE);
+    gStyle->SetPalette(1,0);
+    gStyle->SetTitleBorderSize(0);
+    gStyle->SetCanvasBorderMode(0);
+
+    TChain *geant = new TChain("geant");
+    char filenamestring[256], lookupstring[256];
+    //snprintf(filenamestring,256,"start");
+    Int_t counter=1;
+    snprintf(lookupstring,256,"file%i",counter);
+    //		printf("%s\n",lookupstring);
+    GetPrivateProfileString ("Filenames", lookupstring, "0", filenamestring, 256, inifilename);
+
+    while (strcmp(filenamestring,"0")!=0) {
+      printf("%i  %s\n",counter,filenamestring);
+      geant->Add(filenamestring);
+      //			printf("%i %s  %s\n",counter,lookupstring,filenamestring);
+      counter++;
+      //			printf("%i\n",counter);
+      snprintf(lookupstring,256,"file%i",counter);
+      //			printf("%i %s  %s\n",counter,lookupstring,filenamestring);
+      GetPrivateProfileString ("Filenames", lookupstring, "0", filenamestring, 256, inifilename);
+    }
+
+    char num_thrown_string[50];
+    GetPrivateProfileString ("General", "num_thrown", "0", num_thrown_string, 50, inifilename);
+    num_thrown = atoi(num_thrown_string);
+    if (num_thrown<=0) {
+      printf("num_thrown cannot equal %i\n",num_thrown);
+      exit(-1);
+    }
+
+    eventtype=GetPrivateProfileInt("General", "eventtype", -1, inifilename);
+    switch (eventtype) {
+    case 0:
+      printf("Analysing MOLLER events.\n");
+      num_thrown=2*num_thrown;
+      break;
+    case 1: 
+      printf("Analysing ELASTIC ep events.\n");
+      break;
+    case 2: 
+      printf("Analysing INelastic ep events.\n");
+      break;
+    default:
+      printf("eventtype not set correctly\n");
+      exit(-1);
+    }
+    printf("num_thrown = %i\n",num_thrown);
+
+
+    mollerClass* mollerClassobj = new mollerClass(geant);
+    mollerClassobj->Loop();
+
+    return 1;
+  }
+}
+
+
+

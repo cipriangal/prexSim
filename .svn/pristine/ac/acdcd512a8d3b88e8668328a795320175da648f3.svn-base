@@ -1,0 +1,215 @@
+{
+  //--------------------------------------------------
+  // Chain together the sims
+
+  cout<<"Chaining sims..."<<endl;
+
+  Int_t numchains=5;
+  Int_t numsims=10;
+
+  Int_t numens=1;
+  Double_t minE[numens]={0.00};
+  Double_t maxE[numens]={1050.};
+
+  Int_t numhists=numchains*numens;
+
+
+  TChain *geantTree[numchains];
+
+  char name_base[numchains][200]={
+    
+    "~/scratch/ROOTfiles/prexsim_shldgeo_1e6__LD2none-1_SRC_nfld_sim_",
+    "~/scratch/ROOTfiles/prexsim_shldgeo_1e6_Pb_none-1_prexI_nfld_sim_",
+    "~/scratch/ROOTfiles/prexsim_shldgeo_1e6_Pb__prexborpoly10_prexII_nfld_sim_",
+    "~/scratch/ROOTfiles/prexsim_shldgeo_1e6_Pb_none-1_prexII_nfld_sim_",
+    "~/scratch/ROOTfiles/prexsim_shldgeo_1e6_Pb__combo10_nfld_sim_"
+    
+    /*
+    "~/scratch/ROOTfiles/prexsim_shldgeo_1e6_Pb_none359_collrad_nofld_sim_",
+    "~/scratch/ROOTfiles/prexsim_shldgeo_1e6_Pb_none450_collrad_nofld_sim_",
+    "~/scratch/ROOTfiles/prexsim_shldgeo_1e6_Pb_none541_collrad_nofld_sim_",
+    "~/scratch/ROOTfiles/prexsim_shldgeo_1e6_Pb_none632_collrad_nofld_sim_",
+    "~/scratch/ROOTfiles/prexsim_shldgeo_1e6_Pb_none723_collrad_nofld_sim_",
+    "~/scratch/ROOTfiles/prexsim_shldgeo_1e6_Pb_none814_collrad_nofld_sim_",
+    "~/scratch/ROOTfiles/prexsim_shldgeo_1e6_Pb_none905_collrad_nofld_sim_"
+    */
+  };
+
+  char name[200];
+
+  for (Int_t j=0;j<numchains;j++){
+    geantTree[j]=new TChain("geant");
+    cout<<name_base[j];
+    for (Int_t i=0;i<numsims;i++){
+      sprintf(name,"%s%i.root",name_base[j],i);
+      geantTree[j]->Add(name);
+      cout<<" "<<i;
+    }
+    cout<<endl;
+  }
+
+  //--------------------------------------------------
+  //Some formatting stuff:
+  
+  Int_t histcolor[numchains]={2,4,1,3,5};
+  Int_t histlinetype[numchains]={1,2,1,1,1};
+
+  // Needs to match the order of the input file names...  
+  char legtitle[numchains][200]={
+    "10 cm LD2, 4.46 GeV",
+    "0.5 mm Pb, PREx I",
+    "0.5 mm Pb, PREx II",
+    "0.5 mm Pb, PREx II, no shield",
+    "0.5 mm Pb, PREx II, combo shield"
+  };
+  /*
+  Int_t histcolor[numchains]={2,4,1,3,5,6,7};
+  Int_t histlinetype[numchains]={1,2,1,1,1,1,1};
+
+  // Needs to match the order of the input file names...  
+  char legtitle[numchains][200]={
+    "Inner radius 1.359",
+    "Inner radius 1.450",
+    "Inner radius 1.541",
+    "Inner radius 1.632",
+    "Inner radius 1.723",
+    "Inner radius 1.814",
+    "Inner radius 1.905",
+    };*/
+  //--------------------------------------------------
+  // Set up some cuts, etc.
+
+  Double_t degrad = 180./3.1415926;
+  Double_t total_power[numhists];
+  Double_t dump_power[numhists];
+  Double_t hall_power[numhists];
+
+  TH1F* hf[numhists];
+  TH1F* hb[numhists];
+  char hnamef[numhists][200];
+  char hnameb[numhists][200];
+  char htitlef[numhists][200];
+  char htitleb[numhists][200];
+  char plotf[numhists][200];
+  char plotb[numhists][200];
+
+  Int_t volume =0;
+  Int_t particle =5;
+
+  char cutf[numens][200];
+  char cutb[numens][200];
+
+  //----------------------
+  //Prepare the legend
+  Double_t xmin=0.6,xmax=0.75, ymin=0.5, ymax=0.8;
+
+  TLegend *leg = new TLegend(xmin,ymin,xmax,ymax,NULL,"brNDC");
+  leg->SetTextFont(62);
+  leg->SetTextSize(0.03);
+  leg->SetFillColor(19);
+  leg->SetFillStyle(1001);
+  TLegendEntry *entry;
+
+  //--------------------------------------------------
+  // Make the plots
+
+  cout<<endl;
+  cout<<"Making the plots..."<<endl;
+
+  TCanvas *c1 = new TCanvas("c1");
+  c1->Divide(1,numens);
+
+  Int_t k=0;
+  for(Int_t en=0;en<numens;en++){
+    c1->cd(en+1);
+
+    for (Int_t pl=0;pl<numchains;pl++){
+      //      if(pl==4){
+      //      	sprintf(cutf[en],"(volume==%i&&z>=0)*(10*kineE/8)",volume);
+      //      	sprintf(cutb[en],"(volume==%i&&z<0)*(10*kineE/8)",volume);
+      //     } else {
+	sprintf(cutf[en],"(volume==%i&&z>=0)*kineE",volume);
+	sprintf(cutb[en],"(volume==%i&&z<0)*kineE",volume);
+	//    }
+      sprintf(hnamef[k],"hf%i",k);
+      sprintf(hnameb[k],"hb%i",k);
+      sprintf(htitlef[k],"Total energy per incident electron");
+      sprintf(htitleb[k],"Total energy per incident electron");
+      hf[k] = new TH1F(hnamef[k],htitlef[k],1800,0,180.);
+	    //hf[k] = new TH1F(hnamef[k],htitlef[k],200,0,2.);
+      hb[k] = new TH1F(hnameb[k],htitleb[k],900,90.,180.);
+      sprintf(plotf[k],"asin(sqrt(pow(x,2)+pow(y,2))/sqrt(pow(x,2)+pow(y,2)+pow(z,2)))*%f>>hf%i",degrad,k);
+      sprintf(plotb[k],"180.-asin(sqrt(pow(x,2)+pow(y,2))/sqrt(pow(x,2)+pow(y,2)+pow(z,2)))*%f>>hb%i",degrad,k);
+ 
+      cout<<hnamef[k]<<" "<<plotf[k]<<" "<<cutf[en]<<" and "<<cutb[en]<<endl;
+ 
+      hf[k]->SetLineColor(histcolor[pl]);
+      hf[k]->SetLineStyle(histlinetype[pl]);
+      //hf[k]->GetXaxis()->SetTitle("Energy (MeV)");
+      hf[k]->GetXaxis()->SetTitle("#theta (degrees)");
+      //      hf[k]->GetYaxis()->SetTitle("Energy/degree");
+      hf[k]->GetYaxis()->SetTitle("Energy/ 1/10 degree");
+      hf[k]->SetStats(0);
+      hf[k]->SetMinimum(1e-3);
+      hf[k]->SetMaximum(1e11);
+
+      if(pl==0){
+	hf[k]->SetFillColor(histcolor[pl]);
+	hf[k]->SetFillStyle(3003);
+	geantTree[pl]->Draw(plotf[k],cutf[en],"");
+      } else {
+	geantTree[pl]->Draw(plotf[k],cutf[en],"same");
+      }
+      hb[k]->SetLineColor(histcolor[pl]);
+      hb[k]->SetLineStyle(histlinetype[pl]);
+      //h[k]->GetXaxis()->SetTitle("Energy (MeV)");
+      //hb[k]->GetXaxis()->SetTitle("r (cm)");
+      //hb[k]->GetYaxis()->SetTitle("Energy/cm");
+      hb[k]->SetStats(0);
+      hb[k]->SetMinimum(1e-3);
+      hb[k]->SetMaximum(1e11);
+
+      if(pl==0){
+	hb[k]->SetFillColor(histcolor[pl]);
+	hb[k]->SetFillStyle(3003);
+      } else {
+      }
+      geantTree[pl]->Draw(plotb[k],cutb[en],"same");
+      
+      total_power[k]=hf[k]->Integral()+hb[k]->Integral();
+      dump_power[k]=hf[k]->Integral(1,10);
+      hall_power[k]=hf[k]->Integral(11,900)+hb[k]->Integral(1,900);
+
+      if(en==0){
+	if(pl==0){
+	  entry=leg->AddEntry("c1",legtitle[pl],"f");
+	  entry->SetFillColor(histcolor[pl]);
+	  entry->SetFillStyle(3003);
+	} else {
+	  entry=leg->AddEntry("c1",legtitle[pl],"l");
+	}
+	entry->SetLineColor(histcolor[pl]);
+	entry->SetLineStyle(histlinetype[pl]);
+	leg->Draw();
+      }
+      k++;
+    }
+  }
+  cout<<endl;
+  
+  c1_1->SetLogy();
+
+  c1->Modified();
+  c1->cd();
+  c1->SetSelected(c1);
+  
+  // Print out the number of neutrons for each energy range...
+  k=0;
+  for(Int_t en=0;en<numens;en++){
+    for (Int_t pl=0;pl<numchains;pl++){
+      cout<<legtitle[k]<<" total: "<< total_power[k]/1e7<<", dump: "<<dump_power[k]/1e7<<", hall: "<<hall_power[k]/1e7<<endl;
+      k++;
+    }
+  }
+  
+}

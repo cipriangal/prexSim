@@ -1,0 +1,78 @@
+#
+# Macro file for the initialization phase of "moller_mod.cc"
+# when runing in interactive mode
+#
+# Sets some default verbose
+#
+
+#/control/verbose 1
+
+#
+# create empty scene
+#
+
+/vis/open OGLIX 1200x800
+
+#
+# Create a scene handler for a specific graphics system
+# (Edit the next line(s) to choose another graphic system)
+#
+
+/vis/drawVolume
+
+#
+# draw scene
+#
+
+/vis/viewer/set/viewpointThetaPhi 0 0 deg
+/vis/viewer/set/lightsThetaPhi 5 5 rad
+/vis/viewer/set/style s
+/vis/viewer/scaleTo 2.5 20 1
+
+#/vis/viewer/zoom 1
+#/vis/viewer/flush
+
+
+#
+# for drawing the tracks
+# (if too many tracks cause core dump => storeTrajectory 0)
+
+#/tracking/storeTrajectory 1
+
+#/vis/filtering/trajectories/create/originVolumeFilter
+#/vis/filtering/trajectories/originVolumeFilter-0/add logicTarget
+#/vis/filtering/trajectories/originVolumeFilter-0/verbose false
+
+/vis/filtering/trajectories/create/particleFilter
+/vis/filtering/trajectories/particleFilter-0/add gamma
+/vis/filtering/trajectories/particleFilter-0/invert true
+
+/vis/filtering/trajectories/create/chargeFilter
+/vis/filtering/trajectories/chargeFilter-0/add -1
+#/vis/filtering/trajectories/chargeFilter-0/invert true
+
+/vis/filtering/trajectories/create/attributeFilter
+/vis/filtering/trajectories/attributeFilter-0/setAttribute IMag
+/vis/filtering/trajectories/attributeFilter-0/addInterval 2.75 GeV 5.5 GeV
+
+#/vis/filtering/trajectories/create/attributeFilter
+#/vis/filtering/trajectories/attributeFilter-1/setAttribute 
+#/vis/filtering/trajectories/attributeFilter-1/addValue eIon_key eIoni
+
+#/vis/filtering/trajectories/create/attributeFilter
+#/vis/filtering/trajectories/attributeFilter-1/setAttribute PID
+#/vis/filtering/trajectories/attributeFilter-1/addValue 0
+#/vis/filtering/trajectories/attribiteFilter-1/invert true
+
+
+
+/vis/scene/add/trajectories smooth rich
+
+
+# (if you prefer refreshing each event, comment out next line)
+/vis/scene/endOfEventAction accumulate
+#
+
+
+
+

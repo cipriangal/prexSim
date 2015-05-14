@@ -1,0 +1,8 @@
+/moller/det/setCollimatorFileName default_coll
+/moller/det/setNumberofCollimators 10
+#/moller/det/setCollimatorFileName add_dets
+#/moller/det/setNumberofCollimators 14
+/moller/det/setTargetLength 150 cm
+#
+/run/initialize
+#

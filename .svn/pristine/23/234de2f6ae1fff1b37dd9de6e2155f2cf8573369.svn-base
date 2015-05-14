@@ -1,0 +1,56 @@
+# Looking for user defined GEANT4_VERSION
+if( ! $?GEANT4_VERSION) then
+	setenv GEANT4_VERSION $DEFAULT_GEANT4_VERSION
+endif
+
+
+setenv G4VERSION  $GEANT4_VERSION
+setenv G4ROOT     $JLAB_SOFTWARE/geant4
+setenv G4INSTALL  $G4ROOT/$G4VERSION
+
+setenv G4LIB $G4INSTALL/lib
+
+if ( -f ${G4INSTALL}/bin/geant4-config ) then
+	setenv G4LIB    `$G4INSTALL/bin/geant4-config --libs | awk '{print $1}' | awk -F\-L '{print $2}'`
+endif
+
+set path = ($G4INSTALL/bin $path)
+setenv LD_LIBRARY_PATH ${G4LIB}:${LD_LIBRARY_PATH}
+
+
+if( ! -d ${G4LIB} ) then
+	echo " ? Attention: No GEANT4 installation found."
+else
+echo " > Geant4     Version: " $G4VERSION "   installed in " \$JLAB_SOFTWARE/geant4
+
+
+
+# GEANT4 DATA
+setenv G4ABLADATA                $JLAB_ROOT/noarch/Geant4-9.5.0/data/G4ABLA3.0              # Data for INCL/ABLA models for nuclear shell effects
+setenv G4LEDATA                  $JLAB_ROOT/noarch/Geant4-9.5.0/data/G4EMLOW6.23            # Data for low energy electromagnetic processes
+setenv G4LEVELGAMMADATA          $JLAB_ROOT/noarch/Geant4-9.5.0/data/PhotonEvaporation2.2   # Nuclear Photon evaporation data
+setenv G4NEUTRONHPDATA           $JLAB_ROOT/noarch/Geant4-9.5.0/data/G4NDL4.0               # Data for neutron scattering processes
+setenv G4NEUTRONXSDATA           $JLAB_ROOT/noarch/Geant4-9.5.0/data/G4NEUTRONXS1.1         # Data for evaluated neutron cross sections on natural composition of elements
+setenv G4PIIDATA                 $JLAB_ROOT/noarch/Geant4-9.5.0/data/G4PII1.3               # Data for shell ionisation cross-sections
+setenv G4RADIOACTIVEDATA         $JLAB_ROOT/noarch/Geant4-9.5.0/data/RadioactiveDecay3.4    # Data for radioactive decay hadronic processes under data
+setenv G4REALSURFACEDATA         $JLAB_ROOT/noarch/Geant4-9.5.0/data/RealSurface1.0         # Data measured optical surface reflectance in optical processes
+
+if( ! -d ${G4ABLADATA} )        echo " ? Attention: No G4ABLADATA."
+if( ! -d ${G4LEDATA} )          echo " ? Attention: No G4LEDATA."
+if( ! -d ${G4LEVELGAMMADATA} )  echo " ? Attention: No G4LEVELGAMMADATA."
+if( ! -d ${G4NEUTRONHPDATA} )   echo " ? Attention: No G4NEUTRONHPDATA."
+if( ! -d ${G4NEUTRONXSDATA} )   echo " ? Attention: No G4NEUTRONXSDATA."
+if( ! -d ${G4PIIDATA} )         echo " ? Attention: No G4PIIDATA."
+if( ! -d ${G4RADIOACTIVEDATA} ) echo " ? Attention: No G4RADIOACTIVEDATA."
+if( ! -d ${G4REALSURFACEDATA} ) echo " ? Attention: No G4REALSURFACEDATA."
+
+
+
+
+
+
+endif
+
+
+
+

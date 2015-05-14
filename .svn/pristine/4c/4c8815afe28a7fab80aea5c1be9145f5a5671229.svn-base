@@ -1,0 +1,183 @@
+/*G4 Simulation program for Moller Spectrometer*/
+/*Developed by Luis Mercado with contributions */
+/*by Dustin McNulty (generators)               */
+/*and Mark Dalton (toroid fields)              */
+/*University of Massachusetts - Amherst, JLAB  */
+
+/*This file updated 1-25-2011 by. J. Mammei    */
+/*to reflect current usage and major svn       */
+/*revision.                                    */
+/*This file updated on 06-20-2012 by l.Zana    */
+/*to reflect update with cmake build and geant4*/
+/* version 4.9.5p01                            */
+
+
+
+
+
+This folder contains:
+
+moller_sim.cc:    Main Routine for Simulation.
+
+GNUmakefile:      Makefile. Compiles program into G4WORKDIR/.
+
+CMakeLists.txt    cmake contruct for Makefile (see later note for how to use it)
+
+vis.mac:          Can be called from the simulation prompt in order to
+		  run visualization. WARNING: Analysis and visualization
+		  cannot run concurrently.
+
+moller_###.root:  ROOT Output file created at end of simulation. The ###
+		  refers to the date and time the simulation took place. 
+		  The default save location is ~/scratch/ROOTfiles/
+
+
+bin/, src/, tmp/:	This is where the Makefile compiles and installs the
+			program.
+
+include/:               Header files for Simulation Classes.
+
+src/:			Source files for Simulation Classes.
+
+null/:			Trash folder. Things that didn't quite work out.
+
+plots/:			Plots of results made by ROOT.
+
+output/:	        Root output.
+
+
+HOW TO COMPILE WITH CMAKE (geant4.9.5p01)
+
+cmake version >=2.6 needed (ifarm does not have it)
+
+source env_jlabcue495p01 (this will set up the correct env variables for building)
+Create a building directory (for example mkdir build)
+Go to the building directory (for example cd build)
+Create the makefile with cmake, where you point cmake to the directory where is CMakeLists.txt (for example cmake ../ )
+(Because ifarm does have an old version of cmake, I installed a newer version in the work disk, so use:
+ /work/halla/parity/disk2/zana/Cmake/cmake-2.8.8/bin/cmake ../ from the build directory)
+Now you have the new Makefile created in the build directory: Type make and "prexsim", the new binary file will be created in
+$PREXDIR/bin/Linux-g++/  
+
+
+HOW TO COMPILE FOR geant4.9.4p02
+
+source env_jlabcue494p02 (this will set up the correct env variables for building)
+in the $PREXDIR directory type make:
+the mollersim binary will be created in $PREXDIR/bin/Linux-g++/
+
+
+
+
+
+To run the program type, for example, 'bin/Linux-g++/moller_sim runsim_ee.csh' from the G4WORKDIR.
+
+The data structure of the NTuple is as follows:
+
+
+ion:x:y:z:x0:y0:z0:kineE:px:py:pz:kineE0:px0:py0:pz0:kineE1:px1:py1:pz1:kineE2:px2:py2:pz2:type:volume:theta0:theta1:theta2:ev_num:process:event:creator:hit:kineE_org:theta_org:track:diffXS:totXS:rate
+
+
+
+NOTE: 
+Moller interactions are defined as a beam particle (Moller0) 
+coming from the beam and splitting into Moller1 
+(with energy > 5.5GeV) and Moller2 (with energy < 5.5GeV)
+
+During an event, very time that a particle hits a Sensitive 
+Detector, it creates a Hit with the following data:
+
+
+ion	-if using Geant, ion is 1 if the particle was created 
+	 by the process of "eIoni", which is how Geant defines 
+	 Moller Scattering. Using this as a cut will give you only the 
+	 Moller2 particles, as defined above.
+
+x	-x-position where the particle hit the Sensitive Detector
+y	-y-position where the particle hit the Sensitive Detector
+z	-z-position where the particle hit the Sensitive Detector
+x0	-x-position where the Moller interaction occurred
+y0	-y-position where the Moller interaction occurred
+z0	-z-position where the Moller interaction occurred
+
+kineE	-Energy of the particle when it hit the Sensitive Detector
+px	-Unit vector of momentum in x-direction at the Sensitive Detector
+py	-Unit vector of momentum in y-direction at the Sensitive Detector
+pz	-Unit vector of momentum in z-direction at the Sensitive Detector
+
+kineE0	-Kinetic Energy of the original electron which interacted 
+	 inside the target and created particle Moller1 and Moller2 at the
+	 interaction point (x0,y0,z0) 
+
+px0	-Unit vector of momentum in x-direction of Moller0 right before 
+	 interacting
+py0	-Unit vector of momentum in y-direction of Moller0 right before 
+	 interacting
+pz0	-Unit vector of momentum in z-direction of Moller0 right before 
+ 	 interacting
+
+kineE1	-Kinetic Energy of the original electron which interacted inside 
+	 the target and created particle Moller1 and Moller2 at the
+	 interaction point (x1,y1,z1) 
+
+px1	-Unit vector of momentum in x-direction of Moller1 right after 
+	 interacting
+py1	-Unit vector of momentum in y-direction of Moller1 right after 
+	 interacting
+pz1	-Unit vector of momentum in z-direction of Moller1 right after 
+	 interacting
+
+kineE2	-Kinetic Energy of the original electron which interacted inside
+	 the target and created particle Moller1 and Moller2 at the
+	 interaction point (x2,y2,z2)
+ 
+px2	-Unit vector of momentum in x-direction of Moller2 right after 
+	 interacting.
+py2	-Unit vector of momentum in y-direction of Moller2 right after 
+	 interacting.
+pz2	-Unit vector of momentum in z-direction of Moller2 right after 
+	 interacting.
+
+type	-Particle type( electron=0, positron=1, proton=2, antiproton=3, 
+	 gamma=4, other=5 )
+
+volume	-Volume number of the Sensitive Detector that recorded this Hit.
+
+theta0	-Angle with respect to the beam axis of Moller0 right before 
+	 interacting.
+theta1	-Angle with respect to the beam axis of Moller1 right after interacting.
+theta2	-Angle with respect to the beam axis of Moller2 right after interacting.
+
+ev_num	-Event number, as assigned by Geant. An event is defined as the 
+	 set of particles and interactions that happen after the Particle 
+	 Genarator 'throws' a particle into the spectrometer.
+
+process	-Not properly defined at the moment
+event	-Not properly defined at the moment.
+
+creator	-Process that created this particle, as assigned by G4
+ 	 eIoni->         0     
+	 conv->          1
+	 Decay->         2
+	 annihil->       3
+	 Brem->          4
+	 phot->          5
+ 	 compt->         6
+   	 Transportation->7
+    	 msc->           8
+     	 All Others->    9
+
+hit	-Same as trackID (see below).
+
+kineE_org - Vertex energy of THIS particle. 
+theta_org - Scattering Angle of THIS particle.
+
+track	-Track number as assigned by GEANT. Each particle created in 
+	 an Event is given an incremental trackID number. In this case,
+	 Moller1 has track=1 and Moller2 has track=2.
+
+diffXS	-Differential cross-section calculated in generator.
+totXS	-Total cross-section calculated in generator.
+
+rate    -Rate calculated in generator.
+

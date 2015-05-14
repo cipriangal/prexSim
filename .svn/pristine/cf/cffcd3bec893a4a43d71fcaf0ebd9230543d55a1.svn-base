@@ -1,0 +1,20 @@
+export PREXDIR=`pwd`
+
+
+export G4WORKDIR=.
+export G4TMP=./tmp
+
+test -a tmp || mkdir -p tmp
+export PHYSLIST=QGSP_BERT_HP
+export G4UI_BUILD_QT_SESSION=1
+export G4UI_USE_QT=1
+export G4VIS_BUILD_OPENGLQT_DRIVER=1
+export G4VIS_USE_OPENGLQT=1
+export G4VIS_BUILD_DAWN_DRIVER=1
+export G4VIS_USE_DAWN=1
+export G4LIB_BUILD_GDML=1
+export G4LIB_USE_GDML=1
+export G4UI_USE_QT=1
+export CMAKE_INSTALL_PREFIX=${PREXDIR}/bin/Linux-g++/
+
+

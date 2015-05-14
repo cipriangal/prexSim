@@ -1,0 +1,13 @@
+setenv PREXDIR `pwd`
+
+setenv JLAB_ROOT /site/12gev_phys
+source $JLAB_ROOT/ce_old/jlab.csh
+
+
+setenv G4WORKDIR .
+setenv G4TMP ./tmp
+
+test -a tmp || mkdir -p tmp
+setenv PHYSLIST QGSP_BERT_HP
+
+

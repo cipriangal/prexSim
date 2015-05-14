@@ -1,0 +1,11 @@
+
+/gun/particle e-
+#/gun/energy 1.05 GeV
+#/moller/ana/rootfilename ./P1_target_5M
+/moller/gun/gen 7
+
+#HAPPEX 2 ran a higher energies
+/gun/energy 3.18 GeV  
+/moller/ana/rootfilename ./H2_target_P1_5M
+
+/run/beamOn 5000000

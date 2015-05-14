@@ -1,0 +1,28 @@
+/control/verbose 2
+/run/verbose 0
+/tracking/verbose 0
+/moller/gun/setConstSeed true
+
+/moller/det/readGeometryFromFile true
+
+########~~~~~~~~~~~CG~~~~~~~~~~~ Target added to Rakitha's sim
+#/moller/det/setDetectorFileName geometry/prexII_coll_prototype_4_complete_HAP2target.gdml
+#/moller/det/setDetectorFileName geometry/prexII_coll_prototype_4_complete.gdml
+########~~~~~~~~~~~CG~~~~~~~~~~~ PREX1 sim
+#/moller/det/setDetectorFileName geometry/prexIMother_pedestal_noshield.xml
+/moller/det/setDetectorFileName geometry/prexIMother_pedestal_noshield_H2target.xml
+
+#/moller/det/setNumberofCollimators 18
+/moller/det/setNumberofCollimators 12 ##for prex1
+
+
+/moller/det/setShieldMaterial polyethylene
+
+/moller/field/setLowLim -74 cm
+/moller/field/setHighLim 74 cm
+
+
+/testhadr/CutsAll          0.7 mm
+/testhadr/Physics          PHYSLIST
+/run/initialize
+

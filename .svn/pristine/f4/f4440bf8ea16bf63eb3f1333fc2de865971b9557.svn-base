@@ -1,0 +1,78 @@
+// Macro to plot the transverse world data with the
+// theory calculations provided by B. Pasquini 
+// October 2010
+
+{
+
+gROOT->Reset();
+#include "Riostream.h"
+
+  // ===================================================================
+  // Define some variables
+
+  Int_t n = 7;
+
+  Float_t th_err[n]={0.,0.,0.,0.,0.,0.,0.};
+
+  Float_t th_poly[n]={1.359,1.450,,1.541,1.632,1.723,1.814,1.905};
+
+  Float_t n_neut_poly_en1[n]={0.00653883, 0.00563722, 0.00490621, 0.00435141, 0.00384641, 0.00343211, 0.0031233};
+  Float_t n_neut_poly_en2[n]={0.00529233, 0.00464743, 0.00411973, 0.00370172, 0.00331642, 0.00302392, 0.00276322};
+  Float_t n_neut_poly_en3[n]={3.84e-05, 3.21e-05, 3.2e-05, 2.58e-05, 2.71e-05, 2.7e-05, 2.21e-05};
+
+  Float_t n_neut_poly_en1_err[n]={0.,0.,0.,0.,0.,0.,0.};
+  Float_t n_neut_poly_en2_err[n]={0.,0.,0.,0.,0.,0.,0.};
+  Float_t n_neut_poly_en3_err[n]={0.,0.,0.,0.,0.,0.,0.};
+
+
+  // ===================================================================
+  // Make plots
+
+
+  TCanvas c1("c1","c1",200,200,600,400);
+
+  TGraphErrors *gr1 = new TGraphErrors(n,th_poly,n_neut_poly_en1,th_err,n_neut_poly_en1_err);
+  gr1->SetMarkerStyle(21);
+  gr1->SetMarkerColor(1);
+  //  gr1->SetMarkerStyle(22);
+  //  gr1->SetMarkerColor(2);
+  gr1->Draw("AP");
+  gr1->GetXaxis()->SetLabelSize(0.04);
+  gr1->GetXaxis()->SetTitleSize(0.04);
+  gr1->GetYaxis()->SetTitleOffset(0.7);
+  gr1->GetXaxis()->SetTitle("Collimator Inner radius (cm)");
+  gr1->GetYaxis()->SetLabelSize(0.04);
+  gr1->GetYaxis()->SetTitleSize(0.04);
+  gr1->GetYaxis()->SetTitleOffset(1.4);
+  gr1->GetYaxis()->SetTitle("Counts (per incident e-)");
+  gr1->GetYaxis()->SetRangeUser(0,.006);
+  gr1->GetYaxis()->SetRangeUser(1e-6,1e-2);
+  gr1->SetTitle("No beamline, no shielding");
+
+
+  TGraphErrors *gr2 = new TGraphErrors(n,th_poly,n_neut_poly_en2,th_err,n_neut_poly_en2_err);
+  gr2->SetMarkerStyle(21);
+  gr2->SetMarkerColor(2);
+  gr2->SetLineWidth(2);
+  //  gr2->SetMarkerStyle(22);
+  //  gr2->SetMarkerColor(1);
+  gr2->Draw("P");
+
+  TGraphErrors *gr3 = new TGraphErrors(n,th_poly,n_neut_poly_en3,th_err,n_neut_poly_en3_err);
+  gr3->SetMarkerStyle(21);
+  gr3->SetMarkerColor(4);
+  gr3->SetLineWidth(2);
+  //  gr2->SetMarkerStyle(22);
+  //  gr2->SetMarkerColor(1);
+  gr3->Draw("P");
+
+
+
+  leg = new TLegend(0.85,0.55,0.48,0.85);
+  leg->AddEntry(gr1,"Neutron counts, 0<E<1 MeV","p");
+  leg->AddEntry(gr2,"Neutron counts, 1<E<50 MeV","p");
+  leg->AddEntry(gr3,"Neutron counts, 50<E<500 MeV","p");
+  leg->Draw();
+   
+}
+

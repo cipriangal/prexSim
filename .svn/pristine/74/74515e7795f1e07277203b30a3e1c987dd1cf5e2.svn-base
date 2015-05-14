@@ -1,0 +1,35 @@
+#!/bin/tcsh
+
+source ~/.login
+
+echo "\n======"
+echo "User:       " `whoami`
+echo "Groups:     " `groups`
+echo "======\n"
+
+set geant_dir = $1
+set scratch_dir = $2
+source $geant_dir/env_jlabcue_mine
+
+set executable = $3
+set geo = $4
+set gun = $5
+set phys = $6
+
+echo "'$executable $geant_dir/batch/$geo $geant_dir/batch/$gun'"
+
+$geant_dir/$executable $geant_dir/batch/$geo $geant_dir/batch/$gun $phys
+
+set my_rndm_file = currentEvent.rndm
+set my_results_file = results_geant.txt
+
+set my_root_file = `find . -name \*root`
+echo "Trying to find rootfile... '$my_root_file' "
+if ("$my_root_file" != "") then
+    echo "Moving $my_root_file "
+    mv $my_root_file $scratch_dir/.
+endif
+
+rm $my_rndm_file $my_results_file
+
+exit

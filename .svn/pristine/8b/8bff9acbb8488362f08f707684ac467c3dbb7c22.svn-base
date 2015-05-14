@@ -1,0 +1,10 @@
+[General]
+outdir=plots/prexsim_shldgeo_
+rootoutfile=output/prexsim_shldgeo_1e6_Pb__combo10_nfld_sim_6
+num_thrown=1000000
+eventtype=1
+plottype=.gif
+
+[Filenames]
+file1=~/scratch/ROOTfiles/prexsim_shldgeo_1e6_Pb__combo10_nfld_sim_6.root
+

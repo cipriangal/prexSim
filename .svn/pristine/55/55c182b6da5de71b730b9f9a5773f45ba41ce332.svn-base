@@ -1,0 +1,5 @@
+{
+  gSystem.Load("libGeom");
+  TGeoManager::Import("moller.gdml");
+  gGeoManager->GetTopVolume()->Draw("ogl");
+}

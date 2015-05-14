@@ -1,0 +1,5 @@
+/vis/viewer/zoomTo 1
+/vis/viewer/set/upVector 0 1 0
+/vis/viewer/set/lightsThetaPhi 5 5 rad
+/vis/viewer/set/viewpointThetaPhi 160 180
+/vis/viewer/scaleTo 2.5 10 1

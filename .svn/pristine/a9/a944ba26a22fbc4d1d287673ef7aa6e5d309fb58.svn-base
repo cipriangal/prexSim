@@ -1,0 +1,175 @@
+{
+  //--------------------------------------------------
+  // Chain together the sims
+
+  cout<<"Chaining sims..."<<endl;
+
+  Int_t numchains=8;
+  //Int_t numchains=2;
+  Int_t numsims=10;
+
+  Int_t numens=3;
+  Double_t minE[numens]={0.00,1.00,50.0};
+  Double_t maxE[numens]={1.00,50.0,500.};
+  
+  /*
+  Int_t numens=2;
+  Double_t minE[numens]={0.00,100.0};
+  Double_t maxE[numens]={100.,500.0};
+  */
+  Int_t numhists=numchains*numens;
+
+
+  TChain *geantTree[numchains];
+
+
+  char name_base[numchains][200]={
+    "~/scratch/ROOTfiles/prexsim_shldgeo_1e6_none_LD2_tgt_test-1_test_sim_",
+    "~/scratch/ROOTfiles/prexsim_shldgeo_1e6_none_purePb-1_test_sim_",
+    "~/scratch/ROOTfiles/prexsim_shldgeo_1e6_none_LD2-1_wholegeo_sim_",
+    "~/scratch/ROOTfiles/prexsim_shldgeo_1e6_none_Pb-1_wholegeo_sim_",
+    "~/scratch/ROOTfiles/prexsim_shldgeo_1e6_Pb_poly20_wholegeo_sim_",
+    "~/scratch/ROOTfiles/prexsim_shldgeo_1e6_Pb_prexpoly-1_wholegeo_sim_",
+    "~/scratch/ROOTfiles/prexsim_shldgeo_1e6_Pb_prexpolycrete-1_wholegeo_sim_",
+    "~/scratch/ROOTfiles/prexsim_shldgeo_1e6_Pb_prexborpoly-1_wholegeo_sim_",
+  };
+  /*
+  char name_base[numchains][200]={
+    "~/scratch/ROOTfiles/prexsim_shldgeo_1e6_none-1_sim_",
+    "~/scratch/ROOTfiles/prexsim_shldgeo_1e6_none-1_coll_z0_sim_",
+  };
+  */
+  char name[200];
+
+  for (Int_t j=0;j<numchains;j++){
+    geantTree[j]=new TChain("geant");
+    cout<<name_base[j];
+    for (Int_t i=0;i<numsims;i++){
+      sprintf(name,"%s%i.root",name_base[j],i);
+      geantTree[j]->Add(name);
+      cout<<" "<<i;
+    }
+    cout<<endl;
+  }
+
+  //--------------------------------------------------
+  //Some formatting stuff:
+
+  Int_t histcolor[numchains]={1,2,1,2,2,3,4,5};
+  Int_t histlinetype[numchains]={2,2,1,1,3,1,1,1};
+    
+  //  Int_t histcolor[numchains]={1,2,3,4,5,6};
+  // 1 - solid, 2 - dashed
+  //  Int_t histlinetype[numchains]={1,2,1,2,1,2};
+  //  Int_t histlinetype[numchains]={1,1,1,1,1,1};
+
+  // Needs to match the order of the input file names...  
+    char legtitle[numchains][200]={
+    "LD2, no beamline",
+    "Pb, no beamline",
+    "LD2",
+    "Pb",
+    "Pb, w/ sphere shield",
+    "Pb, w/ prex poly shield",
+    "Pb, w/ prex polycrete shield",
+    "Pb, w/ prex borpoly shield",
+  };
+  /*
+  char legtitle[numchains][200]={
+    "old coll defn",
+    "new coll defn"
+  };
+    */
+  //--------------------------------------------------
+  // Set up some cuts, etc.
+
+  Double_t total_neutrons[numhists];
+
+  TH1F* h[numhists];
+  char hname[numhists][200];
+  char plot[numhists][200];
+  char cut[numens][200];
+
+  Int_t volume =0;
+  Int_t particle =5;
+
+  char cut[numens][200];
+
+  //----------------------
+  //Prepare the legend
+  Double_t xmin=0.6,xmax=0.75, ymin=0.5, ymax=0.8;
+
+  TLegend *leg = new TLegend(xmin,ymin,xmax,ymax,NULL,"brNDC");
+  leg->SetTextFont(62);
+  leg->SetTextSize(0.03);
+  leg->SetFillColor(19);
+  leg->SetFillStyle(1001);
+  TLegendEntry *entry;
+
+  //--------------------------------------------------
+  // Make the plots
+
+  cout<<endl;
+  cout<<"Making the plots..."<<endl;
+
+  TCanvas *c1 = new TCanvas("c1");
+  c1->Divide(1,numens);
+
+  Int_t k=0;
+  for(Int_t en=0;en<numens;en++){
+    c1->cd(en+1);
+
+    for (Int_t pl=0;pl<numchains;pl++){
+      sprintf(cut[en],"(volume==%i&&type==%i&&kineE>%f&&kineE<%f)*(1/10000000)",volume,particle,minE[en],maxE[en]);
+      sprintf(hname[k],"h%i",k);
+      h[k] = new TH1F(hname[k],"Neutron counts per incident electron",200,minE[en],maxE[en]);
+      sprintf(plot[k],"kineE>>h%i",k);
+      //h[k] = new TH1F(hname[k],"Neutron counts per incident electron",600,-400,2600);      
+      //sprintf(plot[k],"z0/10.>>h%i",k);
+      cout<<hname[k]<<" "<<plot[k]<<" "<<cut[en]<<endl;
+
+      if(pl==0){
+	h[k]->SetLineColor(histcolor[pl]);
+	h[k]->SetLineStyle(histlinetype[pl]);
+	h[k]->GetXaxis()->SetTitle("Energy (MeV)");
+	//h[k]->GetXaxis()->SetTitle("z (cm)");
+	h[k]->GetYaxis()->SetTitle("Counts");
+	h[k]->SetStats(0);
+	h[k]->SetMinimum(1e-12);
+	h[k]->SetMaximum(1e-2);
+	geantTree[pl]->Draw(plot[k],cut[en],"");
+	total_neutrons[k]=h[k]->Integral();
+      } else {
+	h[k]->SetLineColor(histcolor[pl]);
+	h[k]->SetLineStyle(histlinetype[pl]);
+	geantTree[pl]->Draw(plot[k],cut[en],"same");
+	total_neutrons[k]=h[k]->Integral();
+      }
+      
+      if(en==1){
+	entry=leg->AddEntry("c1",legtitle[pl],"l");
+	entry->SetLineColor(histcolor[pl]);
+	entry->SetLineStyle(histlinetype[pl]);
+	leg->Draw();
+      }
+      k++;
+    }
+  }
+  cout<<endl;
+  
+  
+  
+  c1->Modified();
+  c1->cd();
+  c1->SetSelected(c1);
+  
+  // Print out the number of neutrons for each energy range...
+  k=0;
+  for(Int_t en=0;en<numens;en++){
+    for (Int_t pl=0;pl<numchains;pl++){
+      cout<<"The total number of neutrons for "<<legtitle[pl]<<" and "<<minE[en]<<"<E<"<<maxE[en]<<" MeV  is "<< total_neutrons[k]<<endl;
+      k++;
+    }
+  }
+  
+}

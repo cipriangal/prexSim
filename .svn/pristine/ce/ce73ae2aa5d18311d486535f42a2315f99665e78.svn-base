@@ -1,0 +1,129 @@
+{
+  gStyle->SetPalette(1);
+  gStyle->SetOptStat(kFALSE);
+  //--------------------------------------------------
+  // Chain together the sims
+
+  cout<<"Chaining sims..."<<endl;
+
+  Int_t numchains=4;
+  //Int_t numchains=2;
+  Int_t numsims=10;
+
+  Int_t numens=3;
+  Double_t minE[numens]={0.00,1.00,50.0};
+  Double_t maxE[numens]={1.00,50.0,500.};
+  
+  /*
+  Int_t numens=2;
+  Double_t minE[numens]={0.00,100.0};
+  Double_t maxE[numens]={100.,500.0};
+  */
+  Int_t numhists=numchains*numens;
+
+
+  TChain *geantTree[numchains];
+  
+  char name_base[numchains][200]={
+    "~/scratch/ROOTfiles/prexsim_shldgeo_1e6_none_purePb-1_test_sim_",
+    "~/scratch/ROOTfiles/prexsim_shldgeo_1e6_none_Pb-1_wholegeo_sim_",
+    "~/scratch/ROOTfiles/prexsim_shldgeo_1e6_Pb_poly20_wholegeo_sim_",
+    "~/scratch/ROOTfiles/prexsim_shldgeo_1e6_Pb_prexpoly-1_wholegeo_sim_"
+  };
+  /*
+  char name_base[numchains][200]={
+    "~/scratch/ROOTfiles/prexsim_shldgeo_1e6_none-1_sim_",
+    "~/scratch/ROOTfiles/prexsim_shldgeo_1e6_none-1_coll_z0_sim_",
+  };
+  */
+  char name[200];
+
+  for (Int_t j=0;j<numchains;j++){
+    geantTree[j]=new TChain("geant");
+    cout<<name_base[j];
+    for (Int_t i=0;i<numsims;i++){
+      sprintf(name,"%s%i.root",name_base[j],i);
+      geantTree[j]->Add(name);
+      cout<<" "<<i;
+    }
+    cout<<endl;
+  }
+
+  //--------------------------------------------------
+  //Some formatting stuff:
+
+  //Int_t histcolor[numchains]={1,2};
+  //Int_t histlinetype[numchains]={1,1};
+    
+  Int_t histcolor[numchains]={1,2,1,2};
+  // 1 - solid, 2 - dashed
+  //  Int_t histlinetype[numchains]={1,2,1,2,1,2};
+  Int_t histlinetype[numchains]={1,1,1,1};
+
+  // Needs to match the order of the input file names...  
+    char legtitle[numchains][200]={
+    "Pb, w/o beamline",
+    "Pb, w/ beamline",
+    "PREx II, w/ sphere",
+    "PREx II, w/ poly",
+  };
+  /*
+  char legtitle[numchains][200]={
+    "old coll defn",
+    "new coll defn"
+  };
+    */
+  //--------------------------------------------------
+  // Set up some cuts, etc.
+
+  Double_t total_neutrons[numhists];
+
+  TH2F* h[numhists];
+  char hname[numhists][200];
+  char plot[numhists][200];
+  char cut[numens][200];
+
+  Int_t volume =0;
+  Int_t particle =4;
+
+  char cut[numens][200];
+
+  Int_t nxbins = 600;
+  Int_t nybins = 40;
+
+  Int_t xmin = -400;
+  Int_t xmax = 2600;
+
+  Int_t ymin = -100;
+  Int_t ymax = 100;
+
+
+
+  h1 = new TH2F("h1",legtitle[0],nxbins,xmin,xmax,nybins,ymin,ymax);
+  h2 = new TH2F("h2",legtitle[1],nxbins,xmin,xmax,nybins,ymin,ymax);
+  h3 = new TH2F("h3",legtitle[2],nxbins,xmin,xmax,nybins,ymin,ymax);
+  h4 = new TH2F("h4",legtitle[3],nxbins,xmin,xmax,nybins,ymin,ymax);
+
+  Double_t n_max=50;
+  TCanvas *c1 = new TCanvas("c1");
+  c1->Divide(2,2);
+   
+  c1->cd(1);
+  h1->SetMaximum(n_max);
+  geantTree[0]->Draw("x0/10.:z0/10.>>h1","volume==0&&type==5","colz");
+  
+  c1->cd(2);
+  h2->SetMaximum(n_max);
+  geantTree[1]->Draw("x0/10.:z0/10.>>h2","volume==0&&type==5","colz");
+
+  c1->cd(3);
+  h3->SetMaximum(n_max);
+  geantTree[2]->Draw("x0/10.:z0/10.>>h3","volume==0&&type==5","colz");
+  
+  c1->cd(4);
+  h4->SetMaximum(n_max);
+  geantTree[3]->Draw("x0/10.:z0/10.>>h4","volume==0&&type==5","colz");
+ 
+}
+
+

@@ -1,0 +1,270 @@
+//////////////////////////////////////////////////////////
+// This class has been automatically generated on
+// Fri Nov 21 17:52:17 2008 by ROOT version 5.20/00
+// from TChain geant/
+//////////////////////////////////////////////////////////
+
+#ifndef mollerClass_h
+#define mollerClass_h
+
+#include <TROOT.h>
+#include <TChain.h>
+#include <TFile.h>
+
+class mollerClass {
+public :
+   TTree          *fChain;   //!pointer to the analyzed TTree or TChain
+   Int_t           fCurrent; //!current Tree number in a TChain
+
+   // Declaration of leaf types
+   Float_t         ion;
+   Float_t         x;
+   Float_t         y;
+   Float_t         z;
+   Float_t         x0;
+   Float_t         y0;
+   Float_t         z0;
+   Float_t         kineE;
+   Float_t         px;
+   Float_t         py;
+   Float_t         pz;
+   Float_t         kineE0;
+   Float_t         px0;
+   Float_t         py0;
+   Float_t         pz0;
+   Float_t         kineE1;
+   Float_t         px1;
+   Float_t         py1;
+   Float_t         pz1;
+   Float_t         kineE2;
+   Float_t         px2;
+   Float_t         py2;
+   Float_t         pz2;
+   Float_t         type;
+   Float_t         volume;
+   Float_t         theta0;
+   Float_t         theta1;
+   Float_t         theta2;
+   Float_t         ev_num;
+   Float_t         process;
+   Float_t         event;
+   Float_t         creator;
+   Float_t         hit;
+   Float_t         kineE_org;
+   Float_t         theta_org;
+   Float_t         track;
+   Float_t         diffXS;
+   Float_t         totXS;
+   Float_t         rate;
+
+   // List of branches
+   TBranch        *b_ion;   //!
+   TBranch        *b_x;   //!
+   TBranch        *b_y;   //!
+   TBranch        *b_z;   //!
+   TBranch        *b_x0;   //!
+   TBranch        *b_y0;   //!
+   TBranch        *b_z0;   //!
+   TBranch        *b_kineE;   //!
+   TBranch        *b_px;   //!
+   TBranch        *b_py;   //!
+   TBranch        *b_pz;   //!
+   TBranch        *b_kineE0;   //!
+   TBranch        *b_px0;   //!
+   TBranch        *b_py0;   //!
+   TBranch        *b_pz0;   //!
+   TBranch        *b_kineE1;   //!
+   TBranch        *b_px1;   //!
+   TBranch        *b_py1;   //!
+   TBranch        *b_pz1;   //!
+   TBranch        *b_kineE2;   //!
+   TBranch        *b_px2;   //!
+   TBranch        *b_py2;   //!
+   TBranch        *b_pz2;   //!
+   TBranch        *b_type;   //!
+   TBranch        *b_volume;   //!
+   TBranch        *b_theta0;   //!
+   TBranch        *b_theta1;   //!
+   TBranch        *b_theta2;   //!
+   TBranch        *b_ev_num;   //!
+   TBranch        *b_process;   //!
+   TBranch        *b_event;   //!
+   TBranch        *b_creator;   //!
+   TBranch        *b_hit;   //!
+   TBranch        *b_kineE_org;   //!
+   TBranch        *b_theta_org;   //!
+   TBranch        *b_track;   //!
+   TBranch        *b_diffXS;   //!
+   TBranch        *b_totXS;   //!
+   TBranch        *b_rate;   //!
+
+   mollerClass(TTree *tree=0);
+   virtual ~mollerClass();
+   virtual Int_t    Cut(Long64_t entry);
+   virtual Int_t    GetEntry(Long64_t entry);
+   virtual Long64_t LoadTree(Long64_t entry);
+   virtual void     Init(TTree *tree);
+   virtual void     Loop();
+   virtual Bool_t   Notify();
+   virtual void     Show(Long64_t entry = -1);
+};
+
+#endif
+
+#ifdef mollerClass_cxx
+mollerClass::mollerClass(TTree *tree)
+{
+// if parameter tree is not specified (or zero), connect the file
+// used to generate this class and read the Tree.
+   if (tree == 0) {
+
+#ifdef SINGLE_TREE
+      // The following code should be used if you want this class to access
+      // a single tree instead of a chain
+      TFile *f = (TFile*)gROOT->GetListOfFiles()->FindObject("Memory Directory");
+      if (!f) {
+         f = new TFile("Memory Directory");
+         f->cd("Rint:/");
+      }
+      tree = (TTree*)gDirectory->Get("geant");
+
+#else // SINGLE_TREE
+
+      // The following code should be used if you want this class to access a chain
+      // of trees.
+      TChain * chain = new TChain("geant","");
+      chain->Add("~/scratch/ROOTfiles/prod_Nov6_Nov17coll_widcoll10m_100k_1.root/geant");
+      chain->Add("~/scratch/ROOTfiles/prod_Nov6_Nov17coll_widcoll10m_100k_2.root/geant");
+      chain->Add("~/scratch/ROOTfiles/prod_Nov6_Nov17coll_widcoll10m_100k_3.root/geant");
+      chain->Add("~/scratch/ROOTfiles/prod_Nov6_Nov17coll_widcoll10m_100k_4.root/geant");
+      chain->Add("~/scratch/ROOTfiles/prod_Nov6_Nov17coll_widcoll10m_100k_5.root/geant");
+      chain->Add("~/scratch/ROOTfiles/prod_Nov6_Nov17coll_widcoll10m_100k_6.root/geant");
+      chain->Add("~/scratch/ROOTfiles/prod_Nov6_Nov17coll_widcoll10m_100k_7.root/geant");
+      chain->Add("~/scratch/ROOTfiles/prod_Nov6_Nov17coll_widcoll10m_100k_8.root/geant");
+      chain->Add("~/scratch/ROOTfiles/prod_Nov6_Nov17coll_widcoll10m_100k_9.root/geant");
+      chain->Add("~/scratch/ROOTfiles/prod_Nov6_Nov17coll_widcoll10m_100k_10.root/geant");
+      chain->Add("~/scratch/ROOTfiles/prod_Nov6_Nov17coll_widcoll10m_100k_11.root/geant");
+      chain->Add("~/scratch/ROOTfiles/prod_Nov6_Nov17coll_widcoll10m_100k_12.root/geant");
+      chain->Add("~/scratch/ROOTfiles/prod_Nov6_Nov17coll_widcoll10m_100k_13.root/geant");
+      chain->Add("~/scratch/ROOTfiles/prod_Nov6_Nov17coll_widcoll10m_100k_14.root/geant");
+      chain->Add("~/scratch/ROOTfiles/prod_Nov6_Nov17coll_widcoll10m_100k_15.root/geant");
+      chain->Add("~/scratch/ROOTfiles/prod_Nov6_Nov17coll_widcoll10m_50k_1.root/geant");
+      chain->Add("~/scratch/ROOTfiles/prod_Nov6_Nov17coll_widcoll10m_50k_2.root/geant");
+      tree = chain;
+#endif // SINGLE_TREE
+
+   }
+   Init(tree);
+}
+
+mollerClass::~mollerClass()
+{
+   if (!fChain) return;
+   delete fChain->GetCurrentFile();
+}
+
+Int_t mollerClass::GetEntry(Long64_t entry)
+{
+// Read contents of entry.
+   if (!fChain) return 0;
+   return fChain->GetEntry(entry);
+}
+Long64_t mollerClass::LoadTree(Long64_t entry)
+{
+// Set the environment to read one entry
+   if (!fChain) return -5;
+   Long64_t centry = fChain->LoadTree(entry);
+   if (centry < 0) return centry;
+   if (!fChain->InheritsFrom(TChain::Class()))  return centry;
+   TChain *chain = (TChain*)fChain;
+   if (chain->GetTreeNumber() != fCurrent) {
+      fCurrent = chain->GetTreeNumber();
+      Notify();
+   }
+   return centry;
+}
+
+void mollerClass::Init(TTree *tree)
+{
+   // The Init() function is called when the selector needs to initialize
+   // a new tree or chain. Typically here the branch addresses and branch
+   // pointers of the tree will be set.
+   // It is normally not necessary to make changes to the generated
+   // code, but the routine can be extended by the user if needed.
+   // Init() will be called many times when running on PROOF
+   // (once per file to be processed).
+
+   // Set branch addresses and branch pointers
+   if (!tree) return;
+   fChain = tree;
+   fCurrent = -1;
+   fChain->SetMakeClass(1);
+
+   fChain->SetBranchAddress("ion", &ion, &b_ion);
+   fChain->SetBranchAddress("x", &x, &b_x);
+   fChain->SetBranchAddress("y", &y, &b_y);
+   fChain->SetBranchAddress("z", &z, &b_z);
+   fChain->SetBranchAddress("x0", &x0, &b_x0);
+   fChain->SetBranchAddress("y0", &y0, &b_y0);
+   fChain->SetBranchAddress("z0", &z0, &b_z0);
+   fChain->SetBranchAddress("kineE", &kineE, &b_kineE);
+   fChain->SetBranchAddress("px", &px, &b_px);
+   fChain->SetBranchAddress("py", &py, &b_py);
+   fChain->SetBranchAddress("pz", &pz, &b_pz);
+   fChain->SetBranchAddress("kineE0", &kineE0, &b_kineE0);
+   fChain->SetBranchAddress("px0", &px0, &b_px0);
+   fChain->SetBranchAddress("py0", &py0, &b_py0);
+   fChain->SetBranchAddress("pz0", &pz0, &b_pz0);
+   fChain->SetBranchAddress("kineE1", &kineE1, &b_kineE1);
+   fChain->SetBranchAddress("px1", &px1, &b_px1);
+   fChain->SetBranchAddress("py1", &py1, &b_py1);
+   fChain->SetBranchAddress("pz1", &pz1, &b_pz1);
+   fChain->SetBranchAddress("kineE2", &kineE2, &b_kineE2);
+   fChain->SetBranchAddress("px2", &px2, &b_px2);
+   fChain->SetBranchAddress("py2", &py2, &b_py2);
+   fChain->SetBranchAddress("pz2", &pz2, &b_pz2);
+   fChain->SetBranchAddress("type", &type, &b_type);
+   fChain->SetBranchAddress("volume", &volume, &b_volume);
+   fChain->SetBranchAddress("theta0", &theta0, &b_theta0);
+   fChain->SetBranchAddress("theta1", &theta1, &b_theta1);
+   fChain->SetBranchAddress("theta2", &theta2, &b_theta2);
+   fChain->SetBranchAddress("ev_num", &ev_num, &b_ev_num);
+   fChain->SetBranchAddress("process", &process, &b_process);
+   fChain->SetBranchAddress("event", &event, &b_event);
+   fChain->SetBranchAddress("creator", &creator, &b_creator);
+   fChain->SetBranchAddress("hit", &hit, &b_hit);
+   fChain->SetBranchAddress("kineE_org", &kineE_org, &b_kineE_org);
+   fChain->SetBranchAddress("theta_org", &theta_org, &b_theta_org);
+   fChain->SetBranchAddress("track", &track, &b_track);
+   fChain->SetBranchAddress("diffXS", &diffXS, &b_diffXS);
+   fChain->SetBranchAddress("totXS", &totXS, &b_totXS);
+   fChain->SetBranchAddress("rate", &rate, &b_rate);
+   Notify();
+}
+
+Bool_t mollerClass::Notify()
+{
+   // The Notify() function is called when a new file is opened. This
+   // can be either for a new TTree in a TChain or when when a new TTree
+   // is started when using PROOF. It is normally not necessary to make changes
+   // to the generated code, but the routine can be extended by the
+   // user if needed. The return value is currently not used.
+
+   return kTRUE;
+}
+
+void mollerClass::Show(Long64_t entry)
+{
+// Print contents of entry.
+// If entry is not specified, print current entry
+   if (!fChain) return;
+   fChain->Show(entry);
+}
+Int_t mollerClass::Cut(Long64_t entry)
+{
+// This function may be called from Loop.
+// returns  1 if entry is accepted.
+// returns -1 otherwise.
+   return 1;
+}
+#endif // #ifdef mollerClass_cxx

@@ -1,0 +1,5 @@
+/vis/viewer/zoomTo 1
+/vis/viewer/set/viewpointVector -1 0 0
+/vis/viewer/set/upVector 0 1 0
+/vis/viewer/set/lightsVector -1 1 0
+/vis/viewer/scaleTo 1 20 1

@@ -1,0 +1,71 @@
+# Looking for user defined GEANT4_VERSION
+if( ! $?GEANT4_VERSION) then
+	setenv GEANT4_VERSION $DEFAULT_GEANT4_VERSION
+endif
+
+# I'm assuming g++ is avaliable to set the SYSTEM
+setenv G4SYSTEM `uname`"-g++"
+
+setenv G4VERSION  $GEANT4_VERSION
+setenv G4ROOT     $JLAB_SOFTWARE/geant4
+setenv G4INSTALL  $G4ROOT/$G4VERSION
+
+
+# Common for all systems 
+if( ! $?G4WORKDIR) setenv G4WORKDIR  $G4INSTALL
+if( ! $?G4TMP)     setenv G4INSTALL  $G4INSTALL
+
+setenv G4LIB      $G4INSTALL/lib
+
+
+setenv G4LISTS_BASE              $G4INSTALL/physics_lists
+
+setenv G4LEVELGAMMADATA          $JLAB_ROOT/noarch/geant4/data/PhotonEvaporation   # Nuclear Photon evaporation data
+setenv G4RADIOACTIVEDATA         $JLAB_ROOT/noarch/geant4/data/RadioactiveDecay    # Data for radioactive decay hadronic processes under data
+setenv G4LEDATA                  $JLAB_ROOT/noarch/geant4/data/G4EMLOW             # Data for low energy electromagnetic processes
+setenv G4NEUTRONHPDATA           $JLAB_ROOT/noarch/geant4/data/G4NDL               # Data for neutron scattering processes
+setenv G4ABLADATA                $JLAB_ROOT/noarch/geant4/data/G4ABLA              # Data for INCL/ABLA models for nuclear shell effects
+setenv G4NEUTRONXSDATA           $JLAB_ROOT/noarch/geant4/data/G4NEUTRONXS         # Data for evaluated neutron cross sections on natural composition of elements
+setenv G4PIIDATA                 $JLAB_ROOT/noarch/geant4/data/G4PII               # Data for shell ionisation cross-sections
+setenv G4REALSURFACEDATA         $JLAB_ROOT/noarch/geant4/data/RealSurface         # Data measured optical surface reflectance in optical processes
+
+setenv XFLAGS " "
+setenv XLIBS  " "
+setenv G4UI_BUILD_QT_SESSION          1
+setenv G4UI_USE_QT                    1
+setenv G4VIS_BUILD_OPENGLQT_DRIVER    1
+setenv G4VIS_USE_OPENGLQT             1
+setenv G4VIS_BUILD_DAWN_DRIVER        1
+setenv G4VIS_USE_DAWN                 1
+setenv G4LIB_BUILD_GDML               1
+setenv G4LIB_USE_GDML                 1
+
+# on Snow Leopard, use cocoa environment and NO X11 whatsoever
+if(`uname` != "Darwin") then
+	setenv OGLHOME                        /usr/X11R6
+	setenv G4VIS_BUILD_OPENGLX_DRIVER     1
+	setenv G4VIS_USE_OPENGLX              1
+
+	setenv G4UI_BUILD_OI_SESSION          1
+	setenv G4UI_USE_OI                    1
+
+	setenv G4UI_BUILD_OIX_SESSION         1
+	setenv G4UI_USE_OIX                   1
+
+	setenv G4UI_BUILD_RAYTRACERX_SESSION  1
+	setenv G4UI_USE_RAYTRACERX            1
+endif
+
+set path = ($G4INSTALL/bin/$G4SYSTEM $path)
+setenv LD_LIBRARY_PATH ${G4INSTALL}/lib/${G4SYSTEM}:${LD_LIBRARY_PATH}
+
+
+if( ! -d ${G4INSTALL}/lib/${G4SYSTEM} ) then
+	echo " ? Attention: No GEANT4 installation found."
+else
+	echo " > Geant4 Version:        " $G4VERSION
+endif
+
+
+
+

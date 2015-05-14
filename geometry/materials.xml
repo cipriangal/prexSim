@@ -1,0 +1,100 @@
+<!--This file is used to define only the material names used in the GDML geometry. Actual materials are updated in the src/MollerDetectorConstruction.cc code : rakitha --> 
+ <materials>
+     <material Z="1" name="Vacuum" state="gas">
+       <T unit="K" value="2.73 "/>
+       <P unit="pascal" value="3e-18"/>
+       <D unit="g/cm3" value="1e-25"/>
+       <atom unit="g/mole" value="1.01"/>
+     </material>
+    <material Z="82" name="PureLead" state="solid">
+      <T unit="K" value="298"/>
+      <D unit="g/cm3" value="11.53"/>
+      <atom unit="g/mole" value="208"/>
+    </material>
+    <material Z="18" name="Argon" state="gas">
+      <T unit="K" value="298"/>
+      <D unit="g/cm3" value="1.66e-3"/>
+      <atom unit="g/mole" value="39.948"/>
+    </material>
+    <material Z="13" name="Aluminum" state="solid">
+      <T unit="K" value="298"/>
+      <D unit="g/cm3" value="2.699"/>
+      <atom unit="g/mole" value="26.982"/>
+    </material>
+    <material Z="13" name="Quartz" state="solid">
+      <T unit="K" value="298"/>
+      <D unit="g/cm3" value="2.699"/>
+      <atom unit="g/mole" value="26.982"/>
+    </material>
+    <material Z="13" name="Tungsten" state="solid">
+      <T unit="K" value="298"/>
+      <D unit="g/cm3" value="2.699"/>
+      <atom unit="g/mole" value="26.982"/>
+    </material>
+    <material Z="13" name="CW70" state="solid">
+      <T unit="K" value="298"/>
+      <D unit="g/cm3" value="2.699"/>
+      <atom unit="g/mole" value="26.982"/>
+    </material>
+    <material Z="13" name="Concrete" state="solid">
+      <T unit="K" value="298"/>
+      <D unit="g/cm3" value="2.699"/>
+      <atom unit="g/mole" value="26.982"/>
+    </material>
+    <material Z="13" name="StainlessSteel" state="solid">
+      <T unit="K" value="298"/>
+      <D unit="g/cm3" value="2.699"/>
+      <atom unit="g/mole" value="26.982"/>
+    </material>
+    <material Z="13" name="Iron" state="solid">
+      <T unit="K" value="298"/>
+      <D unit="g/cm3" value="2.699"/>
+      <atom unit="g/mole" value="26.982"/>
+    </material>
+    <material Z="18" name="Kryptonite" state="solid">
+      <T unit="K" value="298"/>
+      <D unit="mg/cm3" value="0.00000001"/>
+      <atom unit="g/mole" value="39.948"/>
+    </material>
+    <material Z="13" name="Copper" state="solid">
+      <T unit="K" value="298"/>
+      <D unit="g/cm3" value="2.699"/>
+      <atom unit="g/mole" value="26.982"/>
+    </material>
+    <material Z="13" name="LiquidDeuterium" state="solid">
+      <T unit="K" value="298"/>
+      <D unit="g/cm3" value="2.699"/>
+      <atom unit="g/mole" value="26.982"/>
+    </material>
+    <material Z="13" name="Shield" state="solid">
+      <T unit="K" value="298"/>
+      <D unit="g/cm3" value="2.699"/>
+      <atom unit="g/mole" value="26.982"/>
+    </material>
+    <material Z="13" name="Calcium48" state="solid">
+      <T unit="K" value="298"/>
+      <D unit="g/cm3" value="2.699"/>
+      <atom unit="g/mole" value="26.982"/>
+    </material>
+    <material Z="13" name="Calcium40" state="solid">
+      <T unit="K" value="298"/>
+      <D unit="g/cm3" value="2.699"/>
+      <atom unit="g/mole" value="26.982"/>
+    </material>    
+    <material Z="2" name="H2Liquid" state="liquid">
+      <T unit="K" value="20"/>
+      <P unit="pascal" value="224079.612"/> <!--converted 32.5 psi to pascal-->
+      <D unit="g/cm3" value="0.071287"/>
+      <atom unit="g/mole" value="2.02"/>
+    </material>
+    <!-- From QweakSim
+      // Liquid H2
+  name      = "H2Liquid";
+  density   = 0.071287*g/cm3; // From Greg, this is the density at 20 k and 32.5 psia
+  nelements = 1;
+  G4Material* __attribute__ ((unused))
+  matLiquidHydrogen = new G4Material(name, density, nelements);
+  matLiquidHydrogen -> AddElement(elH,1);
+  //matLiquidHydrogen -> GetIonisation() -> SetMeanExcitationEnergy(21.8*eV);
+    -->
+ </materials>
