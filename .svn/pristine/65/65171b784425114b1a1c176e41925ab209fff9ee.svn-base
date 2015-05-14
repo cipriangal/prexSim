@@ -1,2 +1,0 @@
-draw_hists.o: draw_hists.C
-draw_hists.d: draw_hists.C

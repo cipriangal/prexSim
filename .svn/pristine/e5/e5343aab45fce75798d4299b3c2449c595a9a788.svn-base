@@ -1,9 +1,0 @@
-[General]
-outdir=plots/moller_my
-rootoutfile=output/my.root
-num_thrown=100000
-eventtype=0
-plottype=.gif
-
-[Filenames]
-file1=~/scratch/ROOTfiles/moller_110125_130419.root

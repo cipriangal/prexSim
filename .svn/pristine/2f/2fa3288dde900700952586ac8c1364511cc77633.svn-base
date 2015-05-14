@@ -1,9 +1,0 @@
-PROJECT: parity
-TRACK: simulation
-MEMORY: 1600 MB
-DISK_SPACE: 1600 MB
-JOBNAME: moller_mod
-MAIL: crowder@jlab.org
-TIME: 4320
-COMMAND: $PREXDIR/runsim_prex.csh
-OS: linux64

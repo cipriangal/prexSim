@@ -1,2 +1,0 @@
-profile.o: profile.c profile.h
-profile.d: profile.c profile.h
