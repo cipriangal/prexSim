@@ -1,3 +1,4 @@
+/control/macroPath macros
 /control/verbose 2
 /run/verbose 0
 /tracking/verbose 0
