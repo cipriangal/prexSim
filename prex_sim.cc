@@ -8,7 +8,13 @@
 #include "MollerSteppingVerbose.hh"
 #include "MollerSteppingAction.hh"
 
+#include "G4Version.hh"
+#if G4VERSION_NUMBER < 1000
 #include "G4StepLimiterBuilder.hh"
+#else
+#include "G4StepLimiterPhysics.hh"
+#endif
+
 #include "G4RunManager.hh"
 #include "G4UImanager.hh"
 #include "G4UIterminal.hh"
@@ -72,7 +78,13 @@ int main(int argc, char** argv)
   if(factory.IsReferencePhysList(physName)) {
     phys = factory.GetReferencePhysList(physName);
     phys->SetVerboseLevel(verbose);
-    phys->RegisterPhysics( new G4StepLimiterBuilder(verbose) );
+
+#if G4VERSION_NUMBER < 1000
+    phys->RegisterPhysics(new G4StepLimiterBuilder(verbose));
+#else
+    phys->RegisterPhysics(new G4StepLimiterPhysics());
+#endif
+  
     mess = new PhysicsListMessenger();
   }
 
