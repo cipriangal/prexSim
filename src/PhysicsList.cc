@@ -23,7 +23,6 @@
 #include "HadronPhysicsFTF_BIC.hh"
 #include "HadronPhysicsLHEP.hh"
 #include "HadronPhysicsLHEP_EMV.hh"
-#include "HadronPhysicsQGSC_BERT.hh"
 #include "HadronPhysicsQGSP.hh"
 #include "HadronPhysicsQGSP_BERT.hh"
 #include "HadronPhysicsQGSP_BERT_HP.hh"
@@ -31,7 +30,16 @@
 #include "HadronPhysicsQGSP_BIC_HP.hh"
 #include "HadronPhysicsQGSP_FTFP_BERT.hh"
 #include "HadronPhysicsQGS_BIC.hh"
+#else
+#include "G4HadronPhysicsFTFP_BERT.hh"
+#include "G4HadronPhysicsFTF_BIC.hh"
+#include "G4HadronPhysicsQGSP_BERT_HP.hh"
+#include "G4HadronPhysicsQGSP_BIC.hh"
+#include "G4HadronPhysicsQGSP_BIC_HP.hh"
+#include "G4HadronPhysicsQGSP_FTFP_BERT.hh"
+#include "G4HadronPhysicsQGS_BIC.hh"
 #endif
+
 
 #include "G4ChargeExchangePhysics.hh"
 #include "G4NeutronTrackingCut.hh"
@@ -220,7 +228,10 @@ void PhysicsList::AddPhysicsList(const G4String& name)
     SetBuilderList1(true);
 #if G4VERSION_NUMBER < 1000
     hadronPhys.push_back( new HadronPhysicsQGSP_BERT_HP());
+#else
+    hadronPhys.push_back( new G4HadronPhysicsQGSP_BERT_HP());      
 #endif
+    
   } else if (name == "QGSP_BIC") {
 
     SetBuilderList0();
