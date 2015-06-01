@@ -1,35 +1,3 @@
-//=============================================================================
-// 
-//   ---------------------------
-//  | Doxygen File Information |
-//  ---------------------------
-/**
- 
-   \file Geant4_include.hh
-   $Revision: 1.5 $	
-   $Date: 2006/05/05 21:22:12 $
-   \author Klaus Hans Grimm
-     
-*/
-//=============================================================================
-//
-//=============================================================================
-//   -----------------------
-//  | CVS File Information |
-//  -----------------------
-// 
-//  Last Update:      $Author: grimm $
-//  Update Date:      $Date: 2006/05/05 21:22:12 $
-//  CVS/RCS Revision: $Revision: 1.5 $
-//  Status:           $State: Exp $
-// 
-// ===================================
-//  CVS Revision Log at end of file !!
-// ===================================
-// 
-//=============================================================================
-
-
 //////////////////////////////////////////////////////////
 // header Geant4_include.h
 //////////////////////////////////////////////////////////
@@ -52,10 +20,6 @@
 #include "G4UserRunAction.hh"
 
 // material related
-#include "G4Material.hh"
-#include "G4MaterialTable.hh"
-#include "G4Element.hh"
-#include "G4ElementTable.hh"
 #include "G4NistManager.hh"
 
 
@@ -67,7 +31,6 @@
 
 #include "G4Step.hh"
 #include "G4StepPoint.hh"
-#include "G4SteppingManager.hh"
 #include "G4UserSteppingAction.hh"
 #include "G4SteppingManager.hh"
 #include "G4SteppingVerbose.hh"
@@ -81,9 +44,7 @@
 #include "G4TrackVector.hh"
 
 // trajectory related
-#include "G4Trajectory.hh"
 #include "G4VTrajectory.hh"
-#include "G4TrajectoryPoint.hh"
 
 
 // HEP related 
@@ -118,7 +79,6 @@
 #include "G4GeometryManager.hh"
 #include "G4SDManager.hh"
 #include "G4VVisManager.hh"
-#include "G4ProcessManager.hh"
 #include "G4Navigator.hh"
 
 // event related
@@ -230,7 +190,6 @@
 // particle related
 #include "G4VUserPrimaryGeneratorAction.hh"
 #include "G4PrimaryParticle.hh"
-#include "G4ParticleTable.hh"
 #include "G4ParticleTypes.hh"
 #include "G4ParticleDefinition.hh"
 #include "G4ParticleGun.hh"
@@ -238,19 +197,10 @@
 // physics related
 #include "G4VUserPhysicsList.hh"
 #include "G4VModularPhysicsList.hh"
-#include "G4ProcessManager.hh"
 #include "G4VPhysicsConstructor.hh"
 #include "G4ProcessManager.hh"
 
-#include "G4ComptonScattering.hh"
 #include "G4GammaConversion.hh"
-#include "G4PhotoElectricEffect.hh"
-#if G4VERSION_NUMBER < 940
-#include "G4MultipleScattering.hh"
-#else
-#include "G4eMultipleScattering.hh"
-#include "G4hMultipleScattering.hh"
-#endif
 #include "G4eIonisation.hh"
 #include "G4eBremsstrahlung.hh"
 #include "G4eplusAnnihilation.hh"
@@ -259,9 +209,11 @@
 #include "G4MuIonisation.hh"
 #include "G4MuBremsstrahlung.hh"
 #include "G4MuPairProduction.hh"
-#include "G4MuonMinusCaptureAtRest.hh"
 
-#include "G4hIonisation.hh"
+#if G4VERSION_NUMBER < 1011
+#include "G4MuonMinusCaptureAtRest.hh"
+#endif
+
 #include "G4UserSpecialCuts.hh"
 #include "G4PAIModel.hh"
 #include "G4PAIPhotonModel.hh"
@@ -269,22 +221,16 @@
 #include "G4Decay.hh"
 
 // Gamma Physics List
-#include "G4GammaConversion.hh"
 #include "G4ComptonScattering.hh"
 #include "G4PhotoElectricEffect.hh"
 
 // Boson Physics Models
+#if G4VERSION_NUMBER < 1011
 #include "G4GammaNuclearReaction.hh"
-#include "G4TheoFSGenerator.hh"
-#include "G4GeneratorPrecompoundInterface.hh"
-#include "G4QGSMFragmentation.hh"
-#include "G4ExcitedStringDecay.hh"
-#include "G4GammaParticipants.hh"
-#include "G4QGSModel.hh"
+#endif
 
 
 //Particle related
-#include "G4ParticleTypes.hh"
 #include "G4ParticleTable.hh"
 
 //Particles
@@ -315,14 +261,12 @@
 //
 // Gamma- and electro-nuclear models and processes
 //
-#include "G4GammaNuclearReaction.hh"
+#if G4VERSION_NUMBER < 1011
 #include "G4ElectroNuclearReaction.hh"
-#include "G4TheoFSGenerator.hh"
-#include "G4GeneratorPrecompoundInterface.hh"
+#endif
 #include "G4QGSModel.hh"
 #include "G4GammaParticipants.hh"
 #include "G4QGSMFragmentation.hh"
-#include "G4ExcitedStringDecay.hh"
 
 // Lepton-Nucleon Physics
 #include "G4PhotoNuclearProcess.hh"
@@ -333,29 +277,21 @@
 // Hadronic processes
 //
 #include "G4HadronElasticProcess.hh"
-#include "G4HadronCaptureProcess.hh"
 #include "G4HadronFissionProcess.hh"
-#include "G4PionPlusInelasticProcess.hh"
-#include "G4PionMinusInelasticProcess.hh"
 #include "G4KaonPlusInelasticProcess.hh"
-#include "G4KaonMinusInelasticProcess.hh"
 #include "G4KaonZeroLInelasticProcess.hh"
 #include "G4KaonZeroSInelasticProcess.hh"
-#include "G4ProtonInelasticProcess.hh"
-#include "G4AntiProtonInelasticProcess.hh"
 #include "G4NeutronInelasticProcess.hh"
 #include "G4AntiNeutronInelasticProcess.hh"
-#include "G4LambdaInelasticProcess.hh"
-#include "G4AntiLambdaInelasticProcess.hh"
 #include "G4DeuteronInelasticProcess.hh"
 #include "G4TritonInelasticProcess.hh"
 #include "G4AlphaInelasticProcess.hh"
-#include "G4ShortLivedConstructor.hh"
 
 //
 // Hadronic interaction models
 // Low energy (E < 20 GeV) part only
 //
+#if G4VERSION_NUMBER < 1011
 #include "G4LElastic.hh"
 // #include "G4LEPionPlusInelastic.hh"
 // #include "G4LEPionMinusInelastic.hh"
@@ -372,6 +308,7 @@
 #include "G4LEDeuteronInelastic.hh"
 #include "G4LETritonInelastic.hh"
 #include "G4LEAlphaInelastic.hh"
+#endif
 
 //=================
 // Neutron Related
@@ -379,7 +316,6 @@
 
 // neutron cross sections
 #include "G4NeutronInelasticCrossSection.hh"
-#include "G4NeutronHPFissionData.hh"
 
 // Neutron high-precision models: <20 MeV
 #include "G4NeutronHPElastic.hh"
@@ -393,22 +329,6 @@
 //
 #include "G4NeutronHPCapture.hh"
 #include "G4NeutronHPCaptureData.hh"
-//------------------------------------
-// #include "G4NeutronHPorLElastic.hh"
-// #include "G4NeutronHPorLElasticData.hh"
-// //
-// #include "G4NeutronHPorLInelastic.hh"
-// #include "G4NeutronHPorLInelasticData.hh"
-// //
-// #include "G4NeutronHPorLCapture.hh"
-// #include "G4NeutronHPorLCaptureData.hh"
-// //
-// #include "G4NeutronHPorLFission.hh"
-// #include "G4NeutronHPorLFissionData.hh"
-
-// Neutron Low-energy Models: < 20GeV
-#include "G4LENeutronInelastic.hh"
-#include "G4LEAntiNeutronInelastic.hh"
 
 // constructors
 #include "G4LeptonConstructor.hh"
@@ -418,8 +338,6 @@
 #include "G4ShortLivedConstructor.hh"
 
 // processes
-#include "G4ParticleTable.hh"
-#include "G4ProcessManager.hh"
 #if G4VERSION_NUMBER < 940
 #include "G4MultipleScattering.hh"
 #else
@@ -427,18 +345,12 @@
 #include "G4hMultipleScattering.hh"
 #endif
 #include "G4hIonisation.hh"
-#include "G4HadronElasticProcess.hh"
 #include "G4PionPlusInelasticProcess.hh"
 #include "G4PionMinusInelasticProcess.hh"
-#include "G4KaonPlusInelasticProcess.hh"
 #include "G4KaonMinusInelasticProcess.hh"
-#include "G4KaonZeroLInelasticProcess.hh"
-#include "G4KaonZeroSInelasticProcess.hh"
 #include "G4ProtonInelasticProcess.hh"
-#include "G4HadronFissionProcess.hh"
 #include "G4HadronCaptureProcess.hh"
 #include "G4AntiProtonInelasticProcess.hh"
-#include "G4AntiNeutronInelasticProcess.hh"
 #include "G4LambdaInelasticProcess.hh"
 #include "G4AntiLambdaInelasticProcess.hh"
 #include "G4SigmaPlusInelasticProcess.hh"
@@ -451,31 +363,23 @@
 #include "G4AntiXiMinusInelasticProcess.hh"
 #include "G4OmegaMinusInelasticProcess.hh"
 #include "G4AntiOmegaMinusInelasticProcess.hh"
+#if G4VERSION_NUMBER < 1011
 #include "G4AntiProtonAnnihilationAtRest.hh"
-#include "G4AntiNeutronAnnihilationAtRest.hh"
 #include "G4PionMinusAbsorptionAtRest.hh"
 #include "G4KaonMinusAbsorption.hh"
+#endif
+#include "G4AntiNeutronAnnihilationAtRest.hh"
 
 // cross sections
 #include "G4PiNuclearCrossSection.hh"
 #include "G4ProtonInelasticCrossSection.hh"
 
 // models
-#include "G4LElastic.hh"
 #include "G4CascadeInterface.hh"
+#if G4VERSION_NUMBER < 1011
 #include "G4LEPionPlusInelastic.hh"
 #include "G4LEPionMinusInelastic.hh"
-#include "G4LEKaonPlusInelastic.hh"
-#include "G4LEKaonMinusInelastic.hh"
-#include "G4LEKaonZeroLInelastic.hh"
-#include "G4LEKaonZeroSInelastic.hh"
-#include "G4LEProtonInelastic.hh"
-#include "G4LFission.hh"
 #include "G4LCapture.hh"
-#include "G4LEAntiProtonInelastic.hh"
-#include "G4LEAntiNeutronInelastic.hh"
-#include "G4LELambdaInelastic.hh"
-#include "G4LEAntiLambdaInelastic.hh"
 #include "G4LESigmaPlusInelastic.hh"
 #include "G4LESigmaMinusInelastic.hh"
 #include "G4LEAntiSigmaPlusInelastic.hh"
@@ -500,37 +404,17 @@
 #include "G4HEAntiXiMinusInelastic.hh"
 #include "G4HEOmegaMinusInelastic.hh"
 #include "G4HEAntiOmegaMinusInelastic.hh"
+#endif
+
+#include "G4LFission.hh"
 #include "G4TheoFSGenerator.hh"
 #include "G4GeneratorPrecompoundInterface.hh"
 #include "G4ExcitationHandler.hh"
 #include "G4PreCompoundModel.hh"
-#include "G4QGSMFragmentation.hh"
 #include "G4ExcitedStringDecay.hh"
 #include "G4QGSParticipants.hh"
-#include "G4QGSModel.hh"
 
 
 
 #endif
 
-//=======================================================================================
-//   -----------------------
-//  | CVS File Information |
-//  -----------------------
-// 
-//      $Revisions$  
-//      $Log: Geant4_include.hh,v $
-//      Revision 1.5  2006/05/05 21:22:12  grimm
-//      Included Hadron and Neutron physics
-//
-//      Revision 1.4  2006/04/26 20:08:05  grimm
-//      Added includes for PAIModel, G4ProductionCut
-//
-//      Revision 1.3  2006/03/01 17:00:44  grimm
-//      Added header G4NistManager
-//
-//      Revision 1.2  2005/12/27 19:20:25  grimm
-//      - Redesign of Doxygen header containing CVS info like revision and date
-//      - Added CVS revision log at the end of file
-//
-// 
