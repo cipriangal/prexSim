@@ -9,6 +9,7 @@
 #include "MollerPrimaryGenAction.hh"
 #include "RootAnalysis.hh"
 
+using namespace CLHEP;
 
 void MollerPrimaryGenAction::GeneratePrimaries_phasespace_motts(G4Event* anEvent)
 {

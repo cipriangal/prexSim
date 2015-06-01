@@ -1,7 +1,3 @@
-
-
-
-
 #include "MollerDetectorHit.hh"
 #include "G4AttCheck.hh"
 
@@ -179,10 +175,10 @@ void MollerDetectorHit::Print()
   G4cout << "  Layer[" << layerID << "] : Particle type: " << particleName 
 	 << " created by " << creatorProcess << " \nat (x,y,z) " 
 	 << vertexPos.x() << ", " << vertexPos.y() << ", " << vertexPos.z()  
-	 << " with KineE0= " << kineE0/GeV << "[GeV]" 
+	 << " with KineE0= " << kineE0/CLHEP::GeV << "[GeV]" 
 	 << " hit detector \nat (x,y,z) " << worldPos.x()
          << ", " << worldPos.y() << ", " << worldPos.z() 
-	 << " with KineE= " << kineE/GeV << "[GeV]\n" 
+	 << " with KineE= " << kineE/CLHEP::GeV << "[GeV]\n" 
 	 << G4endl;
 }
 

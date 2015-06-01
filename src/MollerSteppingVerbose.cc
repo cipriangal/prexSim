@@ -5,6 +5,8 @@
 #include "G4SteppingManager.hh"
 #include "G4UnitsTable.hh"
 
+using namespace CLHEP;
+
 
 MollerSteppingVerbose::MollerSteppingVerbose()
 {
