@@ -1,10 +1,4 @@
 #include "MollerPrimaryGenAction.hh"
-//#include "MollerPrimaryGenAction_moller.cc"
-// #include "MollerPrimaryGenAction_elasticep.cc"
-// #include "MollerPrimaryGenAction_inelasticep.cc"
-// #include "MollerPrimaryGenAction_phasespace.cc"
-// #include "MollerPrimaryGenAction_prex.cc"
-//#include "MollerPrimaryGenAction_phasespace_motts.cc"
 #include "MollerPrimaryGeneratorMessenger.hh"
 
 #include "G4Event.hh"
@@ -14,6 +8,8 @@
 #include "G4Electron.hh"
 #include "globals.hh"
 #include "TRandom2.h"
+
+using namespace CLHEP;
 
 MollerPrimaryGenAction::MollerPrimaryGenAction() : ebeam(1.05), mp(0.9382796)
 {

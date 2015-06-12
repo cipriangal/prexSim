@@ -8,7 +8,13 @@
 #include "MollerSteppingVerbose.hh"
 #include "MollerSteppingAction.hh"
 
+#include "G4Version.hh"
+#if G4VERSION_NUMBER < 1000
 #include "G4StepLimiterBuilder.hh"
+#else
+#include "G4StepLimiterPhysics.hh"
+#endif
+
 #include "G4RunManager.hh"
 #include "G4UImanager.hh"
 #include "G4UIterminal.hh"
@@ -72,7 +78,13 @@ int main(int argc, char** argv)
   if(factory.IsReferencePhysList(physName)) {
     phys = factory.GetReferencePhysList(physName);
     phys->SetVerboseLevel(verbose);
-    phys->RegisterPhysics( new G4StepLimiterBuilder(verbose) );
+
+#if G4VERSION_NUMBER < 1000
+    phys->RegisterPhysics(new G4StepLimiterBuilder(verbose));
+#else
+    phys->RegisterPhysics(new G4StepLimiterPhysics());
+#endif
+  
     mess = new PhysicsListMessenger();
   }
 
@@ -145,20 +157,19 @@ int main(int argc, char** argv)
      G4VisManager* visManager = new G4VisExecutive;
      visManager->Initialize();
      //default vis.mac file: Mon Jun 17 17:30:24 EDT 2013 rakitha
-     UImanager->ApplyCommand("/control/execute vis/vis.mac");
+     UImanager->ApplyCommand("/control/execute macros/vis/vis.mac");
      //custom vis.mac file used for collimator studies: Mon Jun 17 17:30:24 EDT 2013 rakitha
      //UImanager->ApplyCommand("/control/execute vis/vis_prex_coll_study.mac");
 #endif
       if (ui->IsGUI())
-	UImanager->ApplyCommand("/control/execute gui.mac");
+	UImanager->ApplyCommand("/control/execute macros/gui.mac");
       ui->SessionStart();
       delete ui;
 #endif
 #ifdef G4VIS_USE
   delete visManager;
 #endif
-    }
-  else {
+    } else {
     G4cout << G4endl<< G4endl;
     G4cout << "==========================================================="<< G4endl;
     G4cout << "Please specify the prerun macro, or live with the defaults!"<< G4endl;

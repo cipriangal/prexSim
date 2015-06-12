@@ -1,38 +1,3 @@
-//=============================================================================
-// 
-//   ---------------------------
-//  | Doxygen File Information |
-//  ---------------------------
-// 
-/**
- 
-   \file MollerMagnetFieldMap.cc
-
-   $Revision: 1.3 $	
-   $Date: 2006/01/06 21:40:45 $
-
-   \authors Klaus Hans Grimm Juliette M. Mammei
-
-*/
-//=============================================================================
-
-//=============================================================================
-//   -----------------------
-//  | CVS File Information |
-//  -----------------------
-// 
-//  Last Update:      $Author: grimm $
-//  Update Date:      $Date: 2010/08/17 09:48:30 5 $
-//  CVS/RCS Revision: $Revision: 1.3 $
-//  Status:           $State: Exp $
-// 
-// ===================================
-//  CVS Revision Log at end of file !!
-// ===================================
-//
-//============================================================================
-
-
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 #include "MollerMagnetFieldMap.hh"
@@ -291,9 +256,9 @@ void MollerMagnetFieldMap::GetFieldValue(const G4double Point[4], G4double *Bfie
 
 	// Now convert absolute phi into a phi relative to the sector center
 	G4int numsectors = 7;
-	G4double sectoropeningangle = 2*pi/numsectors;
-	G4double sectorcentrephi = pi/numsectors;  //center of septant "0"??? 
-//	G4double sectorcentrephi = 3*pi/numsectors;  //center of septant "0"; get funny results for sectorcentrephi=sectoropeningangle
+	G4double sectoropeningangle = 2*CLHEP::pi/numsectors;
+	G4double sectorcentrephi = CLHEP::pi/numsectors;  //center of septant "0"??? 
+//	G4double sectorcentrephi = 3*CLHEP::pi/numsectors;  //center of septant "0"; get funny results for sectorcentrephi=sectoropeningangle
    
 	G4double anglefromcentre = phi - sectorcentrephi;
 	G4int segmentnumber;
