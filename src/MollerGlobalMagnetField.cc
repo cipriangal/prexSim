@@ -1,37 +1,3 @@
-//=============================================================================
-// 
-//   ---------------------------
-//  | Doxygen File Information |
-//  ---------------------------
-// 
-/**
- 
-   \file MollerGlobalMagnetField.cc
-
-   $Revision: 1.3 $	
-   $Date: 2006/03/01 17:03:16 $
-
-   \author Klaus Hans Grimm   
-
-*/
-//=============================================================================
-
-//=============================================================================
-//   -----------------------
-//  | CVS File Information |
-//  -----------------------
-// 
-//  Last Update:      $Author: grimm $
-//  Update Date:      $Date: 2006/03/01 17:03:16 $
-//  CVS/RCS Revision: $Revision: 1.3 $
-//  Status:           $State: Exp $
-// 
-// ===================================
-//  CVS Revision Log at end of file !!
-// ===================================
-//
-//============================================================================
-
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
               
 #include "MollerGlobalMagnetField.hh"
@@ -43,10 +9,6 @@ MollerGlobalMagnetField::MollerGlobalMagnetField()
 {	
     
   G4cout << G4endl << "###### Calling MollerGlobalMagnetField::MollerGlobalMagnetField() " << G4endl << G4endl;
-
-  G4String fPath = getenv("PREXDIR");
-  G4String upstreamFieldMap = (fPath+"/fieldmap_front.txt");
-  G4String hybridFieldMap = (fPath+"/fieldmap_back.txt");
 
   fMagneticField_MainMagnet = NULL;
   fMagneticField_MiniMagnet = NULL;

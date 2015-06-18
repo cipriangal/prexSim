@@ -64,21 +64,13 @@ int main(int argc, char** argv)
   G4PhysListFactory factory;
   G4VModularPhysicsList* phys = 0;
   PhysicsListMessenger* mess = 0;
-  G4String physName = "";
-
-  // Physics List name defined via 2nd argument
-  if (argc==4) { physName = argv[3]; }
-
-  // Physics List name defined via environment variable
-  G4int verbose = 0;
-  char* path = getenv("PHYSLIST");
-  if (path) { physName = G4String(path); }
-
-  // reference PhysicsList via its name
+  G4String physName = "QGSP_BERT_HP";
+  G4int verbose=0;
+  
   if(factory.IsReferencePhysList(physName)) {
     phys = factory.GetReferencePhysList(physName);
     phys->SetVerboseLevel(verbose);
-
+    
 #if G4VERSION_NUMBER < 1000
     phys->RegisterPhysics(new G4StepLimiterBuilder(verbose));
 #else
@@ -87,14 +79,9 @@ int main(int argc, char** argv)
   
     mess = new PhysicsListMessenger();
   }
-
-  // local Physics List
-  if(!phys) { phys = new PhysicsList(); }
-
+    
   // define physics
   runManager->SetUserInitialization(phys);
-
-
 
   // User Action Classes
   //
@@ -150,24 +137,21 @@ int main(int argc, char** argv)
       UImanager->ApplyCommand(command+fileName);
 #ifdef G4UI_USE
       G4UIExecutive* ui = new G4UIExecutive(argc, argv);
-// #ifdef G4VIS_USE
-//       UImanager->ApplyCommand("/control/execute vis.mac"); 
-// #endif
 #ifdef G4VIS_USE
-     G4VisManager* visManager = new G4VisExecutive;
-     visManager->Initialize();
-     //default vis.mac file: Mon Jun 17 17:30:24 EDT 2013 rakitha
-     UImanager->ApplyCommand("/control/execute macros/vis/vis.mac");
-     //custom vis.mac file used for collimator studies: Mon Jun 17 17:30:24 EDT 2013 rakitha
-     //UImanager->ApplyCommand("/control/execute vis/vis_prex_coll_study.mac");
+      G4VisManager* visManager = new G4VisExecutive;
+      visManager->Initialize();
+      UImanager->ApplyCommand("/control/macroPath macros"); 
+      UImanager->ApplyCommand("/control/execute vis/vis.mac");
 #endif
-      if (ui->IsGUI())
-	UImanager->ApplyCommand("/control/execute macros/gui.mac");
+      if (ui->IsGUI()){
+	UImanager->ApplyCommand("/control/macroPath macros"); 
+	UImanager->ApplyCommand("/control/execute gui.mac");
+      }
       ui->SessionStart();
       delete ui;
 #endif
 #ifdef G4VIS_USE
-  delete visManager;
+      delete visManager;
 #endif
     } else {
     G4cout << G4endl<< G4endl;
