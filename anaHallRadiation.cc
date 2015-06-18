@@ -73,7 +73,11 @@ int main(int argc,char** argv) {
   TString _sensVol(argv[1]);
   SensVolume_v=_sensVol.Atof();
   
-  if(!(SensVolume_v==10008 || SensVolume_v==10009)) return 1;
+  if(!(SensVolume_v==10008 || SensVolume_v==10009)) {
+    cout<<" ~~~ You are asking for detector "<<SensVolume_v<<endl;
+    cout<<" This code works for 10008 or 10009 for now"<<endl;
+    return 1;
+  }
   cout<<endl;
   cout<<"~~~~ Sensative volue set to :" <<SensVolume_v<<endl;
   cout<<endl;
