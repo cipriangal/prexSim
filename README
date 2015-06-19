@@ -1,3 +1,24 @@
+
+Updated PREX simulation.
+
+To compile:
+mkdir build; cd build
+cmake ../
+cd -
+
+To run the simulation:
+build/prexsim macros/prex_prerunCiprian.mac (to visualize)
+build/prexsim macros/prex_prerunCiprian.mac macros/myRun.mac (for batch mode)
+   These two .mac files need to be modified in order to run exactly what you want. Make sure you change the number of detectors when changing from prex1 to prex2 configurations.
+
+To analyzize the output:
+mkdir output
+build/anaRad [sensitive detector - for this study only 10008 and 10009 currently make sense] [output file name]
+
+
+
+
+
 /*G4 Simulation program for Moller Spectrometer*/
 /*Developed by Luis Mercado with contributions */
 /*by Dustin McNulty (generators)               */
