@@ -8,27 +8,15 @@
       xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
  <!-- FIXME 
 <gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="./schema/gdml.xsd">
- -->
+  -->
 
- <!-- This Area will contain notes for our work on the prexSim/what I am currently altering in this file (Ricky):
-      Currently:
-      - Commenting out old shielding and scattering components (Ricky)
-      - The target chamber tubes will be named prex and crex like in the diagrams (Ricky)
-
-
-      -->
-
-
-
-
- 
 <define>
 <!-- Commonly adjusted parameters -->
 <!-- Units are in cm, and are NOT half-lengths -->
 
   <constant name="real_sc_thick_4" value="0.5"/> <!-- QT will fail for values less than 0.2 REAL VALUE=0.05--> 
 
-  <constant name="fTargetLength" value="0.05"/>
+  <constant name="fTargetLength" value="20.00"/><!--FIXME original was 0.05-->
 
   <constant name="fDeltaCaTargetZ" value="0."/>
   <!-- for theta = 0.909 deg -->
@@ -44,7 +32,9 @@
   <!-- for theta = 1.27 deg -->
   <!-- <constant name="fcollInnerR" value="1.905"/> -->
 
+  <!-- Ricky test constants -->
 
+  <position name="py250" y="250.0"/>
 
 <!-- Shielding -->
   <constant name="fHutShieldThick" value="20."/>
@@ -484,6 +474,10 @@
   <!--Positions for box geometry to be subtracted from the W collimator jacket -->
   <position unit="cm" name="jacket_sub_boxTrans_u"       x="0" y="height_w_coll_1/2 - height_w_sub_box/2"     z="length_w_coll_1/2-length_w_sub_box/2"/>
   <position unit="cm" name="jacket_sub_boxTrans_d"       x="0" y="-height_w_coll_1/2 + height_w_sub_box/2"     z="length_w_coll_1/2-length_w_sub_box/2"/>
+
+  <!-- Ricky test position -->
+  <position unit="cm" name="test_pos" x="0" y="y_cent_sc+500" z="center_sc"/>
+  
   
   <!--Positions for trapozoidal geometry to be added to the W collimator jacket --> 
   <!-- Subtracted 1.27/2 from height so that bottom side of the trapazoid will be below the W collimator volume when union together.  -->
@@ -1008,6 +1002,17 @@
       <second ref="sc_attach_beam_hole"/> <!-- Should be with the septum pipe -->
       <positionref ref="scAttachTrans_3"/>
   </subtraction>
+
+  <!-- Ricky Test Tubes -->
+  <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="test_tube1" rmax="real_sc_radius_top" z="1000"/>
+  <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="test_tube2" rmax="real_sc_radius_top" z="500"/>
+<!--  <union name="uTest">
+    <first ref="test_tube1"/> <second ref="test_tube2"/>
+    <positionref ref="py250"/>
+    <rotationref ref="scRot_1"/>
+  </union>
+  -->
+  
 
 <!-- o-rings and o-ring detectors -->
 
@@ -1901,7 +1906,8 @@
     </volume>
 
     <volume name="target_logic">
-      <materialref ref="PureLead"/>
+      <!-- <materialref ref="PureLead"/> FIXME -->     
+      <materialref ref="H2Liquid"/>
       <solidref ref="tubeTarget"/>
     </volume>
 <!--
@@ -1963,7 +1969,18 @@
       <solidref ref="vac_enc_r_solid"/>
     </volume>
 
+    <!-- Ricky test -->
+    <volume name="test_tube1_logic">
+      <materialref ref="Aluminum"/>
+      <solidref ref="test_tube1"/>
+    </volume>
 
+    <volume name="test_tube2_logic">
+      <materialref ref="Aluminum"/>
+      <solidref ref="test_tube2"/>
+    </volume>
+
+      
     <volume name="sc_attach_hut_logic">
       <materialref ref="Shield"/>
       <solidref ref="sc_attach_hut_solid"/>
@@ -2180,22 +2197,38 @@
         <positionref ref="Cu_tube_center"/>
       </physvol>
 
-<!--      <physvol name="target">
+      <physvol name="target">
         <volumeref ref="target_logic"/>
         <positionref ref="targ_center"/>
       </physvol>
--->
-<!--
-      <physvol name="sc_other_1">
-        <volumeref ref="sc_logic"/>
-        <positionref ref="sc_center"/>
-        <rotationref ref="scRot_1"/>
+
+
+      <!--      <physvol name="sc_other_1">
+           <volumeref ref="sc_logic"/>
+           <positionref ref="sc_center"/>
+           <rotationref ref="scRot_1"/>
+	   </physvol>
+	   <physvol name="sc_attachment">
+           <volumeref ref="sc_attach_logic"/>
+           <positionref ref="sc_attach_center"/>
+	   </physvol> -->
+      
+      <physvol name="test_tube1">
+	<volumeref ref="test_tube1_logic"/>
+	<positionref ref="sc_center"/>
+	<rotationref ref="scRot_1"/>
       </physvol>
-      <physvol name="sc_attachment">
-        <volumeref ref="sc_attach_logic"/>
-        <positionref ref="sc_attach_center"/>
+
+      <physvol name="test_tube2">
+	<volumeref ref="test_tube2_logic"/>
+	<positionref ref="test_pos"/>
       </physvol>
--->
+      
+      <!--<physvol name="uTest">
+	<volumeref ref="test_tube1_logic"/>
+	<positionref ref="sc_center"/>
+      </physvol>-->
+      
       <physvol name="septum">
         <volumeref ref="septum_logic"/>
         <positionref ref="septum_center"/>
@@ -2230,17 +2263,17 @@
 
 
 
-      <physvol name="sc_attachment_hut">
+<!--      <physvol name="sc_attachment_hut">
         <volumeref ref="sc_attach_hut_logic"/>
         <positionref ref="sc_attach_center"/>
       </physvol>
-<!--
+-->
       <physvol name="shieldSC">
         <volumeref ref="scatt_cham_shld_logic"/>
         <positionref ref="sc_center"/>
         <rotationref ref="scRot_1"/>
       </physvol>
--->
+
       <physvol name="cylwall">
         <volumeref ref="cylwall_logic"/>
         <positionref ref="cylwall_center"/>
@@ -2288,12 +2321,12 @@
         <positionref ref="arm_under_ped_pos_3"/>
 	<rotationref ref="scRot_8"/>
       </physvol>
-<!--     <physvol name="top_scatchamber">
+     <!--<physvol name="top_scatchamber">
         <volumeref ref="top_scatchamber_logic"/>
         <positionref ref="top_scatchamber_pos1"/>
 	<rotationref ref="scRot_1"/>
-      </physvol>
--->
+      </physvol>-->
+
 
      <!--The electronic hut @ HRS-->     
      <physvol name="box_elec_hut_phys">

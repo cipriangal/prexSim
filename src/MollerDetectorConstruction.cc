@@ -58,7 +58,6 @@ MollerDetectorConstruction::MollerDetectorConstruction()
   SetGlobalMagneticField();
   DefineMaterials();
   detectorMessenger = new MollerDetectorMessenger(this);
-  //  fTargetLength  = 150.0*cm;  
 }
 
 MollerDetectorConstruction::~MollerDetectorConstruction()
@@ -69,11 +68,6 @@ MollerDetectorConstruction::~MollerDetectorConstruction()
 void MollerDetectorConstruction::SetDetectorGeomFile(const G4String& nam) 
 {
   G4String fPath = ".";
-  if (getenv("PREXDIR"))
-    fPath = getenv("PREXDIR");
-  else
-    G4cout << "You do not have PREXDIR defined in your environment!" << G4endl;
-
   detfileName = (fPath+"/"+nam);
 }
 
@@ -84,19 +78,12 @@ G4VPhysicalVolume* MollerDetectorConstruction::Construct()
   G4cout << G4endl << "###### Calling MollerDetectorConstruction::Read() " << G4endl << G4endl;
 
   if (fReadGeoFile){
-    G4cout << "Attempting to read geometry file." << G4endl;
+    G4cout << "Attempting to read geometry file. Geant4 needs to have GDML support" << G4endl;
 
-    if (getenv("G4LIB_USE_GDML")) {
-      fGDMLParser.SetOverlapCheck(true);
-      //      fGDMLParser.SetOverlapCheck(false);
-      fGDMLParser.Read(detfileName);
+    fGDMLParser.SetOverlapCheck(true);
+    fGDMLParser.Read(detfileName);
     
-      worldVolume = fGDMLParser.GetWorldVolume();
-    }
-    else {
-      G4cout << "No support for GDML geometry!" << G4endl;
-      worldVolume = NULL;
-    }
+    worldVolume = fGDMLParser.GetWorldVolume();
 
   //==========================
   // List auxiliary info
@@ -419,13 +406,10 @@ G4VPhysicalVolume* MollerDetectorConstruction::Construct()
 
 void MollerDetectorConstruction::WriteGeometryFile(const G4String& filename)
 {
-#ifdef G4LIB_USE_GDML
+  G4cout<<" Trying to write out geometry file: Needs GDML Support!!"<<G4endl;
   G4bool appendPointerAddress = true;
   // Note: only change to false if all names are unique
   fGDMLParser.Write(filename,mother_phys,appendPointerAddress);
-#else
-  G4cout << "No support for writing GDML files." << G4endl;
-#endif
 }
 
 void MollerDetectorConstruction::DumpGeometricalTree(G4VPhysicalVolume* aVolume,G4int depth)

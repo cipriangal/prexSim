@@ -21,13 +21,15 @@ endif()
 # Setup include directory for this project
 #
 include(FindROOT.cmake)
+message(STATUS "Found Root ${ROOT_LIBRARY_DIR}")
 include(${Geant4_USE_FILE})
 include_directories(${PROJECT_SOURCE_DIR}/include ${ROOT_INCLUDE_DIR} )
 set(LINK_DIRECTORIES
 ${ROOT_LIBRARY_DIR}
 )
-
 link_directories( ${LINK_DIRECTORIES})
+
+#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=address")
 
 #----------------------------------------------------------------------------
 # Locate sources and headers for this project

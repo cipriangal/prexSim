@@ -6,17 +6,18 @@
 
 /moller/det/readGeometryFromFile true
 
-########~~~~~~~~~~~CG~~~~~~~~~~~ Target added to Rakitha's sim
+########~~~~~~~~~~~CG~~~~~~~~~~~ Target added to Rakitha's sim (PREX2)
 #/moller/det/setDetectorFileName geometry/prexII_coll_prototype_4_complete_HAP2target.gdml
-#/moller/det/setDetectorFileName geometry/prexII_coll_prototype_4_complete.gdml
+/moller/det/setDetectorFileName geometry/prexII_coll_prototype_4_complete.gdml
 #/moller/det/setDetectorFileName geometry/prexII_rickyTest.gdml
-/moller/det/setDetectorFileName geometry/prexCrexNewTarget.gdml
+#/moller/det/setDetectorFileName geometry/prexCrexNewTarget.gdml
+
+/moller/det/setNumberofCollimators 18 
 ########~~~~~~~~~~~CG~~~~~~~~~~~ PREX1 sim
 #/moller/det/setDetectorFileName geometry/prexIMother_pedestal_noshield.xml
 #/moller/det/setDetectorFileName geometry/prexIMother_pedestal_noshield_H2target.xml
 
-#/moller/det/setNumberofCollimators 18
-/moller/det/setNumberofCollimators 12 ##for prex1
+#/moller/det/setNumberofCollimators 12 ##for prex1
 
 
 /moller/det/setShieldMaterial polyethylene
@@ -26,6 +27,5 @@
 
 
 /testhadr/CutsAll          0.7 mm
-/testhadr/Physics          PHYSLIST
 /run/initialize
 

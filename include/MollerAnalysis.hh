@@ -23,12 +23,6 @@
 
 #include <time.h>
 
-#if defined (G4UI_USE_ROOT) || defined (G4UI_BUILD_ROOT_SESSION)
-#if !defined (G4ANALYSIS_USE_ROOT)
-#define G4ANALYSIS_USE_ROOT 1
-#endif /* !defined (G4ANALYSIS_USE_ROOT) */
-#endif /* defined (G4UI_USE_ROOT) || defined (G4UI_BUILD_ROOT_SESSION) */
-
 class G4VPhysicalVolume;
 class G4Event;
 class G4Run;

@@ -28,5 +28,11 @@
 *.app
 *.root
 
+#output
+output
+o_*
+*.rndm
+result*
+
 #build directory
 build*

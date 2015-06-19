@@ -89,10 +89,10 @@ PhysicsListMessenger::PhysicsListMessenger(PhysicsList* pPhys)
   allCutCmd->SetRange("cut>=0.0");
   allCutCmd->AvailableForStates(G4State_PreInit,G4State_Idle);
 
-  pListCmd = new G4UIcmdWithAString("/testhadr/Physics",this);
-  pListCmd->SetGuidance("Add modula physics list.");
-  pListCmd->SetParameterName("PList",false);
-  pListCmd->AvailableForStates(G4State_PreInit);
+  // pListCmd = new G4UIcmdWithAString("/testhadr/Physics",this);
+  // pListCmd->SetGuidance("Add modula physics list.");
+  // pListCmd->SetParameterName("PList",false);
+  // pListCmd->AvailableForStates(G4State_PreInit);
 
   listCmd = new G4UIcmdWithoutParameter("/testhadr/ListPhysics",this);
   listCmd->SetGuidance("Available Physics Lists");

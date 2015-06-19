@@ -1,11 +1,13 @@
 
 /gun/particle e-
-#/gun/energy 1.05 GeV
-#/moller/ana/rootfilename ./P1_target_5M
 /moller/gun/gen 7
 
-#HAPPEX 2 ran a higher energies
-/gun/energy 3.18 GeV  
-/moller/ana/rootfilename ./H2_target_P1_5M
+/gun/energy 1.05 GeV ## PREX energy
+/moller/ana/rootfilename ./tst_give_me_a_name
 
-/run/beamOn 100000
+#HAPPEX 2 ran a higher energies
+#/gun/energy 3.18 GeV  ## HAPPEX2 energy
+#/moller/ana/rootfilename ./tst_give_me_a_name
+
+/run/beamOn 1000000
+
