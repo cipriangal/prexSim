@@ -8,4 +8,4 @@
 /gun/energy 3.18 GeV  
 /moller/ana/rootfilename ./H2_target_P1_5M
 
-/run/beamOn 5000000
+/run/beamOn 100000
