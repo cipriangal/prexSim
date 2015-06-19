@@ -127,7 +127,7 @@ int main(int argc, char** argv)
       analysis->End();
       delete analysis;
     }
-  if (argc == 2)
+  else if (argc == 2)
     {  // interactive mode : define UI session
       G4cout << "==========================================================="<< G4endl;
       G4cout << "Interactive mode"<< G4endl;
