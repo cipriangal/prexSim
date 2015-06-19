@@ -179,7 +179,6 @@ G4bool MollerDetectorSD::ProcessHits(G4Step* aStep, G4TouchableHistory*)
     newHit->SetIon(ion);
     newHit->SetType(partType);
    
-    //    newHit->SetVolume(atof(volume));
     newHit->SetVolume(volume);
     //G4cout << "volume =" << volume << G4endl;
     newHit->SetTrackID(trackID);
