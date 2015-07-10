@@ -14,6 +14,7 @@
        Currently:
        - Commenting out old shielding and scattering components (Ricky)
        - The target chamber tubes will be named prex and crex like in the diagrams (Ricky)
+       - Adding radiation shielding to prex, similar to the old shielding. Designs will be labelled as "New Shielding".
        
        
   -->
@@ -437,17 +438,27 @@
 <constant name="center_sc_main_pipe" value="-120."/>
 <constant name="inner_r_sc_main_pipe" value="15."/>
 <constant name="outer_r_sc_main_pipe" value="15.1"/>
-<constant name="length_prex" value="70."/>
-<constant name="length_crex" value="70."/>
+<constant name="length_prex" value="130."/>
+<constant name="length_crex" value="130."/>
 <constant name="inner_r_prex" value="15."/>
 <constant name="outer_r_prex" value="15.1"/>
 <constant name="inner_r_crex" value="15."/>
 <constant name="outer_r_crex" value="15.1"/>
-<constant name="length_water_targ" value="50."/>
-<constant name="inner_r_water_targ" value="7."/>
-<constant name="outer_r_water_targ" value="7.1"/>
-<constant name="center_prex" value="-105.4"/>
-<constant name="center_crex" value="-152."/>
+<constant name="length_water_targ" value="80."/>
+<constant name="inner_r_water_targ" value="8.5"/>
+<constant name="outer_r_water_targ" value="8.6"/>
+<constant name="center_prex" value="-105.3"/>
+<constant name="center_crex" value="-151.3"/>
+<constant name="prexShld_front_thick" value="30."/>
+<constant name="prexShld_front_length" value="40."/>
+<constant name="prexShld_back_thick" value="7."/>
+<constant name="prexShld_back_length" value="35."/>
+<constant name="coll_wrap_length" value="30."/>
+<constant name="coll_wrap_thick" value="10."/>
+<constant name="center_coll_wrap" value="center_cw70_coll-(coll_wrap_length/2)"/>
+<constant name="shld_sphere_inner_r" value="20."/>
+<constant name="shld_sphere_thick" value="20."/>
+
 
 <!-- Positions -->
 <position unit="cm" name="targ_center" x="0" y="0" z="center_targ"/>
@@ -578,6 +589,7 @@
   <position unit="cm" name="sc_main_pipe_center" x="0" y="0" z="center_sc_main_pipe"/>
   <position unit="cm" name="prex_center" x="0" y="0" z="center_prex"/>
   <position unit="cm" name="crex_center" x="0" y="0" z="center_crex"/>
+  <position unit="cm" name="coll_wrap_center" x="0" y="0" z="center_coll_wrap"/>
 
   <!-- Pedestal scattering chamber -->
  
@@ -667,9 +679,9 @@
   <rotation name="rotatey90" unit="deg" x="0" y="90" z="0"/>
   <rotation name="rotatez90" unit="deg" x="0" y="0" z="90"/>
   <position name="move_prex" x="-105.4"/>
-  <position unit="cm" name="prex_sub_trans" x="0" y="0" z="center_prex-center_sc_main_pipe"/>
+  <position unit="cm" name="prex_sub_trans" x="0" y="0" z="center_prex-1.*center_sc_main_pipe"/>
   <position name="move_crex" x="-152."/>
-  <position unit="cm" name="crex_sub_trans" x="0" y="0" z="center_crex-center_sc_main_pipe"/>
+  <position unit="cm" name="crex_sub_trans" x="0" y="0" z="center_crex-1.*center_sc_main_pipe"/>
   <position name="center"/>
 
 </define>
@@ -932,6 +944,7 @@
   <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="water_targ1_sub" rmin="0" rmax="outer_r_water_targ" z="length_water_targ"/>
   <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="water_targ2_sub" rmin="0" rmax="outer_r_water_targ" z="length_water_targ"/>
 
+
   <subtraction name="sc_main_pipe1">
     <first ref="sc_main_pipe"/>
     <second ref="prex_sub"/>
@@ -1006,20 +1019,37 @@
   </subtraction>
  
   
-  <!--<union name="prexCrex">
-    <first ref="sc_main_pipe"/>
-    <second ref="prex"/>
-    <positionref ref="move_prex"/>
-    <rotationref ref="rotatez90"/>
-    <third ref="water_targ1"/>
-    <positionref ref="move_prex"/>
+  <!-- New Shielding Construction - Ricky -->
+  <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="prexShld_back" rmin="outer_r_prex" rmax="outer_r_prex+prexShld_back_thick" z="prexShld_back_length" />
+  <tube aunit="deg" startphi="fstartPhiFrontShield" deltaphi="fdeltaPhiFrontShield" lunit="cm" name="prexShld_front" rmin="outer_r_prex" rmax="outer_r_prex+prexShld_front_thick" z="prexShld_front_length" />
+  <union name="prexShld_0">
+    <first ref="prexShld_back"/>
+    <second ref="prexShld_front"/>
+    <positionref ref="center"/>
+    <rotationref ref="identity"/>
+  </union>
+  <subtraction name="prexShld_1">
+    <first ref="prexShld_0"/>
+    <second ref="sc_main_pipe_sub"/>
+    <positionref ref="center"/>
+    <rotationref ref="rotatex90"/>
+  </subtraction>
+  <subtraction name="prexShld_2">
+    <first ref="prexShld_1"/>
+    <second ref="water_targ1_sub"/>
+    <positionref ref="center"/>
     <rotationref ref="rotatey90"/>
-    <fourth ref="crex"/>
-    <positionref ref="move_crex"/>
-    <rotationref ref="rotatez90"/>
-    <fifth ref="water_targ2"/>
-    <positionref ref="move_crex"/>
-    <rotationref ref="rotatey90"/> -->
+  </subtraction>
+
+  <sphere aunit="deg" startphi="0" deltaphi="180" lunit="cm" name="shld_sphere" rmin="shld_sphere_inner_r" rmax="shld_sphere_inner_r+shld_sphere_thick" starttheta="0" deltatheta="180"/>
+  <subtraction name="shld_sphere1">
+    <first ref="shld_sphere"/>
+    <second ref="sc_main_pipe_sub"/>
+    <positionref ref="center"/>
+    <rotationref ref="rotatex90"/>
+  </subtraction>
+
+  <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="coll_wrap" rmin="outer_r_sc_main_pipe" rmax="outer_r_sc_main_pipe+coll_wrap_thick" z="coll_wrap_length"/>
   
 <!--  <subtraction name ="scatt_w_holes">
       <first ref="scatt_w_holes_p6"/>
@@ -2329,6 +2359,18 @@
       <materialref ref="Aluminum"/>
       <solidref ref="water_targ2b"/>
     </volume>
+    <volume name="prexShld_logic">
+      <materialref ref="Shield"/>
+      <solidref ref="prexShld_2"/>
+    </volume>
+    <volume name="coll_wrap_logic">
+      <materialref ref="Shield"/>
+      <solidref ref="coll_wrap"/>
+    </volume>
+    <volume name="shld_sphere_logic">
+      <materialref ref="Shield"/>
+      <solidref ref="shld_sphere1"/>
+    </volume>
 
     <volume name="logicMother">
       <materialref ref="Vacuum"/>
@@ -2403,8 +2445,8 @@
         <volumeref ref="sc_attach_hut_logic"/>
         <positionref ref="sc_attach_center"/>
       </physvol>
-<!--
-      <physvol name="shieldSC">
+
+<!--      <physvol name="shieldSC">
         <volumeref ref="scatt_cham_shld_logic"/>
         <positionref ref="sc_center"/>
         <rotationref ref="scRot_1"/>
@@ -2500,6 +2542,21 @@
        <volumeref ref="water_targ2_logic"/>
        <positionref ref="crex_center"/>
        <rotationref ref="rotatey90"/>
+     </physvol>
+     <!-- <physvol name="prexShld_phys">
+       <volumeref ref="prexShld_logic"/>
+       <positionref ref="prex_center"/>
+       <rotationref ref="rotatex90"/>
+     </physvol> -->
+     <!-- <physvol name="coll_wrap_phys">
+       <volumeref ref="coll_wrap_logic"/>
+       <positionref ref="coll_wrap_center"/>
+       <rotationref ref="identity"/>
+     </physvol> -->
+     <physvol name="shld_sphere_phys">
+       <volumeref ref="shld_sphere_logic"/>
+       <positionref ref="coll_cw70_center"/>
+       <rotationref ref="rotatex90"/>
      </physvol>
 
 <!-- elec hut detector is no longer used -->
