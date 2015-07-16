@@ -54,6 +54,8 @@
   <constant name="fSCHutShieldHeight" value="15"/>
   <constant name="fSCHutShieldLength" value="20"/>
 
+
+
   <constant name="PI" value="1.*pi"/>
 
 <!-- World Volume -->
@@ -200,7 +202,8 @@
   <constant name="thick_sc_attach" value="5.08"/>
 
   <constant name="width_sc_attach_hole" value="24.638"/>
-  <constant name="height_sc_attach_hole" value="17.018"/>
+  <!-- 17.018  -->
+  <constant name="height_sc_attach_hole" value="27.018"/>
 
   <constant name="width_sc_attach" value="44.811"/>
   <!--The difference between PT4 collimator and sc_attach height is 1.8536 cm. The sc_attachment height is increased  -->
@@ -310,7 +313,10 @@
   <constant name="right_theta" value="-left_theta"/>
   <constant name="right_phi" value="left_phi"/> 
 
-  <constant name="center_vac_enc_xu" value="ro_septum_pipe+width_vac_u_enc/2-length_vac_enc*tan(left_theta*PI/180.)/2"/>
+  <!-- original value for center_vac_enc_xu -->
+  <!-- <constant name="center_vac_enc_xu" value="ro_septum_pipe+width_vac_u_enc/2-length_vac_enc*tan(left_theta*PI/180.)/2"/>  -->
+  <!-- fixed center_vac_enc_xu value to make more closely match with engineering design. This needs to be checked properly - Rakitha Tue Jul 14 12:23:58 EDT 2015 -->
+  <constant name="center_vac_enc_xu" value="width_w_coll_1/2 + width_vac_u_enc/2-length_vac_enc*tan(left_theta*PI/180.)/2"/>
 
   <constant name="alpha_l_1" value="0."/>
   <constant name="alpha_r_1" value="-alpha_l_1"/>
@@ -333,6 +339,15 @@
   <constant name="width_sc_attach_hut" value="width_sc_attach+2.*fSCHutShieldWidth"/>
   <constant name="height_sc_attach_hut" value="height_sc_attach+2.*fSCHutShieldHeight"/>
   <constant name="length_sc_attach_hut" value="length_sc_attach+2.*fSCHutShieldLength"/>
+
+  <!-- New Shielding for collimator box  -->
+  <constant name="thick_sc_attach_shield" value="20."/>
+  <constant name="forwardthick_sc_attach_shield" value="0."/>
+  <constant name="backthick_sc_attach_shield" value="0."/>
+  <constant name="width_sc_attach_shield" value="width_sc_attach + 2.*thick_sc_attach_shield"/>
+  <constant name="height_sc_attach_shield" value="height_sc_attach + 4.*thick_sc_attach_shield"/>
+  <constant name="length_sc_attach_shield" value="length_sc_attach + 2.*thick_sc_attach_shield + forwardthick_sc_attach_shield + backthick_sc_attach_shield"/>
+
 
 
 <!-- Hall - wall, floor and "dump" -->
@@ -471,6 +486,10 @@
   <position unit="cm" name="new_sc_Trans_2" x="0" y="0" z="-1*length_sc_chamber_beam_pipe/2"/>
   <position unit="cm" name="new_sc_Trans_3" x="0" y="0" z="-1*delta_new_center_sc_prex"/>
   <position unit="cm" name="new_sc_Trans_4" x="0" y="0" z="-1*delta_new_center_sc_crex"/>
+
+  <!-- New Shielding for collimator box  positions -->
+  <position unit="cm" name="scAttachShieldTrans_1" x="0" y="0" z="-1*length_sc_attach_shield/2"/>
+
 
   <position unit="cm" name="scOringTrans_1" x="0" y="0" z="0"/>
   <position unit="cm" name="sc_oring_center" x="0" y="0" z="center_sc_oring"/>
@@ -1035,6 +1054,65 @@
       <positionref ref="scAttachTrans_3"/>
   </subtraction>
 
+  <!-- New Shielding for collimator box  -->
+  <box lunit="cm" name="sc_attach_shield_0" x="width_sc_attach_shield" y="height_sc_attach_shield" z="length_sc_attach_shield"/>
+  <box lunit="cm" name="sc_attach_shield_1" x="width_sc_attach + 0.1" y="height_sc_attach + 0.1" z="length_sc_attach + 0"/>
+  <!--Two tubes above the sc_attachment -->
+  <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="sc_attach_shield_tube" rmin="0" rmax="(width_sc_attach - 0.5*thick_sc_attach)/8. + 0.1" z="0.5*(height_septum - height_sc_attach) + 0.1" />
+  <!-- new SC beam pipe substract -->
+  <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="sc_attach_sc_chamber_beam_hole_sub" rmin="0.0" rmax="radius_sc_chamber_beam_pipe+0.01+01" z="2*thick_sc_attach_shield+0.1" />
+
+  <!-- remove left and right vacuum enclosures -->
+  <trap aunit="deg" lunit="cm" name="hole_for_l_vac_enc_sub" z="1.0*length_vac_enc + 10" theta="left_theta" phi="left_phi" 
+                                                         y1="1.0*height_vac_u_enc" x1="1.0*width_vac_u_enc" x2="1.0*width_vac_u_enc"  alpha1="alpha_l_1" 
+                                                         y2="1.0*height_vac_d_enc" x3="1.0*width_vac_d_enc" x4="1.0*width_vac_d_enc" alpha2="alpha_l_2" />
+
+  <trap aunit="deg" lunit="cm" name="hole_for_r_vac_enc_sub" z="1.0*length_vac_enc + 10" theta="right_theta" phi="right_phi" 
+                                                         y1="1.0*height_vac_u_enc" x1="1.0*width_vac_u_enc" x2="1.0*width_vac_u_enc"  alpha1="alpha_l_1" 
+                                                         y2="1.0*height_vac_d_enc" x3="1.0*width_vac_d_enc" x4="1.0*width_vac_d_enc" alpha2="alpha_l_2" />
+
+  <!--Relative positions are from the sc_attachment -->
+  <subtraction name ="sc_attach_shield_2">
+    <first ref="sc_attach_shield_0"/>
+    <second ref="sc_attach_shield_1"/>
+    <positionref ref="scAttachTrans_1"/>
+  </subtraction>  
+  <subtraction name ="sc_attach_shield_3">
+    <first ref="sc_attach_shield_2"/>
+    <second ref="sc_attach_shield_tube"/>
+    <positionref ref="scAttachTubeTrans_1"/>
+    <rotationref ref="scRot_1"/>
+  </subtraction>  
+  <subtraction name ="sc_attach_shield_4">
+    <first ref="sc_attach_shield_3"/>
+    <second ref="sc_attach_shield_tube"/>
+    <positionref ref="scAttachTubeTrans_2"/>
+    <rotationref ref="scRot_1"/>
+  </subtraction>  
+  <subtraction name ="sc_attach_shield_5">
+      <first ref="sc_attach_shield_4"/>
+      <second ref="sc_attach_sc_chamber_beam_hole_sub"/>
+      <positionref ref="scAttachShieldTrans_1"/>
+  </subtraction>
+  <subtraction name ="sc_attach_shield_6">
+      <first ref="sc_attach_shield_5"/>
+      <second ref="hole_for_l_vac_enc_sub"/>
+      <positionref ref="scAttachTrans_hut_l"/>
+  </subtraction>
+
+  <subtraction name ="sc_attach_shield_7">
+      <first ref="sc_attach_shield_6"/>
+      <second ref="hole_for_r_vac_enc_sub"/>
+      <positionref ref="scAttachTrans_hut_r"/>
+  </subtraction>
+
+  <subtraction name ="sc_attach_shield_8">
+      <first ref="sc_attach_shield_7"/>
+      <second ref="sc_attach_beam_hole"/>
+      <positionref ref="scAttachTrans_3"/>
+  </subtraction>
+
+
   <!-- New dual Scattering Chamber -->
   <!-- Add the SC beam pipe first-->
   <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="new_sc_beampipe_0" rmin="0.0" rmax="radius_sc_chamber_beam_pipe" z="length_sc_chamber_beam_pipe" />
@@ -1292,11 +1370,11 @@
   <trap aunit="deg" lunit="cm" name="vac_enc_r_o" z="length_vac_enc" theta="right_theta" phi="right_phi" 
                                                          y1="height_vac_u_enc" x1="width_vac_u_enc" x2="width_vac_u_enc"  alpha1="alpha_l_1" 
                                                          y2="height_vac_d_enc" x3="width_vac_d_enc" x4="width_vac_d_enc" alpha2="alpha_l_2" />
-  <trap aunit="deg" lunit="cm" name="vac_enc_l_i" z="length_vac_enc" theta="left_theta" phi="left_phi" 
+  <trap aunit="deg" lunit="cm" name="vac_enc_l_i" z="length_vac_enc + 1." theta="left_theta" phi="left_phi" 
                                                          y1="height_vac_u_enc - thick_vac_enc" x1="width_vac_u_enc - thick_vac_enc" x2="width_vac_u_enc - thick_vac_enc"  alpha1="alpha_l_1" 
                                                          y2="height_vac_d_enc - thick_vac_enc" x3="width_vac_d_enc - thick_vac_enc" x4="width_vac_d_enc - thick_vac_enc" alpha2="alpha_l_2" />
 
-  <trap aunit="deg" lunit="cm" name="vac_enc_r_i" z="length_vac_enc" theta="right_theta" phi="right_phi" 
+  <trap aunit="deg" lunit="cm" name="vac_enc_r_i" z="length_vac_enc + 1." theta="right_theta" phi="right_phi" 
                                                          y1="height_vac_u_enc - thick_vac_enc" x1="width_vac_u_enc -thick_vac_enc" x2="width_vac_u_enc - thick_vac_enc"  alpha1="alpha_l_1" 
                                                          y2="height_vac_d_enc - thick_vac_enc" x3="width_vac_d_enc - thick_vac_enc" x4="width_vac_d_enc - thick_vac_enc" alpha2="alpha_l_2" />
   
@@ -2114,7 +2192,13 @@
     <volume name="sc_attach_logic">
       <materialref ref="Aluminum"/>
       <solidref ref="sc_attach_solid"/>
-      <!-- <auxiliary auxtype="SensDet" auxvalue="volumeN5005"/> -->
+      <auxiliary auxtype="SensDet" auxvalue="volumeN5050"/>
+    </volume>
+
+    <volume name="sc_attach_shield_logic">
+      <materialref ref="Shield"/>
+      <solidref ref="sc_attach_shield_8"/>
+      <auxiliary auxtype="SensDet" auxvalue="volumeN5051"/>
     </volume>
 
     <volume name="sc_oring_logic">
@@ -2423,6 +2507,11 @@
         <positionref ref="sc_attach_center"/>
       </physvol>
 
+      <physvol name="sc_attachment_shield">
+        <volumeref ref="sc_attach_shield_logic"/>
+        <positionref ref="sc_attach_center"/>
+      </physvol>
+
       <physvol name="septum">
         <volumeref ref="septum_logic"/>
         <positionref ref="septum_center"/>
@@ -2456,14 +2545,16 @@
       </physvol>
 
 
+      <!-- Making way to new SC attachement shield design -->
+      <!--
+	 <physvol name="sc_attachment_hut">
+           <volumeref ref="sc_attach_hut_logic"/>
+           <positionref ref="sc_attach_center"/>
+	 </physvol>
+	 -->
 
-      <physvol name="sc_attachment_hut">
-        <volumeref ref="sc_attach_hut_logic"/>
-        <positionref ref="sc_attach_center"/>
-      </physvol>
-
-     <!--Making way to new SC design -->
-     <!--
+      <!-- Making way to new SC design -->
+      <!--
       <physvol name="shieldSC">
         <volumeref ref="scatt_cham_shld_logic"/>
         <positionref ref="sc_center"/>
