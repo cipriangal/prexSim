@@ -3,30 +3,14 @@
 <!DOCTYPE gdml [
 <!ENTITY materials SYSTEM "materials.xml">
 ]>
-<gdml
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
-  <!-- FIXME 
-       <gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="./schema/gdml.xsd">
-  -->
-  
-  <!-- This Area will contain notes for our work on the prexSim/what I am currently altering in this file (Ricky):
-       Currently:
-       - Commenting out old shielding and scattering components (Ricky)
-       - The target chamber tubes will be named prex and crex like in the diagrams (Ricky)
-       - Adding radiation shielding to prex, similar to the old shielding. Designs will be labelled as "New Shielding".
-       
-       
-  -->
-  
-  
-  
-  
-  
-  <define>
-    <!-- Commonly adjusted parameters -->
-    <!-- Units are in cm, and are NOT half-lengths -->
-    
+
+<gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="./schema/gdml.xsd">
+
+
+<define>
+<!-- Commonly adjusted parameters -->
+<!-- Units are in cm, and are NOT half-lengths -->
+
   <constant name="real_sc_thick_4" value="0.5"/> <!-- QT will fail for values less than 0.2 REAL VALUE=0.05--> 
 
   <constant name="fTargetLength" value="0.05"/>
@@ -79,6 +63,7 @@
   <constant name="length_mother" value="10000.0"/>
 
   <constant name="prex_target_center" value="-105.3"/>  <!-- reference everything to this -->
+  <constant name="crex_target_center" value="-151.3"/>  <!-- referenced from elog 2977 by Seamus where predicted relative shift is 46 cm -->
 
   <!-- Detector dimensions  -->
   <constant name="det_thick" value="1"/>
@@ -167,7 +152,7 @@
 
   <constant name="delta_coll_us_face" value="85.822"/>
   <constant name="delta_coll_ds_face" value="delta_coll_us_face+length_w_coll_1"/>
-  <constant name="center_coll" value="prex_target_center+delta_coll_us_face+length_w_coll_1/2"/>
+  <constant name="center_coll" value="prex_target_center+delta_coll_us_face+length_w_coll_1/2"/> <!-- -11.23 cm -->
 
   
 
@@ -190,7 +175,7 @@
   <constant name="height_sc" value="239.731"/>
   <constant name="y_cent_sc" value="53.94"/>
   <constant name="deltaz_sc" value="-2.77"/>
-  <constant name="center_sc" value="center_targ+deltaz_sc"/>
+  <constant name="center_sc" value="center_targ+deltaz_sc"/> <!-- -108.07 -->
 
   <constant name="real_sc_hole_high" value="38.1"/>
   <constant name="real_sc_hole_2_high" value="17.5"/>
@@ -226,11 +211,10 @@
   <!--The difference between PT4 and old prexII collimator length. The sc_attachment lenth is extended  -->
   <constant name="deltaz_pt4_sc_attach" value="2.149"/>
   <!--The sc_attachment length is extended  -->
-  <constant name="length_sc_attach" value="center_coll+length_coll/2+deltaz_pt4_sc_attach*2-(center_sc+inner_r_sc)"/> 
-  <constant name="center_sc_attach" value="center_sc+inner_r_sc+length_sc_attach/2"/>
-  <!-- Need to get a real number for this for actual attachment... -->
+  <constant name="length_sc_attach" value="center_coll+length_coll/2+deltaz_pt4_sc_attach*2-(center_sc+inner_r_sc)"/> <!-- 57.948 cm -->
+  <constant name="center_sc_attach" value="center_sc+inner_r_sc+length_sc_attach/2"/> <!-- -27.028 cm -->
+<!-- Need to get a real number for this for actual attachment... -->
   <constant name="length_sc_attach_hole" value="outer_r_sc"/>
-
 
 <!-- o-rings and o-ring detectors -->
 
@@ -246,6 +230,24 @@
 
   <constant name="center_sc_oring" value="prex_target_center+outer_r_sc+deltaz_sc+.05"/>
   <constant name="center_sc_oringDet" value="center_sc_oring+(length_sc_oring+0.5)/2"/>
+
+  <!-- New dual Scattering chamber dimensions -->
+  <constant name="y_offset_new_sc" value="15"/>
+  <constant name="thick_new_sc" value="1"/>
+  <constant name="height_new_sc" value="130"/> <!--This number is an approximation based on att.2 elog 2978 -->
+  <constant name="outer_r_new_sc" value="15.0"/>
+  <constant name="inner_r_new_sc" value="1*outer_r_new_sc - 1*thick_new_sc"/>  
+  <constant name="thick_new_sc_water_tgt" value="1"/>
+  <constant name="height_new_sc_water_tgt" value="2*25.0 + 2*outer_r_new_sc"/> <!--This number is an approximation based on att.2 elog 2978 -->
+  <constant name="outer_r_new_sc_water_tgt" value="8.5"/><!--This number is an approximation based on att.2 elog 2978 -->
+  <constant name="inner_r_new_sc_water_tgt" value="1*outer_r_new_sc_water_tgt - 1*thick_new_sc_water_tgt"/>  
+  <constant name="length_sc_chamber_beam_pipe" value="(center_sc_attach - crex_target_center) +  outer_r_new_sc - length_sc_attach/2"/><!-- 110.298  -->
+  <constant name="new_center_sc" value="center_sc_attach - length_sc_attach/2 - length_sc_chamber_beam_pipe/2"/> <!-- -111.151 -->
+  <constant name="thick_sc_chamber_beam_pipe" value="1.0"/>
+  <constant name="radius_sc_chamber_beam_pipe" value="13.5"/>
+  <!--distance from new_center_sc to PREX/CREX target center -->
+  <constant name="delta_new_center_sc_prex" value="length_sc_chamber_beam_pipe/2 - (prex_target_center - crex_target_center) - outer_r_new_sc"/>
+  <constant name="delta_new_center_sc_crex" value="length_sc_chamber_beam_pipe/2 - outer_r_new_sc"/>
 
 <!-- Septum dimensions  -->
   <constant name="width_septum" value="137.16"/> <constant name="height_septum" value="84."/> <constant name="length_septum" value="74.3863"/> 
@@ -413,7 +415,7 @@
   <constant name="ped_infrac7_radius_i" value="28." />
   <constant name="ped_infrac7_high" value="2." /> 
 
-  <!-- Part of Arms unider scattering chamber -->
+<!-- Part of Arms unider scattering chamber -->
   <constant name="sc_arm_radius" value="172." />
   <constant name="sc_arm_radius_in" value="145." />  
   <constant name="sc_arm_high" value="35." />
@@ -424,7 +426,7 @@
   <constant name="sc_arm_trap_high" value="659.08" />
   <constant name="sc_arm_ped_high" value="1.0" />
   
-  <!-- Top of Scattering Chamber -->
+<!-- Top of Scattering Chamber -->
   <constant name="top_scatchamber_p1_high" value="128" />
   <constant name="top_scatchamber_p2_high" value="96" />
   <constant name="top_scatchamber_p2_radius" value="9" />
@@ -432,48 +434,13 @@
   <constant name="top_scatchamber_p3_radius" value="31" />
   <constant name="top_scatchamber_p4_high" value="7" />
   <constant name="top_scatchamber_p4_radius" value="54" />
-  
-<!-- Prex and Crex additions' dimensions - Ricky -->
-<constant name="length_sc_main_pipe" value="110.298"/>
-<constant name="center_sc_main_pipe" value="center_sc_attach - length_sc_attach/2 - length_sc_main_pipe/2"/>
-<constant name="inner_r_sc_main_pipe" value="15."/>
-<constant name="outer_r_sc_main_pipe" value="15.1"/>
-<constant name="length_prex" value="130."/>
-<constant name="length_crex" value="130."/>
-<constant name="inner_r_prex" value="15."/>
-<constant name="outer_r_prex" value="15.1"/>
-<constant name="inner_r_crex" value="15."/>
-<constant name="outer_r_crex" value="15.1"/>
-<constant name="length_water_targ" value="80."/>
-<constant name="inner_r_water_targ" value="8.5"/>
-<constant name="outer_r_water_targ" value="8.6"/>
-<constant name="center_prex" value="-105.3"/>
-<constant name="center_crex" value="-151.3"/>
-<constant name="prexShld_front_thick" value="30."/>
-<constant name="prexShld_front_length" value="40."/>
-<constant name="prexShld_back_thick" value="7."/>
-<constant name="prexShld_back_length" value="35."/>
-<constant name="coll_wrap_length" value="30."/>
-<constant name="coll_wrap_thick" value="10."/>
-<constant name="center_coll_wrap" value="center_cw70_coll-(coll_wrap_length/2)"/>
-<constant name="shld_sphere_inner_r" value="20."/>
-<constant name="shld_sphere_thick" value="20."/>
-<constant name="sideShldHeight" value="30."/>
-<constant name="sideShldThick" value="20."/>
-<constant name="sideShldLength" value="80."/>
-<constant name="flatShldHeight" value="20."/>
-<constant name="flatShldWidth" value="70."/>
-<constant name="flatShldLength" value="80."/>
-<constant name="pig_tube_inner_r" value="length_w_coll_1/2+length_cw70_jacket/2+2.1"/>
-<constant name="pig_tube_outer_r" value="pig_tube_inner_r+0.1"/>
-<constant name="pig_tube_length" value="height_sc_attach+50."/>
-
-
 
 <!-- Positions -->
-<position unit="cm" name="targ_center" x="0" y="0" z="center_targ"/>
+  <position unit="cm" name="targ_center" x="0" y="0" z="center_targ"/>
+  <position unit="cm" name="crex_targ_center" x="0" y="0" z="crex_target_center"/>
 
   <position unit="cm" name="sc_center" x="0" y="y_cent_sc" z="center_sc"/>
+  <!-- <position unit="cm" name="new_sc_center" x="0" y="0" z="new_center_sc"/> -->
   <position unit="cm" name="scTrans_1" x="0" y="-(outer_r_sc-thick_sc/2)" z="-y_cent_sc"/>
   <position unit="cm" name="scTrans_2" x="0" y="(outer_r_sc-thick_sc/2)" z="-y_cent_sc"/>
   <position unit="cm" name="real_hole_sc_trans1" x="0" y="0" z="-y_cent_sc"/>
@@ -483,7 +450,7 @@
   <position unit="cm" name="real_hole_sc_trans5" x="0" y="0" z="-0.5*(0.5*height_sc-1.*y_cent_sc-1.*(0.5*real_sc_high_4-1.*real_sc_center_4))+0.5*real_sc_bottom_thick"/>  
   <position unit="cm" name="real_hole_sc_trans6" x="0" y="0" z="-1.*y_cent_sc+1.*real_sc_center_4+0.5*real_sc_high_4+0.5*real_sc_middle_conn_high"/>  
   <position unit="cm" name="sc_attach_center" x="0" y="0" z="center_sc_attach"/>
-  <position unit="cm" name="scAttachTrans_1" x="0" y="0" z="-thick_sc_attach/2"/>
+  <position unit="cm" name="scAttachTrans_1" x="0" y="0" z="0"/> <!---use thick_sc_attach/2 for leave US side open Rakitha Wed Jul  1 11:50:04 EDT 2015 -->
   <position unit="cm" name="scAttachTrans_l" x="-1.0*center_vac_enc_xu" y="0" z="center_vac_enc_z - center_sc_attach - thick_sc_attach"/>
   <position unit="cm" name="scAttachTrans_r" x="1.0*center_vac_enc_xu" y="0" z="center_vac_enc_z - center_sc_attach - thick_sc_attach"/>
   <position unit="cm" name="scAttachTrans_hut_l" x="-1.0*center_vac_enc_xu" y="0" z="center_vac_enc_z - center_sc_attach"/>
@@ -491,11 +458,19 @@
   <position unit="cm" name="scAttachTrans_2" x="0" y="0" z="center_sc - center_sc_attach"/>
   <position unit="cm" name="scAttachTrans_3" x="0" y="0" z="length_sc_attach/2"/>
   <position unit="cm" name="scAttachTrans_4" x="0" y="0" z="length_sc_attach/2 - length_w_coll_1/2"/>
+  <position unit="cm" name="scAttachTrans_5" x="0" y="0" z="-1*length_sc_attach/2"/>
   <position unit="cm" name="scAttachTubeTrans_1" x="3.*(width_sc_attach - 0.5*thick_sc_attach)/8.-0.5*thick_sc_attach" y="0.5*height_sc_attach+0.25*(height_septum - height_sc_attach)" z="0.5*length_sc_attach -0.5*thick_sc_attach -3.*(width_sc_attach - 0.5*thick_sc_attach)/8."/>
   <position unit="cm" name="scAttachTubeTrans_2"  x="-3.*(width_sc_attach - 0.5*thick_sc_attach)/8.+0.5*thick_sc_attach" y="0.5*height_sc_attach+0.25*(height_septum - height_sc_attach)" z="0.5*length_sc_attach -0.5*thick_sc_attach -3.*(width_sc_attach - 0.5*thick_sc_attach)/8."/>
   <position unit="cm" name="ShldTubeTrans_1" x="3.*(width_sc_attach - 0.5*thick_sc_attach)/8.-0.5*thick_sc_attach"  y="-inner_r_sc -1.*length_sc_attach +0.5*thick_sc_attach +3.*(width_sc_attach - 0.5*thick_sc_attach)/8." z="-y_cent_sc+0.5*height_sc_attach+0.25*(height_septum - height_sc_attach)"/>
   <position unit="cm" name="ShldTubeTrans_2"  x="-3.*(width_sc_attach - 0.5*thick_sc_attach)/8.+0.5*thick_sc_attach"  y="-inner_r_sc -1.*length_sc_attach +0.5*thick_sc_attach +3.*(width_sc_attach - 0.5*thick_sc_attach)/8." z="-y_cent_sc+0.5*height_sc_attach+0.25*(height_septum - height_sc_attach)"/>
 
+  <!-- New dual Scattering chamber positions -->
+  <position unit="cm" name="new_sc_Trans_0" x="0" y="0" z="0"/>
+  <position unit="cm" name="new_sc_center" x="0" y="0" z="new_center_sc"/>
+  <position unit="cm" name="new_sc_Trans_1" x="0" y="0" z="thick_sc_chamber_beam_pipe/2"/>
+  <position unit="cm" name="new_sc_Trans_2" x="0" y="0" z="-1*length_sc_chamber_beam_pipe/2"/>
+  <position unit="cm" name="new_sc_Trans_3" x="0" y="0" z="-1*delta_new_center_sc_prex"/>
+  <position unit="cm" name="new_sc_Trans_4" x="0" y="0" z="-1*delta_new_center_sc_crex"/>
 
   <position unit="cm" name="scOringTrans_1" x="0" y="0" z="0"/>
   <position unit="cm" name="sc_oring_center" x="0" y="0" z="center_sc_oring"/>
@@ -595,16 +570,6 @@
   <position unit="cm" name="cDet_2_trans"     x="0" y="-cDet_2_radius"     z="-1.*center_cylwall-0.5*thick_cylwall"/>
   <position unit="cm" name="cDet_3_trans"     x="0" y="-cDet_3_radius"     z="-1.*center_cylwall-0.5*thick_cylwall"/>
 
-  <!-- Prex and Crex Positions - Ricky -->
-  <position unit="cm" name="sc_main_pipe_center" x="0" y="0" z="center_sc_main_pipe"/>
-  <position unit="cm" name="prex_center" x="0" y="0" z="center_prex"/>
-  <position unit="cm" name="crex_center" x="0" y="0" z="center_crex"/>
-  <position unit="cm" name="coll_wrap_center" x="0" y="0" z="center_coll_wrap"/>
-  <position unit="cm" name="sideShld1_center" x="-35" y="0" z="center_coll-sideShldLength/2"/>
-  <position unit="cm" name="sideShld2_center" x="35" y="0" z="center_coll-sideShldLength/2"/>
-  <position unit="cm" name="flatShld_top_center" x="0" y="sideShldHeight/2+flatShldHeight/2" z="center_coll-flatShldLength/2"/>
-  <position unit="cm" name="pig_tube_center" x="0" y="5." z="center_coll"/>
-
   <!-- Pedestal scattering chamber -->
  
   <position unit="cm" name="ped_2_pos"       x="0" y="-1.*ped_top_tobeamline-0.25*ped_tube_side"     z="1.*prex_target_center+1.*center_to_tgcenter+1.*ped_length_downstream+0.5*ped_tube_side"/>
@@ -686,19 +651,8 @@
   <rotation name="scRot_10" unit="deg" x="0" y="0" z="240"/>
   <rotation name="scRot_11" unit="deg" x="0" y="0" z="12.5"/>
   <rotation name="scRot_12" unit="deg" x="0" y="0" z="-12.5"/>
+  <rotation name="scRot_13" unit="deg" x="0" y="90" z="0"/>
   <rotation name="identity"/>
-
-  <!-- Custom Rotations and Positioning - Ricky -->
-  <rotation name="rotatex90" unit="deg" x="90" y="0" z="0"/>
-  <rotation name="rotatey90" unit="deg" x="0" y="90" z="0"/>
-  <rotation name="rotatez90" unit="deg" x="0" y="0" z="90"/>
-  <position name="move_prex" x="-105.4"/>
-  <position unit="cm" name="prex_sub_trans" x="0" y="0" z="center_prex-1.*center_sc_main_pipe"/>
-  <position name="move_crex" x="-152."/>
-  <position unit="cm" name="crex_sub_trans" x="0" y="0" z="center_crex-1.*center_sc_main_pipe"/>
-  <position name="center"/>
-  <position name="pig_sc_trans" y="-5."/>
-  <position name="pig_sub_trans" z="center_coll-center_sc_attach"/>
 
 </define>
 
@@ -946,140 +900,6 @@
       <positionref ref="real_hole_sc_trans1"/>
       <rotationref ref="identity"/>
   </union>
-
-
-  <!-- Prex and Crex Solids - Ricky -->
-  <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="sc_main_pipe" rmin="inner_r_sc_main_pipe" rmax="outer_r_sc_main_pipe" z="length_sc_main_pipe"/>
-  <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="prex" rmin="inner_r_prex" rmax="outer_r_prex" z="length_prex"/>
-  <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="crex" rmin="inner_r_crex" rmax="outer_r_crex" z="length_crex"/>
-  <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="water_targ1" rmin="inner_r_water_targ" rmax="outer_r_water_targ" z="length_water_targ"/>
-  <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="water_targ2" rmin="inner_r_water_targ" rmax="outer_r_water_targ" z="length_water_targ"/>
-   <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="sc_main_pipe_sub" rmin="0" rmax="outer_r_sc_main_pipe" z="length_sc_main_pipe"/>
-  <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="prex_sub" rmin="0" rmax="outer_r_prex" z="length_prex"/>
-  <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="crex_sub" rmin="0" rmax="outer_r_crex" z="length_crex"/>
-  <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="water_targ1_sub" rmin="0" rmax="outer_r_water_targ" z="length_water_targ"/>
-  <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="water_targ2_sub" rmin="0" rmax="outer_r_water_targ" z="length_water_targ"/>
-  <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="pig_tube" rmin="pig_tube_inner_r" rmax="pig_tube_outer_r" z="pig_tube_length"/>
-  <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="pig_tube_sub" rmin="0" rmax="pig_tube_outer_r" z="pig_tube_length"/>
-
-
-  <subtraction name="sc_main_pipe1">
-    <first ref="sc_main_pipe"/>
-    <second ref="prex_sub"/>
-    <positionref ref="prex_sub_trans"/>
-    <rotationref ref="rotatex90"/>
-  </subtraction>
-  <subtraction name="sc_main_pipe2">
-    <first ref="sc_main_pipe1"/>
-    <second ref="crex_sub"/>
-    <positionref ref="crex_sub_trans"/>
-    <rotationref ref="rotatex90"/>
-  </subtraction>
-  <subtraction name="sc_main_pipe3">
-    <first ref="sc_main_pipe2"/>
-    <second ref="water_targ1_sub"/>
-    <positionref ref="prex_sub_trans"/>
-    <rotationref ref="rotatey90"/>
-  </subtraction>
-  <subtraction name="sc_main_pipe4">
-    <first ref="sc_main_pipe3"/>
-    <second ref="water_targ2_sub"/>
-    <positionref ref="crex_sub_trans"/>
-    <rotationref ref="rotatey90"/>
-  </subtraction>
-  <subtraction name="prex1">
-    <first ref="prex"/>
-    <second ref="sc_main_pipe_sub"/>
-    <positionref ref="center"/>
-    <rotationref ref="rotatex90"/>
-  </subtraction>
-  <subtraction name="prex2">
-    <first ref="prex1"/>
-    <second ref="water_targ1_sub"/>
-    <positionref ref="center"/>
-    <rotationref ref="rotatey90"/>
-  </subtraction>
-  <subtraction name="crex1">
-    <first ref="crex"/>
-    <second ref="sc_main_pipe_sub"/>
-    <positionref ref="center"/>
-    <rotationref ref="rotatex90"/>
-  </subtraction>
-  <subtraction name="crex2">
-    <first ref="crex1"/>
-    <second ref="water_targ2_sub"/>
-    <positionref ref="center"/>
-    <rotationref ref="rotatey90"/>
-  </subtraction>
-  <subtraction name="water_targ1a">
-    <first ref="water_targ1"/>
-    <second ref="sc_main_pipe_sub"/>
-    <positionref ref="center"/>
-    <rotationref ref="rotatey90"/>
-  </subtraction>
-  <subtraction name="water_targ1b">
-    <first ref="water_targ1a"/>
-    <second ref="prex_sub"/>
-    <positionref ref="center"/>
-    <rotationref ref="rotatex90"/>
-  </subtraction>
-  <subtraction name="water_targ2a">
-    <first ref="water_targ2"/>
-    <second ref="sc_main_pipe_sub"/>
-    <positionref ref="center"/>
-    <rotationref ref="rotatey90"/>
-  </subtraction>
-  <subtraction name="water_targ2b">
-    <first ref="water_targ2a"/>
-    <second ref="crex_sub"/>
-    <positionref ref="center"/>
-    <rotationref ref="rotatex90"/>
-  </subtraction>
-
-  <subtraction name="pig_tube1">
-    <first ref="pig_tube"/>
-    <second ref="sc_main_pipe_sub"/>
-    <positionref ref="pig_sc_trans"/>
-    <rotationref ref="rotatex90"/>
-  </subtraction>
-
-
- 
-  
-  <!-- New Shielding Construction - Ricky -->
-  <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="prexShld_back" rmin="outer_r_prex" rmax="outer_r_prex+prexShld_back_thick" z="prexShld_back_length" />
-  <tube aunit="deg" startphi="fstartPhiFrontShield" deltaphi="fdeltaPhiFrontShield" lunit="cm" name="prexShld_front" rmin="outer_r_prex" rmax="outer_r_prex+prexShld_front_thick" z="prexShld_front_length" />
-  <union name="prexShld_0">
-    <first ref="prexShld_back"/>
-    <second ref="prexShld_front"/>
-    <positionref ref="center"/>
-    <rotationref ref="identity"/>
-  </union>
-  <subtraction name="prexShld_1">
-    <first ref="prexShld_0"/>
-    <second ref="sc_main_pipe_sub"/>
-    <positionref ref="center"/>
-    <rotationref ref="rotatex90"/>
-  </subtraction>
-  <subtraction name="prexShld_2">
-    <first ref="prexShld_1"/>
-    <second ref="water_targ1_sub"/>
-    <positionref ref="center"/>
-    <rotationref ref="rotatey90"/>
-  </subtraction>
-
-  <sphere aunit="deg" startphi="0" deltaphi="180" lunit="cm" name="shld_sphere" rmin="shld_sphere_inner_r" rmax="shld_sphere_inner_r+shld_sphere_thick" starttheta="0" deltatheta="180"/>
-  <subtraction name="shld_sphere1">
-    <first ref="shld_sphere"/>
-    <second ref="sc_main_pipe_sub"/>
-    <positionref ref="center"/>
-    <rotationref ref="rotatex90"/>
-  </subtraction>
-
-  <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="coll_wrap" rmin="outer_r_sc_main_pipe" rmax="outer_r_sc_main_pipe+coll_wrap_thick" z="coll_wrap_length"/>
-
-  <box lunit="cm" name="sideShld" x="sideShldThick" y="sideShldHeight" z="sideShldLength"/>
-  <box lunit="cm" name="flatShld" x="flatShldWidth" y="flatShldHeight" z="flatShldLength"/>
 <!--  <subtraction name ="scatt_w_holes">
       <first ref="scatt_w_holes_p6"/>
       <second ref="real_hole_sc_6"/>
@@ -1151,7 +971,7 @@
 
 
   <box lunit="cm" name="sc_attach_o" x="width_sc_attach" y="height_sc_attach" z="length_sc_attach"/>
-  <box lunit="cm" name="sc_attach_i" x="width_sc_attach - thick_sc_attach" y="height_sc_attach - thick_sc_attach" z="length_sc_attach - thick_sc_attach/2"/>
+  <box lunit="cm" name="sc_attach_i" x="width_sc_attach - thick_sc_attach" y="height_sc_attach - thick_sc_attach" z="length_sc_attach - thick_sc_attach"/> <!--use thick_sc_attach/2 for leave US side open  Rakitha Wed Jul  1 11:50:04 EDT 2015 -->
   <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="sc_attach_tube" rmin="(width_sc_attach - 0.5*thick_sc_attach)/8. - 1.*thick_sc_attach" rmax="(width_sc_attach - 0.5*thick_sc_attach)/8." z="0.5*(height_septum - height_sc_attach)" />
 
 <!-- width and height of hole will be the wrong size; need to adjust width and height for increased length relative to actual vacuum enclosures -->
@@ -1164,6 +984,8 @@
   <trap aunit="deg" lunit="cm" name="hole_for_r_vac_enc" z="1.0*length_vac_enc" theta="right_theta" phi="right_phi" 
                                                          y1="1.0*height_vac_u_enc" x1="1.0*width_vac_u_enc" x2="1.0*width_vac_u_enc"  alpha1="alpha_l_1" 
                                                          y2="1.0*height_vac_d_enc" x3="1.0*width_vac_d_enc" x4="1.0*width_vac_d_enc" alpha2="alpha_l_2" />
+
+  <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="sc_attach_sc_chamber_beam_hole" rmin="0.0" rmax="radius_sc_chamber_beam_pipe+0.01" z="2*thick_sc_attach" />
 
   <subtraction name ="sc_attach_0">
       <first ref="sc_attach_o"/>
@@ -1180,12 +1002,21 @@
       <second ref="hole_for_r_vac_enc"/>
       <positionref ref="scAttachTrans_r"/>
   </subtraction>
+  <!-- remove the outScattChamber subtraction as we no longer need that for new scattering chamber attachment-->
+  <!--
   <subtraction name ="sc_attach_3">
       <first ref="sc_attach_2"/>
       <second ref="outScattChamber"/>
       <positionref ref="scAttachTrans_2"/>
       <rotationref ref="scRot_1"/>
   </subtraction>
+  -->
+  <subtraction name ="sc_attach_3">
+      <first ref="sc_attach_2"/>
+      <second ref="sc_attach_sc_chamber_beam_hole"/>
+      <positionref ref="scAttachTrans_5"/>
+  </subtraction>
+
   <union name="sc_attach_4">
     <first ref="sc_attach_3"/>
     <second ref="sc_attach_tube"/>
@@ -1198,19 +1029,144 @@
     <positionref ref="scAttachTubeTrans_2"/>
     <rotationref ref="scRot_1"/>
   </union>
-  <subtraction name ="sc_attach_6"> <!-- sc_attach_solid -->
+  <subtraction name ="sc_attach_solid">
       <first ref="sc_attach_5"/>
       <second ref="sc_attach_beam_hole"/> <!-- Should be with the septum pipe -->
       <positionref ref="scAttachTrans_3"/>
   </subtraction>
-  <subtraction name="sc_attach_solid"> <!-- Modification - Ricky -->
-    <first ref="sc_attach_6"/>
-    <second ref="pig_tube_sub"/>
-    <positionref ref="pig_sub_trans"/>
-    <rotationref ref="rotatex90"/>
+
+  <!-- New dual Scattering Chamber -->
+  <!-- Add the SC beam pipe first-->
+  <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="new_sc_beampipe_0" rmin="0.0" rmax="radius_sc_chamber_beam_pipe" z="length_sc_chamber_beam_pipe" />
+  <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="new_sc_beampipe_1" rmin="0.0" rmax="radius_sc_chamber_beam_pipe - thick_sc_chamber_beam_pipe" z="length_sc_chamber_beam_pipe - thick_sc_chamber_beam_pipe/2" />
+  <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="new_sc_US_beam_hole" rmin="0.0" rmax="sc_beam_hole_radius" z="3*thick_sc_chamber_beam_pipe" />
+
+  <subtraction name ="new_sc_beampipe_2">
+      <first ref="new_sc_beampipe_0"/>
+      <second ref="new_sc_beampipe_1"/> 
+      <positionref ref="new_sc_Trans_1"/>
   </subtraction>
 
-<!-- o-rings and o-ring detectors -->
+  <subtraction name ="new_sc_beampipe_3">
+      <first ref="new_sc_beampipe_2"/>
+      <second ref="new_sc_US_beam_hole"/> 
+      <positionref ref="new_sc_Trans_2"/>
+  </subtraction>
+
+  <!--subtract spaces for main target scattering chambers and water target scattering chamber -->
+  <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="sub_new_sc_prex" rmin="0.0" rmax="outer_r_new_sc+0.001" z="4*radius_sc_chamber_beam_pipe" />
+  <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="sub_new_sc_prex_water_tgt" rmin="0.0" rmax="outer_r_new_sc_water_tgt+0.001" z="4*radius_sc_chamber_beam_pipe" />
+  <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="sub_new_sc_crex" rmin="0.0" rmax="outer_r_new_sc+0.001" z="4*radius_sc_chamber_beam_pipe" />
+  <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="sub_new_sc_crex_water_tgt" rmin="0.0" rmax="outer_r_new_sc_water_tgt+0.001" z="4*radius_sc_chamber_beam_pipe" />
+
+  <subtraction name ="new_sc_beampipe_4">
+      <first ref="new_sc_beampipe_3"/>
+      <second ref="sub_new_sc_prex"/> 
+      <positionref ref="new_sc_Trans_3"/>
+      <rotationref ref="scRot_1"/>
+  </subtraction>
+
+  <subtraction name ="new_sc_beampipe_5">
+      <first ref="new_sc_beampipe_4"/>
+      <second ref="sub_new_sc_prex_water_tgt"/> 
+      <positionref ref="new_sc_Trans_3"/>
+      <rotationref ref="scRot_13"/>
+  </subtraction>
+
+  <subtraction name ="new_sc_beampipe_6">
+      <first ref="new_sc_beampipe_5"/>
+      <second ref="sub_new_sc_crex"/> 
+      <positionref ref="new_sc_Trans_4"/>
+      <rotationref ref="scRot_1"/>
+  </subtraction>
+
+  <subtraction name ="new_sc_beampipe_solid">
+      <first ref="new_sc_beampipe_6"/>
+      <second ref="sub_new_sc_crex_water_tgt"/> 
+      <positionref ref="new_sc_Trans_4"/>
+      <rotationref ref="scRot_13"/>
+  </subtraction>
+
+  <!--Add the  main target scattering chambers and water target scattering chamber -->
+  <!-- Add PREX main and water tgt 1st -->
+  <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="new_sc_prex_0" rmin="0.0" rmax="outer_r_new_sc" z="height_new_sc" />
+  <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="new_sc_prex_1" rmin="0.0" rmax="outer_r_new_sc - thick_new_sc" z="height_new_sc" />
+  <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="sub_new_sc_beampipe_0" rmin="0.0" rmax="radius_sc_chamber_beam_pipe" z="3*outer_r_new_sc" />
+  <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="new_sc_prex_water_tgt_0" rmin="0.0" rmax="outer_r_new_sc_water_tgt" z="height_new_sc_water_tgt" />
+  <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="new_sc_prex_water_tgt_1" rmin="0.0" rmax="outer_r_new_sc_water_tgt - thick_new_sc_water_tgt" z="height_new_sc_water_tgt" />
+  <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="sub_new_sc_beampipe_1" rmin="0.0" rmax="radius_sc_chamber_beam_pipe" z="3*outer_r_new_sc" />
+
+  <subtraction name ="new_sc_prex_2">
+      <first ref="new_sc_prex_0"/>
+      <second ref="new_sc_prex_1"/> 
+      <positionref ref="new_sc_Trans_0"/>
+  </subtraction>
+  <subtraction name ="new_sc_prex_3">
+      <first ref="new_sc_prex_2"/>
+      <second ref="sub_new_sc_prex_water_tgt"/> 
+      <positionref ref="new_sc_Trans_0"/>
+      <rotationref ref="scRot_13"/>
+  </subtraction>
+  <subtraction name ="new_sc_prex_solid">
+      <first ref="new_sc_prex_3"/>
+      <second ref="sub_new_sc_beampipe_0"/> 
+      <positionref ref="new_sc_Trans_0"/>
+      <rotationref ref="scRot_1"/>
+  </subtraction>
+
+  <!-- Add PREX water tgt -->
+  <subtraction name ="new_sc_prex_water_tgt_2">
+      <first ref="new_sc_prex_water_tgt_0"/>
+      <second ref="new_sc_prex_water_tgt_1"/> 
+      <positionref ref="new_sc_Trans_0"/>
+  </subtraction>
+  <subtraction name ="new_sc_prex_water_tgt_solid">
+      <first ref="new_sc_prex_water_tgt_2"/>
+      <second ref="sub_new_sc_beampipe_1"/> 
+      <positionref ref="new_sc_Trans_0"/>
+      <rotationref ref="scRot_13"/>
+  </subtraction>
+
+  <!-- Add CREX main and water tgt 1st -->
+  <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="new_sc_crex_0" rmin="0.0" rmax="outer_r_new_sc" z="height_new_sc" />
+  <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="new_sc_crex_1" rmin="0.0" rmax="outer_r_new_sc - thick_new_sc" z="height_new_sc" />
+  
+  <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="new_sc_crex_water_tgt_0" rmin="0.0" rmax="outer_r_new_sc_water_tgt" z="height_new_sc_water_tgt" />
+  <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="new_sc_crex_water_tgt_1" rmin="0.0" rmax="outer_r_new_sc_water_tgt - thick_new_sc_water_tgt" z="height_new_sc_water_tgt" />
+  
+
+  <subtraction name ="new_sc_crex_2">
+      <first ref="new_sc_crex_0"/>
+      <second ref="new_sc_crex_1"/> 
+      <positionref ref="new_sc_Trans_0"/>
+  </subtraction>
+  <subtraction name ="new_sc_crex_3">
+      <first ref="new_sc_crex_2"/>
+      <second ref="sub_new_sc_crex_water_tgt"/> 
+      <positionref ref="new_sc_Trans_0"/>
+      <rotationref ref="scRot_13"/>
+  </subtraction>
+  <subtraction name ="new_sc_crex_solid">
+      <first ref="new_sc_crex_3"/>
+      <second ref="sub_new_sc_beampipe_0"/> 
+      <positionref ref="new_sc_Trans_0"/>
+      <rotationref ref="scRot_1"/>
+  </subtraction>
+
+  <!-- Add CREX water tgt -->
+  <subtraction name ="new_sc_crex_water_tgt_2">
+      <first ref="new_sc_crex_water_tgt_0"/>
+      <second ref="new_sc_crex_water_tgt_1"/> 
+      <positionref ref="new_sc_Trans_0"/>
+  </subtraction>
+  <subtraction name ="new_sc_crex_water_tgt_solid">
+      <first ref="new_sc_crex_water_tgt_2"/>
+      <second ref="sub_new_sc_beampipe_1"/> 
+      <positionref ref="new_sc_Trans_0"/>
+      <rotationref ref="scRot_13"/>
+  </subtraction>
+
+  <!-- o-rings and o-ring detectors -->
 
   <box lunit="cm" name="sc_oring_det_solid" x="width_sc_attach - 1.001*thick_sc_attach" y="height_sc_attach - 1.001*thick_sc_attach" z="0.5"/>
 
@@ -1493,20 +1449,19 @@
   </subtraction>
 
 
-<!-- Shielding SC attach hut (Modifications being made - Ricky) -->
+<!-- Shielding SC attach hut -->
   <box lunit="cm" name="sc_attach_hut_o" x="width_sc_attach_hut" y="height_sc_attach_hut" z="length_sc_attach_hut"/>
   <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="hut_sc_tube_hut_hole" rmin="0" rmax="1.001*(inner_r_sc_shld+fThickFrontSCShield)" z="height_sc*1.001" />
-  <!--
-   <subtraction name ="sc_attach_hut_0">
+  <subtraction name ="sc_attach_hut_0">
       <first ref="sc_attach_hut_o"/>
       <second ref="sc_attach_o"/>
       <positionref ref="ped_notrans"/>
-  </subtraction> 
+  </subtraction>
   <subtraction name ="sc_attach_hut_1">
       <first ref="sc_attach_hut_0"/>
       <second ref="hole_for_l_vac_enc"/>
       <positionref ref="scAttachTrans_hut_l"/>
-  </subtraction> 
+  </subtraction>
   <subtraction name ="sc_attach_hut_2">
       <first ref="sc_attach_hut_1"/>
       <second ref="hole_for_r_vac_enc"/>
@@ -1517,13 +1472,13 @@
       <second ref="hut_sc_tube_hut_hole"/>
       <positionref ref="scAttachTrans_2"/>
       <rotationref ref="scRot_1"/>
-  </subtraction> -->
-  <!-- <subtraction name ="sc_attach_hut_solid">
+  </subtraction>
+  <subtraction name ="sc_attach_hut_solid">
       <first ref="sc_attach_hut_3"/>
-      <second ref="sc_attach_beam_hole"/> --><!-- Should be with the septum pipe -->
-  <!--    <positionref ref="scAttachTrans_3"/>
-       </subtraction> -->
-  
+      <second ref="sc_attach_beam_hole"/> <!-- Should be with the septum pipe -->
+      <positionref ref="scAttachTrans_3"/>
+  </subtraction>
+
 
 
 <!-- Pedestal scattering chamber -->
@@ -1703,7 +1658,7 @@
 
   <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="ped_infrac7" rmin="ped_infrac7_radius_i" rmax="ped_infrac7_radius_o" z="ped_infrac7_high" />
 
-<!-- Summing all the parts to create the pedestsal: center is the big orizontal bar under the scattering chamber -->  
+  <!-- Summing all the parts to create the pedestsal: center is the big orizontal bar under the scattering chamber -->  
   <union name ="ped_un_p1">
     <first ref="ped_tube_upstream"/>
     <second ref="ped_tube_upstream"/>
@@ -2112,16 +2067,53 @@
       <solidref ref="ScattChamberDet"/>
       <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
     </volume>
--->
+    -->
+    <!--Old Scattering Chamber -->
     <volume name="sc_logic">
       <materialref ref="Aluminum"/>
       <solidref ref="scatt_w_holes"/>
       <auxiliary auxtype="SensDet" auxvalue="volumeN5004"/>
-<!-- <auxiliary auxtype="SensDet" auxvalue="planeDet"/> -->
+      <!-- <auxiliary auxtype="SensDet" auxvalue="planeDet"/> -->
     </volume>
+    <!-- New dual Scattering Chamber -->
+    <volume name="new_sc_beampipe_logic">
+      <materialref ref="Aluminum"/>
+      <solidref ref="new_sc_beampipe_solid"/>
+      <auxiliary auxtype="SensDet" auxvalue="volumeN5040"/>
+      <!-- <auxiliary auxtype="SensDet" auxvalue="planeDet"/> -->
+    </volume>
+
+    <volume name="new_sc_prex_logic">
+      <materialref ref="Aluminum"/>
+      <solidref ref="new_sc_prex_solid"/>
+      <auxiliary auxtype="SensDet" auxvalue="volumeN5041"/>
+      <!-- <auxiliary auxtype="SensDet" auxvalue="planeDet"/> -->
+    </volume>
+
+    <volume name="new_sc_prex_water_tgt_logic">
+      <materialref ref="Aluminum"/>
+      <solidref ref="new_sc_prex_water_tgt_solid"/>
+      <auxiliary auxtype="SensDet" auxvalue="volumeN5042"/>
+      <!-- <auxiliary auxtype="SensDet" auxvalue="planeDet"/> -->
+    </volume>
+
+    <volume name="new_sc_crex_logic">
+      <materialref ref="Aluminum"/>
+      <solidref ref="new_sc_crex_solid"/>
+      <auxiliary auxtype="SensDet" auxvalue="volumeN5043"/>
+      <!-- <auxiliary auxtype="SensDet" auxvalue="planeDet"/> -->
+    </volume>
+
+    <volume name="new_sc_crex_water_tgt_logic">
+      <materialref ref="Aluminum"/>
+      <solidref ref="new_sc_crex_water_tgt_solid"/>
+      <auxiliary auxtype="SensDet" auxvalue="volumeN5044"/>
+      <!-- <auxiliary auxtype="SensDet" auxvalue="planeDet"/> -->
+    </volume>
+
     <volume name="sc_attach_logic">
       <materialref ref="Aluminum"/>
-      <solidref ref="sc_attach_solid"/> 
+      <solidref ref="sc_attach_solid"/>
       <!-- <auxiliary auxtype="SensDet" auxvalue="volumeN5005"/> -->
     </volume>
 
@@ -2168,7 +2160,7 @@
 
     <volume name="sc_attach_hut_logic">
       <materialref ref="Shield"/>
-      <solidref ref="sc_attach_hut_o"/> <!-- sc_attach_hut_solid -->
+      <solidref ref="sc_attach_hut_solid"/>
       <auxiliary auxtype="SensDet" auxvalue="volumeN5011"/>
     </volume>
     <volume name="hut_logic">
@@ -2361,64 +2353,6 @@
       <auxiliary auxtype="SensDet" auxvalue="volumeN10005"/>
     </volume>
 
-    <!-- prexCrex logic - Ricky -->
-  <!--  <volume name="sc_main_pipe_logic">
-      <materialref ref="Aluminum"/>
-      <solidref ref="sc_main_pipe"/>
-    </volume>
-    <volume name="prex_logic">
-      <materialref ref="Aluminum"/>
-      <solidref ref="prex"/>
-    </volume>
-    <volume name="crex_logic">
-      <materialref ref="Aluminum"/>
-      <solidref ref="crex"/>
-      </volume>
-  -->
-  <volume name="sc_main_pipe_logic">
-    <materialref ref="Aluminum"/>
-      <solidref ref="sc_main_pipe4"/>
-    </volume>
-    <volume name="prex_logic">
-      <materialref ref="Aluminum"/>
-      <solidref ref="prex2"/>
-    </volume>
-    <volume name="crex_logic">
-      <materialref ref="Aluminum"/>
-      <solidref ref="crex2"/>
-      </volume>
-    <volume name="water_targ1_logic">
-      <materialref ref="Aluminum"/>
-      <solidref ref="water_targ1b"/>
-    </volume>
-    <volume name="water_targ2_logic">
-      <materialref ref="Aluminum"/>
-      <solidref ref="water_targ2b"/>
-    </volume>
-    <volume name="prexShld_logic">
-      <materialref ref="Shield"/>
-      <solidref ref="prexShld_2"/>
-    </volume>
-    <volume name="coll_wrap_logic">
-      <materialref ref="Shield"/>
-      <solidref ref="coll_wrap"/>
-    </volume>
-    <volume name="shld_sphere_logic">
-      <materialref ref="Shield"/>
-      <solidref ref="shld_sphere1"/>
-    </volume>
-    <volume name="sideShld_logic">
-      <materialref ref="Shield"/>
-      <solidref ref="sideShld"/>
-    </volume>
-    <volume name="flatShld_logic">
-      <materialref ref="Shield"/>
-      <solidref ref="flatShld"/>
-    </volume>
-    <volume name="pig_tube_logic">
-      <materialref ref="Aluminum"/>
-      <solidref ref="pig_tube1"/>
-    </volume>
 
     <volume name="logicMother">
       <materialref ref="Vacuum"/>
@@ -2444,13 +2378,46 @@
         <volumeref ref="target_logic"/>
         <positionref ref="targ_center"/>
       </physvol>
-<!--
+
+
+      <!--Making way to new SC design -->
+      <!--
       <physvol name="sc_other_1">
         <volumeref ref="sc_logic"/>
         <positionref ref="sc_center"/>
         <rotationref ref="scRot_1"/>
       </physvol>
       -->
+      <!-- New dual Scattering Chamber -->
+      <physvol name="new_sc_beampipe">
+        <volumeref ref="new_sc_beampipe_logic"/>
+        <positionref ref="new_sc_center"/>
+      </physvol>
+
+      <physvol name="new_sc_prex">
+        <volumeref ref="new_sc_prex_logic"/>
+        <positionref ref="targ_center"/>
+	<rotationref ref="scRot_1"/>
+      </physvol>
+
+      <physvol name="new_sc_prex_water_tgt">
+        <volumeref ref="new_sc_prex_water_tgt_logic"/>
+        <positionref ref="targ_center"/>
+	<rotationref ref="scRot_13"/>
+      </physvol>
+
+      <physvol name="new_sc_crex">
+        <volumeref ref="new_sc_crex_logic"/>
+        <positionref ref="crex_targ_center"/>
+	<rotationref ref="scRot_1"/>
+      </physvol>
+
+      <physvol name="new_sc_crex_water_tgt">
+        <volumeref ref="new_sc_crex_water_tgt_logic"/>
+        <positionref ref="crex_targ_center"/>
+	<rotationref ref="scRot_13"/>
+      </physvol>
+
       <physvol name="sc_attachment">
         <volumeref ref="sc_attach_logic"/>
         <positionref ref="sc_attach_center"/>
@@ -2490,17 +2457,20 @@
 
 
 
-      <!-- <physvol name="sc_attachment_hut">
+      <physvol name="sc_attachment_hut">
         <volumeref ref="sc_attach_hut_logic"/>
         <positionref ref="sc_attach_center"/>
-      </physvol> -->
+      </physvol>
 
-<!--      <physvol name="shieldSC">
+     <!--Making way to new SC design -->
+     <!--
+      <physvol name="shieldSC">
         <volumeref ref="scatt_cham_shld_logic"/>
         <positionref ref="sc_center"/>
         <rotationref ref="scRot_1"/>
       </physvol>
--->
+      -->
+
       <physvol name="cylwall">
         <volumeref ref="cylwall_logic"/>
         <positionref ref="cylwall_center"/>
@@ -2548,7 +2518,10 @@
         <positionref ref="arm_under_ped_pos_3"/>
 	<rotationref ref="scRot_8"/>
       </physvol>
-<!--     <physvol name="top_scatchamber">
+
+     <!--Making way to new SC design -->
+<!-- 
+     <physvol name="top_scatchamber">
         <volumeref ref="top_scatchamber_logic"/>
         <positionref ref="top_scatchamber_pos1"/>
 	<rotationref ref="scRot_1"/>
@@ -2567,67 +2540,6 @@
        <positionref ref="dbox_elec_hut_sept_pos"/>
      </physvol>
 
-     <!-- PrexCrex Placement - Ricky -->
-     <physvol name="sc_main_pipe_phys">
-       <volumeref ref="sc_main_pipe_logic"/>
-       <positionref ref="sc_main_pipe_center"/>
-     </physvol>
-     <physvol name="prex_phys">
-       <volumeref ref="prex_logic"/>
-       <positionref ref="prex_center"/>
-       <rotationref ref="rotatex90"/>
-     </physvol>
-     <physvol name="crex_phys">
-       <volumeref ref="crex_logic"/>
-       <positionref ref="crex_center"/>
-       <rotationref ref="rotatex90"/>
-     </physvol>
-     <physvol name="water_targ1_phys">
-       <volumeref ref="water_targ1_logic"/>
-       <positionref ref="prex_center"/>
-       <rotationref ref="rotatey90"/>
-     </physvol>
-     <physvol name="water_targ2_phys">
-       <volumeref ref="water_targ2_logic"/>
-       <positionref ref="crex_center"/>
-       <rotationref ref="rotatey90"/>
-     </physvol>
-     <physvol name="pig_tube_phys">
-       <volumeref ref="pig_tube_logic"/>
-       <positionref ref="pig_tube_center"/>
-       <rotationref ref="rotatex90"/>
-     </physvol>
-     <!-- <physvol name="prexShld_phys">
-       <volumeref ref="prexShld_logic"/>
-       <positionref ref="prex_center"/>
-       <rotationref ref="rotatex90"/>
-     </physvol> --> 
-     <!-- <physvol name="coll_wrap_phys">
-       <volumeref ref="coll_wrap_logic"/>
-       <positionref ref="coll_wrap_center"/>
-       <rotationref ref="identity"/>
-     </physvol> -->
-     <!-- <physvol name="shld_sphere_phys">
-       <volumeref ref="shld_sphere_logic"/>
-       <positionref ref="coll_cw70_center"/>
-       <rotationref ref="rotatex90"/>
-     </physvol>
-     -->
-     <!-- <physvol name="sideShld1_phys">
-       <volumeref ref="sideShld_logic"/>
-       <positionref ref="sideShld1_center"/>
-       <rotationref ref="identity"/>
-     </physvol>
-     <physvol name="sideShld2_phys">
-       <volumeref ref="sideShld_logic"/>
-       <positionref ref="sideShld2_center"/>
-       <rotationref ref="identity"/>
-     </physvol>
-     <physvol name="flatShld_top_phys">
-       <volumeref ref="flatShld_logic"/>
-       <positionref ref="flatShld_top_center"/>
-       <rotationref ref="identity"/>
-     </physvol> -->
 <!-- elec hut detector is no longer used -->
 <!--
   <physvol name="det_elec_hut_phys">
