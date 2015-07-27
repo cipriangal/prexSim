@@ -11,6 +11,7 @@
 #/moller/det/setDetectorFileName geometry/prexII_coll_prototype_4_complete.gdml
 #/moller/det/setDetectorFileName geometry/prexII_rickyTest.gdml
 /moller/det/setDetectorFileName geometry/prexCrexNewTarget.gdml
+#/moller/det/setDetectorFileName geometry/prexII_newSC_update.gdml
 
 /moller/det/setNumberofCollimators 18 
 ########~~~~~~~~~~~CG~~~~~~~~~~~ PREX1 sim
