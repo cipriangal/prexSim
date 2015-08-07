@@ -11,6 +11,8 @@
 <!-- Commonly adjusted parameters -->
 <!-- Units are in cm, and are NOT half-lengths -->
 
+
+    
   <constant name="real_sc_thick_4" value="0.5"/> <!-- QT will fail for values less than 0.2 REAL VALUE=0.05--> 
 
   <constant name="fTargetLength" value="0.05"/>
@@ -113,8 +115,9 @@
 
   <constant name="coll_angle" value="atan(fcollInnerR/(delta_cw70_coll_us_face))*180./PI"/>
 
-  <constant name="cw70_coll_inner_r1" value="(delta_cw70_coll_us_face)*tan(coll_angle*PI/180.)"/> 
-  <constant name="cw70_coll_inner_r2" value="(delta_cw70_coll_ds_face)*tan(coll_angle*PI/180.)"/>
+  <!-- Added Crex scaling - Ricky  -->
+  <constant name="cw70_coll_inner_r1" value="(delta_cw70_coll_us_face)*tan(coll_angle*PI/180.)*1.53"/> 
+  <constant name="cw70_coll_inner_r2" value="(delta_cw70_coll_ds_face)*tan(coll_angle*PI/180.)*1.48"/>
 
   <constant name="length_cw70_bore" value="1.001*(length_cw70_coll_1)"/>
 
@@ -122,8 +125,8 @@
 
   <!-- **No longer in use**  Initial CW70 water jacket inlet volume dimentions : rakitha Mon Sep 30 15:50:52 EDT 2013  -->  
   <constant name="width_cw70_jacket" value="5"/>  <constant name="height_cw70_jacket" value="2"/>  <constant name="length_cw70_jacket" value="3"/>
-  <!-- CW70 collimator extension at the US dimentions : rakitha  Mon Nov 18 13:43:01 EST 2013 -->  
-  <constant name="cw70_jacket_inner_r" value="2"/>  <constant name="cw70_jacket_outer_r" value="5"/>  <constant name="cw70_jacket_length" value="2.54"/>
+  <!-- CW70 collimator extension at the US dimentions : rakitha  Mon Nov 18 13:43:01 EST 2013 -->  <!-- Changing for Crex (3.1 from 2)  - Ricky -->
+  <constant name="cw70_jacket_inner_r" value="3.1"/>  <constant name="cw70_jacket_outer_r" value="5"/>  <constant name="cw70_jacket_length" value="2.54"/>
 
   <!-- CW70 surface grooves : rakitha Mon Nov 18 13:43:01 EST 2013  -->
   <constant name="cw70_groove_inner_r" value="3.905"/> <constant name="cw70_groove_outer_r" value="5"/><constant name="cw70_groove_length" value="0.96"/>
@@ -364,10 +367,13 @@
   <constant name="center_accept" value="(center_coll+prex_target_center)/2"/>
 
   <!-- Lead Pig Shield - Ricky -->
-  <constant name="height_pig_shield" value="30."/>
+  <constant name="height_pig_shield" value="((height_coll_chamber/2-5.)-(height_sc_attach/2)+15.)"/>
   <constant name="width_pig_shield" value="outer_r_coll_chamber*2+30."/>
   <constant name="length_pig_shield" value="outer_r_coll_chamber*2+30."/>
 
+   <!-- Shielding jacket to "new_sc_beampipe" -->
+  <constant name="thick_sc_beampipe_shield" value="20."/>
+  <constant name="length_sc_chamber_beam_pipe_shield" value="length_sc_chamber_beam_pipe - thick_sc_attach_shield"/>
 
 
 <!-- Hall - wall, floor and "dump" -->
@@ -470,6 +476,12 @@
   <constant name="top_scatchamber_p4_high" value="7" />
   <constant name="top_scatchamber_p4_radius" value="54" />
 
+  <!-- Comment this out if testing prex - Ricky  -->
+  <constant name="crex_scalar" value="(crex_target_center-center_cw70_coll)/(prex_target_center-center_cw70_coll)"/>
+
+  <!-- Comment this out if testing crex - Ricky -->
+  <!-- <constant name="crex_scalar" value="1."/> -->
+
 <!-- Positions -->
   <position unit="cm" name="targ_center" x="0" y="0" z="center_targ"/>
   <position unit="cm" name="crex_targ_center" x="0" y="0" z="crex_target_center"/>
@@ -486,10 +498,11 @@
   <position unit="cm" name="real_hole_sc_trans6" x="0" y="0" z="-1.*y_cent_sc+1.*real_sc_center_4+0.5*real_sc_high_4+0.5*real_sc_middle_conn_high"/>  
   <position unit="cm" name="sc_attach_center" x="0" y="0" z="center_sc_attach"/>
   <position unit="cm" name="scAttachTrans_1" x="0" y="0" z="0"/> <!---use thick_sc_attach/2 for leave US side open Rakitha Wed Jul  1 11:50:04 EDT 2015 -->
-  <position unit="cm" name="scAttachTrans_l" x="-1.0*center_vac_enc_xu" y="0" z="center_vac_enc_z - center_sc_attach - thick_sc_attach"/>
-  <position unit="cm" name="scAttachTrans_r" x="1.0*center_vac_enc_xu" y="0" z="center_vac_enc_z - center_sc_attach - thick_sc_attach"/>
-  <position unit="cm" name="scAttachTrans_hut_l" x="-1.0*center_vac_enc_xu" y="0" z="center_vac_enc_z - center_sc_attach"/>
-  <position unit="cm" name="scAttachTrans_hut_r" x="1.0*center_vac_enc_xu" y="0" z="center_vac_enc_z - center_sc_attach"/>
+  <!-- Crex scaling done - Ricky -->
+  <position unit="cm" name="scAttachTrans_l" x="-1.0*center_vac_enc_xu*1.43" y="0" z="center_vac_enc_z - center_sc_attach - thick_sc_attach"/>
+  <position unit="cm" name="scAttachTrans_r" x="1.0*center_vac_enc_xu*1.43" y="0" z="center_vac_enc_z - center_sc_attach - thick_sc_attach"/>
+  <position unit="cm" name="scAttachTrans_hut_l" x="-1.0*center_vac_enc_xu*1.43" y="0" z="center_vac_enc_z - center_sc_attach"/>
+  <position unit="cm" name="scAttachTrans_hut_r" x="1.0*center_vac_enc_xu*1.43" y="0" z="center_vac_enc_z - center_sc_attach"/>
   <position unit="cm" name="scAttachTrans_2" x="0" y="0" z="center_sc - center_sc_attach"/>
   <position unit="cm" name="scAttachTrans_3" x="0" y="0" z="length_sc_attach/2"/>
   <position unit="cm" name="scAttachTrans_4" x="0" y="0" z="length_sc_attach/2 - length_w_coll_1/2"/>
@@ -513,6 +526,12 @@
   <position unit="cm" name="new_sc_Trans_2" x="0" y="0" z="-1*length_sc_chamber_beam_pipe/2"/>
   <position unit="cm" name="new_sc_Trans_3" x="0" y="0" z="-1*delta_new_center_sc_prex"/>
   <position unit="cm" name="new_sc_Trans_4" x="0" y="0" z="-1*delta_new_center_sc_crex"/>
+
+    <position unit="cm" name="new_sc_Shield_Trans_1" x="0" y="0" z="thick_sc_beampipe_shield/2"/>
+  <position unit="cm" name="new_sc_Shield_Trans_2" x="0" y="0" z="-1*length_sc_chamber_beam_pipe_shield/2"/>
+  <position unit="cm" name="new_sc_Shield_center" x="0" y="0" z="new_center_sc - thick_sc_attach_shield"/>
+  <position unit="cm" name="new_sc_Shield_Trans_3" x="0" y="0" z="-1*delta_new_center_sc_prex + thick_sc_attach_shield"/>
+  <position unit="cm" name="new_sc_Shield_Trans_4" x="0" y="0" z="-1*delta_new_center_sc_crex + thick_sc_attach_shield"/>
 
   <!-- New Shielding for collimator box  positions -->
   <position unit="cm" name="scAttachShieldTrans_1" x="0" y="0" z="-1*length_sc_attach_shield/2"/>
@@ -540,8 +559,9 @@
   <position unit="cm" name="coll_chamber_sub_trans" y="5." z="center_coll_chamber-center_sc_attach"/>
 
   <!-- New position for pig shield - Ricky -->
-  <position unit="cm" name="pig_center" x="0" y="5.-height_coll_chamber/2" z="center_coll_chamber"/>
-  <position unit="cm" name="pig_sub_trans" y="height_pig_shield/2"/>
+  <position unit="cm" name="pig_center" x="0" y="-(height_sc_attach/2.)-(height_pig_shield/2.)" z="center_coll_chamber"/>
+  <position unit="cm" name="pig_sub_trans" y="15."/>
+  <position unit="cm" name="hole_for_pig" x="0" y="-(height_sc_attach/2.)-(height_pig_shield/2.)" z="center_coll_chamber-center_sc_attach"/>
 
   <position unit="cm" name="jacketTrans_cyc"       x="0" y="0"     z="-length_cw70_coll_1/2-cw70_jacket_length/2"/>
   <position unit="cm" name="jacketTrans_cyc_g1"       x="0" y="0"     z="-length_cw70_coll_1/2+cw70_groove_length"/>
@@ -562,8 +582,9 @@
   <position unit="cm" name="septTrans_l"       x="-rect_hole_center_x" y="0"     z="0"/>	
   <position unit="cm" name="septTrans_r"       x="rect_hole_center_x" y="0"     z="0"/>	
 
-  <position unit="cm" name="vac_enc_center_l"     x="-center_vac_enc_xu" y="0"     z="center_vac_enc_z"/>	
-  <position unit="cm" name="vac_enc_center_r"     x="center_vac_enc_xu" y="0"     z="center_vac_enc_z"/>	
+  <!-- Scaling for Crex - Ricky -->
+  <position unit="cm" name="vac_enc_center_l"     x="-center_vac_enc_xu*1.43" y="0"     z="center_vac_enc_z"/>	
+  <position unit="cm" name="vac_enc_center_r"     x="center_vac_enc_xu*1.43" y="0"     z="center_vac_enc_z"/>	
 
   <position unit="cm" name="hutTrans_1"        x="0" y="-0.505*fHutShieldThick"     z="center_hut_hole - center_hut"/>	
   <position unit="cm" name="hutTrans_2"        x="0" y="0"     z="-length_hut/2 + fHutShieldThick/2"/>
@@ -573,10 +594,11 @@
   <position unit="cm" name="scShldTrans_2" x="0" y="(outer_r_sc-thick_sc/2)" z="-y_cent_sc"/>
   <position unit="cm" name="scShldlayTrans_1" x="0" y="0" z="-0.5*height_sc+0.5*fHightSideSCShield"/>
   <position unit="cm" name="scShldlayTrans_2" x="0" y="0" z="-0.5*height_sc+0.5*fHightFrontSCShield"/>
-  <position unit="cm" name="septShldTrans_l"        x="rect_hole_center_x - center_vac_enc_xu"  y="0"     z="center_vac_enc_z - center_septum"/>	
-  <position unit="cm" name="septShldTrans_r"        x="-(rect_hole_center_x-center_vac_enc_xu)" y="0"     z="center_vac_enc_z - center_septum"/>
-  <position unit="cm" name="septpipeShldTrans_l"        x="-1.* center_vac_enc_xu"  y="0"     z="0.5*length_vac_enc -0.5*fSeptPipeShieldLength"/>	
-  <position unit="cm" name="septpipeShldTrans_r"        x="center_vac_enc_xu" y="0"     z="0.5*length_vac_enc -0.5*fSeptPipeShieldLength"/>	
+  <!-- Scaled for Crex - Ricky -->
+  <position unit="cm" name="septShldTrans_l"        x="(rect_hole_center_x - center_vac_enc_xu)*1.43"  y="0"     z="center_vac_enc_z - center_septum"/>	
+  <position unit="cm" name="septShldTrans_r"        x="-(rect_hole_center_x-center_vac_enc_xu)*1.43" y="0"     z="center_vac_enc_z - center_septum"/>
+  <position unit="cm" name="septpipeShldTrans_l"        x="-1.* center_vac_enc_xu*1.43"  y="0"     z="0.5*length_vac_enc -0.5*fSeptPipeShieldLength"/>	
+  <position unit="cm" name="septpipeShldTrans_r"        x="center_vac_enc_xu*1.43" y="0"     z="0.5*length_vac_enc -0.5*fSeptPipeShieldLength"/>	
   <position unit="cm" name="septShld_center_l"        x="-rect_hole_center_x" y="0"     z="center_septum"/>	
   <position unit="cm" name="septShld_center_r"        x="rect_hole_center_x" y="0"     z="center_septum"/>
 
@@ -605,7 +627,7 @@
   <position unit="cm" name="cDet_1_pos"       x="0" y="center_cylwall+0.5*thick_cylwall"     z="0"/>
   <position unit="cm" name="cDet_1_under_1pos"       x="0" y="0" z="-center_cylwall-0.5*thick_cylwall+1.*sc_arm_center_1"/>
   <position unit="cm" name="cDet_1_under_2pos"       x="0" y="0" z="-center_cylwall-0.5*thick_cylwall+1.*sc_arm_center_2"/>
-  <position unit="cm" name="dDet_us_pos"       x="0" y="0"     z="center_targ+delta_coll_us_face-0.1"/>
+  <position unit="cm" name="dDet_us_pos"       x="0" y="0"     z="center_targ+delta_coll_us_face-(length_cw70_coll_1)/2.+1.4"/>
   <position unit="cm" name="dDet_ds_pos"       x="0" y="0"     z="center_targ+delta_coll_ds_face+0.1"/>
   <position unit="cm" name="dDet_beamline_pos_1"       x="0" y="0"     z="center_targ+237.535+0.1"/>
   <position unit="cm" name="dDet_beamline_pos_2"       x="0" y="0"     z="center_targ+336.831"/>
@@ -725,7 +747,8 @@
   <box lunit="cm" name="boxMother" x="width_mother" y="height_mother" z="length_mother"/>
 
 
-<!-- Cylindrical CW70 Collimator : rakitha Mon Sep 30 16:40:34 EDT 2013 -->
+  <!-- Cylindrical CW70 Collimator : rakitha Mon Sep 30 16:40:34 EDT 2013 -->
+  <!-- Need to change - Ricky -->
   <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="coll_cw70_cyln" rmin="0.0" rmax="radius_cw70_coll_1" z="length_cw70_coll_1"/>
   <!-- CW70 water jacket inlet volume dimentions -->  
   <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="coll_cw70_cyln_outer_1" rmin="cw70_jacket_inner_r" rmax="cw70_jacket_outer_r" z="cw70_jacket_length"/>
@@ -783,7 +806,8 @@
       <rotationref ref="identity"/>
   </union>
 
-<!-- W Box Collimator Jacket : rakitha Mon Sep 30 16:40:34 EDT 2013 -->
+  <!-- W Box Collimator Jacket : rakitha Mon Sep 30 16:40:34 EDT 2013 -->
+  <!-- Need to change - Ricky -->
   <box lunit="cm" name="Coll_jacket_W" x="width_w_coll_1" y="height_w_coll_1" z="length_w_coll_1"/>
   <cone aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="coll_jacket_w_bore_cone" rmin1="0.0" rmax1="coll_inner_r1" rmin2="0.0" rmax2="coll_inner_r2" z="length_bore"/>
 
@@ -853,7 +877,11 @@
   </subtraction>
 
 <!-- Target  -->
-  <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="tubeTarget" rmin="inner_rad_targ" rmax="outer_rad_targ" z="length_targ" />
+<tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="tubeTarget" rmin="inner_rad_targ" rmax="outer_rad_targ" z="length_targ" />
+
+<!-- Ca Target - Ricky -->
+<tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="CaTarget" rmin="inner_rad_targ" rmax="outer_rad_targ" z="0.5" />
+
 
 <!-- Scattering Chamber -->
   <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="outScattChamber" rmin="0.0" rmax="outer_r_sc" z="height_sc" />
@@ -1169,6 +1197,15 @@
     <rotationref ref="scRot_1"/>
   </subtraction>
 
+  
+  <box lunit="cm" name="pig_shield_sub" x="width_pig_shield" y="height_pig_shield" z="length_pig_shield"/>
+  <subtraction name="sc_attach_shield_10">
+    <first ref="sc_attach_shield_9"/>
+    <second ref="pig_shield_sub"/>
+    <positionref ref="hole_for_pig"/>
+    <rotationref ref="identity"/>
+  </subtraction>
+
 
   <!-- New dual Scattering Chamber -->
   <!-- Add the SC beam pipe first-->
@@ -1187,6 +1224,7 @@
       <second ref="new_sc_US_beam_hole"/> 
       <positionref ref="new_sc_Trans_2"/>
   </subtraction>
+
 
   <!--subtract spaces for main target scattering chambers and water target scattering chamber -->
   <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="sub_new_sc_prex" rmin="0.0" rmax="outer_r_new_sc+0.001" z="4*radius_sc_chamber_beam_pipe" />
@@ -1221,6 +1259,53 @@
       <positionref ref="new_sc_Trans_4"/>
       <rotationref ref="scRot_13"/>
   </subtraction>
+
+    <!-- Add shielding jacket to  "new_sc_beampipe -->
+  <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="new_sc_beampipe_shield_0" rmin="0" rmax="radius_sc_chamber_beam_pipe + thick_sc_beampipe_shield" z="length_sc_chamber_beam_pipe_shield + thick_sc_beampipe_shield/2" />
+  <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="new_sc_beampipe_shield_1" rmin="0.0" rmax="radius_sc_chamber_beam_pipe + 0.1" z="length_sc_chamber_beam_pipe - thick_sc_beampipe_shield/2 + 0.1" />
+  <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="new_sc_US_beam_hole_shield" rmin="0.0" rmax="sc_beam_hole_radius" z="3*thick_sc_beampipe_shield" />
+
+  <subtraction name ="new_sc_beampipe_shield_2">
+      <first ref="new_sc_beampipe_shield_0"/>
+      <second ref="new_sc_beampipe_shield_1"/> 
+      <positionref ref="new_sc_Shield_Trans_1"/>
+  </subtraction>
+
+  <subtraction name ="new_sc_beampipe_shield_3">
+      <first ref="new_sc_beampipe_shield_2"/>
+      <second ref="new_sc_US_beam_hole_shield"/> 
+      <positionref ref="new_sc_Shield_Trans_2"/>
+  </subtraction>
+
+  <!--subtract spaces for main target scattering chambers and water target scattering chamber -->
+  <subtraction name ="new_sc_beampipe_shield_4">
+      <first ref="new_sc_beampipe_shield_3"/>
+      <second ref="sub_new_sc_prex"/> 
+      <positionref ref="new_sc_Shield_Trans_3"/>
+      <rotationref ref="scRot_1"/>
+  </subtraction>
+
+  <subtraction name ="new_sc_beampipe_shield_5">
+      <first ref="new_sc_beampipe_shield_4"/>
+      <second ref="sub_new_sc_prex_water_tgt"/> 
+      <positionref ref="new_sc_Shield_Trans_3"/>
+      <rotationref ref="scRot_13"/>
+  </subtraction>
+
+  <subtraction name ="new_sc_beampipe_shield_6">
+      <first ref="new_sc_beampipe_shield_5"/>
+      <second ref="sub_new_sc_crex"/> 
+      <positionref ref="new_sc_Shield_Trans_4"/>
+      <rotationref ref="scRot_1"/>
+  </subtraction>
+
+  <subtraction name ="new_sc_beampipe_shield_solid">
+      <first ref="new_sc_beampipe_shield_6"/>
+      <second ref="sub_new_sc_crex_water_tgt"/> 
+      <positionref ref="new_sc_Shield_Trans_4"/>
+      <rotationref ref="scRot_13"/>
+  </subtraction>
+
 
   <!--Add the  main target scattering chambers and water target scattering chamber -->
   <!-- Add PREX main and water tgt 1st -->
@@ -2127,8 +2212,8 @@
       <rotationref ref="scRot_1"/>
   </subtraction> 
 
-
-  <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="dDet_us" rmin="0" rmax="(coll_inner_r1)*1.0001" z="0.1" />
+<!-- coll_inner_r1 was replaced - Ricky -->
+  <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="dDet_us" rmin="0" rmax="cw70_jacket_outer_r*1.0001" z="0.1" />
   <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="dDet_ds" rmin="0" rmax="(coll_inner_r2)*1.0001" z="0.1" />
 
   <sphere aunit="deg" startphi="0" deltaphi="360" starttheta="0" deltatheta="360" lunit="cm" name="sDet_2"  rmin="30.0" rmax="30.1"/>
@@ -2238,6 +2323,13 @@
       <materialref ref="PureLead"/>
       <solidref ref="tubeTarget"/>
     </volume>
+
+    <!-- Crex target logic - Ricky -->
+
+    <volume name="Ca_target_logic">
+      <materialref ref="Calcium48"/>
+      <solidref ref="CaTarget"/>
+    </volume>
 <!--
     <volume name="scDet_logic">
       <materialref ref="Vacuum"/>
@@ -2259,6 +2351,14 @@
       <auxiliary auxtype="SensDet" auxvalue="volumeN5040"/>
       <!-- <auxiliary auxtype="SensDet" auxvalue="planeDet"/> -->
     </volume>
+
+    <!-- New dual Scattering Chamber Shield -->
+    <volume name="new_sc_beampipe_shield_logic">
+      <materialref ref="Shield"/>
+      <solidref ref="new_sc_beampipe_shield_solid"/>
+      <!-- <auxiliary auxtype="SensDet" auxvalue="volumeN5040"/> -->
+    </volume>
+
 
     <volume name="new_sc_prex_logic">
       <materialref ref="Aluminum"/>
@@ -2302,7 +2402,7 @@
 
     <volume name="sc_attach_shield_logic">
       <materialref ref="Shield"/>
-      <solidref ref="sc_attach_shield_9"/>
+      <solidref ref="sc_attach_shield_10"/>
       <auxiliary auxtype="SensDet" auxvalue="volumeN5051"/>
     </volume>
 
@@ -2596,10 +2696,16 @@
       </physvol> -->
 
 
-      <physvol name="target">
+      <!-- <physvol name="target">
         <volumeref ref="target_logic"/>
         <positionref ref="targ_center"/>
-      </physvol> 
+      </physvol> -->
+
+      <!-- Crex target - ricky -->
+      <physvol name="Ca_target">
+	<volumeref ref="Ca_target_logic"/>
+	<positionref ref="crex_targ_center"/>
+      </physvol>
 
 
       <!--Making way to new SC design -->
@@ -2615,6 +2721,15 @@
         <volumeref ref="new_sc_beampipe_logic"/>
         <positionref ref="new_sc_center"/>
       </physvol>
+
+      
+      <!-- New dual Scattering Chamber Shield -->
+      <!-- May not be necessary - Ricky -->
+     <!--  <physvol name="new_sc_beampipe_shield">
+        <volumeref ref="new_sc_beampipe_shield_logic"/>
+        <positionref ref="new_sc_Shield_center"/>
+      </physvol> -->
+
 
       <physvol name="new_sc_prex">
         <volumeref ref="new_sc_prex_logic"/>
@@ -2661,8 +2776,16 @@
 	<positionref ref="accept_center"/>
       </physvol> -->
 
+      <physvol name="septum_shield_r">
+        <volumeref ref="septShld_r_logic"/>
+        <positionref ref="septShld_center_r"/>
+      </physvol>
 
 
+      <physvol name="septum_shield_l">
+        <volumeref ref="septShld_l_logic"/>
+        <positionref ref="septShld_center_l"/>
+      </physvol>
 
      <physvol name="septum_pipe">
       <volumeref ref="septum_pipe_logic" />
@@ -2788,8 +2911,8 @@
         <positionref ref="sDet_1_pos"/>
       </physvol>	
 
-<!--
-      <physvol name="plane_det_1">
+
+      <!-- <physvol name="plane_det_1">
         <volumeref ref="pDet_1_logic"/>
         <positionref ref="pDet_1_pos"/>
       </physvol>	
@@ -2800,8 +2923,8 @@
       <physvol name="plane_det_3">
         <volumeref ref="pDet_3_logic"/>
         <positionref ref="pDet_3_pos"/>
-      </physvol> 
--->
+      </physvol> -->
+
 
       <physvol name="cyl_det_1">
         <volumeref ref="cDet_1_logic"/>

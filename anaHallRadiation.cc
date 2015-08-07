@@ -38,9 +38,9 @@
 TH1F *Histo_vert_z_full[3];//particle type = photons, electrons, neutrons
 //2D histograms
 TH2F *Histo_vert_2D[3],*Histo_vert_full_2D[3];
-TH1F *Histo_vert_z_weighted_full[3],*Histo_kineE_lt_10[3],*Histo_kineE_gt_10[3];
+TH1F *Histo_vert_z_weighted_full[3],*Histo_Energy_lt_10[3],*Histo_Energy_gt_10[3];
 //create plots for three vertex ranges [ranges][particle type]
-TH1F *Histo_vert_z[3][3],*Histo_vert_z_weighted[3][3],*Histo_kineE_custom_lt_10[3][3],*Histo_kineE_custom_gt_10[3][3];
+TH1F *Histo_vert_z[3][3],*Histo_vert_z_weighted[3][3],*Histo_Energy_custom_lt_10[3][3],*Histo_Energy_custom_gt_10[3][3];
 
 Int_t low_ranges[3],up_ranges[3];
 //Flux and power parameters Full range //indices [particle type][energy ranges 0->0.1->10->1000] 
@@ -73,9 +73,13 @@ int main(int argc,char** argv) {
   TString _sensVol(argv[1]);
   SensVolume_v=_sensVol.Atof();
   
-  if(!(SensVolume_v==10008 || SensVolume_v==10009 || SensVolume_v==8004)) {
+  if(!(SensVolume_v==10008 || SensVolume_v==10009 ||
+       SensVolume_v==8003 ||SensVolume_v==8004 ||
+       SensVolume_v==8005 || SensVolume_v==10001 ||
+       SensVolume_v==10002 || SensVolume_v==10003 ||
+       SensVolume_v==10004 )) {
     cout<<" ~~~ You are asking for detector "<<SensVolume_v<<endl;
-    cout<<" This code works for 10008 or 10009 for now"<<endl;
+    cout<<" This code does not work for that detector. Please modify."<<endl;
     return 1;
   }
   cout<<endl;
@@ -125,8 +129,8 @@ void Init(){
       Histo_vert_2D[i]              ->Reset();
       Histo_vert_full_2D[i]         ->Reset();
       Histo_vert_z_weighted_full[i] ->Reset();
-      Histo_kineE_lt_10[i]          ->Reset();
-      Histo_kineE_gt_10[i]          ->Reset();
+      Histo_Energy_lt_10[i]          ->Reset();
+      Histo_Energy_gt_10[i]          ->Reset();
     }
     
     for(int j=0;j<3;j++){
@@ -136,8 +140,8 @@ void Init(){
       if(Histo_vert_z_full[i]){
 	Histo_vert_z[i][j]            ->Reset();
 	Histo_vert_z_weighted[i][j]   ->Reset();
-	Histo_kineE_custom_lt_10[i][j]->Reset();
-	Histo_kineE_custom_gt_10[i][j]->Reset();
+	Histo_Energy_custom_lt_10[i][j]->Reset();
+	Histo_Energy_custom_gt_10[i][j]->Reset();
       }
       
       for(int k=0;k<3;k++){
@@ -163,10 +167,10 @@ void bookHisto(){
     
     Histo_vert_z_weighted_full[i]  = new TH1F(Form("vert_z_weighted_full_%c",hPnm[i]),
 					      Form("%s Vertices (KE Weighted);z (cm);W/#muA",pType[i].Data()),300,-2600.,3400.);
-    Histo_kineE_lt_10[i]           = new TH1F(Form("kineE_lt_10_%c",hPnm[i]),
-					      Form("%s E < 10 MeV;kineE (MeV);Counts",pType[i].Data())       ,100,0.,10.);
-    Histo_kineE_gt_10[i]           = new TH1F(Form("kineE_gt_10_%c",hPnm[i]),
-					      Form("%s 10 < E < 1000 MeV;kineE (MeV);Counts",pType[i].Data()),100,10.,1000.);
+    Histo_Energy_lt_10[i]           = new TH1F(Form("Energy_lt_10_%c",hPnm[i]),
+					      Form("%s E < 10 MeV;Energy (MeV);Counts",pType[i].Data())       ,100,0.,10.);
+    Histo_Energy_gt_10[i]           = new TH1F(Form("Energy_gt_10_%c",hPnm[i]),
+					      Form("%s 10 < E < 1000 MeV;Energy (MeV);Counts",pType[i].Data()),100,10.,1000.);
  
     for(int j=0;j<3;j++){
       Histo_vert_z[i][j]           = new TH1F(Form("vert_z_rn_%d_%c",j,hPnm[i]),
@@ -176,11 +180,11 @@ void bookHisto(){
 					      Form("%s Vertices (KE Weighted for %s);z (cm);W/#muA",pType[i].Data(),sranges[j].Data()),
 					      300,low_ranges[j],up_ranges[j]);
       
-      Histo_kineE_custom_lt_10[i][j] = new TH1F(Form("kineE_custom_lt_10_rn_%d_%c",j,hPnm[i]),
-						Form("%s E < 10 MeV (%s);kineE (MeV);Counts",pType[i].Data(),sranges[j].Data()),
+      Histo_Energy_custom_lt_10[i][j] = new TH1F(Form("Energy_custom_lt_10_rn_%d_%c",j,hPnm[i]),
+						Form("%s E < 10 MeV (%s);Energy (MeV);Counts",pType[i].Data(),sranges[j].Data()),
 						100,0.,10.);
-      Histo_kineE_custom_gt_10[i][j] = new TH1F(Form("kineE_custom_gt_10_rn_%d_%c",j,hPnm[i]),
-						Form("%s 10 < E < 1000 MeV (%s);kineE (MeV);Counts",pType[i].Data(),sranges[i].Data()),
+      Histo_Energy_custom_gt_10[i][j] = new TH1F(Form("Energy_custom_gt_10_rn_%d_%c",j,hPnm[i]),
+						Form("%s 10 < E < 1000 MeV (%s);Energy (MeV);Counts",pType[i].Data(),sranges[i].Data()),
 						100,10.,1000.);
     }
   }
@@ -218,6 +222,8 @@ void PrintInfo(){
 void processTree(TString tname){
 
   Float_t kineE, type, volume, track, parent, PDGid, Edeposit, event, creator;
+  //New Float for simulation of various detectors
+  Float_t Energy;
   Float_t px,py,pz;
   Float_t x_0,y_0,z_0,xd,yd,zd;
   
@@ -240,12 +246,25 @@ void processTree(TString tname){
   t->SetBranchAddress("PDGid",&PDGid);  
   t->SetBranchAddress("track",&track);  
   t->SetBranchAddress("event",&event);  
-//   t->SetBranchAddress("Edeposit",&Edeposit); 
-//   t->SetBranchAddress("kineE",&kineE);
-  t->SetBranchAddress("kineE",&Edeposit); 
-  t->SetBranchAddress("Edeposit",&kineE); //hack to get the deposited energy
- 
+   t->SetBranchAddress("Edeposit",&Edeposit); 
+   t->SetBranchAddress("kineE",&Energy);
+
+// Making alterations - Ricky
+/*  if(SensVolume_v==10008 || SensVolume_v==10009){
+    t->SetBranchAddress("Edeposit",&Energy);
+  }
+  else {
+    t->SetBranchAddress("kineE",&Energy);
+    } */
+  
+  //  t->SetBranchAddress("kineE",&Edeposit); 
+  //  t->SetBranchAddress("Edeposit",&kineE); //hack to get the deposited energy
+  
   Double_t hit_radius_min = 46.038; //cm inner radius of the beam pipe 45.72 cm and outer radius of the beam pipe 46.038 cm
+  
+  if ( SensVolume_v==8004 || SensVolume_v==8005 || SensVolume_v==10001 || SensVolume_v==10002 || SensVolume_v==10003 || SensVolume_v==10004 )
+    hit_radius_min = 0.; //this is for looking at results along the beamline
+
   Double_t hit_radius;
   int partType[6]={1,1,-1,-1,0,2}; //electron,positron,N/A,N/A,gamma,neutron
   
@@ -261,41 +280,41 @@ void processTree(TString tname){
       if(hist==1 && z_0== -17720) continue;
        
       Histo_vert_z_full[hist]         ->Fill(z_0/10,1/tot_events);
-      Histo_vert_z_weighted_full[hist]->Fill(z_0/10,kineE/tot_events);
+      Histo_vert_z_weighted_full[hist]->Fill(z_0/10,Energy/tot_events);
 
-      Histo_vert_2D[hist]     ->Fill(z_0/10,x_0/10,kineE/tot_events);
-      Histo_vert_full_2D[hist]->Fill(z_0/10,x_0/10,kineE/tot_events);
+      Histo_vert_2D[hist]     ->Fill(z_0/10,x_0/10,Energy/tot_events);
+      Histo_vert_full_2D[hist]->Fill(z_0/10,x_0/10,Energy/tot_events);
 
-      if (kineE<0.10){
-	Histo_kineE_lt_10[hist]->Fill(kineE);
-	power[hist][0]+=kineE;
+      if (Energy<0.10){
+	Histo_Energy_lt_10[hist]->Fill(Energy);
+	power[hist][0]+=Energy;
 	flux[hist][0]++;
-      }else if (kineE>=0.10 && kineE<10){
-	Histo_kineE_lt_10[hist]->Fill(kineE);
-	power[hist][1]+=kineE;
+      }else if (Energy>=0.10 && Energy<10){
+	Histo_Energy_lt_10[hist]->Fill(Energy);
+	power[hist][1]+=Energy;
 	flux[hist][1]++;	  
-      }else if (kineE>=10 && kineE<1000){
-	Histo_kineE_gt_10[hist]->Fill(kineE);
-	power[hist][2]+=kineE;
+      }else if (Energy>=10 && Energy<1000){
+	Histo_Energy_gt_10[hist]->Fill(Energy);
+	power[hist][2]+=Energy;
 	flux[hist][2]++;	  
       }
       
       for(Int_t j=0;j<3;j++){
 	if (low_ranges[j] <= z_0/10 && z_0/10 < up_ranges[j]){
 	    Histo_vert_z[j][hist]->Fill(z_0/10,1/tot_events);
-	    Histo_vert_z_weighted[j][hist]->Fill(z_0/10,kineE/tot_events);
+	    Histo_vert_z_weighted[j][hist]->Fill(z_0/10,Energy/tot_events);
 	    
-	    if (kineE<0.10){
-	      Histo_kineE_custom_lt_10[j][hist]->Fill(kineE);
-	      power_range[j][0][hist]+=kineE;
+	    if (Energy<0.10){
+	      Histo_Energy_custom_lt_10[j][hist]->Fill(Energy);
+	      power_range[j][0][hist]+=Energy;
 	      flux_range[j][0][hist]++;
-	    }else if (kineE>=0.10 && kineE<10){
-	      Histo_kineE_custom_lt_10[j][hist]->Fill(kineE);
-	      power_range[j][1][hist]+=kineE;
+	    }else if (Energy>=0.10 && Energy<10){
+	      Histo_Energy_custom_lt_10[j][hist]->Fill(Energy);
+	      power_range[j][1][hist]+=Energy;
 	      flux_range[j][1][hist]++;
-	    }else if (kineE>=10 && kineE<1000){
-	      Histo_kineE_custom_gt_10[j][hist]->Fill(kineE);
-	      power_range[j][2][hist]+=kineE;
+	    }else if (Energy>=10 && Energy<1000){
+	      Histo_Energy_custom_gt_10[j][hist]->Fill(Energy);
+	      power_range[j][2][hist]+=Energy;
 	      flux_range[j][2][hist]++;
 	    }
 	}
@@ -333,13 +352,13 @@ void WriteHisto(TString fname){
     writeEachHisto(Histo_vert_2D[i]);
     writeEachHisto(Histo_vert_full_2D[i]);
     writeEachHisto(Histo_vert_z_weighted_full[i]);
-    writeEachHisto(Histo_kineE_lt_10[i]);
-    writeEachHisto(Histo_kineE_gt_10[i]); 
+    writeEachHisto(Histo_Energy_lt_10[i]);
+    writeEachHisto(Histo_Energy_gt_10[i]); 
     for(int j=0;j<3;j++){
       writeEachHisto(Histo_vert_z[i][j]);
       writeEachHisto(Histo_vert_z_weighted[i][j]);
-      writeEachHisto(Histo_kineE_custom_lt_10[i][j]);
-      writeEachHisto(Histo_kineE_custom_gt_10[i][j]);
+      writeEachHisto(Histo_Energy_custom_lt_10[i][j]);
+      writeEachHisto(Histo_Energy_custom_gt_10[i][j]);
     }
   }
   
