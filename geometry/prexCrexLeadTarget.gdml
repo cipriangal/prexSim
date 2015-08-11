@@ -2693,16 +2693,16 @@
       </physvol> -->
 
 
-      <physvol name="target">
+      <!-- <physvol name="target">
         <volumeref ref="target_logic"/>
         <positionref ref="targ_center"/>
-      </physvol>
+      </physvol> -->
 
       <!-- Crex target - ricky -->
-      <!-- <physvol name="Ca_target">
+      <physvol name="Ca_target">
 	<volumeref ref="Ca_target_logic"/>
 	<positionref ref="crex_targ_center"/>
-      </physvol> -->
+      </physvol>
 
 
       <!--Making way to new SC design -->

@@ -2,8 +2,11 @@
 /gun/particle e-
 /moller/gun/gen 7
 
-/gun/energy 1.05 GeV ## PREX energy
-/moller/ana/rootfilename ./tests
+#/gun/energy 1.05 GeV ## PREX energy
+#/moller/ana/rootfilename ./prex_test
+
+/gun/energy 2.20 GeV ## CREX energy
+/moller/ana/rootfilename ./crexcoll_test
 
 #HAPPEX 2 ran a higher energies
 #/gun/energy 3.18 GeV  ## HAPPEX2 energy
