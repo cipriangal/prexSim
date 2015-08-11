@@ -8,10 +8,13 @@
 
 ########~~~~~~~~~~~CG~~~~~~~~~~~ Target added to Rakitha's sim (PREX2)
 #/moller/det/setDetectorFileName geometry/prexII_coll_prototype_4_complete_HAP2target.gdml
-/moller/det/setDetectorFileName geometry/prexII_coll_prototype_4_complete.gdml
+#/moller/det/setDetectorFileName geometry/prexII_coll_prototype_4_complete.gdml
+#/moller/det/setDetectorFileName geometry/prexII_rickyTest.gdml
+#/moller/det/setDetectorFileName geometry/prexCrexLeadTarget.gdml
+/moller/det/setDetectorFileName geometry/prexCrexCalcTarget.gdml
+#/moller/det/setDetectorFileName geometry/prexII_newSC_update.gdml
 
-/moller/det/setNumberofCollimators 18 ##for prex2
-
+/moller/det/setNumberofCollimators 25 
 ########~~~~~~~~~~~CG~~~~~~~~~~~ PREX1 sim
 #/moller/det/setDetectorFileName geometry/prexIMother_pedestal_noshield.xml
 #/moller/det/setDetectorFileName geometry/prexIMother_pedestal_noshield_H2target.xml
@@ -21,8 +24,11 @@
 
 /moller/det/setShieldMaterial polyethylene
 
-/moller/field/setLowLim -74 cm
-/moller/field/setHighLim 74 cm
+#/moller/field/setLowLim -74 cm
+#/moller/field/setHighLim 74 cm
+
+/moller/field/setLowLim -44 cm
+/moller/field/setHighLim 44 cm
 
 
 /testhadr/CutsAll          0.7 mm

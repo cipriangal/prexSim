@@ -247,7 +247,6 @@
   <constant name="length_sc_chamber_beam_pipe" value="(center_sc_attach - crex_target_center) +  outer_r_new_sc - length_sc_attach/2"/><!-- 110.298  -->
   <constant name="new_center_sc" value="center_sc_attach - length_sc_attach/2 - length_sc_chamber_beam_pipe/2"/> <!-- -111.151 -->
   <constant name="thick_sc_chamber_beam_pipe" value="1.0"/>
-  <!-- Original Pipe radius was 13.5; modified to streamline design -Ricky -->
   <constant name="radius_sc_chamber_beam_pipe" value="13.5"/>
   <!--distance from new_center_sc to PREX/CREX target center -->
   <constant name="delta_new_center_sc_prex" value="length_sc_chamber_beam_pipe/2 - (prex_target_center - crex_target_center) - outer_r_new_sc"/>
@@ -343,30 +342,11 @@
 
   <!-- New Shielding for collimator box  -->
   <constant name="thick_sc_attach_shield" value="20."/>
-  <constant name="forwardthick_sc_attach_shield" value="5."/>
-  <constant name="backthick_sc_attach_shield" value="5."/>
+  <constant name="forwardthick_sc_attach_shield" value="0."/>
+  <constant name="backthick_sc_attach_shield" value="0."/>
   <constant name="width_sc_attach_shield" value="width_sc_attach + 2.*thick_sc_attach_shield"/>
   <constant name="height_sc_attach_shield" value="height_sc_attach + 4.*thick_sc_attach_shield"/>
   <constant name="length_sc_attach_shield" value="length_sc_attach + 2.*thick_sc_attach_shield + forwardthick_sc_attach_shield + backthick_sc_attach_shield"/>
-
-  <!-- New Chamber for Collimator - Ricky -->
-  <constant name="height_coll_chamber" value="height_sc_attach+90."/>
-  <constant name="outer_r_coll_chamber" value="13."/>
-  <constant name="center_coll_chamber" value="center_coll-1."/> 
-
-  <!-- Acceptance - Ricky -->
-  <constant name="height_accept" value="10.45"/>
-  <constant name="width_accept" value="13."/>
-  <constant name="width_accept_sub" value="4."/>
-  <constant name="thick_accept" value="4.5"/>
-  <constant name="length_accept" value="50."/>
-  <constant name="center_accept" value="(center_coll+prex_target_center)/2"/>
-
-  <!-- Shielding jacket to "new_sc_beampipe" -->
-  <constant name="thick_sc_beampipe_shield" value="20."/>
-  <constant name="length_sc_chamber_beam_pipe_shield" value="length_sc_chamber_beam_pipe - thick_sc_attach_shield"/>
-
-
 
 
 
@@ -494,10 +474,8 @@
   <position unit="cm" name="scAttachTrans_3" x="0" y="0" z="length_sc_attach/2"/>
   <position unit="cm" name="scAttachTrans_4" x="0" y="0" z="length_sc_attach/2 - length_w_coll_1/2"/>
   <position unit="cm" name="scAttachTrans_5" x="0" y="0" z="-1*length_sc_attach/2"/>
-
-  <!-- Alterations made to make way for collimator chamber -->
-  <position unit="cm" name="scAttachTubeTrans_1" x="3.*(width_sc_attach - 0.5*thick_sc_attach)/8.-0.5*thick_sc_attach" y="0.5*height_sc_attach+0.25*(height_septum - height_sc_attach)" z="0.5*length_sc_attach -0.5*thick_sc_attach -3.*(width_sc_attach - 0.5*thick_sc_attach)/8.-20."/>
-  <position unit="cm" name="scAttachTubeTrans_2"  x="-3.*(width_sc_attach - 0.5*thick_sc_attach)/8.+0.5*thick_sc_attach" y="0.5*height_sc_attach+0.25*(height_septum - height_sc_attach)" z="0.5*length_sc_attach -0.5*thick_sc_attach -3.*(width_sc_attach - 0.5*thick_sc_attach)/8.-20."/>
+  <position unit="cm" name="scAttachTubeTrans_1" x="3.*(width_sc_attach - 0.5*thick_sc_attach)/8.-0.5*thick_sc_attach" y="0.5*height_sc_attach+0.25*(height_septum - height_sc_attach)" z="0.5*length_sc_attach -0.5*thick_sc_attach -3.*(width_sc_attach - 0.5*thick_sc_attach)/8."/>
+  <position unit="cm" name="scAttachTubeTrans_2"  x="-3.*(width_sc_attach - 0.5*thick_sc_attach)/8.+0.5*thick_sc_attach" y="0.5*height_sc_attach+0.25*(height_septum - height_sc_attach)" z="0.5*length_sc_attach -0.5*thick_sc_attach -3.*(width_sc_attach - 0.5*thick_sc_attach)/8."/>
   <position unit="cm" name="ShldTubeTrans_1" x="3.*(width_sc_attach - 0.5*thick_sc_attach)/8.-0.5*thick_sc_attach"  y="-inner_r_sc -1.*length_sc_attach +0.5*thick_sc_attach +3.*(width_sc_attach - 0.5*thick_sc_attach)/8." z="-y_cent_sc+0.5*height_sc_attach+0.25*(height_septum - height_sc_attach)"/>
   <position unit="cm" name="ShldTubeTrans_2"  x="-3.*(width_sc_attach - 0.5*thick_sc_attach)/8.+0.5*thick_sc_attach"  y="-inner_r_sc -1.*length_sc_attach +0.5*thick_sc_attach +3.*(width_sc_attach - 0.5*thick_sc_attach)/8." z="-y_cent_sc+0.5*height_sc_attach+0.25*(height_septum - height_sc_attach)"/>
 
@@ -509,22 +487,8 @@
   <position unit="cm" name="new_sc_Trans_3" x="0" y="0" z="-1*delta_new_center_sc_prex"/>
   <position unit="cm" name="new_sc_Trans_4" x="0" y="0" z="-1*delta_new_center_sc_crex"/>
 
-  <position unit="cm" name="new_sc_Shield_Trans_1" x="0" y="0" z="thick_sc_beampipe_shield/2"/>
-  <position unit="cm" name="new_sc_Shield_Trans_2" x="0" y="0" z="-1*length_sc_chamber_beam_pipe_shield/2"/>
-  <position unit="cm" name="new_sc_Shield_center" x="0" y="0" z="new_center_sc - thick_sc_attach_shield"/>
-  <position unit="cm" name="new_sc_Shield_Trans_3" x="0" y="0" z="-1*delta_new_center_sc_prex + thick_sc_attach_shield"/>
-  <position unit="cm" name="new_sc_Shield_Trans_4" x="0" y="0" z="-1*delta_new_center_sc_crex + thick_sc_attach_shield"/>
-
   <!-- New Shielding for collimator box  positions -->
-  <position unit="cm" name="scAttachShieldTrans_1" x="0" y="0" z="(backthick_sc_attach_shield  - forwardthick_sc_attach_shield)"/>
-  <position unit="cm" name="scAttachShieldTrans_2" x="0" y="0" z="-1*length_sc_attach_shield/2 + backthick_sc_attach_shield" />
-  <position unit="cm" name="scAttachShieldTubeTrans_1" x="3.*(width_sc_attach - 0.5*thick_sc_attach)/8.-0.5*thick_sc_attach" y="0.5*height_sc_attach+0.25*(height_septum - height_sc_attach)" z="0.5*length_sc_attach -0.5*thick_sc_attach -3.*(width_sc_attach - 0.5*thick_sc_attach)/8. + (backthick_sc_attach_shield  - forwardthick_sc_attach_shield)"/>
-  <position unit="cm" name="scAttachShieldTubeTrans_2"  x="-3.*(width_sc_attach - 0.5*thick_sc_attach)/8.+0.5*thick_sc_attach" y="0.5*height_sc_attach+0.25*(height_septum - height_sc_attach)" z="0.5*length_sc_attach -0.5*thick_sc_attach -3.*(width_sc_attach - 0.5*thick_sc_attach)/8. + (backthick_sc_attach_shield  - forwardthick_sc_attach_shield)"/>
-  <position unit="cm" name="scAttachShieldTrans_hut_l" x="-1.0*center_vac_enc_xu" y="0" z="center_vac_enc_z - center_sc_attach + (backthick_sc_attach_shield  - forwardthick_sc_attach_shield)"/>
-  <position unit="cm" name="scAttachShieldTrans_hut_r" x="1.0*center_vac_enc_xu" y="0" z="center_vac_enc_z - center_sc_attach + (backthick_sc_attach_shield  - forwardthick_sc_attach_shield)"/>
-  <position unit="cm" name="scAttachShieldTrans_3" x="0" y="0" z="length_sc_attach_shield/2 + (backthick_sc_attach_shield  - forwardthick_sc_attach_shield)"/>
-  <position unit="cm" name="scAttachShieldTrans_4" x="0" y="0" z="length_sc_attach_shield/2"/>
-  <position unit="cm" name="sc_Shieldattach_center" x="0" y="0" z="center_sc_attach - (backthick_sc_attach_shield  - forwardthick_sc_attach_shield)"/>
+  <position unit="cm" name="scAttachShieldTrans_1" x="0" y="0" z="-1*length_sc_attach_shield/2"/>
 
 
   <position unit="cm" name="scOringTrans_1" x="0" y="0" z="0"/>
@@ -543,12 +507,6 @@
   <position unit="cm" name="coll_center"       x="0" y="0"     z="center_coll"/>
   <position unit="cm" name="coll_cw70_center"       x="0" y="0"     z="center_cw70_coll"/>
   <position unit="cm" name="Cu_tube_center"       x="0" y="0"     z="center_cw70_coll-cw70_jacket_length/2"/>
-  <!-- New position for coll_chamber - Ricky -->
-  <position unit="cm" name="coll_chamber_center" x="0" y="5." z="center_coll_chamber"/>
-  <position unit="cm" name="coll_chamber_trans" z="-5."/>
-  <position unit="cm" name="coll_chamber_sub_trans" y="5." z="center_coll_chamber-center_sc_attach"/>
-  <position name="center"/>
-  
 
   <position unit="cm" name="jacketTrans_cyc"       x="0" y="0"     z="-length_cw70_coll_1/2-cw70_jacket_length/2"/>
   <position unit="cm" name="jacketTrans_cyc_g1"       x="0" y="0"     z="-length_cw70_coll_1/2+cw70_groove_length"/>
@@ -696,9 +654,6 @@
  <position unit="cm" name="top_scatchamber_trans1" x="0" y="0" z="-0.5*top_scatchamber_p1_high+0.5*top_scatchamber_p2_high" />
  <position unit="cm" name="top_scatchamber_trans2" x="0" y="0" z="-0.5*top_scatchamber_p1_high+1.*top_scatchamber_p2_high+0.5*top_scatchamber_p3_high" />
  <position unit="cm" name="top_scatchamber_trans3" x="0" y="0" z="+0.5*top_scatchamber_p1_high+0.5*top_scatchamber_p4_high" />
-
- <!-- Acceptance Positions - Ricky -->
- <position unit="cm" name="accept_center" x="0" y="0" z="center_accept"/>
 
 
 <!-- Rotations -->
@@ -1050,7 +1005,6 @@
                                                          y2="1.0*height_vac_d_enc" x3="1.0*width_vac_d_enc" x4="1.0*width_vac_d_enc" alpha2="alpha_l_2" />
 
   <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="sc_attach_sc_chamber_beam_hole" rmin="0.0" rmax="radius_sc_chamber_beam_pipe+0.01" z="2*thick_sc_attach" />
-  <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="new_coll_chamber_sub" rmin="0." rmax="outer_r_coll_chamber" z="height_coll_chamber"/>
 
   <subtraction name ="sc_attach_0">
       <first ref="sc_attach_o"/>
@@ -1094,19 +1048,11 @@
     <positionref ref="scAttachTubeTrans_2"/>
     <rotationref ref="scRot_1"/>
   </union>
-  <subtraction name ="sc_attach_6">
+  <subtraction name ="sc_attach_solid">
       <first ref="sc_attach_5"/>
       <second ref="sc_attach_beam_hole"/> <!-- Should be with the septum pipe -->
       <positionref ref="scAttachTrans_3"/>
   </subtraction>
-  <subtraction name="sc_attach_solid">
-    <first ref="sc_attach_6"/>
-    <second ref="new_coll_chamber_sub"/>
-    <positionref ref="coll_chamber_sub_trans"/>
-    <rotationref ref="scRot_1"/>
-  </subtraction>
-
-  
 
   <!-- New Shielding for collimator box  -->
   <box lunit="cm" name="sc_attach_shield_0" x="width_sc_attach_shield" y="height_sc_attach_shield" z="length_sc_attach_shield"/>
@@ -1125,61 +1071,45 @@
                                                          y1="1.0*height_vac_u_enc" x1="1.0*width_vac_u_enc" x2="1.0*width_vac_u_enc"  alpha1="alpha_l_1" 
                                                          y2="1.0*height_vac_d_enc" x3="1.0*width_vac_d_enc" x4="1.0*width_vac_d_enc" alpha2="alpha_l_2" />
 
-  <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="sc_attach_beam_hole_sub1" rmin="0.0" rmax="coll_3_outer_r + 0.01" z="length_sc_attach_shield" />
-  <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="sc_attach_beam_hole_sub2" rmin="0.0" rmax="ro_septum_pipe + 1" z="forwardthick_sc_attach_shield" />
-
-  <!--Relative positions derived from the sc_attachment positions -->
+  <!--Relative positions are from the sc_attachment -->
   <subtraction name ="sc_attach_shield_2">
     <first ref="sc_attach_shield_0"/>
     <second ref="sc_attach_shield_1"/>
-    <positionref ref="scAttachShieldTrans_1"/>
+    <positionref ref="scAttachTrans_1"/>
   </subtraction>  
   <subtraction name ="sc_attach_shield_3">
     <first ref="sc_attach_shield_2"/>
     <second ref="sc_attach_shield_tube"/>
-    <positionref ref="scAttachShieldTubeTrans_1"/>
+    <positionref ref="scAttachTubeTrans_1"/>
     <rotationref ref="scRot_1"/>
   </subtraction>  
   <subtraction name ="sc_attach_shield_4">
     <first ref="sc_attach_shield_3"/>
     <second ref="sc_attach_shield_tube"/>
-    <positionref ref="scAttachShieldTubeTrans_2"/>
+    <positionref ref="scAttachTubeTrans_2"/>
     <rotationref ref="scRot_1"/>
   </subtraction>  
   <subtraction name ="sc_attach_shield_5">
       <first ref="sc_attach_shield_4"/>
       <second ref="sc_attach_sc_chamber_beam_hole_sub"/>
-      <positionref ref="scAttachShieldTrans_2"/>
+      <positionref ref="scAttachShieldTrans_1"/>
   </subtraction>
   <subtraction name ="sc_attach_shield_6">
       <first ref="sc_attach_shield_5"/>
       <second ref="hole_for_l_vac_enc_sub"/>
-      <positionref ref="scAttachShieldTrans_hut_l"/>
+      <positionref ref="scAttachTrans_hut_l"/>
   </subtraction>
 
   <subtraction name ="sc_attach_shield_7">
       <first ref="sc_attach_shield_6"/>
       <second ref="hole_for_r_vac_enc_sub"/>
-      <positionref ref="scAttachShieldTrans_hut_r"/>
+      <positionref ref="scAttachTrans_hut_r"/>
   </subtraction>
 
   <subtraction name ="sc_attach_shield_8">
       <first ref="sc_attach_shield_7"/>
-      <second ref="sc_attach_beam_hole_sub1"/>
-      <positionref ref="scAttachShieldTrans_3"/>
-  </subtraction>
-
-  <subtraction name ="sc_attach_shield_9">
-      <first ref="sc_attach_shield_8"/>
-      <second ref="sc_attach_beam_hole_sub2"/>
-      <positionref ref="scAttachShieldTrans_4"/>
-  </subtraction>
-
-  <subtraction name="sc_attach_shield_9">
-    <first ref="sc_attach_shield_8"/>
-    <second ref="new_coll_chamber_sub"/>
-    <positionref ref="coll_chamber_sub_trans"/>
-    <rotationref ref="scRot_1"/>
+      <second ref="sc_attach_beam_hole"/>
+      <positionref ref="scAttachTrans_3"/>
   </subtraction>
 
 
@@ -1202,10 +1132,10 @@
   </subtraction>
 
   <!--subtract spaces for main target scattering chambers and water target scattering chamber -->
-  <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="sub_new_sc_prex" rmin="0.0" rmax="outer_r_new_sc+0.001" z="6*radius_sc_chamber_beam_pipe" />
-  <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="sub_new_sc_prex_water_tgt" rmin="0.0" rmax="outer_r_new_sc_water_tgt+0.001" z="6*radius_sc_chamber_beam_pipe" />
-  <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="sub_new_sc_crex" rmin="0.0" rmax="outer_r_new_sc+0.001" z="6*radius_sc_chamber_beam_pipe" />
-  <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="sub_new_sc_crex_water_tgt" rmin="0.0" rmax="outer_r_new_sc_water_tgt+0.001" z="6*radius_sc_chamber_beam_pipe" />
+  <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="sub_new_sc_prex" rmin="0.0" rmax="outer_r_new_sc+0.001" z="4*radius_sc_chamber_beam_pipe" />
+  <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="sub_new_sc_prex_water_tgt" rmin="0.0" rmax="outer_r_new_sc_water_tgt+0.001" z="4*radius_sc_chamber_beam_pipe" />
+  <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="sub_new_sc_crex" rmin="0.0" rmax="outer_r_new_sc+0.001" z="4*radius_sc_chamber_beam_pipe" />
+  <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="sub_new_sc_crex_water_tgt" rmin="0.0" rmax="outer_r_new_sc_water_tgt+0.001" z="4*radius_sc_chamber_beam_pipe" />
 
   <subtraction name ="new_sc_beampipe_4">
       <first ref="new_sc_beampipe_3"/>
@@ -1234,53 +1164,6 @@
       <positionref ref="new_sc_Trans_4"/>
       <rotationref ref="scRot_13"/>
   </subtraction>
-
-  <!-- Add shielding jacket to  "new_sc_beampipe -->
-  <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="new_sc_beampipe_shield_0" rmin="0" rmax="radius_sc_chamber_beam_pipe + thick_sc_beampipe_shield" z="length_sc_chamber_beam_pipe_shield + thick_sc_beampipe_shield/2" />
-  <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="new_sc_beampipe_shield_1" rmin="0.0" rmax="radius_sc_chamber_beam_pipe + 0.1" z="length_sc_chamber_beam_pipe - thick_sc_beampipe_shield/2 + 0.1" />
-  <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="new_sc_US_beam_hole_shield" rmin="0.0" rmax="sc_beam_hole_radius" z="3*thick_sc_beampipe_shield" />
-
-  <subtraction name ="new_sc_beampipe_shield_2">
-      <first ref="new_sc_beampipe_shield_0"/>
-      <second ref="new_sc_beampipe_shield_1"/> 
-      <positionref ref="new_sc_Shield_Trans_1"/>
-  </subtraction>
-
-  <subtraction name ="new_sc_beampipe_shield_3">
-      <first ref="new_sc_beampipe_shield_2"/>
-      <second ref="new_sc_US_beam_hole_shield"/> 
-      <positionref ref="new_sc_Shield_Trans_2"/>
-  </subtraction>
-
-  <!--subtract spaces for main target scattering chambers and water target scattering chamber -->
-  <subtraction name ="new_sc_beampipe_shield_4">
-      <first ref="new_sc_beampipe_shield_3"/>
-      <second ref="sub_new_sc_prex"/> 
-      <positionref ref="new_sc_Shield_Trans_3"/>
-      <rotationref ref="scRot_1"/>
-  </subtraction>
-
-  <subtraction name ="new_sc_beampipe_shield_5">
-      <first ref="new_sc_beampipe_shield_4"/>
-      <second ref="sub_new_sc_prex_water_tgt"/> 
-      <positionref ref="new_sc_Shield_Trans_3"/>
-      <rotationref ref="scRot_13"/>
-  </subtraction>
-
-  <subtraction name ="new_sc_beampipe_shield_6">
-      <first ref="new_sc_beampipe_shield_5"/>
-      <second ref="sub_new_sc_crex"/> 
-      <positionref ref="new_sc_Shield_Trans_4"/>
-      <rotationref ref="scRot_1"/>
-  </subtraction>
-
-  <subtraction name ="new_sc_beampipe_shield_solid">
-      <first ref="new_sc_beampipe_shield_6"/>
-      <second ref="sub_new_sc_crex_water_tgt"/> 
-      <positionref ref="new_sc_Shield_Trans_4"/>
-      <rotationref ref="scRot_13"/>
-  </subtraction>
-
 
   <!--Add the  main target scattering chambers and water target scattering chamber -->
   <!-- Add PREX main and water tgt 1st -->
@@ -1361,24 +1244,6 @@
       <rotationref ref="scRot_13"/>
   </subtraction>
 
-  <!-- Add new Collimator Chamber - Ricky -->
-  
-  <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="new_coll_chamber_0" rmin="outer_r_coll_chamber - thick_new_sc" rmax="outer_r_coll_chamber" z="height_coll_chamber"/>
-
-  <subtraction name="new_coll_chamber_1">
-    <first ref="new_coll_chamber_0"/>
-    <second ref="new_coll_chamber_sub"/>
-    <positionref ref="center"/>
-    <rotationref ref="scRot_1"/>
-  </subtraction>
-
-  <subtraction name="new_coll_chamber_solid">
-    <first ref="new_coll_chamber_1"/>
-    <second ref="sub_new_sc_beampipe_0"/>
-    <positionref ref="coll_chamber_trans"/>
-    <rotationref ref="identity"/>
-  </subtraction>
-  
   <!-- o-rings and o-ring detectors -->
 
   <box lunit="cm" name="sc_oring_det_solid" x="width_sc_attach - 1.001*thick_sc_attach" y="height_sc_attach - 1.001*thick_sc_attach" z="0.5"/>
@@ -1416,17 +1281,6 @@
       <first ref="septum_solid_2"/>
       <second ref="sept_beam_hole"/>
   </subtraction>
-  
-  <!-- Acceptance solid - Ricky -->
-  
-  <box lunit="cm" name="accept_0" x="width_accept" y="height_accept" z="length_accept"/>
-  <box lunit="cm" name="accept_sub" x="width_accept_sub" y="height_accept" z="length_accept+1."/>
-
-  <subtraction name="accept_solid">
-    <first ref="accept_0"/>
-    <second ref="accept_sub"/>
-  </subtraction>
-    
 
 
 <!-- Beamline -->
@@ -2275,14 +2129,6 @@
       <!-- <auxiliary auxtype="SensDet" auxvalue="volumeN5002"/> -->
     </volume>
 
-    <!-- Logic for new collimator chamber - Ricky -->
-    
-    <volume name="new_coll_chamber_logic">
-      <materialref ref="Aluminum"/>
-      <solidref ref="new_coll_chamber_solid"/>
-    </volume>
-      
-
     <volume name="Cu_tube_logic">
       <materialref ref="Copper"/> 
       <solidref ref="Cu_tube_Solid"/>
@@ -2313,13 +2159,6 @@
       <solidref ref="new_sc_beampipe_solid"/>
       <auxiliary auxtype="SensDet" auxvalue="volumeN5040"/>
       <!-- <auxiliary auxtype="SensDet" auxvalue="planeDet"/> -->
-    </volume>
-
-    <!-- New dual Scattering Chamber Shield -->
-    <volume name="new_sc_beampipe_shield_logic">
-      <materialref ref="Shield"/>
-      <solidref ref="new_sc_beampipe_shield_solid"/>
-      <!-- <auxiliary auxtype="SensDet" auxvalue="volumeN5040"/> -->
     </volume>
 
     <volume name="new_sc_prex_logic">
@@ -2357,9 +2196,8 @@
     </volume>
 
     <volume name="sc_attach_shield_logic">
-      <!-- <materialref ref="Kryptonite"/> -->
       <materialref ref="Shield"/>
-      <solidref ref="sc_attach_shield_9"/>
+      <solidref ref="sc_attach_shield_8"/>
       <auxiliary auxtype="SensDet" auxvalue="volumeN5051"/>
     </volume>
 
@@ -2424,12 +2262,10 @@
       <solidref ref="septum_pipe_shield_3"/>
     </volume>
     <volume name="septShld_l_logic">
-      <!-- <materialref ref="Kryptonite"/> -->
       <materialref ref="Shield"/>
       <solidref ref="sept_shld_l"/>
     </volume>
     <volume name="septShld_r_logic">
-      <!-- <materialref ref="Kryptonite"/> -->
       <materialref ref="Shield"/>
       <solidref ref="sept_shld_r"/>
     </volume>
@@ -2601,14 +2437,6 @@
       <auxiliary auxtype="SensDet" auxvalue="volumeN10005"/>
     </volume>
 
-    <!-- Accept Logic - Ricky -->
-    
-    <volume name="accept_logic">
-      <materialref ref="Aluminum"/>
-      <solidref ref="accept_solid"/>
-    </volume>
-      
-
 
     <volume name="logicMother">
       <materialref ref="Vacuum"/>
@@ -2630,20 +2458,10 @@
         <positionref ref="Cu_tube_center"/>
       </physvol>
 
-      <!-- Placing new collimator chamber - Ricky -->
-      
-      <physvol name="new_coll_chamber">
-	<volumeref ref="new_coll_chamber_logic"/>
-	<positionref ref="coll_chamber_center"/>
-	<rotationref ref="scRot_1"/>
-      </physvol> 
-	
-
-
       <physvol name="target">
         <volumeref ref="target_logic"/>
         <positionref ref="targ_center"/>
-      </physvol> 
+      </physvol>
 
 
       <!--Making way to new SC design -->
@@ -2658,12 +2476,6 @@
       <physvol name="new_sc_beampipe">
         <volumeref ref="new_sc_beampipe_logic"/>
         <positionref ref="new_sc_center"/>
-      </physvol>
- 
-     <!-- New dual Scattering Chamber Shield -->
-      <physvol name="new_sc_beampipe_shield">
-        <volumeref ref="new_sc_beampipe_shield_logic"/>
-        <positionref ref="new_sc_Shield_center"/>
       </physvol>
 
       <physvol name="new_sc_prex">
@@ -2697,7 +2509,7 @@
 
       <physvol name="sc_attachment_shield">
         <volumeref ref="sc_attach_shield_logic"/>
-        <positionref ref="sc_Shieldattach_center"/>
+        <positionref ref="sc_attach_center"/>
       </physvol>
 
       <physvol name="septum">
@@ -2706,24 +2518,8 @@
       </physvol>
 
 
-      <!-- The following volume is not properly setup -->
-      <!--
-      <physvol name="septum_shield">
-        <volumeref ref="septpipeShld_logic"/>
-      <position name="posseptum_shield" unit="cm" x="0" y="0" z="center_septum_pipe"/>
-      </physvol>
-      -->
-      <physvol name="septum_shield_r">
-        <volumeref ref="septShld_r_logic"/>
-        <positionref ref="septShld_center_r"/>
-      </physvol>
 
 
-      <physvol name="septum_shield_l">
-        <volumeref ref="septShld_l_logic"/>
-        <positionref ref="septShld_center_l"/>
-      </physvol>
-      
      <physvol name="septum_pipe">
       <volumeref ref="septum_pipe_logic" />
       <position name="posbeamline" unit="cm" x="0" y="0" z="center_septum_pipe"/>
@@ -2922,8 +2718,6 @@
         <volumeref ref="dDet_beamline_4_logic"/>
         <positionref ref="dDet_beamline_pos_4"/>
       </physvol>
-
-
 
 <!--This interfere with the ssenc volume -->
 <!--
