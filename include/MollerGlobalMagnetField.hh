@@ -82,9 +82,11 @@ public:
   
   void SetLowLimSeptumField(G4double value) { mg_field_low = value; };
   void SetHighLimSeptumField(G4double value) { mg_field_high = value; };
-
+  void SetScaleFactor(G4double value) {magScaleFactor=value;}
+  
   G4double ReadLowLimSeptumField() {return mg_field_low;};
   G4double ReadHighLimSeptumField() {return mg_field_high;};
+  G4double GetScaleFactor() {return magScaleFactor;}
 
   void GetFieldValue( const  G4double Point[4], G4double *Bfield ) const;  
   void WriteMagField();
@@ -104,6 +106,7 @@ private:
   G4String upstreamFilename;
   G4String hybridFilename;
 
+  G4double magScaleFactor;
   G4double mg_field_low;
   G4double mg_field_high; 
 

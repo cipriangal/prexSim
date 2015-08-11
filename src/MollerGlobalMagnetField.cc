@@ -185,8 +185,8 @@ void MollerGlobalMagnetField::GetFieldValue(const G4double Point[4], G4double *B
   G4double dBydx = 0.*gauss/cm;
 
   // gives integral 7003.4 G @ 1 cm
-  G4double a = 158.*gauss/cm;
-  G4double shielded = 0.78 *gauss/cm;
+  G4double a = magScaleFactor*158.*gauss/cm;
+  G4double shielded = magScaleFactor*0.78 *gauss/cm;
   G4double bu = -44*cm;
   // G4double mg2_field_low = -44*cm;
   // G4double mg2_field_high = 44*cm;

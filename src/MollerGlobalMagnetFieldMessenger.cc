@@ -56,6 +56,12 @@ MollerGlobalMagnetFieldMessenger::MollerGlobalMagnetFieldMessenger(MollerGlobalM
   magHighLimCmd->SetRange("Mfield_high>=44.0");
   //  magHighLimCmd->AvailableForStates(G4State_Init,G4State_PreInit,G4State_Idle, G4State_GeomClosed,G4State_Quit);
 
+  magScaleFactorCmd = new G4UIcmdWithADouble("/moller/field/setFieldScaleFactor",this);  
+  magScaleFactorCmd->SetGuidance("Set magnetic field scale factor.");
+  magScaleFactorCmd->SetParameterName("magScaleFactor",true);
+  magScaleFactorCmd->SetDefaultValue(1.);
+
+
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -75,19 +81,13 @@ MollerGlobalMagnetFieldMessenger::~MollerGlobalMagnetFieldMessenger()
 void MollerGlobalMagnetFieldMessenger::SetNewValue(G4UIcommand* command, G4String newValue)
 {
 
-  if (command ==  magLowLimCmd ) 
-    {
-      //      G4cout << "Setting lower limit for septum field" << magLowLimCmd->GetNewDoubleValue(newValue) << G4endl;
-      setField->SetLowLimSeptumField(magLowLimCmd->GetNewDoubleValue(newValue));
-    }
-  else if (command == magHighLimCmd ) 
-    {
-      setField->SetHighLimSeptumField(magHighLimCmd->GetNewDoubleValue(newValue)); 
-    }
-  // if (command == hybridFileCmd) 
-  //   { setField->SetHybridMapFile(newValue); }
-  // else if (command == upstreamFileCmd)
-  //   { setField->SetUpstreamMapFile(newValue); }
+  if (command ==  magLowLimCmd ){
+    setField->SetLowLimSeptumField(magLowLimCmd->GetNewDoubleValue(newValue));
+  } else if (command == magHighLimCmd ){
+    setField->SetHighLimSeptumField(magHighLimCmd->GetNewDoubleValue(newValue)); 
+  } else if (command == magScaleFactorCmd ){
+    setField->SetScaleFactor(magScaleFactorCmd->GetNewDoubleValue(newValue));
+  }
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
