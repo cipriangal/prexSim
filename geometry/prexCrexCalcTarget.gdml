@@ -803,7 +803,7 @@
   <!-- W Box Collimator Jacket : rakitha Mon Sep 30 16:40:34 EDT 2013 -->
   <!-- Scaled for Crex - Ricky -->
   <box lunit="cm" name="Coll_jacket_W" x="width_w_coll_1" y="height_w_coll_1" z="length_w_coll_1"/>
-  <cone aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="coll_jacket_w_bore_cone" rmin1="0.0" rmax1="coll_inner_r1*1.31" rmin2="0.0" rmax2="coll_inner_r2*1.30" z="length_bore"/>
+  <cone aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="coll_jacket_w_bore_cone" rmin1="0.0" rmax1="coll_inner_r1*1.31" rmin2="0.0" rmax2="coll_inner_r2*1.26" z="length_bore"/>
 
   <!-- Box geometry to be subtracted from the DS of the W Box Collimator Jacket : rakitha Mon Nov 18 15:12:34 EST 2013 -->
   <box lunit="cm" name="Coll_jacket_sub_box" x="width_w_sub_box*1.0001" y="height_w_sub_box*1.0001" z="length_w_sub_box*1.001"/>

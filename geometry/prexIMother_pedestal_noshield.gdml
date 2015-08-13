@@ -1398,7 +1398,8 @@
       <rotationref ref="scRot_1"/>
   </subtraction> 
 
-  <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="dDet_us" rmin="0" rmax="(coll_inner_r1)*1.0001" z="0.1" />
+  <!-- Used to be coll_inner_r1 - Ricky -->
+  <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="dDet_us" rmin="0" rmax="(5.)*1.0001" z="0.1" />
   <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="dDet_ds" rmin="0" rmax="(coll_inner_r2)*1.0001" z="0.1" />
 
   <!-- Disk detectors inside the beamline : Rakitha Tue Nov  5 15:17:02 EST 2013 -->

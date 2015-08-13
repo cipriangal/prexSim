@@ -200,7 +200,8 @@ public:
   void AddMacro_2(const G4String&);
   void SetLowLimMagneticShield(G4double value) {mg_field_low = value; };
   void SetHighLimMagneticShield(G4double value) { mg_field_high = value; };
-
+  void SetMagFieldScaleFactor(G4double value) {mgFieldScaleFactor = value; }
+  
   void UpdateSimInputs();
 
 private:
@@ -223,6 +224,7 @@ private:
   G4String MacrofileName_2;
   G4double mg_field_low;
   G4double mg_field_high;
+  G4double mgFieldScaleFactor;
 
   G4int ev_num, index;
   G4int partType, splitProcess, creatorProcess; 

@@ -186,10 +186,10 @@ void MollerGlobalMagnetField::GetFieldValue(const G4double Point[4], G4double *B
 
   // gives integral 7003.4 G @ 1 cm
   // scaling by 2.35 for Crex
-  G4double a = 2.35*158.*gauss/cm;
-  G4double shielded = 2.35*0.78 *gauss/cm;
-  G4double k = shielded;
   // bu and bd define center of gaussian approximations of fringe field along z-axis
+  G4double a = magScaleFactor*158.*gauss/cm;
+  G4double shielded = magScaleFactor*0.78 *gauss/cm;
+  G4double k = shielded;
   G4double bu = -44*cm;
   // G4double mg2_field_low = -44*cm;
   // G4double mg2_field_high = 44*cm;

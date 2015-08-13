@@ -6,6 +6,12 @@
 
 /moller/det/readGeometryFromFile true
 
+#### Scale factor for fringe mag field
+## PREX
+#/moller/field/setFieldScaleFactor 1.
+## CREX
+/moller/field/setFieldScaleFactor 2.35
+
 ########~~~~~~~~~~~CG~~~~~~~~~~~ Target added to Rakitha's sim (PREX2)
 #/moller/det/setDetectorFileName geometry/prexII_coll_prototype_4_complete_HAP2target.gdml
 #/moller/det/setDetectorFileName geometry/prexII_coll_prototype_4_complete.gdml

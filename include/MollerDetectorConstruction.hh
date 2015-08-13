@@ -79,7 +79,8 @@ public:
   G4String  GetDetectorGeomFile() {return detfileName;};
   G4double GetLowLimMagneticShield() {return mg_field_low;};
   G4double GetHighLimMagneticShield() {return mg_field_high;};
-
+  G4double GetMagFieldScaleFactor(){return mgFieldScaleFactor;}
+  
 protected:
 
   //void DefineDipoleFields();
@@ -288,7 +289,7 @@ private:
 
   G4double mg_field_low;
   G4double mg_field_high;
-
+  G4double mgFieldScaleFactor;
 };
 
 #endif

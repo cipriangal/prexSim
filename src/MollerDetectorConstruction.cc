@@ -1874,7 +1874,8 @@ G4VPhysicalVolume* MollerDetectorConstruction::ConstructDetector()
 void MollerDetectorConstruction::ReadGlobalMagneticField()
 {
   mg_field_low = pGlobalMagnetField->ReadLowLimSeptumField();
-  mg_field_high = pGlobalMagnetField->ReadHighLimSeptumField();   
+  mg_field_high = pGlobalMagnetField->ReadHighLimSeptumField();
+  mgFieldScaleFactor = pGlobalMagnetField->GetScaleFactor();
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

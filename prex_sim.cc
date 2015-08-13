@@ -100,6 +100,7 @@ int main(int argc, char** argv)
       G4cout << "==========================================================="<< G4endl;
       G4cout << "Batch  mode"<< G4endl;
       G4cout << "==========================================================="<< G4endl;  
+
       G4String command = "/control/execute ";
       G4String fileName = argv[1];
       G4String fileName2 = argv[2];
@@ -115,7 +116,7 @@ int main(int argc, char** argv)
 
       analysis->SetLowLimMagneticShield(detector->GetLowLimMagneticShield());
       analysis->SetHighLimMagneticShield(detector->GetHighLimMagneticShield());
-
+      analysis->SetMagFieldScaleFactor(detector->GetMagFieldScaleFactor());      
       // Initialize G4 kernel
       //
       runManager->Initialize();

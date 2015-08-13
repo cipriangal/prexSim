@@ -39,8 +39,9 @@ class MollerGlobalMagnetFieldMessenger: public G4UImessenger
     MollerGlobalMagnetField*    setField;
     G4UIdirectory*              fieldDir;
 
-    G4UIcmdWithAString*         hybridFileCmd;
-    G4UIcmdWithAString*         upstreamFileCmd;
+    // G4UIcmdWithAString*         hybridFileCmd;
+    // G4UIcmdWithAString*         upstreamFileCmd;
+    G4UIcmdWithADouble*         magScaleFactorCmd;
     G4UIcmdWithADoubleAndUnit*  magLowLimCmd;
     G4UIcmdWithADoubleAndUnit*  magHighLimCmd;
 

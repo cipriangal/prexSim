@@ -125,7 +125,7 @@
 
   <!-- **No longer in use**  Initial CW70 water jacket inlet volume dimentions : rakitha Mon Sep 30 15:50:52 EDT 2013  -->  
   <constant name="width_cw70_jacket" value="5"/>  <constant name="height_cw70_jacket" value="2"/>  <constant name="length_cw70_jacket" value="3"/>
-  <!-- CW70 collimator extension at the US dimentions : rakitha  Mon Nov 18 13:43:01 EST 2013 -->  <!-- Added Crex Scaling - Ricky -->
+  <!-- CW70 collimator extension at the US dimentions : rakitha  Mon Nov 18 13:43:01 EST 2013 -->  
   <constant name="cw70_jacket_inner_r" value="2"/>  <constant name="cw70_jacket_outer_r" value="5"/>  <constant name="cw70_jacket_length" value="2.54"/>
 
   <!-- CW70 surface grooves : rakitha Mon Nov 18 13:43:01 EST 2013  -->
@@ -2693,16 +2693,16 @@
       </physvol> -->
 
 
-      <!-- <physvol name="target">
+      <physvol name="target">
         <volumeref ref="target_logic"/>
         <positionref ref="targ_center"/>
-      </physvol> -->
+      </physvol>
 
       <!-- Crex target - ricky -->
-      <physvol name="Ca_target">
+      <!-- <physvol name="Ca_target">
 	<volumeref ref="Ca_target_logic"/>
 	<positionref ref="crex_targ_center"/>
-      </physvol>
+      </physvol> -->
 
 
       <!--Making way to new SC design -->
