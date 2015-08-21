@@ -236,12 +236,12 @@ void MollerGlobalMagnetField::GetFieldValue(const G4double Point[4], G4double *B
 
       if (myLocalPointInMainMagnet[2]<mg_field_low){ 
 
-	//dBxdy = a*(exp(-((pow(myLocalPointInMainMagnet[2]-bu,2))/(2*pow(c2,2)))));
+	dBxdy = a*(exp(-((pow(myLocalPointInMainMagnet[2]-bu,2))/(2*pow(c2,2)))));
 
 
       } else if ((myLocalPointInMainMagnet[2]>=mg_field_low)&&(myLocalPointInMainMagnet[2]<z_intercept_low)){
 
-	//dBxdy = a*(exp(-(pow(mg_field_low-bu,2)/(2*pow(c2,2)))))*(exp(-((pow(myLocalPointInMainMagnet[2]-mg_field_low,2))/(2*pow(c1,2)))));
+	dBxdy = a*(exp(-(pow(mg_field_low-bu,2)/(2*pow(c2,2)))))*(exp(-((pow(myLocalPointInMainMagnet[2]-mg_field_low,2))/(2*pow(c1,2)))));
 
       } else if ((myLocalPointInMainMagnet[2]>=z_intercept_low)&&(myLocalPointInMainMagnet[2]<=z_intercept_high)){
 

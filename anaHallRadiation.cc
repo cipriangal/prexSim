@@ -245,20 +245,19 @@ void processTree(TString tname){
   t->SetBranchAddress("creator",&creator);  
   t->SetBranchAddress("PDGid",&PDGid);  
   t->SetBranchAddress("track",&track);  
-  t->SetBranchAddress("event",&event);  
-   t->SetBranchAddress("Edeposit",&Edeposit); 
-   t->SetBranchAddress("kineE",&Energy);
+  t->SetBranchAddress("event",&event);
 
-// Making alterations - Ricky
-/*  if(SensVolume_v==10008 || SensVolume_v==10009){
-    t->SetBranchAddress("Edeposit",&Energy);
+  if ( SensVolume_v==10008 || SensVolume_v==10009){
+  t->SetBranchAddress("Edeposit",&Energy); 
+  t->SetBranchAddress("kineE",&kineE);
   }
-  else {
-    t->SetBranchAddress("kineE",&Energy);
-    } */
-  
-  //  t->SetBranchAddress("kineE",&Edeposit); 
-  //  t->SetBranchAddress("Edeposit",&kineE); //hack to get the deposited energy
+
+  else if  ( SensVolume_v==8004 || SensVolume_v==8005 || SensVolume_v==10001 || SensVolume_v==10002 || SensVolume_v==10003 || SensVolume_v==10004 ) {
+  t->SetBranchAddress("kineE",&Energy); 
+  t->SetBranchAddress("Edeposit",&Edeposit); //hack to get the deposited energy
+  }
+  //if (SensVolume_v==10008 || SensVolume_v==10009) Energy=Edeposit;
+  //else Energy=kineE;
   
   Double_t hit_radius_min = 46.038; //cm inner radius of the beam pipe 45.72 cm and outer radius of the beam pipe 46.038 cm
   

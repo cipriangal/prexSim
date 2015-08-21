@@ -368,8 +368,12 @@
 
   <!-- Lead Pig Shield - Ricky -->
   <constant name="height_pig_shield" value="((height_coll_chamber/2-5.)-(height_sc_attach/2)+15.)"/>
-  <constant name="width_pig_shield" value="outer_r_coll_chamber*2+30."/>
-  <constant name="length_pig_shield" value="outer_r_coll_chamber*2+30."/>
+  <constant name="width_pig_shield" value="outer_r_coll_chamber*2+10."/>
+  <constant name="length_pig_shield" value="outer_r_coll_chamber*2+10."/>
+  <constant name="pig_box_length" value="outer_r_coll_chamber*2+30."/>
+  <constant name="pig_box_width" value="outer_r_coll_chamber*2+10."/>
+  <constant name="pig_box_height" value="height_w_coll_1+5."/>
+
 
    <!-- Shielding jacket to "new_sc_beampipe" -->
   <constant name="thick_sc_beampipe_shield" value="20."/>
@@ -556,6 +560,7 @@
   <!-- New position for pig shield - Ricky -->
   <position unit="cm" name="pig_center" x="0" y="-(height_sc_attach/2.)-(height_pig_shield/2.)" z="center_coll_chamber"/>
   <position unit="cm" name="pig_sub_trans" y="15."/>
+  <position unit="cm" name="pig_box_trans" y="-height_pig_shield/2+height_w_coll_1/2.+2.5"/>
   <position unit="cm" name="hole_for_pig" x="0" y="-(height_sc_attach/2.)-(height_pig_shield/2.)" z="center_coll_chamber-center_sc_attach"/>
 
   <position unit="cm" name="jacketTrans_cyc"       x="0" y="0"     z="-length_cw70_coll_1/2-cw70_jacket_length/2"/>
@@ -1392,14 +1397,28 @@
 
   <!-- Add Shielding Pig - Ricky -->
   <box lunit="cm" name="pig_shield_0" x="width_pig_shield" y="height_pig_shield" z="length_pig_shield"/>
+  <box lunit="cm" name="pig_box_0" x="pig_box_width" y="pig_box_height" z="pig_box_length"/>
+  
   <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="pig_sub" rmin="0." rmax="outer_r_coll_chamber" z="height_pig_shield"/>
 
-  <subtraction name="pig_shield_solid">
+  <subtraction name="pig_shield_1">
     <first ref="pig_shield_0"/>
     <second ref="pig_sub"/>
     <positionref ref="pig_sub_trans"/>
     <rotationref ref="scRot_1"/>
   </subtraction>
+  <subtraction name="pig_box_1">
+    <first ref="pig_box_0"/>
+    <second ref="pig_sub"/>
+    <positionref ref="pig_sub_trans"/>
+    <rotationref ref="scRot_1"/>
+  </subtraction>
+  <union name="pig_shield_solid">
+    <first ref="pig_shield_1"/>
+    <second ref="pig_box_1"/>
+    <positionref ref="pig_box_trans"/>
+  </union>
+
 
   <!-- o-rings and o-ring detectors -->
 

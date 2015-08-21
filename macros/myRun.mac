@@ -12,4 +12,4 @@
 #/gun/energy 3.18 GeV  ## HAPPEX2 energy
 #/moller/ana/rootfilename ./tst_give_me_a_name
 
-/run/beamOn 100
+/run/beamOn 1000000
