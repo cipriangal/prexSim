@@ -116,8 +116,8 @@
   <constant name="coll_angle" value="atan(fcollInnerR/(delta_cw70_coll_us_face))*180./PI"/> 
 
   <!-- Scaling for Crex - Ricky  -->
-  <constant name="cw70_coll_inner_r1" value="(delta_cw70_coll_us_face)*tan(coll_angle*PI/180.)*1.31"/> 
-  <constant name="cw70_coll_inner_r2" value="(delta_cw70_coll_ds_face)*tan(coll_angle*PI/180.)*1.30"/>
+  <constant name="cw70_coll_inner_r1" value="(delta_cw70_coll_us_face)*tan(coll_angle*PI/180.)"/> 
+  <constant name="cw70_coll_inner_r2" value="(delta_cw70_coll_ds_face)*tan(coll_angle*PI/180.)"/>
 
   <constant name="length_cw70_bore" value="1.001*(length_cw70_coll_1)"/>
 
@@ -371,7 +371,7 @@
   <constant name="width_pig_shield" value="outer_r_coll_chamber*2+10."/>
   <constant name="length_pig_shield" value="outer_r_coll_chamber*2+10."/>
   <constant name="pig_box_length" value="outer_r_coll_chamber*2+30."/>
-  <constant name="pig_box_width" value="outer_r_coll_chamber*2+10."/>
+  <constant name="pig_box_width" value="outer_r_coll_chamber*2+30."/>
   <constant name="pig_box_height" value="height_w_coll_1+5."/>
 
 
@@ -808,7 +808,7 @@
   <!-- W Box Collimator Jacket : rakitha Mon Sep 30 16:40:34 EDT 2013 -->
   <!-- Scaled for Crex - Ricky -->
   <box lunit="cm" name="Coll_jacket_W" x="width_w_coll_1" y="height_w_coll_1" z="length_w_coll_1"/>
-  <cone aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="coll_jacket_w_bore_cone" rmin1="0.0" rmax1="coll_inner_r1*1.31" rmin2="0.0" rmax2="coll_inner_r2*1.26" z="length_bore"/>
+  <cone aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="coll_jacket_w_bore_cone" rmin1="0.0" rmax1="coll_inner_r1" rmin2="0.0" rmax2="coll_inner_r2" z="length_bore"/>
 
   <!-- Box geometry to be subtracted from the DS of the W Box Collimator Jacket : rakitha Mon Nov 18 15:12:34 EST 2013 -->
   <box lunit="cm" name="Coll_jacket_sub_box" x="width_w_sub_box*1.0001" y="height_w_sub_box*1.0001" z="length_w_sub_box*1.001"/>
@@ -2228,7 +2228,7 @@
   <!-- coll_inner_r1 was replaced - Ricky -->
   <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="dDet_us" rmin="0" rmax="cw70_jacket_outer_r*1.0001" z="0.1" />
   <!-- Scaled for Crex - Ricky -->
-  <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="dDet_ds" rmin="0" rmax="(coll_inner_r2*1.26)*1.0001" z="0.1" />
+  <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="dDet_ds" rmin="0" rmax="(coll_inner_r2)*1.0001" z="0.1" />
 
   <sphere aunit="deg" startphi="0" deltaphi="360" starttheta="0" deltatheta="360" lunit="cm" name="sDet_2"  rmin="30.0" rmax="30.1"/>
   

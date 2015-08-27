@@ -16,8 +16,8 @@
 #/moller/det/setDetectorFileName geometry/prexII_coll_prototype_4_complete_HAP2target.gdml
 #/moller/det/setDetectorFileName geometry/prexII_coll_prototype_4_complete.gdml
 #/moller/det/setDetectorFileName geometry/prexII_rickyTest.gdml
-/moller/det/setDetectorFileName geometry/prexCrexLeadTarget.gdml
-#/moller/det/setDetectorFileName geometry/prexCrexCalcTarget.gdml
+#/moller/det/setDetectorFileName geometry/prexCrexLeadTarget.gdml
+/moller/det/setDetectorFileName geometry/prexCrexCalcTarget.gdml
 #/moller/det/setDetectorFileName geometry/prexII_newSC_update.gdml
 
 /moller/det/setNumberofCollimators 25 
