@@ -371,7 +371,7 @@
   <constant name="width_pig_shield" value="outer_r_coll_chamber*2+10."/>
   <constant name="length_pig_shield" value="outer_r_coll_chamber*2+10."/>
   <constant name="pig_box_length" value="outer_r_coll_chamber*2+30."/>
-  <constant name="pig_box_width" value="outer_r_coll_chamber*2+10."/>
+  <constant name="pig_box_width" value="outer_r_coll_chamber*2+30."/>
   <constant name="pig_box_height" value="height_w_coll_1+5."/>
 
    <!-- Shielding jacket to "new_sc_beampipe" -->
@@ -2340,10 +2340,10 @@
 
     <!-- Crex target logic - Ricky -->
 
-    <volume name="Ca_target_logic">
+    <!-- <volume name="Ca_target_logic">
       <materialref ref="Calcium48"/>
       <solidref ref="CaTarget"/>
-    </volume>
+    </volume> -->
 <!--
     <volume name="scDet_logic">
       <materialref ref="Vacuum"/>
