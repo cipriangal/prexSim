@@ -113,11 +113,11 @@
   <constant name="delta_cw70_coll_us_face" value="85.822"/>
   <constant name="delta_cw70_coll_ds_face" value="delta_cw70_coll_us_face+length_cw70_coll_1"/>
 
-  <constant name="coll_angle" value="atan(fcollInnerR/(delta_cw70_coll_us_face))*180./PI"/>
+  <constant name="coll_angle" value="atan(fcollInnerR/(delta_cw70_coll_us_face))*180./PI"/> 
 
-  <!-- Added Crex scaling - Ricky  -->
-  <constant name="cw70_coll_inner_r1" value="(delta_cw70_coll_us_face)*tan(coll_angle*PI/180.)*1.53"/> 
-  <constant name="cw70_coll_inner_r2" value="(delta_cw70_coll_ds_face)*tan(coll_angle*PI/180.)*1.48"/>
+  <!-- Scaling for Crex - Ricky  -->
+  <constant name="cw70_coll_inner_r1" value="(delta_cw70_coll_us_face)*tan(coll_angle*PI/180.)*1.31"/> 
+  <constant name="cw70_coll_inner_r2" value="(delta_cw70_coll_ds_face)*tan(coll_angle*PI/180.)*1.30"/>
 
   <constant name="length_cw70_bore" value="1.001*(length_cw70_coll_1)"/>
 
@@ -125,8 +125,8 @@
 
   <!-- **No longer in use**  Initial CW70 water jacket inlet volume dimentions : rakitha Mon Sep 30 15:50:52 EDT 2013  -->  
   <constant name="width_cw70_jacket" value="5"/>  <constant name="height_cw70_jacket" value="2"/>  <constant name="length_cw70_jacket" value="3"/>
-  <!-- CW70 collimator extension at the US dimentions : rakitha  Mon Nov 18 13:43:01 EST 2013 -->  <!-- Changing for Crex (3.1 from 2)  - Ricky -->
-  <constant name="cw70_jacket_inner_r" value="3.1"/>  <constant name="cw70_jacket_outer_r" value="5"/>  <constant name="cw70_jacket_length" value="2.54"/>
+  <!-- CW70 collimator extension at the US dimentions : rakitha  Mon Nov 18 13:43:01 EST 2013 -->  
+  <constant name="cw70_jacket_inner_r" value="2."/>  <constant name="cw70_jacket_outer_r" value="5"/>  <constant name="cw70_jacket_length" value="2.54"/>
 
   <!-- CW70 surface grooves : rakitha Mon Nov 18 13:43:01 EST 2013  -->
   <constant name="cw70_groove_inner_r" value="3.905"/> <constant name="cw70_groove_outer_r" value="5"/><constant name="cw70_groove_length" value="0.96"/>
@@ -251,7 +251,7 @@
   <constant name="length_sc_chamber_beam_pipe" value="(center_sc_attach - crex_target_center) +  outer_r_new_sc - length_sc_attach/2"/><!-- 110.298  -->
   <constant name="new_center_sc" value="center_sc_attach - length_sc_attach/2 - length_sc_chamber_beam_pipe/2"/> <!-- -111.151 -->
   <constant name="thick_sc_chamber_beam_pipe" value="1.0"/>
-  <!-- Original Pipe radius was 13.5; modified to streamline design -Ricky -->
+  <!-- Original Pipe radius was 13.5; modified to 11.5 streamline design -Ricky -->
   <constant name="radius_sc_chamber_beam_pipe" value="13.5"/>
   <!--distance from new_center_sc to PREX/CREX target center -->
   <constant name="delta_new_center_sc_prex" value="length_sc_chamber_beam_pipe/2 - (prex_target_center - crex_target_center) - outer_r_new_sc"/>
@@ -368,8 +368,12 @@
 
   <!-- Lead Pig Shield - Ricky -->
   <constant name="height_pig_shield" value="((height_coll_chamber/2-5.)-(height_sc_attach/2)+15.)"/>
-  <constant name="width_pig_shield" value="outer_r_coll_chamber*2+30."/>
-  <constant name="length_pig_shield" value="outer_r_coll_chamber*2+30."/>
+  <constant name="width_pig_shield" value="outer_r_coll_chamber*2+10."/>
+  <constant name="length_pig_shield" value="outer_r_coll_chamber*2+10."/>
+  <constant name="pig_box_length" value="outer_r_coll_chamber*2+30."/>
+  <constant name="pig_box_width" value="outer_r_coll_chamber*2+10."/>
+  <constant name="pig_box_height" value="height_w_coll_1+5."/>
+
 
    <!-- Shielding jacket to "new_sc_beampipe" -->
   <constant name="thick_sc_beampipe_shield" value="20."/>
@@ -476,12 +480,7 @@
   <constant name="top_scatchamber_p4_high" value="7" />
   <constant name="top_scatchamber_p4_radius" value="54" />
 
-  <!-- Comment this out if testing prex - Ricky  -->
-  <constant name="crex_scalar" value="(crex_target_center-center_cw70_coll)/(prex_target_center-center_cw70_coll)"/>
-
-  <!-- Comment this out if testing crex - Ricky -->
-  <!-- <constant name="crex_scalar" value="1."/> -->
-
+ 
 <!-- Positions -->
   <position unit="cm" name="targ_center" x="0" y="0" z="center_targ"/>
   <position unit="cm" name="crex_targ_center" x="0" y="0" z="crex_target_center"/>
@@ -498,11 +497,11 @@
   <position unit="cm" name="real_hole_sc_trans6" x="0" y="0" z="-1.*y_cent_sc+1.*real_sc_center_4+0.5*real_sc_high_4+0.5*real_sc_middle_conn_high"/>  
   <position unit="cm" name="sc_attach_center" x="0" y="0" z="center_sc_attach"/>
   <position unit="cm" name="scAttachTrans_1" x="0" y="0" z="0"/> <!---use thick_sc_attach/2 for leave US side open Rakitha Wed Jul  1 11:50:04 EDT 2015 -->
-  <!-- Crex scaling done - Ricky -->
-  <position unit="cm" name="scAttachTrans_l" x="-1.0*center_vac_enc_xu*1.43" y="0" z="center_vac_enc_z - center_sc_attach - thick_sc_attach"/>
-  <position unit="cm" name="scAttachTrans_r" x="1.0*center_vac_enc_xu*1.43" y="0" z="center_vac_enc_z - center_sc_attach - thick_sc_attach"/>
-  <position unit="cm" name="scAttachTrans_hut_l" x="-1.0*center_vac_enc_xu*1.43" y="0" z="center_vac_enc_z - center_sc_attach"/>
-  <position unit="cm" name="scAttachTrans_hut_r" x="1.0*center_vac_enc_xu*1.43" y="0" z="center_vac_enc_z - center_sc_attach"/>
+  
+  <position unit="cm" name="scAttachTrans_l" x="-1.0*center_vac_enc_xu" y="0" z="center_vac_enc_z - center_sc_attach - thick_sc_attach"/>
+  <position unit="cm" name="scAttachTrans_r" x="1.0*center_vac_enc_xu" y="0" z="center_vac_enc_z - center_sc_attach - thick_sc_attach"/>
+  <position unit="cm" name="scAttachTrans_hut_l" x="-1.0*center_vac_enc_xu" y="0" z="center_vac_enc_z - center_sc_attach"/>
+  <position unit="cm" name="scAttachTrans_hut_r" x="1.0*center_vac_enc_xu" y="0" z="center_vac_enc_z - center_sc_attach"/>
   <position unit="cm" name="scAttachTrans_2" x="0" y="0" z="center_sc - center_sc_attach"/>
   <position unit="cm" name="scAttachTrans_3" x="0" y="0" z="length_sc_attach/2"/>
   <position unit="cm" name="scAttachTrans_4" x="0" y="0" z="length_sc_attach/2 - length_w_coll_1/2"/>
@@ -561,6 +560,7 @@
   <!-- New position for pig shield - Ricky -->
   <position unit="cm" name="pig_center" x="0" y="-(height_sc_attach/2.)-(height_pig_shield/2.)" z="center_coll_chamber"/>
   <position unit="cm" name="pig_sub_trans" y="15."/>
+  <position unit="cm" name="pig_box_trans" y="-height_pig_shield/2+height_w_coll_1/2.+2.5"/>
   <position unit="cm" name="hole_for_pig" x="0" y="-(height_sc_attach/2.)-(height_pig_shield/2.)" z="center_coll_chamber-center_sc_attach"/>
 
   <position unit="cm" name="jacketTrans_cyc"       x="0" y="0"     z="-length_cw70_coll_1/2-cw70_jacket_length/2"/>
@@ -583,8 +583,8 @@
   <position unit="cm" name="septTrans_r"       x="rect_hole_center_x" y="0"     z="0"/>	
 
   <!-- Scaling for Crex - Ricky -->
-  <position unit="cm" name="vac_enc_center_l"     x="-center_vac_enc_xu*1.43" y="0"     z="center_vac_enc_z"/>	
-  <position unit="cm" name="vac_enc_center_r"     x="center_vac_enc_xu*1.43" y="0"     z="center_vac_enc_z"/>	
+  <position unit="cm" name="vac_enc_center_l"     x="-center_vac_enc_xu" y="0"     z="center_vac_enc_z"/>	
+  <position unit="cm" name="vac_enc_center_r"     x="center_vac_enc_xu" y="0"     z="center_vac_enc_z"/>	
 
   <position unit="cm" name="hutTrans_1"        x="0" y="-0.505*fHutShieldThick"     z="center_hut_hole - center_hut"/>	
   <position unit="cm" name="hutTrans_2"        x="0" y="0"     z="-length_hut/2 + fHutShieldThick/2"/>
@@ -594,11 +594,10 @@
   <position unit="cm" name="scShldTrans_2" x="0" y="(outer_r_sc-thick_sc/2)" z="-y_cent_sc"/>
   <position unit="cm" name="scShldlayTrans_1" x="0" y="0" z="-0.5*height_sc+0.5*fHightSideSCShield"/>
   <position unit="cm" name="scShldlayTrans_2" x="0" y="0" z="-0.5*height_sc+0.5*fHightFrontSCShield"/>
-  <!-- Scaled for Crex - Ricky -->
-  <position unit="cm" name="septShldTrans_l"        x="(rect_hole_center_x - center_vac_enc_xu)*1.43"  y="0"     z="center_vac_enc_z - center_septum"/>	
-  <position unit="cm" name="septShldTrans_r"        x="-(rect_hole_center_x-center_vac_enc_xu)*1.43" y="0"     z="center_vac_enc_z - center_septum"/>
-  <position unit="cm" name="septpipeShldTrans_l"        x="-1.* center_vac_enc_xu*1.43"  y="0"     z="0.5*length_vac_enc -0.5*fSeptPipeShieldLength"/>	
-  <position unit="cm" name="septpipeShldTrans_r"        x="center_vac_enc_xu*1.43" y="0"     z="0.5*length_vac_enc -0.5*fSeptPipeShieldLength"/>	
+  <position unit="cm" name="septShldTrans_l"        x="(rect_hole_center_x - center_vac_enc_xu)"  y="0"     z="center_vac_enc_z - center_septum"/>	
+  <position unit="cm" name="septShldTrans_r"        x="-(rect_hole_center_x-center_vac_enc_xu)" y="0"     z="center_vac_enc_z - center_septum"/>
+  <position unit="cm" name="septpipeShldTrans_l"        x="-1.* center_vac_enc_xu"  y="0"     z="0.5*length_vac_enc -0.5*fSeptPipeShieldLength"/>	
+  <position unit="cm" name="septpipeShldTrans_r"        x="center_vac_enc_xu" y="0"     z="0.5*length_vac_enc -0.5*fSeptPipeShieldLength"/>	
   <position unit="cm" name="septShld_center_l"        x="-rect_hole_center_x" y="0"     z="center_septum"/>	
   <position unit="cm" name="septShld_center_r"        x="rect_hole_center_x" y="0"     z="center_septum"/>
 
@@ -807,9 +806,9 @@
   </union>
 
   <!-- W Box Collimator Jacket : rakitha Mon Sep 30 16:40:34 EDT 2013 -->
-  <!-- Need to change - Ricky -->
+  <!-- Scaled for Crex - Ricky -->
   <box lunit="cm" name="Coll_jacket_W" x="width_w_coll_1" y="height_w_coll_1" z="length_w_coll_1"/>
-  <cone aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="coll_jacket_w_bore_cone" rmin1="0.0" rmax1="coll_inner_r1" rmin2="0.0" rmax2="coll_inner_r2" z="length_bore"/>
+  <cone aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="coll_jacket_w_bore_cone" rmin1="0.0" rmax1="coll_inner_r1*1.31" rmin2="0.0" rmax2="coll_inner_r2*1.26" z="length_bore"/>
 
   <!-- Box geometry to be subtracted from the DS of the W Box Collimator Jacket : rakitha Mon Nov 18 15:12:34 EST 2013 -->
   <box lunit="cm" name="Coll_jacket_sub_box" x="width_w_sub_box*1.0001" y="height_w_sub_box*1.0001" z="length_w_sub_box*1.001"/>
@@ -1398,14 +1397,28 @@
 
   <!-- Add Shielding Pig - Ricky -->
   <box lunit="cm" name="pig_shield_0" x="width_pig_shield" y="height_pig_shield" z="length_pig_shield"/>
+  <box lunit="cm" name="pig_box_0" x="pig_box_width" y="pig_box_height" z="pig_box_length"/>
+  
   <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="pig_sub" rmin="0." rmax="outer_r_coll_chamber" z="height_pig_shield"/>
 
-  <subtraction name="pig_shield_solid">
+  <subtraction name="pig_shield_1">
     <first ref="pig_shield_0"/>
     <second ref="pig_sub"/>
     <positionref ref="pig_sub_trans"/>
     <rotationref ref="scRot_1"/>
   </subtraction>
+  <subtraction name="pig_box_1">
+    <first ref="pig_box_0"/>
+    <second ref="pig_sub"/>
+    <positionref ref="pig_sub_trans"/>
+    <rotationref ref="scRot_1"/>
+  </subtraction>
+  <union name="pig_shield_solid">
+    <first ref="pig_shield_1"/>
+    <second ref="pig_box_1"/>
+    <positionref ref="pig_box_trans"/>
+  </union>
+
 
   <!-- o-rings and o-ring detectors -->
 
@@ -1457,7 +1470,7 @@
 
 <!-- Beamline -->
 <!--septum_pipe_tube tube is not used the polycone is the one used in the geometry-->
-  <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="septum_pipe_tube" rmin="ri_septum_pipe" rmax="ro_septum_pipe" z="length_septum_pipe" />
+<tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="septum_pipe_tube" rmin="ri_septum_pipe" rmax="ro_septum_pipe" z="length_septum_pipe" />
    <polycone aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="septum_pipe_tube_1"> 
      <zplane  rmin="1.2 * coll_inner_r2" rmax="1.2 * coll_inner_r2 + 1.0*ro_septum_pipe -1.0*ri_septum_pipe" z="-0.5*length_septum_pipe" />
      <zplane  rmin="1.2 * coll_inner_r2 + 20.0 * tan(coll_angle*PI/180.)" rmax="1.2 * coll_inner_r2 + 20.0 * tan(coll_angle*PI/180.) + 1.0*ro_septum_pipe -1.0*ri_septum_pipe" z="-0.5*length_septum_pipe + 20.0" />
@@ -2212,9 +2225,10 @@
       <rotationref ref="scRot_1"/>
   </subtraction> 
 
-<!-- coll_inner_r1 was replaced - Ricky -->
+  <!-- coll_inner_r1 was replaced - Ricky -->
   <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="dDet_us" rmin="0" rmax="cw70_jacket_outer_r*1.0001" z="0.1" />
-  <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="dDet_ds" rmin="0" rmax="(coll_inner_r2)*1.0001" z="0.1" />
+  <!-- Scaled for Crex - Ricky -->
+  <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="dDet_ds" rmin="0" rmax="(coll_inner_r2*1.26)*1.0001" z="0.1" />
 
   <sphere aunit="deg" startphi="0" deltaphi="360" starttheta="0" deltatheta="360" lunit="cm" name="sDet_2"  rmin="30.0" rmax="30.1"/>
   
