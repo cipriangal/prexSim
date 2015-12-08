@@ -8,35 +8,44 @@
 
 #### Scale factor for fringe mag field
 ## PREX
-#/moller/field/setFieldScaleFactor 1.
+/moller/field/setFieldScaleFactor 1.
 ## CREX
-/moller/field/setFieldScaleFactor 2.35
+#/moller/field/setFieldScaleFactor 2.35
+## Collimator Shielding Test
+#/moller/field/setFieldScaleFactor 0.
 
 ########~~~~~~~~~~~CG~~~~~~~~~~~ Target added to Rakitha's sim (PREX2)
 #/moller/det/setDetectorFileName geometry/prexII_coll_prototype_4_complete_HAP2target.gdml
 #/moller/det/setDetectorFileName geometry/prexII_coll_prototype_4_complete.gdml
 #/moller/det/setDetectorFileName geometry/prexII_rickyTest.gdml
-#/moller/det/setDetectorFileName geometry/prexCrexLeadTarget.gdml
-/moller/det/setDetectorFileName geometry/prexCrexCalcTarget.gdml
+/moller/det/setDetectorFileName geometry/prexCrexLeadTarget.gdml
+#/moller/det/setDetectorFileName geometry/prexCrexCalcTarget.gdml
 #/moller/det/setDetectorFileName geometry/prexII_newSC_update.gdml
+#/moller/det/setDetectorFileName geometry/newPigDesign_1.gdml
 
-/moller/det/setNumberofCollimators 25 
+/moller/det/setNumberofCollimators 27 
 ########~~~~~~~~~~~CG~~~~~~~~~~~ PREX1 sim
 #/moller/det/setDetectorFileName geometry/prexIMother_pedestal_noshield.xml
 #/moller/det/setDetectorFileName geometry/prexIMother_pedestal_noshield_H2target.xml
 
 #/moller/det/setNumberofCollimators 12 ##for prex1
 
+########~~~~~~~~~~~CG~~~~~~~~~~~ Coll Shield sim
+#/moller/det/setDetectorFileName geometry/collShieldTest.gdml
+#/moller/det/setDetectorFileName geometry/oneWayTest.gdml
+
+#/moller/det/setNumberofCollimators 3 ## for tests
+
 
 /moller/det/setShieldMaterial polyethylene
 
 #PrexII
-/moller/field/setLowLim -74 cm
-/moller/field/setHighLim 74 cm
+#/moller/field/setLowLim -74 cm
+#/moller/field/setHighLim 74 cm
 
 #PrexI
-#/moller/field/setLowLim -44 cm
-#/moller/field/setHighLim 44 cm
+/moller/field/setLowLim -44 cm
+/moller/field/setHighLim 44 cm
 
 
 /testhadr/CutsAll          0.7 mm

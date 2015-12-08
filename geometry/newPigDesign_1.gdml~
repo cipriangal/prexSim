@@ -90,7 +90,6 @@
   <!-- Beam-line Cylindical Detector covers upto the septum pipe (lenght is 135.213)-->
   <constant name="beam_cyl_det_length" value="3074.44+135.213"/>
 
-  
 <!-- Cylindrical detector to wrap around collimator dimensions  -->
 
 
@@ -242,7 +241,6 @@
   <constant name="y_offset_new_sc" value="15"/>
   <constant name="thick_new_sc" value="1"/>
   <constant name="height_new_sc" value="130"/> <!--This number is an approximation based on att.2 elog 2978 -->
-  <!-- Originially 15.0 for prex and crex, increasing for new design - Ricky -->
   <constant name="outer_r_new_sc" value="15.0"/>
   <constant name="inner_r_new_sc" value="1*outer_r_new_sc - 1*thick_new_sc"/>  
   <constant name="thick_new_sc_water_tgt" value="1"/>
@@ -370,14 +368,6 @@
   <constant name="length_accept" value="50."/>
   <constant name="center_accept" value="(center_coll+prex_target_center)/2"/>
 
-  <!-- Lead Pig Shield - Ricky -->
-  <constant name="height_pig_shield" value="((height_coll_chamber/2-5.)-(height_sc_attach/2)+5.)"/>
-  <constant name="width_pig_shield" value="outer_r_coll_chamber*2+10."/>
-  <constant name="length_pig_shield" value="outer_r_coll_chamber*2+10."/>
-  <constant name="pig_box_length" value="outer_r_coll_chamber*2+30."/>
-  <constant name="pig_box_width" value="outer_r_coll_chamber*2+30."/>
-  <constant name="pig_box_height" value="height_w_coll_1+5."/>
-
    <!-- Shielding jacket to "new_sc_beampipe" -->
   <constant name="thick_sc_beampipe_shield" value="20."/>
   <constant name="length_sc_chamber_beam_pipe_shield" value="length_sc_chamber_beam_pipe - thick_sc_attach_shield"/>
@@ -415,21 +405,6 @@
   <constant name="dump_ss_enc_center" value="center_dump-length_dump/2-thick_wall+5."/>
   <constant name="dump_ss_enc_cylcenter" value="center_cyldump-length_dump/2-thick_cylwall+5."/>
   <constant name="dump_ss_enc_hole_radius" value="46.038"/>
-
-
-  <!--  Detectors for new concrete sites - Ricky -->
-  <constant name="width_det_far" value="100.0"/>
-  <constant name="height_det_far" value="100.0"/>
-  <constant name="length_det_far" value="100.0"/>
-
-  
-  <!-- Concrete sites - Ricky -->
-  <constant name="width_slab1" value="200."/>
-  <constant name="width_slab2" value="300."/>
-  <constant name="length_slab1" value="200."/>
-  <constant name="length_slab2" value="500."/>
-  <constant name="height_slab" value="-(bottom_cylwall)+50."/>
-  <constant name="thick_slab" value="50."/>
 
 <!-- Cylindrical detector for Full hall simulation -->
   <constant name="cDet_1_radius" value="prex_target_center+600."/>
@@ -504,6 +479,10 @@
   <!-- Comment this out if testing crex - Ricky -->
   <!-- <constant name="crex_scalar" value="1."/> -->
 
+  <!-- New Pig Design Starts Here -Ricky  -->
+  <constant name="pig_side_tube_length" value="30."/>
+  <constant name="pig_side_tube_radius" value="15.0"/>
+
 <!-- Positions -->
   <position unit="cm" name="targ_center" x="0" y="0" z="center_targ"/>
   <position unit="cm" name="crex_targ_center" x="0" y="0" z="crex_target_center"/>
@@ -571,19 +550,18 @@
   <position unit="cm" name="jacketTrans_d_1"       x="0" y="radius_cw70_coll_1 - height_cw70_jacket/2"     z="-length_w_coll_1/2-length_cw70_jacket/2"/>
   <position unit="cm" name="jacketTrans_u_1"       x="0" y="-radius_cw70_coll_1 + height_cw70_jacket/2"     z="-length_w_coll_1/2-length_cw70_jacket/2"/>
   <position unit="cm" name="collTrans_4"       x="0" y="0"     z="-(length_w_coll_1)/2+length_cw70_coll_1/2"/>
-  <position unit="cm" name="coll_center"       x="0" y="0"     z="center_coll"/>
-  <position unit="cm" name="coll_cw70_center"       x="0" y="0"     z="center_cw70_coll"/>
-  <position unit="cm" name="Cu_tube_center"       x="0" y="0"     z="center_cw70_coll-cw70_jacket_length/2"/>
+  <position unit="cm" name="coll_center"       x="-(width_sc_attach/2.+pig_side_tube_length)" y="0"     z="center_coll"/>
+  <position unit="cm" name="coll_cw70_center"       x="-(width_sc_attach/2.+pig_side_tube_length)" y="0"     z="center_cw70_coll"/>
+  <position unit="cm" name="Cu_tube_center"       x="-(width_sc_attach/2.+pig_side_tube_length)" y="0"     z="center_cw70_coll-cw70_jacket_length/2"/>
+
+  <!-- Positioning for new pig tube -Ricky -->
+  <position unit="cm" name="pig_tube_trans" x="-(width_sc_attach/2.+pig_side_tube_length/2.)" y="0" z="center_coll-center_sc_attach"/>
+  
   <!-- New position for coll_chamber - Ricky -->
   <position unit="cm" name="coll_chamber_center" x="0" y="5." z="center_coll_chamber" />
   <position unit="cm" name="coll_chamber_trans" z="-5."/>
   <position unit="cm" name="coll_chamber_sub_trans" y="5." z="center_coll_chamber-center_sc_attach"/>
 
-  <!-- New position for pig shield - Ricky -->
-  <position unit="cm" name="pig_center" x="0" y="-(height_sc_attach/2.)-(height_pig_shield/2.)" z="center_coll_chamber"/>
-  <position unit="cm" name="pig_sub_trans" y="5."/>
-  <position unit="cm" name="pig_box_trans" y="-height_pig_shield/2+height_w_coll_1/2.+2.5"/>
-  <position unit="cm" name="hole_for_pig" x="0" y="-(height_sc_attach/2.)-(height_pig_shield/2.)" z="center_coll_chamber-center_sc_attach"/>
 
   <position unit="cm" name="jacketTrans_cyc"       x="0" y="0"     z="-length_cw70_coll_1/2-cw70_jacket_length/2"/>
   <position unit="cm" name="jacketTrans_cyc_g1"       x="0" y="0"     z="-length_cw70_coll_1/2+cw70_groove_length"/>
@@ -656,8 +634,8 @@
   <position unit="cm" name="beam_cyl_det_pos"       x="0" y="0"     z="center_targ+237.535-length_septum_pipe+beam_cyl_det_length/2"/>
 
   <!-- Scattering Chamber Detectors -->
-  <position unit="cm" name="prex_det_pos" x="height_new_sc/2.+1.0" y="0" z="prex_target_center"/>
-  <position unit="cm" name="crex_det_pos" x="height_new_sc/2.+1.0" y="0" z="crex_target_center"/>
+  <position unit="cm" name="prex_det_pos" x="0" y="height_new_sc/2.+1.0" z="prex_target_center"/>
+  <position unit="cm" name="crex_det_pos" x="0" y="height_new_sc/2.+1.0" z="crex_target_center"/>
 
   <!--Electronic hut placement -->
   <position unit="cm" name="dbox_elec_hut_pos"       x="450" y="0"     z="1900"/>
@@ -669,14 +647,6 @@
   <position unit="cm" name="cDet_1_trans"     x="0" y="-cDet_1_radius"     z="-1.*center_cylwall-0.5*thick_cylwall"/>
   <position unit="cm" name="cDet_2_trans"     x="0" y="-cDet_2_radius"     z="-1.*center_cylwall-0.5*thick_cylwall"/>
   <position unit="cm" name="cDet_3_trans"     x="0" y="-cDet_3_radius"     z="-1.*center_cylwall-0.5*thick_cylwall"/>
-
-  <!-- Positions for detectors and walls at concrete site - Ricky-->
-  <position unit="cm" name="farDet_farside_pos" x="860." y="0" z="-1461."/>
-  <position unit="cm" name="farDet_rampside_pos" x="-425." y="0" z="-1461"/>
-  <position unit="cm" name="slab1_pos" x="810." y="-(height_slab)/2.+thick_cylwall+50." z="-1411."/>
-  <position unit="cm" name="slab2_pos" x="-425." y="-(height_slab)/2.+thick_cylwall+50." z="-1461."/>
-  <position unit="cm" name="slab1_trans" x="thick_slab" y="0" z="-(thick_slab)"/>
-  <position unit="cm" name="slab2_trans" x="-(thick_slab)" y="0" z="-(thick_slab)"/>
 
   <!-- Pedestal scattering chamber -->
  
@@ -764,7 +734,6 @@
   <rotation name="scRot_11" unit="deg" x="0" y="0" z="12.5"/>
   <rotation name="scRot_12" unit="deg" x="0" y="0" z="-12.5"/>
   <rotation name="scRot_13" unit="deg" x="0" y="90" z="0"/>
-  <rotation name="scRot_14" unit="deg" x="0" y="0" z="90"/>
   <rotation name="identity"/>
 
 </define>
@@ -781,7 +750,7 @@
 
 
   <!-- Cylindrical CW70 Collimator : rakitha Mon Sep 30 16:40:34 EDT 2013 -->
-  
+  <!-- Need to change - Ricky -->
   <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="coll_cw70_cyln" rmin="0.0" rmax="radius_cw70_coll_1" z="length_cw70_coll_1"/>
   <!-- CW70 water jacket inlet volume dimentions -->  
   <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="coll_cw70_cyln_outer_1" rmin="cw70_jacket_inner_r" rmax="cw70_jacket_outer_r" z="cw70_jacket_length"/>
@@ -840,7 +809,7 @@
   </union>
 
   <!-- W Box Collimator Jacket : rakitha Mon Sep 30 16:40:34 EDT 2013 -->
-  
+  <!-- Need to change - Ricky -->
   <box lunit="cm" name="Coll_jacket_W" x="width_w_coll_1" y="height_w_coll_1" z="length_w_coll_1"/>
   <cone aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="coll_jacket_w_bore_cone" rmin1="0.0" rmax1="coll_inner_r1" rmin2="0.0" rmax2="coll_inner_r2" z="length_bore"/>
 
@@ -1155,14 +1124,6 @@
       <positionref ref="scAttachTrans_3"/>
   </subtraction>
 
-  <!--
-  <subtraction name="sc_attach_solid">
-    <first ref="sc_attach_6"/>
-    <second ref="new_coll_chamber_sub"/>
-    <positionref ref="coll_chamber_sub_trans"/>
-    <rotationref ref="scRot_1"/>
-    </subtraction>
-    -->
   <!-- Pylon Solid for Pics - Ricky -->
   <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="pylon_solid" rmin="(width_sc_attach - 0.5*thick_sc_attach)/8. - 1.*thick_sc_attach" rmax="(width_sc_attach - 0.5*thick_sc_attach)/8." z="0.5*(height_septum - height_sc_attach)+1." />
   
@@ -1224,23 +1185,9 @@
       <second ref="sc_attach_beam_hole"/>
       <positionref ref="scAttachTrans_3"/>
   </subtraction>
-<!--
-  <subtraction name="sc_attach_shield_9">
-    <first ref="sc_attach_shield_8"/>
-    <second ref="new_coll_chamber_sub"/>
-    <positionref ref="coll_chamber_sub_trans"/>
-    <rotationref ref="scRot_1"/>
-  </subtraction>
--->
-<!--  
-  <box lunit="cm" name="pig_shield_sub" x="width_pig_shield" y="height_pig_shield" z="length_pig_shield"/>
-  <subtraction name="sc_attach_shield_10">
-    <first ref="sc_attach_shield_9"/>
-    <second ref="pig_shield_sub"/>
-    <positionref ref="hole_for_pig"/>
-    <rotationref ref="identity"/>
-  </subtraction>
--->
+
+  
+
 
   <!-- New dual Scattering Chamber -->
   <!-- Add the SC beam pipe first-->
@@ -1431,50 +1378,7 @@
     <positionref ref="coll_chamber_trans"/>
   </subtraction>
 
-  <!-- Add Shielding Pig - Ricky -->
-  <box lunit="cm" name="pig_shield_0" x="width_pig_shield" y="height_pig_shield" z="length_pig_shield"/>
-  <box lunit="cm" name="pig_box_0" x="pig_box_width" y="pig_box_height" z="pig_box_length"/>
-  
-  <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="pig_sub" rmin="0." rmax="outer_r_coll_chamber" z="height_pig_shield"/>
 
-  <subtraction name="pig_shield_1">
-    <first ref="pig_shield_0"/>
-    <second ref="pig_sub"/>
-    <positionref ref="pig_sub_trans"/>
-    <rotationref ref="scRot_1"/>
-  </subtraction>
-  <subtraction name="pig_box_1">
-    <first ref="pig_box_0"/>
-    <second ref="pig_sub"/>
-    <positionref ref="pig_sub_trans"/>
-    <rotationref ref="scRot_1"/>
-  </subtraction>
-  <union name="pig_shield_solid">
-    <first ref="pig_shield_1"/>
-    <second ref="pig_box_1"/>
-    <positionref ref="pig_box_trans"/>
-  </union>
-
-  <!-- Concrete sites and concrete site detectors -Ricky -->
-  <box lunit="cm" name="farDet_farside_solid" x="width_det_far" y="height_det_far" z="length_det_far"/>
-  <box lunit="cm" name="farDet_rampside_solid" x="width_det_far" y="height_det_far" z="length_det_far"/>
-  <box lunit="cm" name="slab1_0" x="width_slab1" y="height_slab" z="length_slab1"/>
-  <box lunit="cm" name="slab2_0" x="width_slab2" y="height_slab" z="length_slab2"/>
-  <box lunit="cm" name="slab1_cut" x="width_slab1" y="height_slab+0.5" z="length_slab1"/>
-  <box lunit="cm" name="slab2_cut" x="width_slab2" y="height_slab+0.5" z="length_slab2"/>
-
-  <subtraction name="slab1_solid">
-    <first ref="slab1_0"/>
-    <second ref="slab1_cut"/>
-    <positionref ref="slab1_trans"/>
-  </subtraction>
-
-  <subtraction name="slab2_solid">
-    <first ref="slab2_0"/>
-    <second ref="slab2_cut"/>
-    <positionref ref="slab2_trans"/>
-  </subtraction>
-  
 
   <!-- o-rings and o-ring detectors -->
 
@@ -2379,11 +2283,6 @@
       <solidref ref="new_coll_chamber_solid"/>
     </volume>
 
-    <!-- Logic for pig shield - Ricky -->
-    <volume name="pig_shield_logic">
-      <materialref ref="PureLead"/>
-      <solidref ref="pig_shield_solid"/>
-    </volume>
 
     <volume name="Cu_tube_logic">
       <materialref ref="Copper"/> 
@@ -2609,29 +2508,6 @@
       <auxiliary auxtype="SensDet" auxvalue="volumeN10009"/> 
     </volume>
 
-    <!-- Detectors at concrete sites and concrete -->
-    <volume name="farDet_farside_logic">
-      <materialref ref="Vacuum"/>
-      <solidref ref="farDet_farside_solid"/>
-      <auxiliary auxtype="SensDet" auxvalue="volumeN2001"/>
-    </volume>
-
-    <volume name="farDet_rampside_logic">
-      <materialref ref="Vacuum"/>
-      <solidref ref="farDet_rampside_solid"/>
-      <auxiliary auxtype="SensDet" auxvalue="volumeN2002"/>
-    </volume>
-
-    <volume name="slab1_logic">
-      <materialref ref="Concrete"/>
-      <solidref ref="slab1_solid"/>
-    </volume>
-
-    <volume name="slab2_logic">
-      <materialref ref="Concrete"/>
-      <solidref ref="slab2_solid"/>
-    </volume>
-
     <!-- Electronic hut detector -->
     <volume name="det_box_elec_hut_logic">
        <materialref ref="Vacuum"/>
@@ -2775,36 +2651,6 @@
         <positionref ref="Cu_tube_center"/>
       </physvol>
 
-      <!-- Placing new collimator chamber - Ricky -->
-      <!-- <physvol name="new_coll_chamber">
-	<volumeref ref="new_coll_chamber_logic"/>
-	<positionref ref="coll_chamber_center"/>
-	<rotationref ref="scRot_1"/>
-      </physvol> -->
-
-      <!-- Concrete sites and detectors - Ricky -->
-      <physvol name="farDet_farside">
-	<volumeref ref="farDet_farside_logic"/>
-	<positionref ref="farDet_farside_pos"/>
-      </physvol>
-      
-      <physvol name="farDet_rampside">
-	<volumeref ref="farDet_rampside_logic"/>
-	<positionref ref="farDet_rampside_pos"/>
-      </physvol>
-
-      <physvol name="slab1">
-	<volumeref ref="slab1_logic"/>
-	<positionref ref="slab1_pos"/>
-      </physvol>
-
-      <physvol name="slab2">
-	<volumeref ref="slab2_logic"/>
-	<positionref ref="slab2_pos"/>
-      </physvol>
-
-      
-
 
       <!-- Placing pylons - Ricky -->
       <!-- <physvol name="pylon1">
@@ -2844,7 +2690,6 @@
       <physvol name="new_sc_beampipe">
         <volumeref ref="new_sc_beampipe_logic"/>
         <positionref ref="new_sc_center"/>
-	<rotationref ref="scRot_14"/>
       </physvol>
 
       
@@ -2859,25 +2704,25 @@
       <physvol name="new_sc_prex">
         <volumeref ref="new_sc_prex_logic"/>
         <positionref ref="targ_center"/>
-	<rotationref ref="scRot_13"/>
+	<rotationref ref="scRot_1"/>
       </physvol>
 
       <physvol name="new_sc_prex_water_tgt">
         <volumeref ref="new_sc_prex_water_tgt_logic"/>
         <positionref ref="targ_center"/>
-	<rotationref ref="scRot_1"/>
+	<rotationref ref="scRot_13"/>
       </physvol>
 
       <physvol name="new_sc_crex">
         <volumeref ref="new_sc_crex_logic"/>
         <positionref ref="crex_targ_center"/>
-	<rotationref ref="scRot_13"/>
+	<rotationref ref="scRot_1"/>
       </physvol>
 
       <physvol name="new_sc_crex_water_tgt">
         <volumeref ref="new_sc_crex_water_tgt_logic"/>
         <positionref ref="crex_targ_center"/>
-	<rotationref ref="scRot_1"/>
+	<rotationref ref="scRot_13"/>
       </physvol>
 
       <physvol name="sc_attachment">
@@ -3080,13 +2925,13 @@
       <physvol name="prex_det">
 	<volumeref ref="prex_det_logic"/>
 	<positionref ref="prex_det_pos"/>
-	<rotationref ref="scRot_13"/>
+	<rotationref ref="scRot_1"/>
       </physvol>
 
       <physvol name="crex_det">
 	<volumeref ref="crex_det_logic"/>
 	<positionref ref="crex_det_pos"/>
-	<rotationref ref="scRot_13"/>
+	<rotationref ref="scRot_1"/>
       </physvol>
 
 <!--The sphere detector is disable due to volume overlap with the septum pipe -->

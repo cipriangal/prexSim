@@ -257,6 +257,9 @@
   <constant name="delta_new_center_sc_prex" value="length_sc_chamber_beam_pipe/2 - (prex_target_center - crex_target_center) - outer_r_new_sc"/>
   <constant name="delta_new_center_sc_crex" value="length_sc_chamber_beam_pipe/2 - outer_r_new_sc"/>
 
+   <!-- Detectors above scattering chambers - Ricky -->
+  <constant name="scat_det_r" value="outer_r_new_sc+1."/>
+
 <!-- Septum dimensions  -->
   <constant name="width_septum" value="137.16"/> <constant name="height_septum" value="84."/> <constant name="length_septum" value="74.3863"/> 
   <constant name="center_septum" value="175.211+prex_target_center"/> <!-- Seems about right; some space for coils...  -->
@@ -634,6 +637,10 @@
   <position unit="cm" name="dDet_beamline_pos_4"       x="0" y="0"     z="center_targ+3311.975"/>
   <position unit="cm" name="beam_cyl_det_pos"       x="0" y="0"     z="center_targ+237.535-length_septum_pipe+beam_cyl_det_length/2"/>
 
+  <!-- Scattering Chamber Detectors -->
+  <position unit="cm" name="prex_det_pos" x="0" y="height_new_sc/2.+1.0" z="prex_target_center"/>
+  <position unit="cm" name="crex_det_pos" x="0" y="height_new_sc/2.+1.0" z="crex_target_center"/>
+  
   <!--Electronic hut placement -->
   <position unit="cm" name="dbox_elec_hut_pos"       x="450" y="0"     z="1900"/>
 
@@ -2223,8 +2230,12 @@
       <second ref="beamtube_12"/>
       <positionref ref="cDet_3_trans"/>
       <rotationref ref="scRot_1"/>
-  </subtraction> 
-
+  </subtraction>
+  
+ <!-- Above Scat Chamber Detectors -Ricky -->
+  <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="prex_det_solid" rmin="0" rmax="scat_det_r" z="0.1"/>
+  <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="crex_det_solid" rmin="0" rmax="scat_det_r" z="0.1"/>
+  
   <!-- coll_inner_r1 was replaced - Ricky -->
   <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="dDet_us" rmin="0" rmax="cw70_jacket_outer_r*1.0001" z="0.1" />
   <!-- Scaled for Crex - Ricky -->
@@ -2616,7 +2627,18 @@
       <!-- <auxiliary auxtype="SensDet" auxvalue="volumeN8006"/> -->
     </volume> 
 
+  <!-- Scat Chamber Detectors - Ricky -->
+    <volume name="prex_det_logic">
+      <materialref ref="Vacuum"/>
+      <solidref ref="prex_det_solid"/>
+      <auxiliary auxtype="SensDet" auxvalue="volumeN7001"/>
+    </volume>
 
+    <volume name="crex_det_logic">
+      <materialref ref="Vacuum"/>
+      <solidref ref="crex_det_solid"/>
+      <auxiliary auxtype="SensDet" auxvalue="volumeN7002"/>
+    </volume>
 
 
     <volume name="box_det_1_logic">
@@ -2964,6 +2986,20 @@
         <volumeref ref="dDet_ds_logic"/>
         <positionref ref="dDet_ds_pos"/> 
       </physvol>
+
+      <!-- Prex and Crex Detectors - Ricky -->
+      <physvol name="prex_det">
+	<volumeref ref="prex_det_logic"/>
+	<positionref ref="prex_det_pos"/>
+	<rotationref ref="scRot_1"/>
+      </physvol>
+
+      <physvol name="crex_det">
+	<volumeref ref="crex_det_logic"/>
+	<positionref ref="crex_det_pos"/>
+	<rotationref ref="scRot_1"/>
+      </physvol>
+
 <!--The sphere detector is disable due to volume overlap with the septum pipe -->
 	
   <!--    <physvol name="sphere_det_2">

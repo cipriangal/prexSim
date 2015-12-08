@@ -252,7 +252,7 @@ void processTree(TString tname){
   t->SetBranchAddress("kineE",&kineE);
   }
 
-  else if  ( SensVolume_v==8004 || SensVolume_v==8005 || SensVolume_v==10001 || SensVolume_v==10002 || SensVolume_v==10003 || SensVolume_v==10004 ) {
+  else if  ( SensVolume_v==8003 || SensVolume_v==8004 || SensVolume_v==8005 || SensVolume_v==10001 || SensVolume_v==10002 || SensVolume_v==10003 || SensVolume_v==10004 ) {
   t->SetBranchAddress("kineE",&Energy); 
   t->SetBranchAddress("Edeposit",&Edeposit); //hack to get the deposited energy
   }
