@@ -246,9 +246,9 @@ void processTree(TString tname){
   t->SetBranchAddress("PDGid",&PDGid);  
   t->SetBranchAddress("track",&track);  
   t->SetBranchAddress("event",&event);  
-   t->SetBranchAddress("Edeposit",&Edeposit); 
-   t->SetBranchAddress("kineE",&Energy);
-
+  t->SetBranchAddress("Edeposit",&Edeposit); 
+  t->SetBranchAddress("kineE",&Energy);
+  
 // Making alterations - Ricky
 /*  if(SensVolume_v==10008 || SensVolume_v==10009){
     t->SetBranchAddress("Edeposit",&Energy);
