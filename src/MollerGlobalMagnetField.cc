@@ -185,16 +185,26 @@ void MollerGlobalMagnetField::GetFieldValue(const G4double Point[4], G4double *B
   G4double dBydx = 0.*gauss/cm;
 
   // gives integral 7003.4 G @ 1 cm
+  // scaling by 2.35 for Crex
+  // bu and bd define center of gaussian approximations of fringe field along z-axis
   G4double a = magScaleFactor*158.*gauss/cm;
   G4double shielded = magScaleFactor*0.78 *gauss/cm;
+  G4double k = shielded;
   G4double bu = -44*cm;
   // G4double mg2_field_low = -44*cm;
   // G4double mg2_field_high = 44*cm;
   //  G4double bu =  mg_field_low;
   G4double bd = 44*cm;
   //  G4double bd =  mg_field_high;
-  G4double c1 = 4.2*cm;   
-  G4double c2 = 14.15*cm;   
+  // c1 is gaussian width inside the shield
+  G4double c1 = 4.2*cm;
+  // c2 is gaussian width outside the shield
+  G4double c2 = 14.15*cm;
+
+  // Worksite for new gaussian - Ricky
+  // Calculating the new peaks au and ad
+  G4double au = a*(exp(-((pow(mg_field_low-bu,2))/(2*pow(c2,2)))));
+  G4double ad = a*(exp(-((pow(mg_field_high-bd,2))/(2*pow(c2,2)))));
 
   G4double z_intercept_low = mg_field_low + pow( (2*pow(c1,2)*log(a*exp(-(pow(mg_field_low-bu,2)/(2*pow(c2,2))))/shielded)),0.5);
   G4double z_intercept_high =  mg_field_high - pow( (2*pow(c1,2)*log(a*exp(-(pow(mg_field_high-bd,2)/(2*pow(c2,2))))/shielded)),0.5);
@@ -222,11 +232,12 @@ void MollerGlobalMagnetField::GetFieldValue(const G4double Point[4], G4double *B
   // within the radius of the beampipe through the septum, r = 4.128 cm.
   if(!readfrommap&&sqrt(pow(myLocalPointInMainMagnet[0],2)+pow(myLocalPointInMainMagnet[1],2))<4.128*cm){
     
-    if ((myLocalPointInMainMagnet[2]>-100*cm)&&(myLocalPointInMainMagnet[2]<100*cm)){
+     if ((myLocalPointInMainMagnet[2]>-100*cm)&&(myLocalPointInMainMagnet[2]<100*cm)){
 
       if (myLocalPointInMainMagnet[2]<mg_field_low){ 
 
 	dBxdy = a*(exp(-((pow(myLocalPointInMainMagnet[2]-bu,2))/(2*pow(c2,2)))));
+
 
       } else if ((myLocalPointInMainMagnet[2]>=mg_field_low)&&(myLocalPointInMainMagnet[2]<z_intercept_low)){
 
@@ -248,7 +259,35 @@ void MollerGlobalMagnetField::GetFieldValue(const G4double Point[4], G4double *B
 
 	dBxdy=0;
 
-      }
+	} 
+
+    	
+	
+    /* if ((myLocalPointInMainMagnet[2]>-100*cm)&&(myLocalPointInMainMagnet[2]<100*cm)){
+
+      if (myLocalPointInMainMagnet[2]<mg_field_low){ 
+
+	dBxdy = au*(exp(-(pow(myLocalPointInMainMagnet[2]-mg_field_low,2))/(2*pow(c2,2))));
+
+      } else if ((myLocalPointInMainMagnet[2]>=mg_field_low)&&(myLocalPointInMainMagnet[2]<=0)){
+
+	//dBxdy = a*(exp(-(pow(mg_field_low-bu,2)/(2*pow(c2,2)))))*(exp(-((pow(myLocalPointInMainMagnet[2]-mg_field_low,2))/(2*pow(c1,2)))));
+	dBxdy = (au-k)*(exp(-(pow(myLocalPointInMainMagnet[2]-mg_field_low,2))/(2*pow(c1,2))))+k;
+
+      } else if ((myLocalPointInMainMagnet[2]<=mg_field_high)&&(myLocalPointInMainMagnet[2]>0)){
+
+	dBxdy = (ad-k)*(exp(-(pow(myLocalPointInMainMagnet[2]-mg_field_high,2))/(2*pow(c1,2))))+k;
+
+      } else if ((myLocalPointInMainMagnet[2]>mg_field_high)){ 
+
+	dBxdy = ad*(exp(-((pow(myLocalPointInMainMagnet[2]-mg_field_high,2))/(2*pow(c2,2)))));
+  
+      } else {
+
+	dBxdy=0;
+
+	} */ 
+
 
       dBydx=dBxdy;
       

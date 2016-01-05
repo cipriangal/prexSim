@@ -125,7 +125,7 @@
 
   <!-- **No longer in use**  Initial CW70 water jacket inlet volume dimentions : rakitha Mon Sep 30 15:50:52 EDT 2013  -->  
   <constant name="width_cw70_jacket" value="5"/>  <constant name="height_cw70_jacket" value="2"/>  <constant name="length_cw70_jacket" value="3"/>
-  <!-- CW70 collimator extension at the US dimentions : rakitha  Mon Nov 18 13:43:01 EST 2013 -->  <!-- Added Crex Scaling - Ricky -->
+  <!-- CW70 collimator extension at the US dimentions : rakitha  Mon Nov 18 13:43:01 EST 2013 -->  
   <constant name="cw70_jacket_inner_r" value="2"/>  <constant name="cw70_jacket_outer_r" value="5"/>  <constant name="cw70_jacket_length" value="2.54"/>
 
   <!-- CW70 surface grooves : rakitha Mon Nov 18 13:43:01 EST 2013  -->
@@ -354,7 +354,7 @@
   <constant name="length_sc_attach_shield" value="length_sc_attach + 2.*thick_sc_attach_shield + forwardthick_sc_attach_shield + backthick_sc_attach_shield"/>
 
   <!-- New Chamber for Collimator - Ricky -->
-  <constant name="height_coll_chamber" value="height_sc_attach+120."/>
+  <constant name="height_coll_chamber" value="height_sc_attach+140."/>
   <constant name="outer_r_coll_chamber" value="13."/>
   <constant name="center_coll_chamber" value="center_coll-1."/>
 
@@ -367,9 +367,12 @@
   <constant name="center_accept" value="(center_coll+prex_target_center)/2"/>
 
   <!-- Lead Pig Shield - Ricky -->
-  <constant name="height_pig_shield" value="((height_coll_chamber/2-5.)-(height_sc_attach/2)+15.)"/>
-  <constant name="width_pig_shield" value="outer_r_coll_chamber*2+30."/>
-  <constant name="length_pig_shield" value="outer_r_coll_chamber*2+30."/>
+  <constant name="height_pig_shield" value="((height_coll_chamber/2-5.)-(height_sc_attach/2)+5.)"/>
+  <constant name="width_pig_shield" value="outer_r_coll_chamber*2+10."/>
+  <constant name="length_pig_shield" value="outer_r_coll_chamber*2+10."/>
+  <constant name="pig_box_length" value="outer_r_coll_chamber*2+30."/>
+  <constant name="pig_box_width" value="outer_r_coll_chamber*2+30."/>
+  <constant name="pig_box_height" value="height_w_coll_1+5."/>
 
    <!-- Shielding jacket to "new_sc_beampipe" -->
   <constant name="thick_sc_beampipe_shield" value="20."/>
@@ -559,7 +562,8 @@
 
   <!-- New position for pig shield - Ricky -->
   <position unit="cm" name="pig_center" x="0" y="-(height_sc_attach/2.)-(height_pig_shield/2.)" z="center_coll_chamber"/>
-  <position unit="cm" name="pig_sub_trans" y="15."/>
+  <position unit="cm" name="pig_sub_trans" y="5."/>
+  <position unit="cm" name="pig_box_trans" y="-height_pig_shield/2+height_w_coll_1/2.+2.5"/>
   <position unit="cm" name="hole_for_pig" x="0" y="-(height_sc_attach/2.)-(height_pig_shield/2.)" z="center_coll_chamber-center_sc_attach"/>
 
   <position unit="cm" name="jacketTrans_cyc"       x="0" y="0"     z="-length_cw70_coll_1/2-cw70_jacket_length/2"/>
@@ -1395,14 +1399,27 @@
 
   <!-- Add Shielding Pig - Ricky -->
   <box lunit="cm" name="pig_shield_0" x="width_pig_shield" y="height_pig_shield" z="length_pig_shield"/>
+  <box lunit="cm" name="pig_box_0" x="pig_box_width" y="pig_box_height" z="pig_box_length"/>
+  
   <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="pig_sub" rmin="0." rmax="outer_r_coll_chamber" z="height_pig_shield"/>
 
-  <subtraction name="pig_shield_solid">
+  <subtraction name="pig_shield_1">
     <first ref="pig_shield_0"/>
     <second ref="pig_sub"/>
     <positionref ref="pig_sub_trans"/>
     <rotationref ref="scRot_1"/>
   </subtraction>
+  <subtraction name="pig_box_1">
+    <first ref="pig_box_0"/>
+    <second ref="pig_sub"/>
+    <positionref ref="pig_sub_trans"/>
+    <rotationref ref="scRot_1"/>
+  </subtraction>
+  <union name="pig_shield_solid">
+    <first ref="pig_shield_1"/>
+    <second ref="pig_box_1"/>
+    <positionref ref="pig_box_trans"/>
+  </union>
 
   <!-- o-rings and o-ring detectors -->
 
@@ -2323,10 +2340,10 @@
 
     <!-- Crex target logic - Ricky -->
 
-    <volume name="Ca_target_logic">
+    <!-- <volume name="Ca_target_logic">
       <materialref ref="Calcium48"/>
       <solidref ref="CaTarget"/>
-    </volume>
+    </volume> -->
 <!--
     <volume name="scDet_logic">
       <materialref ref="Vacuum"/>
