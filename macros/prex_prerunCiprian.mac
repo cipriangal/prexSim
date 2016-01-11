@@ -40,12 +40,12 @@
 /moller/det/setShieldMaterial polyethylene
 
 #PrexII
-#/moller/field/setLowLim -74 cm
-#/moller/field/setHighLim 74 cm
+/moller/field/setLowLim -74 cm
+/moller/field/setHighLim 74 cm
 
 #PrexI
-/moller/field/setLowLim -44 cm
-/moller/field/setHighLim 44 cm
+#/moller/field/setLowLim -44 cm
+#/moller/field/setHighLim 44 cm
 
 
 /testhadr/CutsAll          0.7 mm

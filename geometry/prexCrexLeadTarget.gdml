@@ -2611,13 +2611,13 @@
 
     <!-- Detectors at concrete sites and concrete -->
     <volume name="farDet_farside_logic">
-      <materialref ref="Vacuum"/>
+      <materialref ref="Kryptonite"/>
       <solidref ref="farDet_farside_solid"/>
       <auxiliary auxtype="SensDet" auxvalue="volumeN2001"/>
     </volume>
 
     <volume name="farDet_rampside_logic">
-      <materialref ref="Vacuum"/>
+      <materialref ref="Kryptonite"/>
       <solidref ref="farDet_rampside_solid"/>
       <auxiliary auxtype="SensDet" auxvalue="volumeN2002"/>
     </volume>
