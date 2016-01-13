@@ -41,12 +41,14 @@ TH2F *Histo_vert_2D[3],*Histo_vert_full_2D[3];
 TH1F *Histo_vert_z_weighted_full[3],*Histo_Energy_lt_10[3],*Histo_Energy_gt_10[3];
 //create plots for three vertex ranges [ranges][particle type]
 TH1F *Histo_vert_z[3][3],*Histo_vert_z_weighted[3][3],*Histo_Energy_custom_lt_10[3][3],*Histo_Energy_custom_gt_10[3][3];
+//plot for the detector faces
+TH1F *Det_Face;
 
 Int_t low_ranges[3],up_ranges[3];
 //Flux and power parameters Full range //indices [particle type][energy ranges 0->0.1->10->1000] 
 Double_t flux[3][3],power[3][3];
 //indices[z range][energy range][particle type]
-Double_t flux_range[3][3][3],power_range[3][3][3]; 
+Double_t flux_range[3][3][3],power_range[3][3][3];
 float tot_events;
 TDirectory* gD;
 TString prename;
@@ -73,7 +75,8 @@ int main(int argc,char** argv) {
   TString _sensVol(argv[1]);
   SensVolume_v=_sensVol.Atof();
   
-  if(!(SensVolume_v==10008 || SensVolume_v==10009 ||
+  if(!(SensVolume_v==2001 || SensVolume_v==2002 ||
+       SensVolume_v==10008 || SensVolume_v==10009 ||
        SensVolume_v==8003 ||SensVolume_v==8004 ||
        SensVolume_v==8005 || SensVolume_v==10001 ||
        SensVolume_v==10002 || SensVolume_v==10003 ||
@@ -147,9 +150,12 @@ void Init(){
       for(int k=0;k<3;k++){
 	flux_range[i][j][k]=0.0;
 	power_range[i][j][k]=0.0;
-      }
+      }   
     }
   }
+
+  if(Det_Face) Det_Face  ->Reset();
+
 }
  
 void bookHisto(){
@@ -188,7 +194,8 @@ void bookHisto(){
 						100,10.,1000.);
     }
   }
- 
+
+  Det_Face = new TH1F("Det_Face","Detector Face Hit",8,0.,7.);
 }
 
 void PrintInfo(){
@@ -247,13 +254,14 @@ void processTree(TString tname){
   t->SetBranchAddress("track",&track);  
   t->SetBranchAddress("event",&event);
 
-  if ( SensVolume_v==10008 || SensVolume_v==10009){
+  if ( SensVolume_v==2001 || SensVolume_v==2002 || SensVolume_v==10008 || SensVolume_v==10009){
   t->SetBranchAddress("Edeposit",&Energy); 
   t->SetBranchAddress("kineE",&kineE);
-  }else if( SensVolume_v==8004 || SensVolume_v==8005 || SensVolume_v==10001 || SensVolume_v==10002 || SensVolume_v==10003 || SensVolume_v==10004 ) {
+  }else if( SensVolume_v==8003 || SensVolume_v==8004 || SensVolume_v==8005 || SensVolume_v==10001 || SensVolume_v==10002 || SensVolume_v==10003 || SensVolume_v==10004 ) {
     t->SetBranchAddress("kineE",&Energy); 
     t->SetBranchAddress("Edeposit",&Edeposit); //hack to get the deposited energy
   }
+
   
   Double_t hit_radius_min = 46.038; //cm inner radius of the beam pipe 45.72 cm and outer radius of the beam pipe 46.038 cm
   
@@ -319,6 +327,43 @@ void processTree(TString tname){
        
     if(i % 1000000 == 1 ) cout<<" processed: "<<tname.Data()<<" "<<i<<endl;
   }
+  for (int i=0; i<nentries; i++) {
+    t->GetEntry(i);
+    if  ( volume==SensVolume_v  && z_0 > -26000  && type<=5){
+      if (SensVolume_v == 2001){
+	if ( (xd>8100 && xd<9100) && (yd>-500 && yd<500) && zd==-14110 ) Det_Face->Fill(1);
+	else if ( (xd>8100 && xd<9100) && (yd>-500 && yd<500) && zd==-15110 ) Det_Face->Fill(2);
+	else if ( xd==9100 && (yd>-500 && yd<500) && (zd>-15110 && zd<-14110) ) Det_Face->Fill(3);
+	else if ( xd==8100 && (yd>-500 && yd<500) && (zd>-15110 && zd<-14110) ) Det_Face->Fill(4);
+	else if ( (xd>8100 && xd<9100) && yd==500 && (zd>-15110 && zd<-14110) ) Det_Face->Fill(5);
+	else if ( (xd>8100 && xd<9100) && yd==-500 && (zd>-15110 && zd<-14110) ) Det_Face->Fill(6);	
+      }
+      if (SensVolume_v == 2002){
+	if ( (xd>-4750 && xd<-3750) && (yd>-500 && yd<500) && zd==-14110 ) Det_Face->Fill(1);
+	else if ( (xd>-4750 && xd<-3750) && (yd>-500 && yd<500) && zd==-15110 ) Det_Face->Fill(2);
+	else if ( xd==-3750 && (yd>-500 && yd<500) && (zd>-15110 && zd<-14110) ) Det_Face->Fill(3);
+	else if ( xd==-4750 && (yd>-500 && yd<500) && (zd>-15110 && zd<-14110) ) Det_Face->Fill(4);
+	else if ( (xd>-4750 && xd<-3750) && yd==500 && (zd>-15110 && zd<-14110) ) Det_Face->Fill(5);
+	else if ( (xd>-4750 && xd<-3750) && yd==-500 && (zd>-15110 && zd<-14110) ) Det_Face->Fill(6);	
+      }
+      if (SensVolume_v == 10008){
+	if ( (xd>3500 && xd<5500) && (yd>-1000 && yd<1000) && zd==21000 ) Det_Face->Fill(1);
+	else if ( (xd>3500 && xd<5500) && (yd>-1000 && yd<1000) && zd==17000 ) Det_Face->Fill(2);
+	else if ( xd==5500 && (yd>-1000 && yd<1000) && (zd>17000 && zd<21000) ) Det_Face->Fill(3);
+	else if ( xd==3500 && (yd>-1000 && yd<1000) && (zd>17000 && zd<21000) ) Det_Face->Fill(4);
+	else if ( (xd>3500 && xd<5500) && yd==1000 && (zd>17000 && zd<21000) ) Det_Face->Fill(5);
+	else if ( (xd>3500 && xd<5500) && yd==-1000 && (zd>17000 && zd<21000) ) Det_Face->Fill(6);	
+      }
+      if (SensVolume_v == 10009){
+	if ( (xd>-1750 && xd<-750) && (yd>500 && yd<1500) && zd==2000 ) Det_Face->Fill(1);
+	else if ( (xd>-1750 && xd<-750) && (yd>500 && yd<1500) && zd==1000 ) Det_Face->Fill(2);
+	else if ( xd==-750 && (yd>500 && yd<1500) && (zd>1000 && zd<2000) ) Det_Face->Fill(3);
+	else if ( xd==-1750 && (yd>500 && yd<1500) && (zd>1000 && zd<2000) ) Det_Face->Fill(4);
+	else if ( (xd>-1750 && xd<-750) && yd==1500 && (zd>1000 && zd<2000) ) Det_Face->Fill(5);
+	else if ( (xd>-1750 && xd<-750) && yd==500 && (zd>1000 && zd<2000) ) Det_Face->Fill(6);	
+      }
+    }
+    }
   
   PrintInfo();
 }
@@ -356,6 +401,8 @@ void WriteHisto(TString fname){
       writeEachHisto(Histo_Energy_custom_gt_10[i][j]);
     }
   }
+
+  writeEachHisto(Det_Face);
   
   fout->Close();
 }

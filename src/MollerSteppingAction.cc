@@ -40,6 +40,19 @@ void MollerSteppingAction::UserSteppingAction(const G4Step* aStep)
   gRootAnalysis->UserSteppingAction(aStep);       
 
     */
+  G4Track*        track = aStep->GetTrack();
+
+  if(track->GetMaterial()->GetName() == "VacuumOneWay")
+    {
+      if(track->GetTrackStatus()==fAlive){
+	track->SetTrackStatus(fStopButAlive);
+      }
+      // if(track->GetTrackStatus()==fStopButAlive){
+      //track->SetTrackStatus(fAlive);
+      //}
+      //}
+    }
+  gRootAnalysis->UserSteppingAction(aStep);  
 }
 
 
