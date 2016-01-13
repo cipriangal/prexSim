@@ -3,36 +3,15 @@
 #include <algorithm>
 #include <iostream>
 #include <fstream>
-#include <new>
 #include <cstdlib>
 #include <math.h>
-
-#include "TRandom.h"
-#include <TApplication.h>
 
 #include <TH2F.h>
 #include <TTree.h>
 #include <TF1.h>
-#include <Rtypes.h>
-#include <TROOT.h>
 #include <TFile.h>
 #include <TChain.h>
-#include <TString.h> 
-#include <TDatime.h>
-#include <stdexcept>
-#include <time.h>
-#include <cstdio>
-#include <TMath.h>
-#include <TStyle.h>
-#include <TPaveStats.h>
-#include <TCanvas.h>
-#include <TGraph.h>
-#include <TMultiGraph.h>
-#include <TLegend.h>
-#include <TGraphErrors.h>
-#include <TFrame.h>
 #include <TDirectory.h>
-#include <TObjArray.h>
 
 //Radiation All Vertices
 TH1F *Histo_vert_z_full[3];//particle type = photons, electrons, neutrons
@@ -274,7 +253,7 @@ void processTree(TString tname){
   Int_t nentries = (Int_t)t->GetEntries();
   for (int i=0; i<nentries ; i++) {
     t->GetEntry(i);
-    hit_radius = TMath::Sqrt(TMath::Power(xd/10,2)+TMath::Power(yd/10,2));
+    hit_radius = sqrt(pow(xd/10,2)+pow(yd/10,2));
      
     if ( volume==SensVolume_v  && z_0 > -26000  && type<=5 && hit_radius > hit_radius_min ){
       int hist=partType[(int)type];
