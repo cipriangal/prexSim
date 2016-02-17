@@ -360,7 +360,7 @@
   <!-- New Chamber for Collimator - Ricky -->
   <constant name="height_coll_chamber" value="height_sc_attach+140."/>
   <constant name="outer_r_coll_chamber" value="13."/>
-  <constant name="center_coll_chamber" value="center_coll-1."/>
+  <constant name="center_coll_chamber" value="center_coll - 1."/>
 
   <!-- Acceptance - Ricky -->
   <constant name="height_accept" value="10.45"/>
@@ -577,13 +577,13 @@
   <!-- New position for coll_chamber - Ricky -->
   <position unit="cm" name="coll_chamber_center" x="0" y="5." z="center_coll_chamber" />
   <position unit="cm" name="coll_chamber_trans" z="-5."/>
-  <position unit="cm" name="coll_chamber_sub_trans" y="5." z="center_coll_chamber-center_sc_attach"/>
+  <position unit="cm" name="coll_chamber_sub_trans" y="5." z="center_coll_chamber - center_sc_attach"/>
 
   <!-- New position for pig shield - Ricky -->
   <position unit="cm" name="pig_center" x="0" y="-(height_sc_attach/2.)-(height_pig_shield/2.)" z="center_coll_chamber"/>
   <position unit="cm" name="pig_sub_trans" y="5."/>
   <position unit="cm" name="pig_box_trans" y="-height_pig_shield/2+height_w_coll_1/2.+2.5"/>
-  <position unit="cm" name="hole_for_pig" x="0" y="-(height_sc_attach/2.)-(height_pig_shield/2.)" z="center_coll_chamber-center_sc_attach"/>
+  <position unit="cm" name="hole_for_pig" x="0" y="-(height_sc_attach/2.)-(height_pig_shield/2.)" z="center_coll_chamber - center_sc_attach"/>
 
   <position unit="cm" name="jacketTrans_cyc"       x="0" y="0"     z="-length_cw70_coll_1/2-cw70_jacket_length/2"/>
   <position unit="cm" name="jacketTrans_cyc_g1"       x="0" y="0"     z="-length_cw70_coll_1/2+cw70_groove_length"/>
