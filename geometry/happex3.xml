@@ -1845,7 +1845,6 @@
        <positionref ref="dDet_beamline_pos_4"/>
      </physvol>
 
-     <!--FIXME-->
      <physvol name="farDet_farside">
        <volumeref ref="farDet_farside_logic"/>
        <positionref ref="farDet_farside_pos"/>
