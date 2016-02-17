@@ -134,7 +134,7 @@ G4VPhysicalVolume* MollerDetectorConstruction::Construct()
       if ((*vit).type == "SensDet")
       {
         G4String det_type = (*vit).value;
-	//G4cout << " is a " << det_type <<  G4endl << G4endl;
+	G4cout << " is a " << det_type << G4endl;
 
 	snprintf(detectorname,200,"/detector%i",k+1);
 	collimatordetector[k] = new MollerDetectorSD(detectorname);
@@ -142,9 +142,9 @@ G4VPhysicalVolume* MollerDetectorConstruction::Construct()
         if (collimatordetector[k] != 0)
         {
 
-          G4cout << "  Creating sensitive detector " << det_type
+          G4cout << " Creating sensitive detector " << det_type
                  << " for volume " << myvol->GetName()
-                 <<  G4endl << G4endl;
+                 <<  G4endl ;
 	  char volumeNumber[20] = "volumeN"; 
 	  TString vol_str(det_type.data());
 	  G4int n_vol = -1;
@@ -153,7 +153,7 @@ G4VPhysicalVolume* MollerDetectorConstruction::Construct()
 	    n_vol =  vol_str.Atoi(); 
 	    // G4cout << "volume " << vol_str.Data() << " number overwritten to " << n_vol << G4endl;
 	    collimatordetector[k]->SetVolume(n_vol);
-	    G4cout << "volume number overwritten to " << n_vol <<" to be accessed in the TNtuple" << G4endl;
+	    G4cout << "  volume number overwritten to " << n_vol <<" to be accessed in the TNtuple" << G4endl<< G4endl;
 	  }
           SDman->AddNewDetector(collimatordetector[k]);
           myvol->SetSensitiveDetector(collimatordetector[k]);
@@ -576,8 +576,8 @@ void MollerDetectorConstruction::DefineMaterials()
   SS->AddMaterial(S,  fractionmass=0.030*perCent);
 
    // this material will kill every tracks that touch it                                         
-  Kryptonite = new G4Material("Kryptonite", density= 0.00000001*mg/cm3, nComponents=1);
-  Kryptonite->AddMaterial(Ar, fractionmass=100.*perCent);
+  // Kryptonite = new G4Material("Kryptonite", density= 0.00000001*mg/cm3, nComponents=1);
+  // Kryptonite->AddMaterial(Ar, fractionmass=100.*perCent);
 
   D  = new G4Isotope("Deuteron", z=1, n=2, a= 2.0141018*g/mole);
   elD = new G4Element("Deuterium",symbol="elD", nIso = 1);
@@ -606,9 +606,9 @@ void MollerDetectorConstruction::DefineMaterials()
   pureCa40 = new G4Material("Pure_Calcium40", density= 1.55*g/cm3, nComponents=1);
   pureCa40->AddElement(Ca40, natoms=1); 
 
-  CW70 = new G4Material("CW70", density= 14.18*g/cm3, nComponents=2);
-  CW70->AddMaterial(Cu,fractionmass=30.*perCent);
-  CW70->AddMaterial(W,fractionmass=70.*perCent);
+  // CW70 = new G4Material("CW70", density= 14.18*g/cm3, nComponents=2);
+  // CW70->AddMaterial(Cu,fractionmass=30.*perCent);
+  // CW70->AddMaterial(W,fractionmass=70.*perCent);
 
   septumpipeMaterial  = SS;
   septumMaterial  = Fe;
