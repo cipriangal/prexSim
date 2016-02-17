@@ -17,11 +17,10 @@
 
   <constant name="real_sc_thick_4" value="0.5"/> <!-- QT will fail for values less than 0.2 REAL VALUE=0.05--> 
 
-  <constant name="fTargetLength" value="20.00"/><!--FIXME original was 0.05-->
+  <constant name="fTargetLength" value="20.00"/>
 
   <constant name="fDeltaCaTargetZ" value="0."/>
   <constant name="fcollInnerR" value="1.905"/>
-<!--  <constant name="fcollInnerR" value="1.361"/> -->
   <constant name="fHutShieldThick" value="20."/>
   <constant name="fSCShieldThick" value="20."/>
   
@@ -1420,17 +1419,10 @@
     </volume>
 
     <volume name="target_logic">
-      <!-- <materialref ref="PureLead"/> FIXME -->     
       <materialref ref="H2Liquid"/>
       <solidref ref="tubeTarget"/>
     </volume>
-<!--
-    <volume name="scDet_logic">
-      <materialref ref="Vacuum"/>
-      <solidref ref="ScattChamberDet"/>
-      <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
-    </volume>
--->
+
     <volume name="sc_logic">
       <materialref ref="Aluminum"/>
       <solidref ref="scatt_w_holes"/>
