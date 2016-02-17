@@ -230,7 +230,7 @@ private:
   G4Material* borcrete;
   G4Material* polycrete;
   G4Material* W;
-  G4Material* CW70;
+  //G4Material* CW70;
   G4Material* Al;
   G4Material* Ar;
   G4Material* Mn;
@@ -244,7 +244,7 @@ private:
   G4Material* S;
   G4Material* SS;
   G4Material* H2O;
-  G4Material* Kryptonite;
+  //G4Material* Kryptonite;
   G4Material* Air;
   G4Material* H;
   
