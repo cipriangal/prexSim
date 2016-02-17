@@ -1,20 +1,2 @@
-
-/gun/particle e-
-#/gun/particle gamma
-/moller/gun/gen 7
-
-#/gun/energy 1.05 GeV ## PREX energy
-#/moller/ana/rootfilename ./rakithadata_test
-
-#/gun/energy 2.20 GeV ## CREX energy
-#/moller/ana/rootfilename ./open_test
-
-#HAPPEX 2 ran a higher energies
-/gun/energy 3.18 GeV  ## HAPPEX2 energy
-/moller/ana/rootfilename ./calcRadTest
-
-#Collimator Shield Radiation Testing
-#/gun/energy 0.008 GeV # Coll Radiation
-#/moller/ana/rootfilename ./oneWay_test
-
-/run/beamOn 1000000
+/moller/ana/rootfilename ./o_SimName
+/run/beamOn 100
