@@ -26,20 +26,6 @@ MollerGlobalMagnetFieldMessenger::MollerGlobalMagnetFieldMessenger(MollerGlobalM
   fieldDir = new G4UIdirectory("/moller/field/");
   fieldDir->SetGuidance("Magnet field control.");
 
-  // hybridFileCmd = new G4UIcmdWithAString("/moller/field/setHybridMap",this);
-  // hybridFileCmd->SetGuidance("Set the hybrid field map file name.");
-  // hybridFileCmd->SetParameterName("hybridFilename",true);
-  // hybridFileCmd->SetDefaultValue("blockyHybrid_3.0");
-  // //hybridFileCmd->AvailableForStates(G4State_Init);
-  // //hybridFileCmd->AvailableForStates(G4State_PreInit,G4State_Idle, G4State_GeomClosed);
-
-  // upstreamFileCmd = new G4UIcmdWithAString("/moller/field/setUpstreamMap",this);
-  // upstreamFileCmd->SetGuidance("Set the upstream field map file name.");
-  // upstreamFileCmd->SetParameterName("upstreamFilename",true);
-  // upstreamFileCmd->SetDefaultValue("blockyUpstream_1.1");
-  // //upstreamFileCmd->AvailableForStates(G4State_Init);
-  //upstreamFileCmd->AvailableForStates(G4State_PreInit,G4State_Idle, G4State_GeomClosed);
-
   magLowLimCmd = new G4UIcmdWithADoubleAndUnit("/moller/field/setLowLim",this);  
   magLowLimCmd->SetGuidance("Set Lower limit for shield in the Septum field.");
   magLowLimCmd->SetParameterName("Mfield_low",true);
@@ -68,9 +54,6 @@ MollerGlobalMagnetFieldMessenger::MollerGlobalMagnetFieldMessenger(MollerGlobalM
 
 MollerGlobalMagnetFieldMessenger::~MollerGlobalMagnetFieldMessenger()
 {
-  // delete hybridFileCmd;
-  // delete upstreamFileCmd;
-
   delete fieldDir;
   delete magLowLimCmd;
   delete magHighLimCmd;
