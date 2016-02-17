@@ -449,22 +449,40 @@
  <position unit="cm" name="top_scatchamber_trans3" x="0" y="0" z="+0.5*top_scatchamber_p1_high+0.5*top_scatchamber_p4_high" />
 
 
-<!-- Rotations -->
+ <!-- Rotations -->
+ <rotation name="scRot_1" unit="deg" x="90" y="0" z="0"/>
+ <rotation name="scRot_2" unit="deg" x="-90" y="0" z="0"/>
+ <rotation name="scRot_3" unit="deg" x="0" y="0" z="45"/>
+ <rotation name="scRot_4" unit="deg" x="0" y="0" z="-45"/>
+ <rotation name="scRot_5" unit="deg" x="0" y="0" z="225"/>
+ <rotation name="scRot_6" unit="deg" x="90" y="0" z="12.5"/>
+ <rotation name="scRot_7" unit="deg" x="90" y="0" z="-12.5"/>
+ <rotation name="scRot_8" unit="deg" x="90" y="0" z="30"/>
+ <rotation name="scRot_9" unit="deg" x="0" y="0" z="120"/>
+ <rotation name="scRot_10" unit="deg" x="0" y="0" z="240"/>
+ <rotation name="scRot_11" unit="deg" x="0" y="0" z="12.5"/>
+ <rotation name="scRot_12" unit="deg" x="0" y="0" z="-12.5"/>
+ <rotation name="identity"/>
 
-  <rotation name="scRot_1" unit="deg" x="90" y="0" z="0"/>
-  <rotation name="scRot_2" unit="deg" x="-90" y="0" z="0"/>
-  <rotation name="scRot_3" unit="deg" x="0" y="0" z="45"/>
-  <rotation name="scRot_4" unit="deg" x="0" y="0" z="-45"/>
-  <rotation name="scRot_5" unit="deg" x="0" y="0" z="225"/>
-  <rotation name="scRot_6" unit="deg" x="90" y="0" z="12.5"/>
-  <rotation name="scRot_7" unit="deg" x="90" y="0" z="-12.5"/>
-  <rotation name="scRot_8" unit="deg" x="90" y="0" z="30"/>
-  <rotation name="scRot_9" unit="deg" x="0" y="0" z="120"/>
-  <rotation name="scRot_10" unit="deg" x="0" y="0" z="240"/>
-  <rotation name="scRot_11" unit="deg" x="0" y="0" z="12.5"/>
-  <rotation name="scRot_12" unit="deg" x="0" y="0" z="-12.5"/>
-  <rotation name="identity"/>
-
+  <!--  Detectors for new concrete sites - Ricky -->
+  <constant name="width_det_far" value="100.0"/>
+  <constant name="height_det_far" value="100.0"/>
+  <constant name="length_det_far" value="100.0"/>  
+  <!-- Concrete sites - Ricky -->
+  <constant name="width_slab1" value="200."/>
+  <constant name="width_slab2" value="300."/>
+  <constant name="length_slab1" value="200."/>
+  <constant name="length_slab2" value="500."/>
+  <constant name="height_slab" value="-(bottom_cylwall)+50."/>
+  <constant name="thick_slab" value="50."/>  
+  <!-- Positions for detectors and walls at concrete site - Ricky-->
+  <position unit="cm" name="farDet_farside_pos" x="860." y="0" z="-1461."/>
+  <position unit="cm" name="farDet_rampside_pos" x="-425." y="0" z="-1461"/>
+  <position unit="cm" name="slab1_pos" x="810." y="-(height_slab)/2.+thick_cylwall+50." z="-1411."/>
+  <position unit="cm" name="slab2_pos" x="-425." y="-(height_slab)/2.+thick_cylwall+50." z="-1461."/>
+  <position unit="cm" name="slab1_trans" x="thick_slab" y="0" z="-(thick_slab)"/>
+  <position unit="cm" name="slab2_trans" x="-(thick_slab)" y="0" z="-(thick_slab)"/>  
+  
 </define>
 
 &materials;
@@ -1407,6 +1425,25 @@
   <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="dDet_beamline_3" rmin="0" rmax="beamline[1,12]" z="0.1" />  
   <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="dDet_beamline_4" rmin="0" rmax="beamline[1,12]" z="0.1" />
 
+  <!-- Concrete sites and concrete site detectors -Ricky -->
+  <box lunit="cm" name="farDet_farside_solid" x="width_det_far" y="height_det_far" z="length_det_far"/>
+  <box lunit="cm" name="farDet_rampside_solid" x="width_det_far" y="height_det_far" z="length_det_far"/>
+  <box lunit="cm" name="slab1_0" x="width_slab1" y="height_slab" z="length_slab1"/>
+  <box lunit="cm" name="slab2_0" x="width_slab2" y="height_slab" z="length_slab2"/>
+  <box lunit="cm" name="slab1_cut" x="width_slab1" y="height_slab+0.5" z="length_slab1"/>
+  <box lunit="cm" name="slab2_cut" x="width_slab2" y="height_slab+0.5" z="length_slab2"/>
+  
+  <subtraction name="slab1_solid">
+    <first ref="slab1_0"/>
+    <second ref="slab1_cut"/>
+    <positionref ref="slab1_trans"/>
+  </subtraction>
+  
+  <subtraction name="slab2_solid">
+    <first ref="slab2_0"/>
+    <second ref="slab2_cut"/>
+    <positionref ref="slab2_trans"/>
+  </subtraction>
 
 </solids>
 
@@ -1558,6 +1595,29 @@
       <materialref ref="Kryptonite"/>
       <solidref ref="box_elec_hut_sept"/>
       <auxiliary auxtype="SensDet" auxvalue="volumeN10009"/> 
+    </volume>
+
+    <!-- Detectors at concrete sites and concrete -->
+    <volume name="farDet_farside_logic">
+      <materialref ref="Kryptonite"/>
+      <solidref ref="farDet_farside_solid"/>
+      <auxiliary auxtype="SensDet" auxvalue="volumeN2001"/>
+    </volume>
+    
+    <volume name="farDet_rampside_logic">
+      <materialref ref="Kryptonite"/>
+      <solidref ref="farDet_rampside_solid"/>
+      <auxiliary auxtype="SensDet" auxvalue="volumeN2002"/>
+    </volume>
+    
+    <volume name="slab1_logic">
+      <materialref ref="Concrete"/>
+      <solidref ref="slab1_solid"/>
+    </volume>
+    
+    <volume name="slab2_logic">
+      <materialref ref="Concrete"/>
+      <solidref ref="slab2_solid"/>
     </volume>
 
     <volume name="sDet_1_logic">
@@ -1831,6 +1891,26 @@
       <physvol name="beamline_4_det">
         <volumeref ref="dDet_beamline_4_logic"/>
         <positionref ref="dDet_beamline_pos_4"/>
+      </physvol>
+
+      <physvol name="farDet_farside">
+	<volumeref ref="farDet_farside_logic"/>
+	<positionref ref="farDet_farside_pos"/>
+      </physvol>
+      
+      <physvol name="farDet_rampside">
+	<volumeref ref="farDet_rampside_logic"/>
+	<positionref ref="farDet_rampside_pos"/>
+      </physvol>
+      
+      <physvol name="slab1">
+	<volumeref ref="slab1_logic"/>
+	<positionref ref="slab1_pos"/>
+      </physvol>
+      
+      <physvol name="slab2">
+	<volumeref ref="slab2_logic"/>
+	<positionref ref="slab2_pos"/>
       </physvol>
 
     </volume>
