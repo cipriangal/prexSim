@@ -1,6 +1,3 @@
-
-
-
 #ifndef MollerDetectorSD_h
 #define MollerDetectorSD_h 1
 
