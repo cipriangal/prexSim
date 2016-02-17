@@ -1,16 +1,3 @@
-// ****************************************************
-// *                                                  *
-// * MollerDetectorMessenger to change values of      *
-// * collimator positions/sizes.  Temporary solution; *
-// * I intend to have a general geometry readin if we *
-// * don't move to GEMC soon.                         *
-// *                                                  *
-// * Added 3-21-2011 by Juliette Mammei               *
-// *                                                  *
-// ****************************************************
-
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-
 #include "MollerDetectorMessenger.hh"
 
 #include "MollerDetectorConstruction.hh"
@@ -19,9 +6,6 @@
 #include "G4UIcmdWithAnInteger.hh"
 #include "G4UIcmdWithADoubleAndUnit.hh"
 #include "G4UIcmdWithABool.hh"
-//#include "globals.hh"
-
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 MollerDetectorMessenger::MollerDetectorMessenger(MollerDetectorConstruction* myDet)
 :myDetector(myDet)
