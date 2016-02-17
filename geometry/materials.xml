@@ -93,14 +93,4 @@
       <D unit="g/cm3" value="0.071287"/>
       <atom unit="g/mole" value="2.02"/>
     </material>
-    <!-- From QweakSim
-      // Liquid H2
-  name      = "H2Liquid";
-  density   = 0.071287*g/cm3; // From Greg, this is the density at 20 k and 32.5 psia
-  nelements = 1;
-  G4Material* __attribute__ ((unused))
-  matLiquidHydrogen = new G4Material(name, density, nelements);
-  matLiquidHydrogen -> AddElement(elH,1);
-  //matLiquidHydrogen -> GetIonisation() -> SetMeanExcitationEnergy(21.8*eV);
-    -->
  </materials>
