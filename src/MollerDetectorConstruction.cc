@@ -576,8 +576,8 @@ void MollerDetectorConstruction::DefineMaterials()
   SS->AddMaterial(S,  fractionmass=0.030*perCent);
 
    // this material will kill every tracks that touch it                                         
-  // Kryptonite = new G4Material("Kryptonite", density= 0.00000001*mg/cm3, nComponents=1);
-  // Kryptonite->AddMaterial(Ar, fractionmass=100.*perCent);
+  Kryptonite = new G4Material("Kryptonite", density= 0.00000001*mg/cm3, nComponents=1);
+  Kryptonite->AddMaterial(Ar, fractionmass=100.*perCent);
 
   D  = new G4Isotope("Deuteron", z=1, n=2, a= 2.0141018*g/mole);
   elD = new G4Element("Deuterium",symbol="elD", nIso = 1);
@@ -606,9 +606,9 @@ void MollerDetectorConstruction::DefineMaterials()
   pureCa40 = new G4Material("Pure_Calcium40", density= 1.55*g/cm3, nComponents=1);
   pureCa40->AddElement(Ca40, natoms=1); 
 
-  // CW70 = new G4Material("CW70", density= 14.18*g/cm3, nComponents=2);
-  // CW70->AddMaterial(Cu,fractionmass=30.*perCent);
-  // CW70->AddMaterial(W,fractionmass=70.*perCent);
+  CW70 = new G4Material("CW70", density= 14.18*g/cm3, nComponents=2);
+  CW70->AddMaterial(Cu,fractionmass=30.*perCent);
+  CW70->AddMaterial(W,fractionmass=70.*perCent);
 
   septumpipeMaterial  = SS;
   septumMaterial  = Fe;
