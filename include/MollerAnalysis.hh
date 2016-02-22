@@ -143,31 +143,26 @@ public:
   if (!index&&
       (aHit->GetIon()||splitProcess==0)&&
       kineE0>0&&
-      aHit->GetType()==0
-      ) {
+      aHit->GetType()==0) {
     
     if (aHit->GetIon()) {
       fntup[32] = 2;
       fntup[33] = kineE2;
       fntup[34] = theta2;
-    }
-    else {
+    }else{
       fntup[32] = 1;
       fntup[33] = kineE1;
       fntup[34] = theta1;
     }
-  }
-  else if (aHit->GetTrackID()==1){ 
+  }else if (aHit->GetTrackID()==1){ 
     fntup[32] = 1;
     fntup[33] = kineE1;
     fntup[34] = theta1;
-  }
-  else if (aHit->GetTrackID()==2){ 
+  }else if (aHit->GetTrackID()==2){ 
     fntup[32] = 2;
     fntup[33] = kineE2;
     fntup[34] = theta2;
-  }
-  else { 
+  }else { 
     fntup[32] = 0;
     fntup[33] = 0;
     fntup[34] = 0;
@@ -181,17 +176,6 @@ public:
   fntup[39] = aHit->GetEdep();
   fntup[40] = aHit->GetTrackStatus();
 
-  /*
-  G4cout<<"Ntuple variables in AddData:"<<G4endl;
-
-  //  for (Int_t i=0;i<40;i++){
-  //    G4cout<<fntup[i]<<", ";  
-  //}
-  G4cout<<" Event,   type,   volume,   track,   edep"<<G4endl;
-  G4cout<<fntup[30]<<", "<<fntup[23]<<", "<<fntup[24]<<", "<<fntup[35]<<", "<<fntup[39];
-  G4cout<<G4endl;
-
-  */
   ntup->Fill(fntup);
 }
 
