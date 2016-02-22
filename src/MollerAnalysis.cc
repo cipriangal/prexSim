@@ -263,33 +263,8 @@ void MollerAnalysis::BeginOfRunAction(const G4Run* /*aRun*/)
   G4String filenamechar=(rootfileName+".root");
     
   G4cout << "Root file name is "<<filenamechar << G4endl;   
-  //printf("%s \n",&filenamechar);
-  // This works:
-  /*
-  G4String filenamechar;
-  filenamechar="~/scratch/ROOTfiles/";
-  filenamechar += rootfileName;
-  filenamechar += ".root";
-  G4cout<<filenamechar<<G4endl;
-  */
-
-  //char filenamechar[200];
-  /*
-  time_t rawtime;
-  tm * ptm;
-  time ( &rawtime );
-  ptm = gmtime ( &rawtime );
-  snprintf(filenamechar,200,"~/scratch/ROOTfiles/coll_test0_%02i%02i%02i_%02i%02i%02i.root",
-  	   ptm->tm_year-100,ptm->tm_mon+1,ptm->tm_mday,(ptm->tm_hour+19)%24,ptm->tm_min,ptm->tm_sec);
-  //  snprintf(filenamechar,200,"~/scratch/ROOTfiles/moller_%02i%02i%02i_%02i%02i%02i.root",
-  //	   ptm->tm_year-100,ptm->tm_mon+1,ptm->tm_mday,(ptm->tm_hour+19)%24,ptm->tm_min,ptm->tm_sec);
-  printf(filenamechar);
-  */
-  //snprintf(filenamechar,200,"~/scratch/ROOTfiles/%s.root",rootfileName);
 
   hfile = new TFile(filenamechar,"RECREATE","Root/G4 analysis");
-  //hfile = new TFile(rootfileName,"RECREATE","Root/G4 analysis");
-
 
   string myntuple_string;
   //                0  1 2 3 4  5  6  7     8  9  10 11     12  13  14  15     16  17  18  19     20  21  22  23   24     25     26     27     28     29      30    31      32  33        34        35    36     37    38   39
@@ -309,20 +284,11 @@ void MollerAnalysis::BeginOfRunAction(const G4Run* /*aRun*/)
 void MollerAnalysis::BeginOfEventAction(const G4Event */*anEvent*/)
 {
   ev_num++;
+  if(ev_num%100000==1) G4cout<<"at event: "<<ev_num<<G4endl;
+  
   if (gSystem) gSystem->ProcessEvents();
 
   G4SDManager * SDman = G4SDManager::GetSDMpointer();
-
-  /*  if(hitsCollID[0]<0 || hitsCollID[1]<0 || 
-     hitsCollID[2]<0 || hitsCollID[3]<0 || 
-     hitsCollID[4]<0 || hitsCollID[5]<0 || 
-     hitsCollID[6]<0 || hitsCollID[7]<0 || 
-     hitsCollID[8]<0 || hitsCollID[9]<0 || 
-     hitsCollID[10]<0 || hitsCollID[11]<0 || 
-     hitsCollID[12]<0 || hitsCollID[13]<0 || 
-     hitsCollID[14]<0 || hitsCollID[15]<0 || hitsCollID[16]<0
-     )
-  */ 
 
   if((int) hitsCollID.size()==0)   
     {
@@ -336,18 +302,11 @@ void MollerAnalysis::BeginOfEventAction(const G4Event */*anEvent*/)
 	G4cout << colNam << G4endl;
 	
 	hitsCollID.push_back (SDman->GetCollectionID(colNam));
-      }
-      //  G4cout<<G4endl<<"Finished setting hitsCollID"<<G4endl<<G4endl;
-      
+      }      
     }
 
 
   gRootAnalysis->SetProcess(1);
-  /* These are you lines Dustin! Only these three lines. */
-  //gRootAnalysis->SetMomentum0();
-  //gRootAnalysis->SetMomentum1();
-  //gRootAnalysis->SetMomentum2();
-  /*                 ****************                    */
 }
 
 
@@ -444,7 +403,6 @@ void MollerAnalysis::UserSteppingAction(const G4Step *aStep)
   
   if (tracking==1) { /*parameter ``tracking'' may be a flag. Rakitha on Fri May 10 14:44:02 EDT 2013*/
 
-  /*Starting here. Rakitha on Fri May 10 14:44:02 EDT 2013*/  
     G4ThreeVector worldPos = fTrack->GetPosition();
     G4ThreeVector worldMomentum = fTrack->GetMomentumDirection();
     G4ThreeVector vertexPos = fTrack->GetVertexPosition();
@@ -462,7 +420,6 @@ void MollerAnalysis::UserSteppingAction(const G4Step *aStep)
     G4double kineE0 = fTrack->GetVertexKineticEnergy();
     
     G4bool ion = (process=="eIoni");
-/*upto here. These parameters are not used for anything. Rakitha on Fri May 10 14:44:02 EDT 2013*/    
   
     if (particle=="e-") partType=0;
     else if (particle=="e+") partType=1;
@@ -473,8 +430,6 @@ void MollerAnalysis::UserSteppingAction(const G4Step *aStep)
     else partType=6;
 
   }
-
-
 }
 
 void MollerAnalysis::EndOfEventAction(const G4Event *anEvent)
