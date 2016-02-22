@@ -51,6 +51,7 @@ int main(int argc,char** argv) {
 
   if(argc < 3){
     cout<<"Usage: anaRad [input file name] [output file name] [list of sensative detectors #]"<<endl;
+    cout<<" for example: build/anaRad o_HAPPEX2_1e6.root HAPPEX2_1e6 10008 10009 2001 2002"<<endl;
     cout<<"   Output files will be of the type: output/anaRad_OutputFileName.root"<<endl;
     return 1;
   }
