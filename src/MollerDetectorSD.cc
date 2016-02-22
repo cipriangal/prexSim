@@ -150,42 +150,28 @@ G4bool MollerDetectorSD::ProcessHits(G4Step* aStep, G4TouchableHistory*)
   G4double scat_ang = sqrt(vertexMomentum.x()*vertexMomentum.x() + 
 			   vertexMomentum.y()*vertexMomentum.y());
 
-  /* Insert cut here for limiting hit creation */
-  /* This default cut ignores gamma particles, which have partType=4*/
-
-  //  if (kineE0<100||!(partType==4||partType==0)) {
-  //    return true;
-  //  }
-
-  /* Create and define Hit attributes */
-  //  else {
-    MollerDetectorHit* newHit = new MollerDetectorHit(copyNo);
+  MollerDetectorHit* newHit = new MollerDetectorHit(copyNo);
     
     
-    newHit->SetWorldPos(worldPos);
-    newHit->SetVertexPos(vertexPos);
-    newHit->SetMomentum(momentum);
-    newHit->SetKineticEnergy(kineE);
-    
-    newHit->SetMomentum2(vertexMomentum);
-    newHit->SetKineticEnergy2(kineE0);
-    newHit->SetScatAngle(scat_ang);
-    
-    newHit->SetCreatorProcess(process);
-    newHit->SetParticleName(particle);
-
-    newHit->SetEdep( edep ); ;
-   
-    newHit->SetIon(ion);
-    newHit->SetType(partType);
-   
-    newHit->SetVolume(volume);
-    //G4cout << "volume =" << volume << G4endl;
-    newHit->SetTrackID(trackID);
-    newHit->SetParentID(parentID);
-    newHit->SetPDG(pdgID);
-    newHit->SetTrackStatus(trackstatusID);
-    /* 
+  newHit->SetWorldPos(worldPos);
+  newHit->SetVertexPos(vertexPos);
+  newHit->SetMomentum(momentum);
+  newHit->SetKineticEnergy(kineE);  
+  newHit->SetMomentum2(vertexMomentum);
+  newHit->SetKineticEnergy2(kineE0);
+  newHit->SetScatAngle(scat_ang);
+  newHit->SetCreatorProcess(process);
+  newHit->SetParticleName(particle);  
+  newHit->SetEdep( edep ); ;   
+  newHit->SetIon(ion);
+  newHit->SetType(partType);  
+  newHit->SetVolume(volume);
+  //G4cout << "volume =" << volume << G4endl;
+  newHit->SetTrackID(trackID);
+  newHit->SetParentID(parentID);
+  newHit->SetPDG(pdgID);
+  newHit->SetTrackStatus(trackstatusID);
+  /* 
     G4cout<<"Hit values in ProcessHits:"<<G4endl;
 
     G4cout<<"particle, volume, trackID, edep"<<G4endl;
@@ -199,10 +185,9 @@ G4bool MollerDetectorSD::ProcessHits(G4Step* aStep, G4TouchableHistory*)
     G4cout<<G4endl;
     */
 
-    hitsCollection->insert( newHit );
-    
-    return true;
-    //    }
+  hitsCollection->insert( newHit );
+  
+  return true;
 }
 
 void MollerDetectorSD::EndOfEvent(G4HCofThisEvent*)
