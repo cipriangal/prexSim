@@ -38,8 +38,6 @@ TDirectory* gD;
 string prename;
 
 int SensVolume_v;
-//8002 cylindircal det at the radius close to electronic hut
-//8003 cyl det at the wall
 
 void bookHisto();
 void processTree(string tname);
@@ -61,9 +59,14 @@ int main(int argc,char** argv) {
   rf->Close();
 
   map <int,string> SensNames;
-  SensNames[8002] ="HallD2";
-  SensNames[8003] ="HallD3";  
+  SensNames[8002] ="HallD2";//cylindircal det at the radius close to electronic hut
+  SensNames[8003] ="HallD3";//cylindircal det at the radius close to the wall
   SensNames[10008]="HRShut";
+  SensNames[10009]="Septum";
+  SensNames[10001]="BLTgt1";//beamline circle detector close to the target
+  SensNames[10002]="BLTgt2";//beamline circle detector close to the target
+  SensNames[10003]="BLDmp1";//beamline circle detector close to the dump
+  SensNames[10004]="BLDmp2";//beamline circle detector close to the dump
   SensNames[10009]="Septum";
   SensNames[2001] ="Lpower";
   SensNames[2002] ="Rpower";
@@ -73,11 +76,11 @@ int main(int argc,char** argv) {
     SensVolume_v=_sensVol.Atoi();
     cout<<"~~~~ Sensative volue set to :" <<SensVolume_v<<endl;
     cout<<endl;
-
+    
     prename=Form("SV%d",SensVolume_v);
     if( SensNames.find(SensVolume_v)!=SensNames.end() )
       prename=SensNames[SensVolume_v];
-
+  
     bookHisto();
     Init();
     processTree(ifnm);
@@ -236,18 +239,19 @@ void processTree(string tname){
 
   if ( SensVolume_v==2001 || SensVolume_v==2002 || SensVolume_v==10008 || SensVolume_v==10009){
     t->SetBranchAddress("Edeposit",&Energy); //because these are made from Kryptonite
-  }else if( SensVolume_v==8003  || SensVolume_v==8004  || SensVolume_v==8005 ||
+  }else if( SensVolume_v==8003  ||SensVolume_v==8002   || SensVolume_v==8004  || SensVolume_v==8005 ||
 	    SensVolume_v==10001 || SensVolume_v==10002 || SensVolume_v==10003||
 	    SensVolume_v==10004 ) {
     t->SetBranchAddress("kineE",&Energy); //because these are vacuum
   }
 
+  Double_t hit_radius_min = 0.; //cm 
   
-  Double_t hit_radius_min = 46.038; //cm inner radius of the beam pipe 45.72 cm and outer radius of the beam pipe 46.038 cm
-  
-  if ( SensVolume_v==8004 || SensVolume_v==8005 || SensVolume_v==10001 || SensVolume_v==10002 || SensVolume_v==10003 || SensVolume_v==10004 )
-    hit_radius_min = 0.; //this is for looking at results along the beamline
+    //inner radius of the beam pipe 45.72 cm and outer radius of the beam pipe 46.038 cm
+  if ( SensVolume_v==8002  || SensVolume_v==8003)
+    hit_radius_min = 46.038; //cm 
 
+  
   Double_t hit_radius;
   int partType[6]={1,1,-1,-1,0,2}; //electron,positron,N/A,N/A,gamma,neutron
   
