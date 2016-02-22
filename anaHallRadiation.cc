@@ -51,7 +51,7 @@ int main(int argc,char** argv) {
 
   if(argc < 3){
     cout<<"Usage: anaRad [input file name] [output file name] [list of sensative detectors #]"<<endl;
-    cout<<" for example: build/anaRad o_HAPPEX2_1e6.root HAPPEX2_1e6 10008 10009 2001 2002"<<endl;
+    cout<<" for example: build/anaRad o_HAPPEX2_1e6.root HAPPEX2_1e6 10008 10009 2001 2002 8002 8003"<<endl;
     cout<<"   Output files will be of the type: output/anaRad_OutputFileName.root"<<endl;
     return 1;
   }
@@ -61,6 +61,8 @@ int main(int argc,char** argv) {
   rf->Close();
 
   map <int,string> SensNames;
+  SensNames[8002] ="HallD2";
+  SensNames[8003] ="HallD3";  
   SensNames[10008]="HRShut";
   SensNames[10009]="Septum";
   SensNames[2001] ="Lpower";
@@ -242,11 +244,13 @@ void processTree(string tname){
   t->SetBranchAddress("event",&event);
 
   if ( SensVolume_v==2001 || SensVolume_v==2002 || SensVolume_v==10008 || SensVolume_v==10009){
-  t->SetBranchAddress("Edeposit",&Energy); 
-  t->SetBranchAddress("kineE",&kineE);
-  }else if( SensVolume_v==8003 || SensVolume_v==8004 || SensVolume_v==8005 || SensVolume_v==10001 || SensVolume_v==10002 || SensVolume_v==10003 || SensVolume_v==10004 ) {
-    t->SetBranchAddress("kineE",&Energy); 
+    t->SetBranchAddress("Edeposit",&Energy); //because these are made from Kryptonite
+    t->SetBranchAddress("kineE",&kineE);
+  }else if( SensVolume_v==8003  || SensVolume_v==8004  || SensVolume_v==8005 ||
+	    SensVolume_v==10001 || SensVolume_v==10002 || SensVolume_v==10003||
+	    SensVolume_v==10004 ) {
     t->SetBranchAddress("Edeposit",&Edeposit); //hack to get the deposited energy
+    t->SetBranchAddress("kineE",&Energy); //because these are vacuum
   }
 
   
