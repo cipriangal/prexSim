@@ -6,7 +6,9 @@
 #include <cstdlib>
 #include <math.h>
 
+#include <TH1F.h>
 #include <TH2F.h>
+#include <TH3F.h>
 #include <TTree.h>
 #include <TF1.h>
 #include <TFile.h>
@@ -24,6 +26,7 @@ TH1F *Histo_vert_z_weighted_full[3],*Histo_Energy_lt_10[3],*Histo_Energy_gt_10[3
 TH1F *Histo_vert_z[3][3],*Histo_vert_z_weighted[3][3],*Histo_Energy_custom_lt_10[3][3],*Histo_Energy_custom_gt_10[3][3];
 //plot for the detector faces
 TH1F *Det_Face;
+TH3F *DetFace;
 
 Int_t low_ranges[3],up_ranges[3];
 //Flux and power parameters Full range //indices [particle type][energy ranges 0->0.1->10->1000] 
@@ -118,7 +121,8 @@ void Init(){
     }
   }
 
-  if(Det_Face)  Det_Face  ->Reset();
+  if(Det_Face)  Det_Face ->Reset();  
+  if(DetFace)   DetFace  ->Reset();  
 }
  
 void bookHisto(){
@@ -158,7 +162,26 @@ void bookHisto(){
     }
   }
 
-  Det_Face = new TH1F("Det_Face","Detector Face Hit",8,0.,7.);
+  Det_Face = new TH1F("Det_Face","Detector Face Hit",8,-0.5,7.5);
+  
+  int knownDet[4]={10008,10009,2001,2002};
+  float ranges[5][3][2]={
+    {{3500,5500},{-1000,1000},{1000,2000}},//10008
+    {{-1750,-750},{500,1500},{1000,2000}},//10009	   
+    {{8100,9100},{-500,500},{-15110,-14110}},//2001  
+    {{-4750,-3750},{-500,500},{-15110,-14110}},//2002
+    {{-5000,9000},{-1000,2000},{-16000,4000}}
+  };
+
+  int rn=4;
+  for(int i=0;i<4;i++)
+    if(SensVolume_v==knownDet[i])
+      rn=i;
+  
+  DetFace = new TH3F("DetFace","Detector Hits",
+		     100,ranges[rn][0][0],ranges[rn][0][1],
+		     100,ranges[rn][1][0],ranges[rn][1][1],
+		     100,ranges[rn][2][0],ranges[rn][2][1]);
 }
 
 void PrintInfo(){
@@ -288,13 +311,8 @@ void processTree(string tname){
       }
     }
     
-       
-    if(i % 1000000 == 1 ) cout<<" processed: "<<tname.c_str()<<" "<<i<<endl;
-  }
-
-  for (int i=0; i<nentries; i++) {
-    t->GetEntry(i);
     if  ( volume==SensVolume_v  && z_0 > -26000  && type<=5){
+      DetFace->Fill(xd,yd,zd);
       if (SensVolume_v == 2001){
 	if ( (xd>8100 && xd<9100) && (yd>-500 && yd<500) && zd==-14110 ) Det_Face->Fill(1);
 	else if ( (xd>8100 && xd<9100) && (yd>-500 && yd<500) && zd==-15110 ) Det_Face->Fill(2);
@@ -328,20 +346,15 @@ void processTree(string tname){
 	else if ( (xd>-1750 && xd<-750) && yd==500 && (zd>1000 && zd<2000) ) Det_Face->Fill(6);	
       }
     }
-    }
+       
+    if(i % 1000000 == 1 ) cout<<" processed: "<<tname.c_str()<<" "<<i<<endl;
+  }
   
   PrintInfo();
   delete t;
 }
 
-void writeEachHisto(TH1F* a){
-  a -> SetName(Form("%s_%s",prename.c_str(),a->GetName()));
-  a -> SetTitle(Form("%s %s",prename.c_str(),a->GetTitle()));
-  a -> SetDirectory(gD);
-  a -> Write();
-}
-
-void writeEachHisto(TH2F* a){
+void writeEachHisto(TH1* a){
   a -> SetName(Form("%s_%s",prename.c_str(),a->GetName()));
   a -> SetTitle(Form("%s %s",prename.c_str(),a->GetTitle()));
   a -> SetDirectory(gD);
@@ -369,6 +382,7 @@ void WriteHisto(string fname){
   }
 
   writeEachHisto(Det_Face);
+  writeEachHisto(DetFace);
   
   fout->Close();
   delete fout;
