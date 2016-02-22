@@ -217,19 +217,14 @@ void PrintInfo(){
 
 void processTree(string tname){
 
-  Float_t kineE, type, volume, track, parent, PDGid, Edeposit, event, creator;
-  //New Float for simulation of various detectors
+  Float_t type, volume, event;
   Float_t Energy;
-  Float_t px,py,pz;
   Float_t x_0,y_0,z_0,xd,yd,zd;
   
   TChain *t = new TChain("geant");
   t->Add(tname.c_str());
   t->SetBranchAddress("type",&type);
   t->SetBranchAddress("volume",&volume);
-  t->SetBranchAddress("px",&px);
-  t->SetBranchAddress("py",&py);
-  t->SetBranchAddress("pz",&pz);
   t->SetBranchAddress("x",&xd);  
   t->SetBranchAddress("y",&yd);  
   t->SetBranchAddress("z",&zd);  
@@ -237,19 +232,13 @@ void processTree(string tname){
   t->SetBranchAddress("y0",&y_0);
   t->SetBranchAddress("z0",&z_0);
   t->SetBranchAddress("type",&type);
-  t->SetBranchAddress("parent",&parent);  
-  t->SetBranchAddress("creator",&creator);  
-  t->SetBranchAddress("PDGid",&PDGid);  
-  t->SetBranchAddress("track",&track);  
   t->SetBranchAddress("event",&event);
 
   if ( SensVolume_v==2001 || SensVolume_v==2002 || SensVolume_v==10008 || SensVolume_v==10009){
     t->SetBranchAddress("Edeposit",&Energy); //because these are made from Kryptonite
-    t->SetBranchAddress("kineE",&kineE);
   }else if( SensVolume_v==8003  || SensVolume_v==8004  || SensVolume_v==8005 ||
 	    SensVolume_v==10001 || SensVolume_v==10002 || SensVolume_v==10003||
 	    SensVolume_v==10004 ) {
-    t->SetBranchAddress("Edeposit",&Edeposit); //hack to get the deposited energy
     t->SetBranchAddress("kineE",&Energy); //because these are vacuum
   }
 
