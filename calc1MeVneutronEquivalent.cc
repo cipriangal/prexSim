@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cstdlib>
+#include <map>
 
 #include "TGraph.h"
 #include "TCanvas.h"
@@ -8,62 +9,84 @@
 
 using namespace std;
 
-//Neutron,Proton,Pion,Electron
+//Electron,Neutron,Proton,Pion
 TGraph *dmgFct[4];
+string ofnm;
 
 void Init();
 void DrawDamageFunctions(string pdfNm);
-double CalcDmg(TH1D *dist,TH1D *dmg,int nDmg);
+double CalcDmg(TH1 *dist,TH1 *dmg,int nDmg);
 
 int main(int argc,char** argv) {
 
   if(argc < 3){
-    cout<<"Usage: build/calcRadDamage [sensative detector #] [input filename with distributions] <optional [name of pdf for dmg functions]>"<<endl;
+    cout<<"Usage: build/calcRadDamage [input filename with distributions] [output name] [list of Sensitive Detector #]"<<endl;
+    cout<<" for example: build/calcRadDamage output/anaRad_P2_1e7.root P2_1e7 10008 10009 2001 2002 8002 8003"<<endl;
     return 1;
   }
-  Init();
-  string pdfNm="y_dmgFunctions.pdf";
-  if( argc ==4 ){    
-    pdfNm=argv[3];
-    DrawDamageFunctions(pdfNm);
-  }
-  
-  int detID=atoi(argv[1]);
-  string partNm[4]={"Neutron","Proton","Pion","Electron"};
 
-  TFile *fout=new TFile("o_dmgCalculation.root","UPDATE"); 
-  TFile *fin=TFile::Open(argv[2],"READ");
+  Init();
+  //string pdfNm="output/y_Calc1MeVEquiv_dmgFunctions.pdf";
+  //DrawDamageFunctions(pdfNm);
+  
+  string ifnm=argv[1]; 
+  ofnm=argv[2];
+  TFile *fout=new TFile(Form("output/calc1MeV_%s.root",ofnm.c_str()),"RECREATE");
+
+  map <int,string> SensNames;
+  SensNames[8002] ="HallD2";//cylindircal det at the radius close to electronic hut
+  SensNames[8003] ="HallD3";//cylindircal det at the radius close to the wall
+  SensNames[10008]="HRShut";
+  SensNames[10009]="Septum";
+  SensNames[10001]="BLTgt1";//beamline circle detector close to the target
+  SensNames[10002]="BLTgt2";//beamline circle detector close to the target
+  SensNames[10003]="BLDmp1";//beamline circle detector close to the dump
+  SensNames[10004]="BLDmp2";//beamline circle detector close to the dump
+  SensNames[10009]="Septum";
+  SensNames[2001] ="Lpower";
+  SensNames[2002] ="Rpower";
+  
+  TFile *fin=new TFile(ifnm.c_str(),"READ");
   if(!fin->IsOpen()){
     cout<<"Cannot find file : "<<argv[2]<<endl;
     return -1;
   }
 
-  TH1D *dmg[4];
-  TH1D *dist[4];
   
-  for(int i=0;i<4;i++){
-    if(!fin->GetListOfKeys()->Contains(Form("dist%s_%d",partNm[i].c_str(),detID))){
-      cout<<" can't find "<<Form("dist%s_%d",partNm[i].c_str(),detID)<<endl;
-      continue;
-    }
-    dist[i]=(TH1D*)fin->Get(Form("dist%s_%d",partNm[i].c_str(),detID));
-    dmg[i]=(TH1D*)dist[i]->Clone(Form("dmg%s_%d",partNm[i].c_str(),detID));
-    double calcDmg=CalcDmg(dist[i],dmg[i],i);
-    cout<<"Damage from "<<partNm[i]<<" is "<<calcDmg<<endl;
-    fout->cd();
-    dmgFct[i]->Write();
-    dist[i]->Write();
-    dmg[i]->Write();
+  for(int i=3;i<argc;i++){
+    TString _sensVol(argv[i]);
+    int SensVolume_v=_sensVol.Atoi();
+    string prename=Form("SV%d",SensVolume_v);
+    if( SensNames.find(SensVolume_v)!=SensNames.end() )
+      prename=SensNames[SensVolume_v];
+
+    char hPnm[3]={'g','e','n'};
+    string cuts[2]={"lt","gt"};
+    for(int part=1;part<3;part++)
+      for(int cut=0;cut<2;cut++){
+	string hnm=Form("%s_Energy_%s_10_%c",prename.c_str(),cuts[cut].c_str(),hPnm[part]);
+	if(!fin->GetListOfKeys()->Contains(hnm.c_str())){
+	  cout<<" skipping "<<hnm<<endl;
+	  continue;
+	}
+	TH1F *h=(TH1F*)fin->Get(hnm.c_str());
+	TH1F *d=(TH1F*)h->Clone(Form("dmg_%s",hnm.c_str()));
+	double calcDmg=CalcDmg(h,d,part-1);
+	cout<<hnm<<" 1MeV equiv: "<<calcDmg<<endl;
+	fout->cd();
+	h->Write();
+	d->Write();	
+      }
   }
-  
+
   fin->Close();
   fout->Close();
+  delete fin;
   delete fout;
-  delete fin;  
   return 0;
 }
 
-double CalcDmg(TH1D *dist,TH1D *dmg,int nDmg){
+double CalcDmg(TH1 *dist,TH1 *dmg,int nDmg){
   int nbin=dist->GetXaxis()->GetNbins();
   double tot=0;
   for(int i=1;i<=nbin;i++){
@@ -108,25 +131,25 @@ double dmgPionX[]={1.500E+01,2.500E+01,3.500E+01,4.500E+01,5.500E+01,6.500E+01,7
   int dmgPionN = sizeof(dmgPionX)/sizeof(dmgPionX[0]);
   int dmgElectronN = sizeof(dmgElectronX)/sizeof(dmgElectronX[0]);
 
-  dmgFct[0]=new TGraph(dmgNeutronN,dmgNeutronX,dmgNeutronY);
-  dmgFct[0]->SetName("dmgFctNeutron");
-  dmgFct[0]->SetTitle("1MeV neutron in Si equivalent damage function for neutron;energy [MeV]");
-  dmgFct[0]->SetMarkerStyle(20);  
+  dmgFct[0]=new TGraph(dmgElectronN,dmgElectronX,dmgElectronY);
+  dmgFct[0]->SetName("dmgFctElectron");
+  dmgFct[0]->SetTitle("1MeV neutron in Si equivalent damage function for electron;energy [MeV]");
+  dmgFct[0]->SetMarkerStyle(20);
 
-  dmgFct[1]=new TGraph(dmgProtonN,dmgProtonX,dmgProtonY);
-  dmgFct[1]->SetName("dmgFctProton");
-  dmgFct[1]->SetTitle("1MeV neutron in Si equivalent damage function for proton;energy [MeV]");
-  dmgFct[1]->SetMarkerStyle(20);
+  dmgFct[1]=new TGraph(dmgNeutronN,dmgNeutronX,dmgNeutronY);
+  dmgFct[1]->SetName("dmgFctNeutron");
+  dmgFct[1]->SetTitle("1MeV neutron in Si equivalent damage function for neutron;energy [MeV]");
+  dmgFct[1]->SetMarkerStyle(20);  
 
-  dmgFct[2]=new TGraph(dmgPionN,dmgPionX,dmgPionY);
-  dmgFct[2]->SetName("dmgFctPion");
-  dmgFct[2]->SetTitle("1MeV neutron in Si equivalent damage function for pion;energy [MeV]");
-  dmgFct[2]->SetMarkerStyle(20);  
+  dmgFct[2]=new TGraph(dmgProtonN,dmgProtonX,dmgProtonY);
+  dmgFct[2]->SetName("dmgFctProton");
+  dmgFct[2]->SetTitle("1MeV neutron in Si equivalent damage function for proton;energy [MeV]");
+  dmgFct[2]->SetMarkerStyle(20);
 
-  dmgFct[3]=new TGraph(dmgElectronN,dmgElectronX,dmgElectronY);
-  dmgFct[3]->SetName("dmgFctElectron");
-  dmgFct[3]->SetTitle("1MeV neutron in Si equivalent damage function for electron;energy [MeV]");
-  dmgFct[3]->SetMarkerStyle(20);
+  dmgFct[3]=new TGraph(dmgPionN,dmgPionX,dmgPionY);
+  dmgFct[3]->SetName("dmgFctPion");
+  dmgFct[3]->SetTitle("1MeV neutron in Si equivalent damage function for pion;energy [MeV]");
+  dmgFct[3]->SetMarkerStyle(20);  
 
 }
  
