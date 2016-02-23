@@ -88,8 +88,15 @@ int main(int argc,char** argv) {
 
 double CalcDmg(TH1 *dist,TH1 *dmg,int nDmg){
   int nbin=dist->GetXaxis()->GetNbins();
+  double xmin,xmax,ydm;
+  dmgFct[nDmg]->GetPoint(0,xmin,ydm);
+  dmgFct[nDmg]->GetPoint(dmgFct[nDmg]->GetN()-1,xmax,ydm);
   double tot=0;
   for(int i=1;i<=nbin;i++){
+    if(dist->GetBinCenter(i)<xmin || dist->GetBinCenter(i)>xmax) {
+      dmg->SetBinContent(i,0);
+      continue;
+    }
     double val=dist->GetBinContent(i)*dmgFct[nDmg]->Eval(dist->GetBinCenter(i));
     dmg->SetBinContent(i,val);
     tot+=val;
