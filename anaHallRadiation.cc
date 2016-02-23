@@ -35,7 +35,7 @@ Double_t flux[3][3],power[3][3];
 Double_t flux_range[3][3][3],power_range[3][3][3];
 float tot_events;
 TDirectory* gD;
-string prename;
+string prename,ofnm;
 
 int SensVolume_v;
 
@@ -54,7 +54,7 @@ int main(int argc,char** argv) {
     return 1;
   }
   string ifnm=argv[1]; 
-  string ofnm=argv[2];
+  ofnm=argv[2];
   TFile *rf=new TFile(Form("output/anaRad_%s.root",ofnm.c_str()),"RECREATE");
   rf->Close();
 
@@ -196,7 +196,7 @@ void PrintInfo(){
   TString eName[3]={"  0<E<0.1","0.1<E<10"," 10<E<1000"};
   TString zName[3]={"-2600<z<-110"," -110<z<135","  135<z<3400"};
   cout<<" ~Printing:"<<endl;
-  ofstream fout(Form("output/o_%s_powerFlux.dat",prename.c_str()),std::ofstream::out);
+  ofstream fout(Form("output/o_%s_%s_powerFlux.dat",ofnm.c_str(),prename.c_str()),std::ofstream::out);
   
   for(int i=0;i<3;i++)
     for(int j=0;j<3;j++)
