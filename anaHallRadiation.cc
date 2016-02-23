@@ -67,7 +67,6 @@ int main(int argc,char** argv) {
   SensNames[10002]="BLTgt2";//beamline circle detector close to the target
   SensNames[10003]="BLDmp1";//beamline circle detector close to the dump
   SensNames[10004]="BLDmp2";//beamline circle detector close to the dump
-  SensNames[10009]="Septum";
   SensNames[2001] ="Lpower";
   SensNames[2002] ="Rpower";
 
