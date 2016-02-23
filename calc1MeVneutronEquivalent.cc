@@ -65,6 +65,7 @@ int main(int argc,char** argv) {
 	cout<<hnm<<" 1MeV equiv: "<<calcDmg<<" [Hz/uA/m2]"<<endl;
 	fout->cd();
 	h->Write();
+	d->GetYaxis()->SetTitle("1 MeV equivalent damage [Hz/uA/m2]");
 	d->Write();	
       }
   }
