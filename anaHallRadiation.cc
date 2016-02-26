@@ -48,13 +48,14 @@ void WriteHisto(string fname);
 int main(int argc,char** argv) {
 
   if(argc < 3){
-    cout<<"Usage: anaRad [input file name] [output file name] [list of sensative detectors #]"<<endl;
-    cout<<" for example: build/anaRad o_HAPPEX2_1e6.root HAPPEX2_1e6 10008 10009 2001 2002 8002 8003"<<endl;
+    cout<<"Usage: anaRad [number of events] [input file name] [output file name] [list of sensative detectors #]"<<endl;
+    cout<<" for example: build/anaRad 1e6 o_HAPPEX2_1e6.root HAPPEX2_1e6 10008 10009 2001 2002 8002 8003"<<endl;
     cout<<"   Output files will be of the type: output/anaRad_OutputFileName.root"<<endl;
     return 1;
   }
-  string ifnm=argv[1]; 
-  ofnm=argv[2];
+  tot_events=atof(argv[1]);
+  string ifnm=argv[2]; 
+  ofnm=argv[3];
   TFile *rf=new TFile(Form("output/anaRad_%s.root",ofnm.c_str()),"RECREATE");
   rf->Close();
 
@@ -70,7 +71,7 @@ int main(int argc,char** argv) {
   SensNames[2001] ="Lpower";
   SensNames[2002] ="Rpower";
 
-  for(int i=3;i<argc;i++){
+  for(int i=4;i<argc;i++){
     TString _sensVol(argv[i]);
     SensVolume_v=_sensVol.Atoi();
     cout<<"~~~~ Sensative volue set to :" <<SensVolume_v<<endl;
