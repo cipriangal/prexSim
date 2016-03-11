@@ -136,13 +136,13 @@
     <!-- Tungsten jacket volume dimentions : rakitha Mon Oct 14 17:32:34 EDT 2013  -->
     <constant name="width_w_coll_1" value="11.4"/>
     <constant name="height_w_coll_1" value="22.7"/>
-    <constant name="length_w_coll_1" value="16.5"/>
+    <constant name="length_w_coll_1" value="11.75"/>
     <!-- Make a square Tungsten jacket -->
     <!-- <constant name="width_w_coll_1" value="24"/>  <constant name="height_w_coll_1" value="24"/>  <constant name="length_w_coll_1" value="16.5"/> -->
     <!-- Dimensions of volume to be subtracted at DS of Tungsten jacket (Length is 3.48 + 1.27 cm see CAD diagram): rakitha Mon Nov 18 15:12:34 EST 2013  -->
     <constant name="width_w_sub_box" value="11.4"/>
     <constant name="height_w_sub_box" value="4.44"/>
-    <constant name="length_w_sub_box" value="4.75"/>
+    <constant name="length_w_sub_box" value="0.1"/>
     <!-- Dimensions of trapazoidal volume to be added at DS of Tungsten jacket : rakitha Mon Nov 18 15:12:34 EST 2013  -->
     <constant name="trap_box_x1" value="11.4"/>
     <constant name="trap_box_x2" value="11.4"/> 
@@ -558,7 +558,7 @@
     <position unit="cm" name="scAttachTrans_3" x="0" y="0" z="length_sc_attach/2"/>
     <position unit="cm" name="scAttachTrans_4" x="0" y="0" z="length_sc_attach/2 - length_w_coll_1/2"/>
     <position unit="cm" name="scAttachTrans_5" x="0" y="0" z="-1*length_sc_attach/2"/>
-    <position unit="cm" name="scAttachTrans_6" x="0" y="height_sc_attach" z="-length_cw70_coll_1/2"/>
+    <position unit="cm" name="scAttachTrans_6" x="0" y="height_sc_attach - 1.001" z="center_coll_chamber-center_sc_attach"/>
     
     <!-- Alterations made to make way for collimator chamber -->
     <!-- Made alterations (-20 along z axis) for purposes of spacing - Ricky -->
@@ -839,42 +839,36 @@
       <positionref ref="collTrans_0"/>
       <rotationref ref="identity"/>
     </subtraction> 
-
     <subtraction name ="coll_CW70_Solid_1">
       <first ref="coll_cw70_cyln"/>
       <second ref="coll_cw70_bore_cone"/>
       <positionref ref="collTrans_0"/>
       <rotationref ref="identity"/>
     </subtraction>
-
     <subtraction name ="coll_CW70_Solid_2">
       <first ref="coll_CW70_Solid_1"/>
       <second ref="cw70_groove_solid"/>
       <positionref ref="jacketTrans_cyc_g1"/>
       <rotationref ref="identity"/>
     </subtraction>  
-
     <subtraction name ="coll_CW70_Solid_3">
       <first ref="coll_CW70_Solid_2"/>
       <second ref="cw70_groove_solid"/>
       <positionref ref="jacketTrans_cyc_g2"/>
       <rotationref ref="identity"/>
     </subtraction>  
-
     <subtraction name ="coll_CW70_Solid_4">
       <first ref="coll_CW70_Solid_3"/>
       <second ref="cw70_groove_solid"/>
       <positionref ref="jacketTrans_cyc_g3"/>
       <rotationref ref="identity"/>
     </subtraction>  
-
     <subtraction name ="coll_CW70_Solid_5">
       <first ref="coll_CW70_Solid_4"/>
       <second ref="cw70_groove_solid"/>
       <positionref ref="jacketTrans_cyc_g4"/>
       <rotationref ref="identity"/>
     </subtraction>  
-
     <union name ="coll_CW70_Solid">
       <first ref="coll_CW70_Solid_5"/>
       <second ref="coll_cw70_cyln_outer"/>
@@ -891,11 +885,6 @@
     <box lunit="cm" name="Coll_jacket_sub_box" x="width_w_sub_box*1.0001" y="height_w_sub_box*1.0001" z="length_w_sub_box*1.001"/>
 
     <trd  lunit="cm" name="trd_box_w_1" x1="trap_box_x1" x2="trap_box_x2" y1="trap_box_y1" y2="trap_box_y2" z="trap_box_half_length"/>
-    <!-- To have a smooth transistion from CW70 to W jacket in the Bore, rmax1 must be recalcualted and replace the coll_inner_r1 -->
-    <!--   <cone aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="coll_jacket_w_bore_cone" rmin1="0.0" rmax1="1.173" rmin2="0.0" rmax2="coll_inner_r2" z="length_bore"/>  -->
-
-    <!-- To have a smooth transistion from CW70 to W jacket in the Bore, rmax1 must be recalcualted and replace the coll_inner_r1 -->
-    <!-- <cone aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="coll_jacket_w_bore_cone" rmin1="0.0" rmax1="1.488" rmin2="0.0" rmax2="coll_inner_r2" z="length_bore"/> -->
 
     <subtraction name ="coll_jacket_W_Solid_1">
       <first ref="Coll_jacket_W"/>
@@ -903,28 +892,26 @@
       <positionref ref="collTrans_0"/>
       <rotationref ref="identity"/>
     </subtraction>
-
+    <!--
     <subtraction name ="coll_jacket_W_Solid_2">
       <first ref="coll_jacket_W_Solid_1"/>
       <second ref="Coll_jacket_sub_box"/>
       <positionref ref="jacket_sub_boxTrans_u"/>
       <rotationref ref="identity"/>
     </subtraction>
-
     <subtraction name ="coll_jacket_W_Solid_3">
       <first ref="coll_jacket_W_Solid_2"/>
       <second ref="Coll_jacket_sub_box"/>
       <positionref ref="jacket_sub_boxTrans_d"/>
       <rotationref ref="identity"/>
     </subtraction>
-
+    -->
     <union name ="coll_jacket_W_Solid_4">
-      <first ref="coll_jacket_W_Solid_3"/>
+      <first ref="coll_jacket_W_Solid_1"/>
       <second ref="trd_box_w_1"/>
       <positionref ref="jacket_add_trapTrans_u"/>
       <rotationref ref="identity"/>
     </union> 
-
     <union name ="coll_jacket_W_Solid_5">
       <first ref="coll_jacket_W_Solid_4"/>
       <second ref="trd_box_w_1"/>
@@ -1154,13 +1141,13 @@
 
     <tube aunit="deg" startphi="0" deltaphi="360"
 	  lunit="cm" name="sc_attach_pig"
-	  rmin="25"
-	  rmax="25.4"
+	  rmin="25/2"
+	  rmax="25.4/2"
 	  z="39.37 - height_sc_attach*0.5" />
     <tube aunit="deg" startphi="0" deltaphi="360"
 	  lunit="cm" name="sc_attach_pig_lid"
 	  rmin="0"
-	  rmax="25.4"
+	  rmax="25.4/2"
 	  z="1.27" />
 
     <!--
