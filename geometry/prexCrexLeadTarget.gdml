@@ -49,8 +49,6 @@
     <constant name="fSCHutShieldHeight" value="15"/>
     <constant name="fSCHutShieldLength" value="20"/>
 
-
-
     <constant name="PI" value="1.*pi"/>
 
     <!-- World Volume -->
@@ -136,18 +134,14 @@
     
     <constant name="coll_angle" value="atan(fcollInnerR/(delta_coll_us_face))*180./PI"/> 
 
-
-
     <!-- **No longer in use**  Initial CW70 water jacket inlet volume dimentions : rakitha Mon Sep 30 15:50:52 EDT 2013  -->
-    <!-- FIXME -->
     <constant name="width_cw70_jacket" value="5"/>
     <constant name="height_cw70_jacket" value="2"/>
     <constant name="length_cw70_jacket" value="3"/>
-    <!-- CW70 collimator extension at the US dimentions : rakitha  Mon Nov 18 13:43:01 EST 2013 -->
-    <!-- FIXME -->
+
+    <!-- CW70 collimator extension at the US -->
     <constant name="cw70_jacket_inner_r" value="2"/>
     <constant name="cw70_jacket_outer_r" value="5"/>
-    <constant name="cw70_jacket_length" value="2.54"/>
 
     <!-- Space between CW70 surface and W block : rakitha Mon Nov 18 13:43:01 EST 2013  -->
     <constant name="cw70_cooling_length" value="0.24"/>
@@ -168,7 +162,6 @@
     <!--Dimensions of the Copper tube between the CW70 and W box -->
     <constant name="Cu_tube_inner_r" value="radius_cw70_coll_1+0.001"/>
     <constant name="Cu_tube_outer_r" value="radius_cw70_coll_1+cw70_cooling_length-0.001"/>
-    <constant name="Cu_tube_length" value="length_cw70_coll+cw70_jacket_length"/>
     
     <constant name="coll_3_inner_r" value="0"/>
     <constant name="coll_3_outer_r" value="3.073"/>
@@ -624,7 +617,6 @@
     <position unit="cm" name="jacketTrans_u_1"       x="0" y="-radius_cw70_coll_1 + height_cw70_jacket/2"     z="-length_w_coll_jacket/2-length_cw70_jacket/2"/>
     <position unit="cm" name="collTrans_4"       x="0" y="0"     z="-(length_w_coll_jacket)/2+length_cw70_coll/2"/>
     <position unit="cm" name="coll_center"       x="0" y="0"     z="center_cw70_coll"/>
-    <position unit="cm" name="Cu_tube_center"       x="0" y="0"     z="center_cw70_coll-cw70_jacket_length/2"/>
 
     <!-- New position for coll_chamber - Ricky -->
     <position unit="cm" name="coll_chamber_center" x="0" y="5." z="center_cw70_coll_chamber" />
