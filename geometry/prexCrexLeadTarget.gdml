@@ -105,8 +105,9 @@
 
 
     <!-- Collimator bore dimentions-->
-    <constant name="coll_bore_inner_r1" value="1.32"/> 
-    <constant name="coll_bore_inner_r2" value="1.56"/>
+    <!-- 1.168 at the face of it and an angle of 0.78 deg: see https://ace.phys.virginia.edu:80/HAPPEX/2928 -->
+    <constant name="coll_bore_inner_r1" value="1.168"/> 
+    <constant name="coll_bore_inner_r2" value="1.380"/>
 
     <!-- Collimator surface grooves-->
     <constant name="cw70_groove_inner_r" value="3.905"/>
@@ -830,7 +831,7 @@
 	  lunit="cm" name="coll_bore_cone"
 	  rmin1="0.0" rmax1="coll_bore_inner_r1"
 	  rmin2="0.0" rmax2="coll_bore_inner_r2"
-	  z="length_w_coll_jacket"/>
+	  z="length_w_coll_jacket+0.001"/>
 
     <subtraction name ="coll_cw70_cyln_1">
       <first ref="coll_cw70_cyln"/>
@@ -2820,10 +2821,10 @@
         <positionref ref="sc_attach_center"/>
       </physvol>
 
-      <physvol name="sc_attachment_shield">
-        <volumeref ref="sc_attach_shield_logic"/>
-        <positionref ref="sc_attach_center"/>
-      </physvol>
+      <!-- <physvol name="sc_attachment_shield"> -->
+      <!--   <volumeref ref="sc_attach_shield_logic"/> -->
+      <!--   <positionref ref="sc_attach_center"/> -->
+      <!-- </physvol> -->
 
       <physvol name="septum">
         <volumeref ref="septum_logic"/>
