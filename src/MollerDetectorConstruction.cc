@@ -236,7 +236,7 @@ G4VPhysicalVolume* MollerDetectorConstruction::Construct()
       if (worldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->GetDaughter(j)->GetLogicalVolume()->GetMaterial()->GetName().compare("Vacuum")==0){
 	worldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->GetDaughter(j)->GetLogicalVolume()->SetVisAttributes(planeDetVisAtt); 
 	worldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->GetDaughter(j)->GetLogicalVolume()->SetMaterial(worldMaterial);}
-
+      
        if (worldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->GetDaughter(j)->GetLogicalVolume()->GetMaterial()->GetName().compare("VacuumOneWay")==0){
 	worldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->GetDaughter(j)->GetLogicalVolume()->SetVisAttributes(planeDetVisAtt); 
 	worldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->GetDaughter(j)->GetLogicalVolume()->SetMaterial(worldMaterial);}
@@ -297,7 +297,7 @@ G4VPhysicalVolume* MollerDetectorConstruction::Construct()
 	worldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->GetDaughter(j)->GetLogicalVolume()->SetVisAttributes(oringVisAtt); 
 	worldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->GetDaughter(j)->GetLogicalVolume()->SetMaterial(rubberneo);}
 
-      if (worldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->GetDaughter(j)->GetLogicalVolume()->GetMaterial()->GetName().compare("Kryptonite")==0){
+      if (worldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->GetDaughter(j)->GetLogicalVolume()->GetMaterial()->GetName().compare("matKryptonite")==0){
 	worldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->GetDaughter(j)->GetLogicalVolume()->SetVisAttributes(kryptoVisAtt); 
 	worldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->GetDaughter(j)->GetLogicalVolume()->SetMaterial(Kryptonite);
 	worldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->GetDaughter(j)->GetLogicalVolume()->SetUserLimits( new G4UserLimits(0.0, 0.0, 0.0, DBL_MAX, DBL_MAX) );
@@ -307,13 +307,14 @@ G4VPhysicalVolume* MollerDetectorConstruction::Construct()
     
     if (worldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->GetMaterial()->GetName().compare("Vacuum")==0){
       worldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->SetVisAttributes(planeDetVisAtt); 
-      worldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->SetMaterial(worldMaterial);}
+      worldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->SetMaterial(worldMaterial);
+    }
 
     if (worldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->GetMaterial()->GetName().compare("Tungsten")==0){
       worldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->SetVisAttributes(WVisAtt); 
       worldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->SetMaterial(W);}
 
-    if (worldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->GetMaterial()->GetName().compare("CW70")==0){
+    if (worldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->GetMaterial()->GetName().compare("matCW70")==0){
       worldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->SetVisAttributes(CW70VisAtt); 
       worldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->SetMaterial(CW70);}
 
@@ -369,7 +370,7 @@ G4VPhysicalVolume* MollerDetectorConstruction::Construct()
       worldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->SetVisAttributes(oringVisAtt); 
       worldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->SetMaterial(rubberneo);}
 
-    if (worldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->GetMaterial()->GetName().compare("Kryptonite")==0){
+    if (worldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->GetMaterial()->GetName().compare("matKryptonite")==0){
       worldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->SetVisAttributes(kryptoVisAtt); 
       worldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->SetMaterial(Kryptonite);
       worldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->SetUserLimits( new G4UserLimits(0.0, 0.0, 0.0, DBL_MAX, DBL_MAX) );

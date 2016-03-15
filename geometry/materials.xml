@@ -6,87 +6,105 @@
        <D unit="g/cm3" value="1e-25"/>
        <atom unit="g/mole" value="1.01"/>
      </material>
+
      <material Z="1" name="VacuumOneWay" state="gas">
        <T unit="K" value="2.73 "/>
        <P unit="pascal" value="3e-18"/>
        <D unit="g/cm3" value="1e-25"/>
        <atom unit="g/mole" value="1.01"/>
      </material>
-    <material Z="82" name="PureLead" state="solid">
+
+     <material Z="82" name="PureLead" state="solid">
       <T unit="K" value="298"/>
-      <D unit="g/cm3" value="11.53"/>
+      <D unit="g/cm3" value="11.39"/>
+<!--      <D unit="g/cm3" value="11.35"/> natural Pb -->
       <atom unit="g/mole" value="208"/>
     </material>
+
     <material Z="18" name="Argon" state="gas">
       <T unit="K" value="298"/>
       <D unit="g/cm3" value="1.66e-3"/>
       <atom unit="g/mole" value="39.948"/>
     </material>
+
     <material Z="13" name="Aluminum" state="solid">
       <T unit="K" value="298"/>
       <D unit="g/cm3" value="2.699"/>
       <atom unit="g/mole" value="26.982"/>
     </material>
-    <material Z="13" name="Quartz" state="solid">
+    
+    <material Z="13" name="Quartz" state="solid"><!--FIXME -->
       <T unit="K" value="298"/>
       <D unit="g/cm3" value="2.699"/>
       <atom unit="g/mole" value="26.982"/>
     </material>
-    <material Z="13" name="Tungsten" state="solid">
+    
+    <material Z="13" name="Tungsten" state="solid"><!--FIXME -->
       <T unit="K" value="298"/>
       <D unit="g/cm3" value="2.699"/>
       <atom unit="g/mole" value="26.982"/>
     </material>
-    <material Z="13" name="CW70" state="solid">
+    
+    <material Z="13" name="matCW70" state="solid"><!--FIXME -->
       <T unit="K" value="298"/>
       <D unit="g/cm3" value="2.699"/>
       <atom unit="g/mole" value="26.982"/>
     </material>
-    <material Z="13" name="Concrete" state="solid">
+    
+    <material Z="13" name="Concrete" state="solid"><!--FIXME -->
       <T unit="K" value="298"/>
       <D unit="g/cm3" value="2.699"/>
       <atom unit="g/mole" value="26.982"/>
     </material>
-    <material Z="13" name="StainlessSteel" state="solid">
+    
+    <material Z="13" name="StainlessSteel" state="solid"><!--FIXME -->
       <T unit="K" value="298"/>
       <D unit="g/cm3" value="2.699"/>
       <atom unit="g/mole" value="26.982"/>
     </material>
-    <material Z="13" name="Iron" state="solid">
+    
+    <material Z="13" name="Iron" state="solid"><!--FIXME -->
       <T unit="K" value="298"/>
       <D unit="g/cm3" value="2.699"/>
       <atom unit="g/mole" value="26.982"/>
     </material>
-    <material Z="18" name="Kryptonite" state="solid">
+    
+    <material Z="18" name="matKryptonite" state="solid">
       <T unit="K" value="298"/>
       <D unit="mg/cm3" value="0.00000001"/>
       <atom unit="g/mole" value="39.948"/>
     </material>
-    <material Z="13" name="Copper" state="solid">
+    
+    <material Z="13" name="Copper" state="solid"><!--FIXME -->
       <T unit="K" value="298"/>
       <D unit="g/cm3" value="2.699"/>
       <atom unit="g/mole" value="26.982"/>
     </material>
-    <material Z="13" name="LiquidDeuterium" state="solid">
+    
+    <material Z="1" name="LiquidDeuterium" state="liquid">
+      <T unit="K" value="298"/>
+      <D unit="g/cm3" value="0.169"/>
+      <atom unit="g/mole" value="2.014"/>
+    </material>
+
+    <material Z="13" name="Shield" state="solid"><!--FIXME -->
       <T unit="K" value="298"/>
       <D unit="g/cm3" value="2.699"/>
       <atom unit="g/mole" value="26.982"/>
     </material>
-    <material Z="13" name="Shield" state="solid">
+    
+    <material Z="20" name="Calcium48" state="solid">
       <T unit="K" value="298"/>
-      <D unit="g/cm3" value="2.699"/>
-      <atom unit="g/mole" value="26.982"/>
+      <D unit="g/cm3" value="1.86"/>
+      <atom unit="g/mole" value="47.952"/>
     </material>
-    <material Z="13" name="Calcium48" state="solid">
+
+    <material Z="20" name="Calcium40" state="solid">
       <T unit="K" value="298"/>
-      <D unit="g/cm3" value="2.699"/>
-      <atom unit="g/mole" value="26.982"/>
-    </material>
-    <material Z="13" name="Calcium40" state="solid">
-      <T unit="K" value="298"/>
-      <D unit="g/cm3" value="2.699"/>
-      <atom unit="g/mole" value="26.982"/>
+      <D unit="g/cm3" value="1.55"/>
+      <atom unit="g/mole" value="39.96"/>
     </material>    
+
     <material Z="2" name="H2Liquid" state="liquid">
       <T unit="K" value="20"/>
       <P unit="pascal" value="224079.612"/> <!--converted 32.5 psi to pascal-->

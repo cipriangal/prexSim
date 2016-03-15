@@ -2366,7 +2366,7 @@
   <structure>
 
     <volume name="W_coll_logic">
-      <materialref ref="CW70"/>
+      <materialref ref="matCW70"/>
       <solidref ref="coll_cw70_cyln_6"/>
     </volume>
 
@@ -2586,27 +2586,27 @@
 
     <!-- Electronic hut @ HRS represnted by this box -->
     <volume name="box_elec_hut_logic">
-      <materialref ref="Kryptonite"/>
+      <materialref ref="matKryptonite"/>
       <solidref ref="box_elec_hut"/>
       <auxiliary auxtype="SensDet" auxvalue="volumeN10008"/> 
     </volume>
 
     <!-- Electronic hut @ septum represnted by this box -->
     <volume name="box_elec_hut_sept_logic">
-      <materialref ref="Kryptonite"/>
+      <materialref ref="matKryptonite"/>
       <solidref ref="box_elec_hut_sept"/>
       <auxiliary auxtype="SensDet" auxvalue="volumeN10009"/> 
     </volume>
 
     <!-- Detectors at concrete sites and concrete -->
     <volume name="farDet_farside_logic">
-      <materialref ref="Kryptonite"/>
+      <materialref ref="matKryptonite"/>
       <solidref ref="farDet_farside_solid"/>
       <auxiliary auxtype="SensDet" auxvalue="volumeN2001"/>
     </volume>
 
     <volume name="farDet_rampside_logic">
-      <materialref ref="Kryptonite"/>
+      <materialref ref="matKryptonite"/>
       <solidref ref="farDet_rampside_solid"/>
       <auxiliary auxtype="SensDet" auxvalue="volumeN2002"/>
     </volume>
