@@ -794,23 +794,38 @@
     <!-- Acceptance Positions - Ricky -->
     <position unit="cm" name="accept_center" x="0" y="0" z="center_accept"/>
 
+    <!-- Dipole constants/positions -->
+    <constant name="arm_dipole_r1" value="733.32"/>
+    <constant name="arm_dipole_r2" value="956.7"/>
+    <constant name="arm_dipole_w1" value="97.0"/>
+
+    <constant name="arm_dipole_r5" value="659.0"/>
+    <constant name="arm_dipole_r6" value="1017.4"/>
+    <constant name="arm_dipole_w3" value="255.48"/>
+
+    <constant name="arm_dipole_center_y" value="987.0"/>
+  
+    <position unit="cm" name="arm_dipole_pos2"  x="0" y="-1.*arm_dipole_center_y" z="1.*center_cylwall -40.0" />
+    
     <!-- Rotations -->
-    <rotation name="scRot_1" unit="deg" x="90" y="0" z="0"/>
-    <rotation name="scRot_2" unit="deg" x="-90" y="0" z="0"/>
-    <rotation name="scRot_3" unit="deg" x="0" y="0" z="45"/>
-    <rotation name="scRot_4" unit="deg" x="0" y="0" z="-45"/>
-    <rotation name="scRot_5" unit="deg" x="0" y="0" z="225"/>
-    <rotation name="scRot_6" unit="deg" x="90" y="0" z="12.5"/>
-    <rotation name="scRot_7" unit="deg" x="90" y="0" z="-12.5"/>
-    <rotation name="scRot_8" unit="deg" x="90" y="0" z="30"/>
-    <rotation name="scRot_9" unit="deg" x="0" y="0" z="120"/>
-    <rotation name="scRot_10" unit="deg" x="0" y="0" z="240"/>
-    <rotation name="scRot_11" unit="deg" x="0" y="0" z="12.5"/>
-    <rotation name="scRot_12" unit="deg" x="0" y="0" z="-12.5"/>
-    <rotation name="scRot_13" unit="deg" x="0" y="90" z="0"/>
-    <rotation name="scRot_14" unit="deg" x="0" y="0" z="90"/>
+    <rotation name="scRot_1"  unit="deg" x="90"  y="0"   z="0"/>
+    <rotation name="scRot_2"  unit="deg" x="-90" y="0"   z="0"/>
+    <rotation name="scRot_3"  unit="deg" x="0"   y="0"   z="45"/>
+    <rotation name="scRot_4"  unit="deg" x="0"   y="0"   z="-45"/>
+    <rotation name="scRot_5"  unit="deg" x="0"   y="0"   z="225"/>
+    <rotation name="scRot_6"  unit="deg" x="90"  y="0"   z="12.5"/>
+    <rotation name="scRot_7"  unit="deg" x="90"  y="0"   z="-12.5"/>
+    <rotation name="scRot_8"  unit="deg" x="90"  y="0"   z="30"/>
+    <rotation name="scRot_9"  unit="deg" x="0"   y="0"   z="120"/>
+    <rotation name="scRot_10" unit="deg" x="0"   y="0"   z="240"/>
+    <rotation name="scRot_11" unit="deg" x="0"   y="0"   z="12.5"/>
+    <rotation name="scRot_12" unit="deg" x="0"   y="0"   z="-12.5"/>
+    <rotation name="scRot_13" unit="deg" x="0"   y="90"  z="0"/>
+    <rotation name="scRot_14" unit="deg" x="0"   y="0"   z="90"/>
+    <rotation name="scRot_22" unit="deg" x="0"   y="-90" z="0"/>
     <rotation name="identity"/>
 
+    
   </define>
 
   &materials;
@@ -2359,6 +2374,35 @@
       <rotationref ref="identity"/>
     </subtraction>
 
+
+    <!-- Q1 dipole -->
+    <tube aunit="deg" startphi="90" deltaphi="360"
+	  lunit="cm" name="Dipole_ip1_cut"
+	  rmin="arm_dipole_r1 -5.0"
+	  rmax="arm_dipole_r2 +5.0"
+	  z="arm_dipole_w1 +5.0" />
+    <tube aunit="deg" startphi="181" deltaphi="42"
+	  lunit="cm" name="Dipole_ip1"
+	  rmin="arm_dipole_r5"
+	  rmax="arm_dipole_r6"
+	  z="arm_dipole_w3" />
+    <subtraction name ="Dipole_s_i_p1">
+      <first ref="Dipole_ip1"/>
+      <second ref="Dipole_ip1_cut"/>
+      <positionref ref="ped_notrans"/>
+      <rotationref ref="identity"/>
+    </subtraction>
+    
+    <tube aunit="deg" startphi="0" deltaphi="360"
+	  lunit="cm" name="in_cylwall_i"
+	  rmin="0.0" rmax="radius_of_cylwall"
+	  z="1*height_cylwall-1*thick_cylwall" />     
+    <intersection name ="arm_i_solid">
+      <first ref="in_cylwall_i"/>
+      <second ref="Dipole_s_i_p1"/>
+      <positionref ref="arm_dipole_pos2"/>
+      <rotationref ref="scRot_22"/>
+    </intersection>
     
   </solids>
 
@@ -2733,6 +2777,16 @@
       <solidref ref="accept_solid"/>
     </volume>
 
+    <!-- dipoles  -->
+    <volume name="dipole_logic_1">
+      <materialref ref="Iron"/>
+      <solidref ref="arm_i_solid"/>
+    </volume>
+    <volume name="dipole_logic_2">
+      <materialref ref="Iron"/>
+      <solidref ref="arm_i_solid"/>
+    </volume>
+
 
     <volume name="logicMother">
       <materialref ref="Vacuum"/>
@@ -2985,6 +3039,18 @@
         <positionref ref="dDet_beamline_pos_4"/>
       </physvol>
 
+      <physvol name="dipole_left">
+        <volumeref ref="dipole_logic_1"/>
+        <positionref ref="cylwall_center"/>
+	<rotationref ref="scRot_6"/>
+      </physvol>
+      
+      <physvol name="dipole_right">
+        <volumeref ref="dipole_logic_2"/>
+        <positionref ref="cylwall_center"/>
+	<rotationref ref="scRot_7"/>
+      </physvol>
+      
     </volume>
   </structure>
 
