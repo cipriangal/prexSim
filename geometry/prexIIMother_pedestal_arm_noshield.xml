@@ -3,9 +3,7 @@
 <!DOCTYPE gdml [
 <!ENTITY materials SYSTEM "materials.xml">
 ]>
-<gdml
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
+<gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="./schema/gdml.xsd">
 
 <!--<gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../geant4/4.9.5.p01/source/geant4.9.5.p01/source/persistency/gdml/schema/gdml.xsd">-->
 
