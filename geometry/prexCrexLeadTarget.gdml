@@ -2285,10 +2285,12 @@
     <box lunit="cm" name="pDet_1" x="width_mother" y="height_mother" z="0.5"/>
     <box lunit="cm" name="pDet_2" x="width_mother" y="height_mother" z="0.5"/>
     <box lunit="cm" name="pDet_3" x="width_mother" y="height_mother" z="0.5"/>
-    <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="cDet_1_f" rmin="cDet_1_radius" rmax="cDet_1_radius+1." z="1*height_cylwall-1*thick_cylwall" /> 
-    <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="cDet_2_f" rmin="cDet_2_radius" rmax="cDet_2_radius+1." z="1*height_cylwall-1*thick_cylwall" /> 
-    <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="cDet_3_f" rmin="cDet_3_radius - 1." rmax="cDet_3_radius" z="1*height_cylwall-1*thick_cylwall" /> 
 
+    <tube aunit="deg" startphi="0" deltaphi="360"
+	  lunit="cm" name="cDet_1_f"
+	  rmin="cDet_1_radius"
+	  rmax="cDet_1_radius+1."
+	  z="1*height_cylwall-1*thick_cylwall" /> 
     <subtraction name ="cDet_1_f_p1">
       <first ref="cDet_1_f"/>
       <second ref="beamtube_10"/>
@@ -2307,12 +2309,24 @@
       <positionref ref="cDet_1_under_2pos"/>
       <rotationref ref="scRot_11"/>
     </subtraction>  
+
+    <tube aunit="deg" startphi="0" deltaphi="360"
+	  lunit="cm" name="cDet_2_f"
+	  rmin="cDet_2_radius"
+	  rmax="cDet_2_radius+1."
+	  z="1*height_cylwall-1*thick_cylwall" /> 
     <subtraction name ="cDet_2">
       <first ref="cDet_2_f"/>
       <second ref="beamtube_12"/>
       <positionref ref="cDet_2_trans"/>
       <rotationref ref="scRot_1"/>
     </subtraction> 
+
+    <tube aunit="deg" startphi="0" deltaphi="360"
+	  lunit="cm" name="cDet_3_f"
+	  rmin="cDet_3_radius - 1."
+	  rmax="cDet_3_radius"
+	  z="1*height_cylwall-1*thick_cylwall" /> 
     <subtraction name ="cDet_3">
       <first ref="cDet_3_f"/>
       <second ref="beamtube_12"/>
@@ -2389,7 +2403,11 @@
     <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="dDet_beamline_4" rmin="0" rmax="beamline[1,12]" z="0.1" />
 
     <!-- Beam-line Cylindical detector outside the beamline : Rakitha Tue Nov 12 11:23:08 EST 2013 -->
-    <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="beam_cyl_det" rmin="beam_cyl_det_inner_r" rmax="beam_cyl_det_outer_r" z="beam_cyl_det_length" />
+    <tube aunit="deg" startphi="0" deltaphi="360"
+	  lunit="cm" name="beam_cyl_det"
+	  rmin="beam_cyl_det_inner_r"
+	  rmax="beam_cyl_det_outer_r"
+	  z="beam_cyl_det_length" />
     <!--detector for electronic hut -->
     <box lunit="cm" name="det_box_elec_hut_1" x="width_elec_hut+0.0001" y="height_elec_hut+0.0001" z="length_elec_hut+0.0001"/>
     <box lunit="cm" name="det_box_elec_hut_2" x="width_elec_hut" y="height_elec_hut" z="length_elec_hut"/>
@@ -2473,13 +2491,6 @@
 	<auxiliary auxtype="SensDet" auxvalue="planeDet"/>
 	</volume>
     -->
-    <!--Old Scattering Chamber -->
-    <volume name="sc_logic">
-      <materialref ref="Aluminum"/>
-      <solidref ref="scatt_w_holes"/>
-      <auxiliary auxtype="SensDet" auxvalue="volumeN5004"/>
-      <!-- <auxiliary auxtype="SensDet" auxvalue="planeDet"/> -->
-    </volume>
     <!-- New dual Scattering Chamber -->
     <volume name="new_sc_beampipe_logic">
       <materialref ref="Aluminum"/>
@@ -2703,32 +2714,30 @@
       <auxiliary auxtype="SensDet" auxvalue="volumeN10006"/> 
     </volume>
 
-
     <volume name="sDet_1_logic">
       <materialref ref="Vacuum"/>
       <solidref ref="sDet_1"/>
       <auxiliary auxtype="SensDet" auxvalue="volumeN10007"/>
     </volume>
 
+    <!-- hall detectors -->
     <volume name="cDet_1_logic">
       <materialref ref="Vacuum"/>
       <solidref ref="cDet_1"/>
-      <!--      <auxiliary auxtype="SensDet" auxvalue="planeDet"/> -->
       <auxiliary auxtype="SensDet" auxvalue="volumeN8001"/>
     </volume>
     <volume name="cDet_2_logic">
       <materialref ref="Vacuum"/>
       <solidref ref="cDet_2"/>
-      <!--      <auxiliary auxtype="SensDet" auxvalue="planeDet"/> -->
       <auxiliary auxtype="SensDet" auxvalue="volumeN8002"/> 
     </volume>
     <volume name="cDet_3_logic">
       <materialref ref="Vacuum"/>
       <solidref ref="cDet_3"/>
-      <!--      <auxiliary auxtype="SensDet" auxvalue="planeDet"/> -->
       <auxiliary auxtype="SensDet" auxvalue="volumeN8003"/>
     </volume>
 
+    <!-- Collimator detectors -->
     <volume name="dDet_us_logic">
       <materialref ref="Vacuum"/>
       <solidref ref="dDet_us"/>
