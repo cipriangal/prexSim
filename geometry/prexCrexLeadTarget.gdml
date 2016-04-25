@@ -55,16 +55,6 @@
     <constant name="det_inner_r" value="length_mother/2+prex_target_center-det_thick"/>  <!-- as large as it can be... -->
     <constant name="det_outer_r" value="length_mother/2+prex_target_center"/>
 
-    <!-- Electronic Hut @ HRS dimensions  -->
-    <constant name="width_elec_hut" value="200.0"/>
-    <constant name="height_elec_hut" value="200.0"/>
-    <constant name="length_elec_hut" value="400.0"/>
-    
-    <!-- Electronic Hut @ septum dimensions  -->
-    <constant name="width_elec_hut_sept" value="100.0"/>
-    <constant name="height_elec_hut_sept" value="100.0"/>
-    <constant name="length_elec_hut_sept" value="100.0"/>
-
     <!-- Beam-line Cylindical Detector dimensions  -->
     <constant name="beam_cyl_det_thick" value="0.1"/>
     <constant name="beam_cyl_det_inner_r" value="46.9"/>  
@@ -86,7 +76,6 @@
     <constant name="length_cw70_coll" value="10.54"/> <!-- total collimator lenght -->
 
     <constant name="delta_coll_us_face" value="83.2822"/>
-
     <constant name="center_cw70_coll" value="prex_target_center + delta_coll_us_face + length_cw70_coll/2"/>
     <position unit="cm" name="pos_global_coll_cw70" x="0" y="0" z="center_cw70_coll"/>
 
@@ -426,20 +415,6 @@
     <constant name="dump_ss_enc_hole_radius" value="46.038"/>
 
 
-    <!--  Detectors for new concrete sites - Ricky -->
-    <constant name="width_det_far" value="100.0"/>
-    <constant name="height_det_far" value="100.0"/>
-    <constant name="length_det_far" value="100.0"/>
-
-    
-    <!-- Concrete sites - Ricky -->
-    <constant name="width_slab1" value="200."/>
-    <constant name="width_slab2" value="300."/>
-    <constant name="length_slab1" value="200."/>
-    <constant name="length_slab2" value="500."/>
-    <constant name="height_slab" value="-(bottom_cylwall)+50."/>
-    <constant name="thick_slab" value="50."/>
-
     <!-- Cylindrical detector for Full hall simulation -->
     <constant name="cDet_1_radius" value="prex_target_center+600."/>
     <constant name="cDet_2_radius" value="prex_target_center+2300."/>
@@ -701,24 +676,10 @@
     <position unit="cm" name="prex_det_pos" x="height_new_sc/2.+1.0" y="0" z="prex_target_center"/>
     <position unit="cm" name="crex_det_pos" x="height_new_sc/2.+1.0" y="0" z="crex_target_center"/>
 
-    <!--Electronic hut placement -->
-    <position unit="cm" name="dbox_elec_hut_pos"       x="450" y="0"     z="1900"/>
-
-    <!--Electronic hut placement -->
-    <position unit="cm" name="dbox_elec_hut_sept_pos"       x="-125" y="100"     z="150"/>
-
     <!-- <position unit="cm" name="scTrans_1" x="0" y="-(outer_r_sc-thick_sc/2)" z="-y_cent_sc"/> -->
     <position unit="cm" name="cDet_1_trans"     x="0" y="-cDet_1_radius"     z="-1.*center_cylwall-0.5*thick_cylwall"/>
     <position unit="cm" name="cDet_2_trans"     x="0" y="-cDet_2_radius"     z="-1.*center_cylwall-0.5*thick_cylwall"/>
     <position unit="cm" name="cDet_3_trans"     x="0" y="-cDet_3_radius"     z="-1.*center_cylwall-0.5*thick_cylwall"/>
-
-    <!-- Positions for detectors and walls at concrete site - Ricky-->
-    <position unit="cm" name="farDet_farside_pos" x="860." y="0" z="-1461."/>
-    <position unit="cm" name="farDet_rampside_pos" x="-425." y="0" z="-1461"/>
-    <position unit="cm" name="slab1_pos" x="810." y="-(height_slab)/2.+thick_cylwall+50." z="-1411."/>
-    <position unit="cm" name="slab2_pos" x="-425." y="-(height_slab)/2.+thick_cylwall+50." z="-1461."/>
-    <position unit="cm" name="slab1_trans" x="thick_slab" y="0" z="-(thick_slab)"/>
-    <position unit="cm" name="slab2_trans" x="-(thick_slab)" y="0" z="-(thick_slab)"/>
 
     <!-- Pedestal scattering chamber -->
     
@@ -819,7 +780,11 @@
     <rotation name="scRot_14" unit="deg" x="0"   y="0"   z="90"/>
     <rotation name="scRot_22" unit="deg" x="0"   y="-90" z="0"/>
     <rotation name="identity"/>
-
+ 
+    <position unit="cm" name="pos_global_SEPT_elec"
+	      x="-125"
+	      y="100"
+	      z="150" />
     
   </define>
 
@@ -1476,27 +1441,6 @@
       <rotationref ref="scRot_13"/>
     </subtraction>
     
-    <!-- Concrete sites and concrete site detectors -Ricky -->
-    <box lunit="cm" name="farDet_farside_solid" x="width_det_far" y="height_det_far" z="length_det_far"/>
-    <box lunit="cm" name="farDet_rampside_solid" x="width_det_far" y="height_det_far" z="length_det_far"/>
-    <box lunit="cm" name="slab1_0" x="width_slab1" y="height_slab" z="length_slab1"/>
-    <box lunit="cm" name="slab2_0" x="width_slab2" y="height_slab" z="length_slab2"/>
-    <box lunit="cm" name="slab1_cut" x="width_slab1" y="height_slab+0.5" z="length_slab1"/>
-    <box lunit="cm" name="slab2_cut" x="width_slab2" y="height_slab+0.5" z="length_slab2"/>
-
-    <subtraction name="slab1_solid">
-      <first ref="slab1_0"/>
-      <second ref="slab1_cut"/>
-      <positionref ref="slab1_trans"/>
-    </subtraction>
-
-    <subtraction name="slab2_solid">
-      <first ref="slab2_0"/>
-      <second ref="slab2_cut"/>
-      <positionref ref="slab2_trans"/>
-    </subtraction>
-    
-
     <!-- o-rings and o-ring detectors -->
 
     <box lunit="cm" name="sc_oring_det_solid" x="width_sc_attach - 1.001*thick_sc_attach" y="height_sc_attach - 1.001*thick_sc_attach" z="0.5"/>
@@ -2272,13 +2216,6 @@
     </subtraction>
 
 
-    <!-- Electronic hut at HRS represnted by this box -->
-    <box lunit="cm" name="box_elec_hut" x="width_elec_hut" y="height_elec_hut" z="length_elec_hut"/> 
-
-    <!-- Electronic hut at septum magnet represnted by this box -->
-    <box lunit="cm" name="box_elec_hut_sept" x="width_elec_hut_sept" y="height_elec_hut_sept" z="length_elec_hut_sept"/> 
-
-
     <!-- Detectors -->
     <sphere aunit="deg" startphi="0" deltaphi="360" starttheta="0" deltatheta="360" lunit="cm" name="sDet_1"  rmin="det_inner_r" rmax="det_outer_r"/>
 
@@ -2408,16 +2345,6 @@
 	  rmin="beam_cyl_det_inner_r"
 	  rmax="beam_cyl_det_outer_r"
 	  z="beam_cyl_det_length" />
-    <!--detector for electronic hut -->
-    <box lunit="cm" name="det_box_elec_hut_1" x="width_elec_hut+0.0001" y="height_elec_hut+0.0001" z="length_elec_hut+0.0001"/>
-    <box lunit="cm" name="det_box_elec_hut_2" x="width_elec_hut" y="height_elec_hut" z="length_elec_hut"/>
-
-    <subtraction name ="det_box_elec_hut">
-      <first ref="det_box_elec_hut_1"/>
-      <second ref="det_box_elec_hut_2"/>
-      <positionref ref="center"/>
-      <rotationref ref="identity"/>
-    </subtraction>
 
 
     <!-- Q1 dipole -->
@@ -2670,50 +2597,6 @@
       <solidref ref="dump_ss_enc"/>
     </volume>
 
-    <!-- Electronic hut @ HRS represnted by this box -->
-    <volume name="box_elec_hut_logic">
-      <materialref ref="matKryptonite"/>
-      <solidref ref="box_elec_hut"/>
-      <auxiliary auxtype="SensDet" auxvalue="volumeN10008"/> 
-    </volume>
-
-    <!-- Electronic hut @ septum represnted by this box -->
-    <volume name="box_elec_hut_sept_logic">
-      <materialref ref="matKryptonite"/>
-      <solidref ref="box_elec_hut_sept"/>
-      <auxiliary auxtype="SensDet" auxvalue="volumeN10009"/> 
-    </volume>
-
-    <!-- Detectors at concrete sites and concrete -->
-    <volume name="farDet_farside_logic">
-      <materialref ref="matKryptonite"/>
-      <solidref ref="farDet_farside_solid"/>
-      <auxiliary auxtype="SensDet" auxvalue="volumeN2001"/>
-    </volume>
-
-    <volume name="farDet_rampside_logic">
-      <materialref ref="matKryptonite"/>
-      <solidref ref="farDet_rampside_solid"/>
-      <auxiliary auxtype="SensDet" auxvalue="volumeN2002"/>
-    </volume>
-
-    <volume name="slab1_logic">
-      <materialref ref="Concrete"/>
-      <solidref ref="slab1_solid"/>
-    </volume>
-
-    <volume name="slab2_logic">
-      <materialref ref="Concrete"/>
-      <solidref ref="slab2_solid"/>
-    </volume>
-
-    <!-- Electronic hut detector -->
-    <volume name="det_box_elec_hut_logic">
-      <materialref ref="Vacuum"/>
-      <solidref ref="det_box_elec_hut"/>
-      <auxiliary auxtype="SensDet" auxvalue="volumeN10006"/> 
-    </volume>
-
     <volume name="sDet_1_logic">
       <materialref ref="Vacuum"/>
       <solidref ref="sDet_1"/>
@@ -2849,28 +2732,6 @@
 	<rotationref ref="scRot_1"/>
       </physvol>
 
-
-      <!-- Concrete sites and detectors - Ricky -->
-      <physvol name="farDet_farside">
-	<volumeref ref="farDet_farside_logic"/>
-	<positionref ref="farDet_farside_pos"/>
-      </physvol>
-      
-      <physvol name="farDet_rampside">
-	<volumeref ref="farDet_rampside_logic"/>
-	<positionref ref="farDet_rampside_pos"/>
-      </physvol>
-
-      <physvol name="slab1">
-	<volumeref ref="slab1_logic"/>
-	<positionref ref="slab1_pos"/>
-      </physvol>
-
-      <physvol name="slab2">
-	<volumeref ref="slab2_logic"/>
-	<positionref ref="slab2_pos"/>
-      </physvol>
-
       <physvol name="target">
         <volumeref ref="target_logic"/>
         <positionref ref="targ_center"/>
@@ -3000,19 +2861,6 @@
 	<rotationref ref="scRot_8"/>
       </physvol>
 
-      <!--The electronic hut @ HRS-->     
-      <physvol name="box_elec_hut_phys">
-	<volumeref ref="box_elec_hut_logic"/>
-	<positionref ref="dbox_elec_hut_pos"/>
-<!-- FIXME prob rotate with arm	<rotationref ref="scRot_11"/> -->
-      </physvol>
-      
-      <!--The electronic hut @ Septum-->     
-      <physvol name="box_elec_hut_sept_phys">
-	<volumeref ref="box_elec_hut_sept_logic"/>
-	<positionref ref="dbox_elec_hut_sept_pos"/>
-      </physvol>
-
       <physvol name="sphere_det_1">
         <volumeref ref="sDet_1_logic"/>
         <positionref ref="sDet_1_pos"/>
@@ -3087,7 +2935,13 @@
         <positionref ref="cylwall_center"/>
       	<rotationref ref="scRot_7"/>
       </physvol>
-      
+
+      <physvol>
+	<file name="geometry/kriptoniteDetectors.gdml"/>
+	<positionref ref="pos_global_SEPT_elec"/>
+	<rotationref ref="identity"/>
+      </physvol>
+	    
     </volume>
   </structure>
 
