@@ -59,10 +59,8 @@ target_link_libraries(calcRadDamage ${LINK_LIBRARIES})
 #
 set(PREXSIM_SCRIPTS
   macros/gui.mac
-  macros/prerun.mac
-  macros/prerunmacro.mac
-  macros/prex_prerun.mac
-  macros/run_prex.mac
+  macros/preRun.mac
+  macros/myRun.mac
   )
 
 foreach(_script ${PREXSIM_SCRIPTS})
