@@ -537,16 +537,14 @@
 	      y="(height_sc_attach + height_sc_attach_pig)/2"
 	      z="center_cw70_coll + length_w_coll_jacket/2 - length_cw70_coll/2"/>
 
-    <!-- Alterations made to make way for collimator chamber -->
-    <!-- Made alterations (-20 along z axis) for purposes of spacing - Ricky -->
     <position unit="cm" name="scAttachTubeTrans_1"
 	      x="3.*(width_sc_attach - 0.5*thick_sc_attach)/8.-0.5*thick_sc_attach"
-	      y="0.5*height_sc_attach+0.25*(height_septum - height_sc_attach)"
-	      z="0.5*length_sc_attach -0.5*thick_sc_attach -3.*(width_sc_attach - 0.5*thick_sc_attach)/8."/>
+	      y="-(0.5*height_sc_attach+0.25*(height_septum - height_sc_attach))"
+	      z="0.5*length_sc_attach -0.5*thick_sc_attach -3.*(width_sc_attach - 0.5*thick_sc_attach)/8.-(7.)"/>
     <position unit="cm" name="scAttachTubeTrans_2"
 	      x="-3.*(width_sc_attach - 0.5*thick_sc_attach)/8.+0.5*thick_sc_attach"
-	      y="0.5*height_sc_attach+0.25*(height_septum - height_sc_attach)"
-	      z="0.5*length_sc_attach -0.5*thick_sc_attach -3.*(width_sc_attach - 0.5*thick_sc_attach)/8."/>
+	      y="-(0.5*height_sc_attach+0.25*(height_septum - height_sc_attach))"
+	      z="0.5*length_sc_attach -0.5*thick_sc_attach -3.*(width_sc_attach - 0.5*thick_sc_attach)/8.-(7.)"/>
     <position unit="cm" name="ShldTubeTrans_1"
 	      x="3.*(width_sc_attach - 0.5*thick_sc_attach)/8.-0.5*thick_sc_attach"
 	      y="-inner_r_sc -1.*length_sc_attach +0.5*thick_sc_attach +3.*(width_sc_attach - 0.5*thick_sc_attach)/8."
@@ -1091,16 +1089,10 @@
 	 y="height_sc_attach - thick_sc_attach"
 	 z="length_sc_attach - thick_sc_attach"/>
     
-    <tube aunit="deg" startphi="0" deltaphi="360"
-	  lunit="cm" name="sc_attach_tube"
-	  rmin="(width_sc_attach - 0.5*thick_sc_attach)/8. - 1.*thick_sc_attach"
-	  rmax="(width_sc_attach - 0.5*thick_sc_attach)/8."
-	  z="0.5*(height_septum - height_sc_attach)" />
     <!--
 	width and height of hole will be the wrong size;
 	need to adjust width and height for increased length relative to actual vacuum enclosures
     -->
-
     <trap aunit="deg" lunit="cm" name="hole_for_l_vac_enc" z="1.0*length_vac_enc" theta="left_theta" phi="left_phi" 
           y1="1.0*height_vac_u_enc" x1="1.0*width_vac_u_enc" x2="1.0*width_vac_u_enc"  alpha1="alpha_l_1" 
           y2="1.0*height_vac_d_enc" x3="1.0*width_vac_d_enc" x4="1.0*width_vac_d_enc" alpha2="alpha_l_2" />
@@ -1171,6 +1163,7 @@
       <second ref="coll_jacket_W"/>
       <positionref ref="pos_rel_pigHole_scAttach"/>
     </subtraction>
+    
     <!-- Lid for the pig -->
     <tube aunit="deg" startphi="0" deltaphi="360"
 	  lunit="cm" name="sc_attach_pigLid"
@@ -1183,7 +1176,7 @@
       <positionref ref="pos_rel_pigLid_scAttach"/>
       <rotationref ref="scRot_1"/>
     </union>
-
+        
     <!-- Add Shielding inside the Pig -->
     <tube aunit="deg" startphi="0" deltaphi="360"
 	  lunit="cm" name="pig_shield_0"
@@ -1580,13 +1573,32 @@
       <first ref="sc_attach_7"/>
       <second ref="vac_enc_l_o"/>
       <positionref ref="pos_rel_scAttach_vacEnc_l"/>
-    </subtraction>
-    <subtraction name ="sc_attach_solid">
+    </subtraction>    
+    <subtraction name ="sc_attach_10">
       <first ref="sc_attach_9"/>
       <second ref="vac_enc_r_o"/>
       <positionref ref="pos_rel_scAttach_vacEnc_r"/>
     </subtraction>
 
+    <!-- Sieve slits remote control holes -->
+    <tube aunit="deg" startphi="0" deltaphi="360"
+	  lunit="cm" name="sc_attach_tube"
+	  rmin="1.5"
+	  rmax="3.5"
+	  z="0.5*(height_septum - height_sc_attach)" />
+    <union name="sc_attach_11">
+      <first ref="sc_attach_10"/>
+      <second ref="sc_attach_tube"/>
+      <positionref ref="scAttachTubeTrans_1"/>
+      <rotationref ref="scRot_1"/>
+    </union>
+    <union name="sc_attach_solid">
+      <first ref="sc_attach_11"/>
+      <second ref="sc_attach_tube"/>
+      <positionref ref="scAttachTubeTrans_2"/>
+      <rotationref ref="scRot_1"/>
+    </union>
+    
     <trap aunit="deg" lunit="cm" name="vac_enc_l_i" z="length_vac_enc + 1." theta="left_theta" phi="left_phi" 
           y1="height_vac_u_enc - thick_vac_enc" x1="width_vac_u_enc - thick_vac_enc" x2="width_vac_u_enc - thick_vac_enc"  alpha1="alpha_l_1" 
           y2="height_vac_d_enc - thick_vac_enc" x3="width_vac_d_enc - thick_vac_enc" x4="width_vac_d_enc - thick_vac_enc" alpha2="alpha_l_2" />
@@ -2217,7 +2229,10 @@
 
 
     <!-- Detectors -->
-    <sphere aunit="deg" startphi="0" deltaphi="360" starttheta="0" deltatheta="360" lunit="cm" name="sDet_1"  rmin="det_inner_r" rmax="det_outer_r"/>
+    <sphere aunit="deg" startphi="0" deltaphi="360"
+	    starttheta="0" deltatheta="360"
+	    lunit="cm" name="sDet_1"
+	    rmin="det_inner_r" rmax="det_outer_r"/>
 
     <box lunit="cm" name="pDet_1" x="width_mother" y="height_mother" z="0.5"/>
     <box lunit="cm" name="pDet_2" x="width_mother" y="height_mother" z="0.5"/>
@@ -2272,8 +2287,12 @@
     </subtraction>
 
     <!-- Above Scat Chamber Detectors -Ricky -->
-    <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="prex_det_solid" rmin="0" rmax="scat_det_r" z="0.1"/>
-    <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="crex_det_solid" rmin="0" rmax="scat_det_r" z="0.1"/>
+    <tube aunit="deg" startphi="0" deltaphi="360"
+	  lunit="cm" name="prex_det_solid"
+	  rmin="0" rmax="scat_det_r" z="0.1"/>
+    <tube aunit="deg" startphi="0" deltaphi="360"
+	  lunit="cm" name="crex_det_solid"
+	  rmin="0" rmax="scat_det_r" z="0.1"/>
 
     <!-- Collimator detectors front and back -->
     <!-- <tube aunit="deg" startphi="0" deltaphi="360" -->
@@ -2281,7 +2300,7 @@
     <!-- 	  rmin="0" rmax="cw70_jacket_outer_r*1.0001" -->
     <!-- 	  z="0.1" /> -->
     <box  lunit="cm" name="dDet_us"
-	  x="width_w_coll_jacket"
+	  x="width_w_coll_jacket*3"
 	  y="height_w_coll_jacket"
 	  z="0.1" />
     <tube aunit="deg" startphi="0" deltaphi="360"
@@ -2334,10 +2353,18 @@
     </subtraction>
 
     <!-- Disk detectors inside the beamline : Rakitha Tue Nov  5 15:17:02 EST 2013 -->
-    <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="dDet_beamline_1" rmin="0" rmax="beamline[1,1]" z="0.1" />
-    <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="dDet_beamline_2" rmin="0" rmax="beamline[1,4]" z="0.1" />  
-    <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="dDet_beamline_3" rmin="0" rmax="beamline[1,12]" z="0.1" />  
-    <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="dDet_beamline_4" rmin="0" rmax="beamline[1,12]" z="0.1" />
+    <tube aunit="deg" startphi="0" deltaphi="360"
+	  lunit="cm" name="dDet_beamline_1"
+	  rmin="0" rmax="beamline[1,1]" z="0.1" />
+    <tube aunit="deg" startphi="0" deltaphi="360"
+	  lunit="cm" name="dDet_beamline_2"
+	  rmin="0" rmax="beamline[1,4]" z="0.1" />  
+    <tube aunit="deg" startphi="0" deltaphi="360"
+	  lunit="cm" name="dDet_beamline_3"
+	  rmin="0" rmax="beamline[1,12]" z="0.1" />  
+    <tube aunit="deg" startphi="0" deltaphi="360"
+	  lunit="cm" name="dDet_beamline_4"
+	  rmin="0" rmax="beamline[1,12]" z="0.1" />
 
     <!-- Beam-line Cylindical detector outside the beamline : Rakitha Tue Nov 12 11:23:08 EST 2013 -->
     <tube aunit="deg" startphi="0" deltaphi="360"
