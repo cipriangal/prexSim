@@ -1579,6 +1579,23 @@
       <second ref="vac_enc_r_o"/>
       <positionref ref="pos_rel_scAttach_vacEnc_r"/>
     </subtraction>
+    
+    <trap aunit="deg" lunit="cm" name="vac_enc_l_i" z="length_vac_enc + 1." theta="left_theta" phi="left_phi" 
+          y1="height_vac_u_enc - thick_vac_enc" x1="width_vac_u_enc - thick_vac_enc" x2="width_vac_u_enc - thick_vac_enc"  alpha1="alpha_l_1" 
+          y2="height_vac_d_enc - thick_vac_enc" x3="width_vac_d_enc - thick_vac_enc" x4="width_vac_d_enc - thick_vac_enc" alpha2="alpha_l_2" />
+
+    <trap aunit="deg" lunit="cm" name="vac_enc_r_i" z="length_vac_enc + 1." theta="right_theta" phi="right_phi" 
+          y1="height_vac_u_enc - thick_vac_enc" x1="width_vac_u_enc -thick_vac_enc" x2="width_vac_u_enc - thick_vac_enc"  alpha1="alpha_l_1" 
+          y2="height_vac_d_enc - thick_vac_enc" x3="width_vac_d_enc - thick_vac_enc" x4="width_vac_d_enc - thick_vac_enc" alpha2="alpha_l_2" />
+    
+    <subtraction name ="vac_enc_l_solid">
+      <first ref="vac_enc_l_o"/>
+      <second ref="vac_enc_l_i"/>
+    </subtraction>
+    <subtraction name ="vac_enc_r_solid">
+      <first ref="vac_enc_r_o"/>
+      <second ref="vac_enc_r_i"/>
+    </subtraction>
 
     <!-- Sieve slits remote control holes -->
     <tube aunit="deg" startphi="0" deltaphi="360"
@@ -1599,23 +1616,6 @@
       <rotationref ref="scRot_1"/>
     </union>
     
-    <trap aunit="deg" lunit="cm" name="vac_enc_l_i" z="length_vac_enc + 1." theta="left_theta" phi="left_phi" 
-          y1="height_vac_u_enc - thick_vac_enc" x1="width_vac_u_enc - thick_vac_enc" x2="width_vac_u_enc - thick_vac_enc"  alpha1="alpha_l_1" 
-          y2="height_vac_d_enc - thick_vac_enc" x3="width_vac_d_enc - thick_vac_enc" x4="width_vac_d_enc - thick_vac_enc" alpha2="alpha_l_2" />
-
-    <trap aunit="deg" lunit="cm" name="vac_enc_r_i" z="length_vac_enc + 1." theta="right_theta" phi="right_phi" 
-          y1="height_vac_u_enc - thick_vac_enc" x1="width_vac_u_enc -thick_vac_enc" x2="width_vac_u_enc - thick_vac_enc"  alpha1="alpha_l_1" 
-          y2="height_vac_d_enc - thick_vac_enc" x3="width_vac_d_enc - thick_vac_enc" x4="width_vac_d_enc - thick_vac_enc" alpha2="alpha_l_2" />
-    
-    <subtraction name ="vac_enc_l_solid">
-      <first ref="vac_enc_l_o"/>
-      <second ref="vac_enc_l_i"/>
-    </subtraction>
-    <subtraction name ="vac_enc_r_solid">
-      <first ref="vac_enc_r_o"/>
-      <second ref="vac_enc_r_i"/>
-    </subtraction>
-
     <!-- Shielding -->
     <!-- Here keep scattering chamber and hut separate. -->
 
