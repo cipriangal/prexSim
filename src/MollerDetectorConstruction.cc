@@ -166,6 +166,7 @@ G4VPhysicalVolume* MollerDetectorConstruction::Construct()
     }
     k++;
   }
+  setNumColl(k);
 
   //==========================
   // Visualization attributes
