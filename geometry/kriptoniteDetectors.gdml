@@ -14,9 +14,12 @@
     <position unit="cm" name="pos_rel_HRS_underDipole_elec" x="450" y="-300" z="1250" />
 
     <position unit="cm" name="pos_rel_usRightIron_shield2_wrt_shield1" x="450" y="0" z="37.5" />
-    <position unit="cm" name="pos_rel_usRightIron_shield" x="-625" y="-250" z="-925" />
+    <position unit="cm" name="pos_rel_usRightIron_shield" x="-625" y="-245" z="-925" />
+
+    <position unit="cm" name="pos_rel_Hall_Lid" x="125" y="1230" z="-150" />    
     
     <rotation name="rot_HRS_elec" unit="deg" x="0" y="-12.5" z="0"/>
+    <rotation name="rot_Hall_Lid" unit="deg" x="90" y="0" z="0"/>
   </define>
 
   <materials>
@@ -85,7 +88,13 @@
       <first ref="solid_usRightIron_shield1"/>
       <second ref="solid_usRightIron_shield2"/>
       <positionref ref="pos_rel_usRightIron_shield2_wrt_shield1"/>
-    </union>   
+    </union>
+    
+    <tube aunit="deg" startphi="0" deltaphi="360"
+	  lunit="cm" name="solid_Hall_Lid"
+	  rmin="0"
+	  rmax="2490."
+	  z="0.2" />
     
     <!-- Union of all detectors so that there is a space to physically add them -->
     <box lunit="cm" name="detUnion0"
@@ -103,13 +112,11 @@
       <first ref="detUnion1"/>
       <second ref="solid_upstreamRight_elec"/>
       <positionref ref="pos_rel_upstreamRight_elec"/>
-      <!-- <rotationref ref=""/> -->
     </union>
     <union name ="detUnion3">
       <first ref="detUnion2"/>
       <second ref="solid_HRS_side_elec"/>
       <positionref ref="pos_rel_HRS_side_elec"/>
-      <!-- <rotationref ref=""/> -->
     </union>
     <union name ="detUnion4">
       <first ref="detUnion3"/>
@@ -121,6 +128,12 @@
       <first ref="detUnion4"/>
       <second ref="solid_usRightIron_shield"/>
       <positionref ref="pos_rel_usRightIron_shield"/>
+    </union>
+    <union name ="detUnion6">
+      <first ref="detUnion5"/>
+      <second ref="solid_Hall_Lid"/>
+      <positionref ref="pos_rel_Hall_Lid"/>
+      <rotationref ref="rot_Hall_Lid"/>
     </union>
     
   </solids>
@@ -162,9 +175,15 @@
       <solidref ref="solid_usRightIron_shield"/>
     </volume>
 
+    <volume name="logic_Hall_Lid">
+      <materialref ref="matKryptonite"/>
+      <solidref ref="solid_Hall_Lid"/>
+      <auxiliary auxtype="SensDet" auxvalue="volumeN10013"/>
+    </volume>
+	
     <volume name="logicKripDetectors">
       <materialref ref="Vacuum"/>
-      <solidref ref="detUnion4"/>
+      <solidref ref="detUnion6"/>
       
       <physvol name="phys_SEPT_elec">
 	<volumeref ref="logic_SEPT_elec"/>
@@ -197,6 +216,13 @@
 	<volumeref ref="logic_usRightIron_shield"/>
 	<positionref ref="pos_rel_usRightIron_shield"/>
       </physvol>
+
+      <physvol name="phys_Hall_Lid">
+      	<volumeref ref="logic_Hall_Lid"/>
+      	<positionref ref="pos_rel_Hall_Lid"/>
+      	<rotationref ref="rot_Hall_Lid"/>
+      </physvol>
+
 
     </volume>
   </structure>
