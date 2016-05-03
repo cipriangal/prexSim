@@ -28,13 +28,13 @@
    /moller/field/setHighLim 74 cm
    #### Geometry files
    #/moller/det/setDetectorFileName geometry/prexII_coll_prototype_4_complete.gdml
-   #/moller/det/setNumberofCollimators 18 
    #/moller/det/setDetectorFileName geometry/prexII_rickyTest.gdml
    /moller/det/setDetectorFileName geometry/prexCrexLeadTarget.gdml
+   #/moller/det/setDetectorFileName geometry/kriptoniteDetectors.gdml
    #/moller/det/setDetectorFileName geometry/prexCrexCalcTarget.gdml
    #/moller/det/setDetectorFileName geometry/prexII_newSC_update.gdml
    #/moller/det/setDetectorFileName geometry/newPigDesign_1.gdml
-   /moller/det/setNumberofCollimators 27 
+
 
 ############
 ### PREX I configurations
@@ -53,7 +53,6 @@
    #/moller/field/setHighLim 44 cm
    #### Geometry files
    #/moller/det/setDetectorFileName geometry/prexIMother_pedestal_noshield.xml
-   #/moller/det/setNumberofCollimators 14 
 
 ############
 ### PVDIS configurations
@@ -72,7 +71,6 @@
    #/moller/field/setHighLim 74 cm
    #### Geometry files
    #/moller/det/setDetectorFileName geometry/pvdis.xml
-   #/moller/det/setNumberofCollimators 14
 
 ############
 ### Happex configurations
@@ -92,7 +90,6 @@
    #/moller/field/setHighLim 44 cm
    ### Geometry files
    #/moller/det/setDetectorFileName geometry/prexIMother_pedestal_noshield_H2target.xml
-   #/moller/det/setNumberofCollimators 14
    
    
    ########
@@ -110,7 +107,6 @@
    #/moller/field/setHighLim 74 cm
    #### Geometry files
    #/moller/det/setDetectorFileName geometry/happex3.xml
-   #/moller/det/setNumberofCollimators 14
 
 
 /moller/det/setShieldMaterial polyethylene
