@@ -83,7 +83,7 @@
     <!-- Collimator bore dimentions-->
     <!-- 1.168 at the face of it and an angle of 0.78 deg: see https://ace.phys.virginia.edu:80/HAPPEX/2928 -->
     <constant name="coll_bore_inner_r1" value="1.133"/> 
-    <constant name="coll_bore_inner_r2" value="1.380"/>
+    <constant name="coll_bore_inner_r2" value="1.345"/>
 
     <!-- Collimator surface grooves-->
     <constant name="cw70_groove_inner_r" value="3.905"/>
