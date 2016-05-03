@@ -2295,7 +2295,7 @@
 	  lunit="cm" name="cDet_1_f"
 	  rmin="cDet_1_radius"
 	  rmax="cDet_1_radius+1."
-	  z="1*height_cylwall-1*thick_cylwall" /> 
+	  z="height_cylwall - thick_cylwall - 2" /> 
     <subtraction name ="cDet_1_f_p1">
       <first ref="cDet_1_f"/>
       <second ref="beamtube_10"/>
@@ -2319,7 +2319,7 @@
 	  lunit="cm" name="cDet_2_f"
 	  rmin="cDet_2_radius"
 	  rmax="cDet_2_radius+1."
-	  z="1*height_cylwall-1*thick_cylwall" /> 
+	  z="height_cylwall - thick_cylwall - 2" /> 
     <subtraction name ="cDet_2">
       <first ref="cDet_2_f"/>
       <second ref="beamtube_12"/>
@@ -2331,7 +2331,7 @@
 	  lunit="cm" name="cDet_3_f"
 	  rmin="cDet_3_radius - 1."
 	  rmax="cDet_3_radius"
-	  z="1*height_cylwall-1*thick_cylwall" /> 
+	  z="height_cylwall - thick_cylwall - 2" /> 
     <subtraction name ="cDet_3">
       <first ref="cDet_3_f"/>
       <second ref="beamtube_12"/>
