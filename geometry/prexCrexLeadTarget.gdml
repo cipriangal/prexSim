@@ -95,6 +95,7 @@
     <position unit="cm" name="pos_rel_coll_g3" x="0" y="0" z="(-length_cw70_coll+11*cw70_groove_length)/2"/>
     <position unit="cm" name="pos_rel_coll_g4" x="0" y="0" z="(-length_cw70_coll+15*cw70_groove_length)/2"/>
     <position unit="cm" name="pos_rel_coll_g5" x="0" y="0" z="(-length_cw70_coll+19*cw70_groove_length)/2"/>
+    <position unit="cm" name="pos_rel_coll_frontHole" x="0" y="0" z="(-length_cw70_coll + 3.0 )/2."/>
     
     <!-- Tungsten jacket volume dimentions-->
     <constant name="width_w_coll_jacket" value="11.4"/>
@@ -871,7 +872,20 @@
       <positionref ref="pos_rel_coll_g5"/>
       <rotationref ref="identity"/>
     </subtraction>  
-
+    
+    <tube aunit="deg" startphi="0" deltaphi="360"
+	  lunit="cm" name="front_coll_hole"
+	  rmin="0"
+	  rmax="2"
+	  z="3.01"/> 
+    <subtraction name ="coll_cw70_cyln_7">
+      <first ref="coll_cw70_cyln_6"/>
+      <second ref="front_coll_hole"/>
+      <positionref ref="pos_rel_coll_frontHole"/>
+      <rotationref ref="identity"/>
+    </subtraction>
+    
+    
     <!-- Copper Cylinder for water cooling CW70 Collimator-->
     <tube aunit="deg" startphi="0" deltaphi="360"
 	  lunit="cm" name="Cu_tube_solid"
@@ -2353,7 +2367,7 @@
     <!-- 	  rmin="0" rmax="cw70_jacket_outer_r*1.0001" -->
     <!-- 	  z="0.1" /> -->
     <box  lunit="cm" name="dDet_us"
-	  x="width_w_coll_jacket*3"
+	  x="width_w_coll_jacket"
 	  y="height_w_coll_jacket"
 	  z="0.1" />
     <tube aunit="deg" startphi="0" deltaphi="360"
@@ -2462,7 +2476,7 @@
 
     <volume name="W_coll_logic">
       <materialref ref="matCW70"/>
-      <solidref ref="coll_cw70_cyln_6"/>
+      <solidref ref="coll_cw70_cyln_7"/>
     </volume>
 
     <volume name="coll_jacket_W_logic">
@@ -2805,8 +2819,8 @@
       </physvol>
 
       <physvol name="coll_shield">
-	<volumeref ref="coll_shield_logic"/>
-	<positionref ref="pos_global_collShield"/>
+      	<volumeref ref="coll_shield_logic"/>
+      	<positionref ref="pos_global_collShield"/>
       </physvol>
 	  
       <physvol name="target">
