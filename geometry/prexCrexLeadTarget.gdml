@@ -95,7 +95,7 @@
     <position unit="cm" name="pos_rel_coll_g3" x="0" y="0" z="(-length_cw70_coll+11*cw70_groove_length)/2"/>
     <position unit="cm" name="pos_rel_coll_g4" x="0" y="0" z="(-length_cw70_coll+15*cw70_groove_length)/2"/>
     <position unit="cm" name="pos_rel_coll_g5" x="0" y="0" z="(-length_cw70_coll+19*cw70_groove_length)/2"/>
-    <position unit="cm" name="pos_rel_coll_frontHole" x="0" y="0" z="(-length_cw70_coll + 3.0 )/2."/>
+    <position unit="cm" name="pos_rel_coll_frontHole" x="0" y="0" z="(-length_cw70_coll + 2.5 )/2."/>
     
     <!-- Tungsten jacket volume dimentions-->
     <constant name="width_w_coll_jacket" value="11.4"/>
@@ -882,7 +882,7 @@
 	  lunit="cm" name="front_coll_hole"
 	  rmin="0"
 	  rmax="2"
-	  z="3.01"/> 
+	  z="2.51"/> 
     <subtraction name ="coll_cw70_cyln_7">
       <first ref="coll_cw70_cyln_6"/>
       <second ref="front_coll_hole"/>
