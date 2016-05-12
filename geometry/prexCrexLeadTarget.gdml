@@ -805,7 +805,20 @@
 	      x="-(width_sc_attach_shield/2.-thick_sc_attach_shield/2.)"
 	      y="0"
 	      z="length_coll_shield_side/2.-thick_sc_attach_shield"/>
-  </define>
+    <position unit="cm" name="pos_rel_dsShield1_wrt_collShield"
+	      x="0"
+	      y="height_sc_attach/2 + thick_sc_attach_shield/2."
+	      z="length_coll_shield_side/2. + innerR_sc_attach_pig + 2. + thick_sc_attach_shield/4."/>
+
+    <position unit="cm" name="pos_rel_outsideW_wrt_collShield"
+	      x="0"
+	      y="height_sc_attach/2 + 3."
+	      z=" - innerR_sc_attach_pig/4. + 13. "/>
+    <position unit="cm" name="pos_global_outsideW"
+	      x="0"
+	      y="height_sc_attach/2 + 3."
+	      z=" center_sc_attach - length_sc_attach/2. - innerR_sc_attach_pig/4. + 11. "/>
+</define>
 
   &materials;
 
@@ -1242,9 +1255,6 @@
       <rotationref ref="scRot_1"/>
     </subtraction>
     
-
-
-
     
     <!-- Pylon Solid for Pics - Ricky -->
     <tube aunit="deg" startphi="0" deltaphi="360"
@@ -1299,7 +1309,6 @@
       <second ref="sc_attach_beam_hole"/>
       <positionref ref="scAttachTrans_3"/>
     </subtraction>
-
     
     <!-- New dual Scattering Chamber -->
     <!-- Add the SC beam pipe first-->
@@ -1667,19 +1676,15 @@
 	 x="width_sc_attach_shield"
 	 y="height_sc_attach_shield"
 	 z="length_coll_shield"/>
-    <box lunit="cm" name="coll_shield_cut"
-	 x="width_sc_attach_shield + 10."
-	 y="thick_sc_attach_shield + 1."
-	 z="length_sc_attach_shield + 1000."/>
-    <box lunit="cm" name="coll_shield_back_0"
-	 x="width_sc_attach_shield"
-	 y="height_sc_attach_shield"
-	 z="length_sc_attach_shield"/>  
     <subtraction name ="coll_shield_1">
       <first ref="coll_shield_0"/>
       <second ref="sc_attach_shield_1"/>
       <positionref ref="center"/>
     </subtraction>    
+    <box lunit="cm" name="coll_shield_cut"
+	 x="width_sc_attach_shield + 10."
+	 y="thick_sc_attach_shield + 1."
+	 z="length_sc_attach_shield + 1000."/>
     <subtraction name="coll_shield_2">
       <first ref="coll_shield_1"/>
       <second ref="coll_shield_cut"/>
@@ -1700,6 +1705,29 @@
       <second ref="coll_shield_side"/>
       <positionref ref="pos_rel_sideShield2_collShield"/>
     </union> 
+
+    <box lunit="cm" name="coll_shield_ds"
+	 x="width_sc_attach_shield"
+	 y="thick_sc_attach_shield"
+	 z="thick_sc_attach_shield/2."/>  
+    <union name="coll_shield_5">
+      <first ref="coll_shield_4"/>
+      <second ref="coll_shield_ds"/>
+      <positionref ref="pos_rel_dsShield1_wrt_collShield"/>
+    </union> 
+    
+    <!-- Block of W  -->
+    <box lunit="cm" name="sc_attach_outside_w"
+    	 x="width_sc_attach + 0.1"
+    	 y="6."
+    	 z="length_sc_attach - innerR_sc_attach_pig*2. - 2."/>    
+    <subtraction name="coll_shield_6">
+      <first ref="coll_shield_5"/>
+      <second ref="sc_attach_outside_w"/>
+      <positionref ref="pos_rel_outsideW_wrt_collShield"/>
+    </subtraction> 
+    
+
     
     <!-- Here keep scattering chamber and hut separate. -->
 
@@ -2508,9 +2536,14 @@
 
     <volume name="coll_shield_logic">
       <materialref ref="Shield"/>
-      <solidref ref="coll_shield_4"/>
+      <solidref ref="coll_shield_6"/>
     </volume>
-    
+
+    <volume name="coll_outsideW_shield_logic">
+      <materialref ref="Tungsten"/>
+      <solidref ref="sc_attach_outside_w"/>
+    </volume>
+
     <volume name="coll_pig_shield">
       <materialref ref="PureLead"/> 
       <solidref ref="pig_shield"/>
@@ -2839,6 +2872,11 @@
       	<volumeref ref="coll_shield_logic"/>
       	<positionref ref="pos_global_collShield"/>
       </physvol>
+
+      <physvol name="coll_outsideW_shield">
+      	<volumeref ref="coll_outsideW_shield_logic"/>
+      	<positionref ref="pos_global_outsideW"/>
+      </physvol>      
 	  
       <physvol name="target">
         <volumeref ref="target_logic"/>
