@@ -71,7 +71,6 @@
 
 
     <!-- Collimator dimensions  -->
-    <!-- CW70 inner volume dimentions-->
     <constant name="radius_cw70_coll_1" value="5.00"/> 
     <constant name="length_cw70_coll" value="10.54"/> <!-- total collimator lenght -->
 
