@@ -818,6 +818,11 @@
 	      x="0"
 	      y="height_sc_attach/2 + 3."
 	      z=" center_sc_attach - length_sc_attach/2. - innerR_sc_attach_pig/4. + 11. "/>
+
+    <position unit="cm" name="pos_global_pigTopShield"
+	      x="0"
+	      y="(height_sc_attach + thick_sc_attach_shield )/2. + height_sc_attach_pig + height_sc_attach_pigLid"
+	      z="center_cw70_coll + length_w_coll_jacket/2 - length_cw70_coll/2"/>
 </define>
 
   &materials;
@@ -1235,7 +1240,13 @@
       <positionref ref="pos_rel_pigLid_scAttach"/>
       <rotationref ref="scRot_1"/>
     </union>
-        
+
+    <!-- Shielding lid for the pig -->
+    <box lunit="cm" name="sc_attach_pigTopShield"
+	 x="innerR_sc_attach_pig * 2.4"
+	 y="thick_sc_attach_shield"
+	 z="innerR_sc_attach_pig * 2.4"/>
+    
     <!-- Add Shielding inside the Pig -->
     <tube aunit="deg" startphi="0" deltaphi="360"
 	  lunit="cm" name="pig_shield_0"
@@ -2549,6 +2560,11 @@
       <solidref ref="pig_shield"/>
     </volume>
 
+    <volume name="sc_attach_pigTopShield_logic">
+      <materialref ref="Shield"/> 
+      <solidref ref="sc_attach_pigTopShield"/>
+    </volume>
+
     <volume name="target_logic">
       <materialref ref="PureLead"/>
       <solidref ref="tubeTarget"/>
@@ -2866,6 +2882,11 @@
         <volumeref ref="coll_pig_shield"/>
         <positionref ref="pos_global_pig_shield"/>
 	<rotationref ref="scRot_1"/>
+      </physvol>
+
+      <physvol name="sc_attach_pigTopShield_phys">
+        <volumeref ref="sc_attach_pigTopShield_logic"/>
+        <positionref ref="pos_global_pigTopShield"/>
       </physvol>
 
       <physvol name="coll_shield">
