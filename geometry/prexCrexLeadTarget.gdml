@@ -95,11 +95,13 @@
     <position unit="cm" name="pos_rel_coll_g3" x="0" y="0" z="(-length_cw70_coll+11*cw70_groove_length)/2"/>
     <position unit="cm" name="pos_rel_coll_g4" x="0" y="0" z="(-length_cw70_coll+15*cw70_groove_length)/2"/>
     <position unit="cm" name="pos_rel_coll_g5" x="0" y="0" z="(-length_cw70_coll+19*cw70_groove_length)/2"/>
+    <position unit="cm" name="pos_rel_coll_frontHole" x="0" y="0" z="(-length_cw70_coll + 2.5 )/2."/>
     
     <!-- Tungsten jacket volume dimentions-->
     <constant name="width_w_coll_jacket" value="11.4"/>
     <constant name="height_w_coll_jacket" value="22.7"/>
     <constant name="length_w_coll_jacket" value="15.5575"/>
+    <constant name="height_w_coll_jacket_topExtension" value="6."/>
 
     <constant name="delta_coll_ds_face" value="delta_coll_us_face+length_w_coll_jacket"/>
 
@@ -107,6 +109,10 @@
     <position unit="cm" name="pos_rel_jacket_coll" x="0" y="0" z="- length_w_coll_jacket/2 + length_cw70_coll/2"/>
     <position unit="cm" name="pos_global_coll_jacket" x="0" y="0"
 	      z="center_cw70_coll + length_w_coll_jacket/2 - length_cw70_coll/2"/>
+    <position unit="cm" name="pos_rel_topExtension_wrt_jacket"
+	      x="0"
+	      y="(height_w_coll_jacket + height_w_coll_jacket_topExtension)/2."
+	      z="0"/>
 
     <!-- degrees. This is the angle of the particle envelope -->
     <constant name="coll_angle" value="0.7797"/> 
@@ -799,7 +805,25 @@
 	      x="-(width_sc_attach_shield/2.-thick_sc_attach_shield/2.)"
 	      y="0"
 	      z="length_coll_shield_side/2.-thick_sc_attach_shield"/>
-  </define>
+    <position unit="cm" name="pos_rel_dsShield1_wrt_collShield"
+	      x="0"
+	      y="height_sc_attach/2 + thick_sc_attach_shield/2."
+	      z="length_coll_shield_side/2. + innerR_sc_attach_pig + 2. + thick_sc_attach_shield/4."/>
+
+    <position unit="cm" name="pos_rel_outsideW_wrt_collShield"
+	      x="0"
+	      y="height_sc_attach/2 + 3."
+	      z=" - innerR_sc_attach_pig/4. + 13. "/>
+    <position unit="cm" name="pos_global_outsideW"
+	      x="0"
+	      y="height_sc_attach/2 + 3."
+	      z=" center_sc_attach - length_sc_attach/2. - innerR_sc_attach_pig/4. + 11. "/>
+
+    <position unit="cm" name="pos_global_pigTopShield"
+	      x="0"
+	      y="(height_sc_attach + thick_sc_attach_shield )/2. + height_sc_attach_pig + height_sc_attach_pigLid"
+	      z="center_cw70_coll + length_w_coll_jacket/2 - length_cw70_coll/2"/>
+</define>
 
   &materials;
 
@@ -871,7 +895,20 @@
       <positionref ref="pos_rel_coll_g5"/>
       <rotationref ref="identity"/>
     </subtraction>  
-
+    
+    <tube aunit="deg" startphi="0" deltaphi="360"
+	  lunit="cm" name="front_coll_hole"
+	  rmin="0"
+	  rmax="2"
+	  z="2.51"/> 
+    <subtraction name ="coll_cw70_cyln_7">
+      <first ref="coll_cw70_cyln_6"/>
+      <second ref="front_coll_hole"/>
+      <positionref ref="pos_rel_coll_frontHole"/>
+      <rotationref ref="identity"/>
+    </subtraction>
+    
+    
     <!-- Copper Cylinder for water cooling CW70 Collimator-->
     <tube aunit="deg" startphi="0" deltaphi="360"
 	  lunit="cm" name="Cu_tube_solid"
@@ -881,26 +918,38 @@
     
     <!-- W Box Collimator Jacket-->
     <box lunit="cm" name="coll_jacket_W" x="width_w_coll_jacket" y="height_w_coll_jacket" z="length_w_coll_jacket"/>
-    <subtraction name ="coll_jacket_W_Solid_1">
+    <subtraction name ="coll_jacket_w_solid_1">
       <first ref="coll_jacket_W"/>
       <second ref="coll_bore_cone"/>
       <positionref ref="center"/>
       <rotationref ref="identity"/>
     </subtraction>    
     <!-- Remove copper cylinder from jacket -->
-    <subtraction name ="coll_jacket_W_Solid_2">
-      <first ref="coll_jacket_W_Solid_1"/>
+    <subtraction name ="coll_jacket_w_solid_2">
+      <first ref="coll_jacket_w_solid_1"/>
       <second ref="Cu_tube_solid"/>
       <positionref ref="pos_rel_jacket_coll"/>
       <rotationref ref="identity"/>
     </subtraction>
     <!-- Remove collimator from jacket -->
-    <subtraction name ="coll_jacket_W_Solid_3">
-      <first ref="coll_jacket_W_Solid_2"/>
+    <subtraction name ="coll_jacket_w_solid_3">
+      <first ref="coll_jacket_w_solid_2"/>
       <second ref="coll_cw70_cyln"/>
       <positionref ref="pos_rel_jacket_coll"/>
       <rotationref ref="identity"/>
     </subtraction>
+    <!-- Add extension on top of collimator     -->
+    <box lunit="cm" name="coll_jacket_topExtension"
+	 x="width_w_coll_jacket"
+	 y="height_w_coll_jacket_topExtension"
+	 z="length_w_coll_jacket"/>
+    <union name ="coll_jacket_w_solid_4">
+      <first ref="coll_jacket_w_solid_3"/>
+      <second ref="coll_jacket_topExtension"/>
+      <positionref ref="pos_rel_topExtension_wrt_jacket"/>
+      <rotationref ref="identity"/>
+    </union>
+
     
     <!-- Target  -->
     <tube aunit="deg" startphi="0" deltaphi="360"
@@ -1191,7 +1240,13 @@
       <positionref ref="pos_rel_pigLid_scAttach"/>
       <rotationref ref="scRot_1"/>
     </union>
-        
+
+    <!-- Shielding lid for the pig -->
+    <box lunit="cm" name="sc_attach_pigTopShield"
+	 x="innerR_sc_attach_pig * 2.4"
+	 y="thick_sc_attach_shield"
+	 z="innerR_sc_attach_pig * 2.4"/>
+    
     <!-- Add Shielding inside the Pig -->
     <tube aunit="deg" startphi="0" deltaphi="360"
 	  lunit="cm" name="pig_shield_0"
@@ -1211,9 +1266,6 @@
       <rotationref ref="scRot_1"/>
     </subtraction>
     
-
-
-
     
     <!-- Pylon Solid for Pics - Ricky -->
     <tube aunit="deg" startphi="0" deltaphi="360"
@@ -1268,7 +1320,6 @@
       <second ref="sc_attach_beam_hole"/>
       <positionref ref="scAttachTrans_3"/>
     </subtraction>
-
     
     <!-- New dual Scattering Chamber -->
     <!-- Add the SC beam pipe first-->
@@ -1636,19 +1687,15 @@
 	 x="width_sc_attach_shield"
 	 y="height_sc_attach_shield"
 	 z="length_coll_shield"/>
-    <box lunit="cm" name="coll_shield_cut"
-	 x="width_sc_attach_shield + 10."
-	 y="thick_sc_attach_shield + 1."
-	 z="length_sc_attach_shield + 1000."/>
-    <box lunit="cm" name="coll_shield_back_0"
-	 x="width_sc_attach_shield"
-	 y="height_sc_attach_shield"
-	 z="length_sc_attach_shield"/>  
     <subtraction name ="coll_shield_1">
       <first ref="coll_shield_0"/>
       <second ref="sc_attach_shield_1"/>
       <positionref ref="center"/>
     </subtraction>    
+    <box lunit="cm" name="coll_shield_cut"
+	 x="width_sc_attach_shield + 10."
+	 y="thick_sc_attach_shield + 1."
+	 z="length_sc_attach_shield + 1000."/>
     <subtraction name="coll_shield_2">
       <first ref="coll_shield_1"/>
       <second ref="coll_shield_cut"/>
@@ -1669,6 +1716,29 @@
       <second ref="coll_shield_side"/>
       <positionref ref="pos_rel_sideShield2_collShield"/>
     </union> 
+
+    <box lunit="cm" name="coll_shield_ds"
+	 x="width_sc_attach_shield"
+	 y="thick_sc_attach_shield"
+	 z="thick_sc_attach_shield/2."/>  
+    <union name="coll_shield_5">
+      <first ref="coll_shield_4"/>
+      <second ref="coll_shield_ds"/>
+      <positionref ref="pos_rel_dsShield1_wrt_collShield"/>
+    </union> 
+    
+    <!-- Block of W  -->
+    <box lunit="cm" name="sc_attach_outside_w"
+    	 x="width_sc_attach + 0.1"
+    	 y="6."
+    	 z="length_sc_attach - innerR_sc_attach_pig*2. - 2."/>    
+    <subtraction name="coll_shield_6">
+      <first ref="coll_shield_5"/>
+      <second ref="sc_attach_outside_w"/>
+      <positionref ref="pos_rel_outsideW_wrt_collShield"/>
+    </subtraction> 
+    
+
     
     <!-- Here keep scattering chamber and hut separate. -->
 
@@ -2353,7 +2423,7 @@
     <!-- 	  rmin="0" rmax="cw70_jacket_outer_r*1.0001" -->
     <!-- 	  z="0.1" /> -->
     <box  lunit="cm" name="dDet_us"
-	  x="width_w_coll_jacket*3"
+	  x="width_w_coll_jacket"
 	  y="height_w_coll_jacket"
 	  z="0.1" />
     <tube aunit="deg" startphi="0" deltaphi="360"
@@ -2462,12 +2532,12 @@
 
     <volume name="W_coll_logic">
       <materialref ref="matCW70"/>
-      <solidref ref="coll_cw70_cyln_6"/>
+      <solidref ref="coll_cw70_cyln_7"/>
     </volume>
 
     <volume name="coll_jacket_W_logic">
       <materialref ref="Tungsten"/>
-      <solidref ref="coll_jacket_W_Solid_3"/>
+      <solidref ref="coll_jacket_w_solid_4"/>
     </volume>
 
     <volume name="Cu_tube_logic">
@@ -2477,12 +2547,22 @@
 
     <volume name="coll_shield_logic">
       <materialref ref="Shield"/>
-      <solidref ref="coll_shield_4"/>
+      <solidref ref="coll_shield_6"/>
     </volume>
-    
+
+    <volume name="coll_outsideW_shield_logic">
+      <materialref ref="Tungsten"/>
+      <solidref ref="sc_attach_outside_w"/>
+    </volume>
+
     <volume name="coll_pig_shield">
       <materialref ref="PureLead"/> 
       <solidref ref="pig_shield"/>
+    </volume>
+
+    <volume name="sc_attach_pigTopShield_logic">
+      <materialref ref="Shield"/> 
+      <solidref ref="sc_attach_pigTopShield"/>
     </volume>
 
     <volume name="target_logic">
@@ -2804,10 +2884,20 @@
 	<rotationref ref="scRot_1"/>
       </physvol>
 
-      <physvol name="coll_shield">
-	<volumeref ref="coll_shield_logic"/>
-	<positionref ref="pos_global_collShield"/>
+      <physvol name="sc_attach_pigTopShield_phys">
+        <volumeref ref="sc_attach_pigTopShield_logic"/>
+        <positionref ref="pos_global_pigTopShield"/>
       </physvol>
+
+      <physvol name="coll_shield">
+      	<volumeref ref="coll_shield_logic"/>
+      	<positionref ref="pos_global_collShield"/>
+      </physvol>
+
+      <physvol name="coll_outsideW_shield">
+      	<volumeref ref="coll_outsideW_shield_logic"/>
+      	<positionref ref="pos_global_outsideW"/>
+      </physvol>      
 	  
       <physvol name="target">
         <volumeref ref="target_logic"/>

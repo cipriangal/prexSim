@@ -234,15 +234,18 @@ void processTree(string tname){
   t->SetBranchAddress("x0",&x_0);
   t->SetBranchAddress("y0",&y_0);
   t->SetBranchAddress("z0",&z_0);
-  t->SetBranchAddress("type",&type);
   t->SetBranchAddress("event",&event);
 
-  if ( SensVolume_v==2001 || SensVolume_v==2002 || SensVolume_v==10008 || SensVolume_v==10009){
+  if ( SensVolume_v>=10008 && SensVolume_v <= 10013){
     t->SetBranchAddress("Edeposit",&Energy); //because these are made from Kryptonite
-  }else if( SensVolume_v==8003  ||SensVolume_v==8002   || SensVolume_v==8004  || SensVolume_v==8005 ||
+  }else if( SensVolume_v==8001  || SensVolume_v==8002  ||
+	    SensVolume_v==8003  || SensVolume_v==8004  || SensVolume_v==8005 ||
 	    SensVolume_v==10001 || SensVolume_v==10002 || SensVolume_v==10003||
 	    SensVolume_v==10004 ) {
     t->SetBranchAddress("kineE",&Energy); //because these are vacuum
+  }else{
+    cout<<"did you know that this detector does not have an energy associated? results will be useless"<<endl;
+    std::cin.ignore();
   }
 
   Double_t hit_radius_min = 0.; //cm 
