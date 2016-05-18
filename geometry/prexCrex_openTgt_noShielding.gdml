@@ -2532,7 +2532,7 @@
 
     <volume name="W_coll_logic">
       <materialref ref="matCW70"/>
-      <solidref ref="coll_cw70_cyln_7"/>
+      <solidref ref="coll_cw70_cyln_6"/>
     </volume>
 
     <volume name="coll_jacket_W_logic">
