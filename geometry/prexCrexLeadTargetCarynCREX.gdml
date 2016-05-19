@@ -682,9 +682,19 @@
     <position unit="cm" name="prex_det_pos" x="0" y="outer_r_new_sc + 0.5" z="prex_target_center"/>
     <position unit="cm" name="crex_det_pos" x="0" y="outer_r_new_sc + 0.5" z="crex_target_center"/> 
 
-<!-- target chamber shielding W above CAP-->
-   <position unit="cm" name="pos_global_prex_aboveW" x="0" y="outer_r_new_sc+height_prex_aboveW/2+0.5+0.05" z="prex_target_center"/>
-   <position unit="cm" name="pos_global_crex_aboveW" x="0" y="outer_r_new_sc+height_crex_aboveW/2+0.5+0.05" z="crex_target_center"/>
+    <!-- target chamber shielding W above CAP-->
+    <position unit="cm" name="pos_global_prex_aboveW"
+	      x="0" y="outer_r_new_sc+height_prex_aboveW/2+0.5+0.05" z="prex_target_center"/>
+    <position unit="cm" name="pos_global_crex_aboveW"
+	      x="0" y="outer_r_new_sc+height_crex_aboveW/2+0.5+0.05" z="crex_target_center"/>
+    
+    <constant name="height_crex_abovePoly" value="10.+height_crex_aboveW"/>
+    <position unit="cm" name="pos_rel_crex_aboveW_wrt_abovePoly"
+	      x="0" y="-height_crex_abovePoly/2+height_crex_aboveW/2" z="0"/>
+    <position unit="cm" name="pos_global_crex_abovePoly"
+	      x="0" y="outer_r_new_sc+height_crex_abovePoly/2+0.5+0.1+0.05"
+	      z="crex_target_center"/>
+
 
     <!-- <position unit="cm" name="scTrans_1" x="0" y="-(outer_r_sc-thick_sc/2)" z="-y_cent_sc"/> -->
     <position unit="cm" name="cDet_1_trans"     x="0" y="-cDet_1_radius"     z="-1.*center_cylwall-0.5*thick_cylwall"/>
@@ -830,6 +840,7 @@
 	      x="0"
 	      y="(height_sc_attach + thick_sc_attach_shield )/2. + height_sc_attach_pig + height_sc_attach_pigLid"
 	      z="center_cw70_coll + length_w_coll_jacket/2 - length_cw70_coll/2"/>
+
 </define>
 
   &materials;
@@ -1760,7 +1771,7 @@
       <positionref ref="pos_rel_outsideW_wrt_collShield"/>
     </subtraction> 
     
-<!--CAP Blocks of W for above target chambers -->
+    <!--CAP Blocks of W for above target chambers -->
     <box lunit="cm" name="prex_attach_above_w"
          x="2*(outer_r_new_sc+1.)"
          y="height_prex_aboveW"
@@ -1769,6 +1780,17 @@
          x="2*(outer_r_new_sc+1.)"
          y="height_crex_aboveW"
          z="2*(outer_r_new_sc+1.)"/>
+
+    <!--CAP Block of poly for above target chambers -->
+    <box lunit="cm" name="crex_attach_above_poly0"
+	 x="2*(outer_r_new_sc+1.) + 20"
+	 y="height_crex_abovePoly"
+	 z="2*(outer_r_new_sc+1.) + 20"/>
+    <subtraction name="crex_attach_above_poly1">
+      <first ref="crex_attach_above_poly0"/>
+      <second ref="crex_attach_above_w"/>
+      <positionref ref="pos_rel_crex_aboveW_wrt_abovePoly"/>
+    </subtraction>
     
     <!-- Here keep scattering chamber and hut separate. -->
 
@@ -2628,13 +2650,6 @@
       <!-- <auxiliary auxtype="SensDet" auxvalue="planeDet"/> -->
     </volume>
 
-<!--CAP comment out 5-15-16    <volume name="new_sc_prex_water_tgt_logic">
-      <materialref ref="Aluminum"/>
-      <solidref ref="new_sc_prex_water_tgt_solid"/>
-      <auxiliary auxtype="SensDet" auxvalue="volumeN5042"/> -->
-      <!-- <auxiliary auxtype="SensDet" auxvalue="planeDet"/> -->
-<!--    </volume> -->
-
     <volume name="new_sc_crex_logic">
       <materialref ref="Aluminum"/>
       <solidref ref="new_sc_crex_solid"/>
@@ -2642,15 +2657,7 @@
       <!-- <auxiliary auxtype="SensDet" auxvalue="planeDet"/> -->
     </volume>
 
-<!-- commented out CAP 5/15/16 -->
-<!--    <volume name="new_sc_crex_water_tgt_logic">
-      <materialref ref="Aluminum"/>
-      <solidref ref="new_sc_crex_water_tgt_solid"/>
-      <auxiliary auxtype="SensDet" auxvalue="volumeN5044"/> -->
-      <!-- <auxiliary auxtype="SensDet" auxvalue="planeDet"/> -->
-<!--    </volume> -->
-
-<!--prex and crex tunsten sheilding above target chambers CAP 5/16/16-->
+    <!--prex and crex tunsten sheilding above target chambers CAP 5/16/16-->
     <volume name="prex_aboveW_shield_logic">
       <materialref ref="Tungsten"/>
       <solidref ref="prex_attach_above_w"/>
@@ -2659,6 +2666,12 @@
     <volume name="crex_aboveW_shield_logic">
       <materialref ref="Tungsten"/>
       <solidref ref="crex_attach_above_w"/>
+    </volume>
+    
+    <!--crex poly shielding above tungsten above target chambers -->
+    <volume name="crex_abovePoly_shield_logic">
+      <materialref ref="Shield"/>
+      <solidref ref="crex_attach_above_poly1"/>
     </volume>
 
     <volume name="sc_attach_logic">
@@ -2965,10 +2978,15 @@
       </physvol>
       
       <!--CAP add tunsten shielding above crex target chamber -->
-      <!-- <physvol name="crex_aboveW_shield"> -->
-      <!--   <volumeref ref="crex_aboveW_shield_logic"/> -->
-      <!--   <positionref ref="pos_global_crex_aboveW"/> -->
-      <!-- </physvol> -->
+      <physvol name="crex_aboveW_shield">
+        <volumeref ref="crex_aboveW_shield_logic"/>
+        <positionref ref="pos_global_crex_aboveW"/>
+      </physvol>
+      <!--CAP add Poly shielding above tungsten above crex chambers -->
+      <physvol name="crex_abovePoly_shield">
+        <volumeref ref="crex_abovePoly_shield_logic"/>
+        <positionref ref="pos_global_crex_abovePoly"/>
+      </physvol>
 
       <!-- New dual Scattering Chamber -->
       <physvol name="new_sc_beampipe">
