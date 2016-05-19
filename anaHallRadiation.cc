@@ -241,7 +241,7 @@ void processTree(string tname){
   }else if( SensVolume_v==8001  || SensVolume_v==8002  ||
 	    SensVolume_v==8003  || SensVolume_v==8004  || SensVolume_v==8005 ||
 	    SensVolume_v==10001 || SensVolume_v==10002 || SensVolume_v==10003||
-	    SensVolume_v==10004 ) {
+	    SensVolume_v==10004 || SensVolume_v==7001  || SensVolume_v==7002) {
     t->SetBranchAddress("kineE",&Energy); //because these are vacuum
   }else{
     cout<<"did you know that this detector does not have an energy associated? results will be useless"<<endl;

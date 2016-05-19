@@ -518,7 +518,7 @@
     <position unit="cm" name="scAttachTrans_4" x="0" y="0" z="length_sc_attach/2 - length_w_coll_jacket/2"/>
     <position unit="cm" name="scAttachTrans_5" x="0" y="0" z="-1*length_sc_attach/2"/>
     <position unit="cm" name="scAttachTrans_6" x="0" y="-height_sc_attach/2-thick_sc_attach_shield/2" z="0."/>
-    
+    <!--CAP-->
     <constant name="height_sc_attach_pig" value="39.37 - height_sc_attach/2"/>
     <constant name="innerR_sc_attach_pig" value="25/2."/>    
     <constant name="height_sc_attach_pigLid" value="1.27"/>
@@ -818,10 +818,11 @@
 	      y="height_sc_attach/2 + 3."
 	      z=" center_sc_attach - length_sc_attach/2. - innerR_sc_attach_pig/4. + 11. "/>
 
-    <position unit="cm" name="pos_global_pigTopShield"
+    <position unit="cm" name="pos_global_pigTopShieldConcrete"
 	      x="0"
-	      y="(height_sc_attach + thick_sc_attach_shield )/2. + height_sc_attach_pig + height_sc_attach_pigLid"
+	      y="(height_sc_attach + 50. )/2. + height_sc_attach_pig + height_sc_attach_pigLid+20."
 	      z="center_cw70_coll + length_w_coll_jacket/2 - length_cw70_coll/2"/>
+
 </define>
 
   &materials;
@@ -1240,12 +1241,15 @@
       <rotationref ref="scRot_1"/>
     </union>
 
-    <!-- Shielding lid for the pig -->
-    <box lunit="cm" name="sc_attach_pigTopShield"
-	 x="innerR_sc_attach_pig * 2.4"
-	 y="thick_sc_attach_shield"
-	 z="innerR_sc_attach_pig * 2.4"/>
-    
+    <!-- Concrete lid for the pig -->
+    <box lunit="cm" name="sc_attach_pigTopShieldConcrete"
+           x="width_sc_attach_shield"
+           y="50."
+           z="90."/>
+      <!-- x="innerR_sc_attach_pig * 2.4"-->
+        <!-- y="thick_sc_attach_shield"-->
+         <!--z="innerR_sc_attach_pig * 2.4"/>-->    
+
     <!-- Add Shielding inside the Pig -->
     <tube aunit="deg" startphi="0" deltaphi="360"
 	  lunit="cm" name="pig_shield_0"
@@ -2574,9 +2578,9 @@
       <solidref ref="pig_shield"/>
     </volume>
 
-    <volume name="sc_attach_pigTopShield_logic">
-      <materialref ref="Shield"/> 
-      <solidref ref="sc_attach_pigTopShield"/>
+    <volume name="sc_attach_pigTopShieldConcrete_logic">
+      <materialref ref="Concrete"/> 
+      <solidref ref="sc_attach_pigTopShieldConcrete"/>
     </volume>
 
     <volume name="target_logic">
@@ -2899,9 +2903,9 @@
 	<rotationref ref="scRot_1"/>
       </physvol>
 
-      <physvol name="sc_attach_pigTopShield_phys">
-        <volumeref ref="sc_attach_pigTopShield_logic"/>
-        <positionref ref="pos_global_pigTopShield"/>
+      <physvol name="sc_attach_pigTopShieldConcrete_phys">
+        <volumeref ref="sc_attach_pigTopShieldConcrete_logic"/>
+        <positionref ref="pos_global_pigTopShieldConcrete"/>
       </physvol>
 
       <physvol name="coll_shield">

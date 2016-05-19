@@ -243,6 +243,10 @@
     <!-- Detectors above scattering chambers - Ricky -->
     <constant name="scat_det_r" value="outer_r_new_sc+1."/>
 
+    <!--Tungsten shielding above target chambers CAP-->
+    <constant name="height_prex_aboveW" value="6."/>
+    <constant name="height_crex_aboveW" value="6."/>
+
     <!-- Septum dimensions  -->
     <constant name="width_septum" value="137.16"/>
     <constant name="height_septum" value="84."/>
@@ -675,8 +679,12 @@
     <position unit="cm" name="beam_cyl_det_pos"       x="0" y="0"     z="center_targ+237.535-length_septum_pipe+beam_cyl_det_length/2"/>
 
     <!-- Scattering Chamber Detectors -->
-    <position unit="cm" name="prex_det_pos" x="0" y="outer_r_new_sc+0.5" z="prex_target_center"/><!--changed x="height_new_sc/2.+1.0" to x=0 and y=0 to y=outer_r_new_sc+0.5-->
-    <position unit="cm" name="crex_det_pos" x="0" y="outer_r_new_sc+0.5" z="crex_target_center"/>  <!--changed x="height_new_sc/2.+1.0" to x=0 CAP and y="0" to y=outer_r_new_sc+0.5-->
+    <position unit="cm" name="prex_det_pos" x="0" y="outer_r_new_sc+0.5" z="prex_target_center"/><!--changed x="height_new_sc/2.+1.0" to x=0 and y=0 to y=outer_r_new_sc+0.5 CAP-->
+    <position unit="cm" name="crex_det_pos" x="0" y="outer_r_new_sc+0.5" z="crex_target_center"/>  <!--changed x="height_new_sc/2.+1.0" to x=0 CAP and y="0" to y=outer_r_new_sc+0.5 CAP-->
+
+<!-- target chamber shielding W above CAP-->
+   <position unit="cm" name="pos_global_prex_aboveW" x="0" y="outer_r_new_sc+height_prex_aboveW/2+0.5+0.05" z="prex_target_center"/>
+   <position unit="cm" name="pos_global_crex_aboveW" x="0" y="outer_r_new_sc+height_crex_aboveW/2+0.5+0.05" z="crex_target_center"/>
 
     <!-- <position unit="cm" name="scTrans_1" x="0" y="-(outer_r_sc-thick_sc/2)" z="-y_cent_sc"/> -->
     <position unit="cm" name="cDet_1_trans"     x="0" y="-cDet_1_radius"     z="-1.*center_cylwall-0.5*thick_cylwall"/>
@@ -1752,7 +1760,15 @@
       <positionref ref="pos_rel_outsideW_wrt_collShield"/>
     </subtraction> 
     
-
+<!--CAP Blocks of W for above target chambers -->
+    <box lunit="cm" name="prex_attach_above_w"
+         x="2*(outer_r_new_sc+1.)"
+         y="height_prex_aboveW"
+         z="2*(outer_r_new_sc+1.)"/>
+    <box lunit="cm" name="crex_attach_above_w"
+         x="2*(outer_r_new_sc+1.)"
+         y="height_crex_aboveW"
+         z="2*(outer_r_new_sc+1.)"/>
     
     <!-- Here keep scattering chamber and hut separate. -->
 
@@ -2629,6 +2645,16 @@
       <!-- <auxiliary auxtype="SensDet" auxvalue="planeDet"/> -->
 <!--    </volume> -->
 
+<!--prex and crex tunsten sheilding above target chambers CAP 5/16/16-->
+    <volume name="prex_aboveW_shield_logic">
+      <materialref ref="Tungsten"/>
+      <solidref ref="prex_attach_above_w"/>
+    </volume>
+    <volume name="crex_aboveW_shield_logic">
+      <materialref ref="Tungsten"/>
+      <solidref ref="crex_attach_above_w"/>
+    </volume>
+
     <volume name="sc_attach_logic">
       <materialref ref="Aluminum"/>
       <solidref ref="sc_attach_solid"/>
@@ -2962,6 +2988,16 @@
       <!--   <volumeref ref="sc_attach_shield_logic"/> -->
       <!--   <positionref ref="sc_attach_center"/> -->
       <!-- </physvol> -->
+
+<!--CAP add tunsten shielding above crex and prex target chambers -->
+      <physvol name="prex_aboveW_shield">
+        <volumeref ref="prex_aboveW_shield_logic"/>
+        <positionref ref="pos_global_prex_aboveW"/>
+      </physvol>
+      <physvol name="crex_aboveW_shield">
+        <volumeref ref="crex_aboveW_shield_logic"/>
+        <positionref ref="pos_global_crex_aboveW"/>
+      </physvol>
 
       <physvol name="septum">
         <volumeref ref="septum_logic"/>
