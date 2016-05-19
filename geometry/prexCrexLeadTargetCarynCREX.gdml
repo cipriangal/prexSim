@@ -970,7 +970,7 @@
 	  lunit="cm" name="CaTarget"
 	  rmin="inner_rad_targ"
 	  rmax="outer_rad_targ"
-	  z="0.446" />
+	  z="0.598" />
 
 
     <!-- Scattering Chamber -->
