@@ -679,8 +679,8 @@
     <position unit="cm" name="beam_cyl_det_pos"       x="0" y="0"     z="center_targ+237.535-length_septum_pipe+beam_cyl_det_length/2"/>
 
     <!-- Scattering Chamber Detectors -->
-    <position unit="cm" name="prex_det_pos" x="0" y="outer_r_new_sc+0.5" z="prex_target_center"/><!--changed x="height_new_sc/2.+1.0" to x=0 and y=0 to y=outer_r_new_sc+0.5 CAP-->
-    <position unit="cm" name="crex_det_pos" x="0" y="outer_r_new_sc+0.5+height_crex_aboveW" z="crex_target_center"/>  <!--changed x="height_new_sc/2.+1.0" to x=0 CAP and y="0" to y=outer_r_new_sc+0.5 CAP-->
+    <position unit="cm" name="prex_det_pos" x="0" y="outer_r_new_sc + 0.5" z="prex_target_center"/>
+    <position unit="cm" name="crex_det_pos" x="0" y="outer_r_new_sc + 0.5" z="crex_target_center"/> 
 
 <!-- target chamber shielding W above CAP-->
    <position unit="cm" name="pos_global_prex_aboveW" x="0" y="outer_r_new_sc+height_prex_aboveW/2+0.5+0.05" z="prex_target_center"/>
@@ -970,7 +970,7 @@
 	  lunit="cm" name="CaTarget"
 	  rmin="inner_rad_targ"
 	  rmax="outer_rad_targ"
-	  z="0.4" />
+	  z="0.446" />
 
 
     <!-- Scattering Chamber -->
@@ -2600,7 +2600,6 @@
       <solidref ref="tubeTarget"/>
     </volume>
 
-   <!-- Crex target logic - Ricky -->
     <volume name="Ca_target_logic">
       <materialref ref="Calcium48"/>
       <solidref ref="CaTarget"/>
@@ -2947,18 +2946,29 @@
       	<positionref ref="pos_global_outsideW"/>
       </physvol>      
 	  
-<!--CAP comment out if running Crex -->
-<!--      <physvol name="target">
-        <volumeref ref="target_logic"/>
-        <positionref ref="targ_center"/>
-      </physvol> -->
-
-<!--CAP comment out if running Prex-->
-      <!-- Crex target - ricky -->
+      <!--CAP comment out if running Crex -->
+      <!-- <physvol name="target"> -->
+      <!--   <volumeref ref="target_logic"/> -->
+      <!--   <positionref ref="targ_center"/> -->
+      <!-- </physvol> -->
+      
+      <!--CAP add tunsten shielding above prex target chamber -->
+      <!-- <physvol name="prex_aboveW_shield"> -->
+      <!--    <volumeref ref="prex_aboveW_shield_logic"/> -->
+      <!--    <positionref ref="pos_global_prex_aboveW"/> -->
+      <!--  </physvol> -->
+      
+      <!--CAP comment out if running Prex-->
       <physvol name="Ca_target">
         <volumeref ref="Ca_target_logic"/>
         <positionref ref="crex_targ_center"/>
       </physvol>
+      
+      <!--CAP add tunsten shielding above crex target chamber -->
+      <!-- <physvol name="crex_aboveW_shield"> -->
+      <!--   <volumeref ref="crex_aboveW_shield_logic"/> -->
+      <!--   <positionref ref="pos_global_crex_aboveW"/> -->
+      <!-- </physvol> -->
 
       <!-- New dual Scattering Chamber -->
       <physvol name="new_sc_beampipe">
@@ -2974,25 +2984,11 @@
 	<rotationref ref="scRot_13"/>
       </physvol>
 
-<!-- CAP comment out 5/15/16 -->
-<!--      <physvol name="new_sc_prex_water_tgt">
-        <volumeref ref="new_sc_prex_water_tgt_logic"/>
-        <positionref ref="targ_center"/>
-	<rotationref ref="scRot_1"/>
-      </physvol> -->
-
       <physvol name="new_sc_crex">
         <volumeref ref="new_sc_crex_logic"/>
         <positionref ref="crex_targ_center"/>
 	<rotationref ref="scRot_13"/>
       </physvol>
-
-<!-- commented out new_sc_crex_water_tgt CAP 05/15/16-->
-<!--      <physvol name="new_sc_crex_water_tgt">
-        <volumeref ref="new_sc_crex_water_tgt_logic"/>
-        <positionref ref="crex_targ_center"/>
-	<rotationref ref="scRot_1"/>
-      </physvol> -->
 
       <physvol name="sc_attachment">
         <volumeref ref="sc_attach_logic"/>
@@ -3003,18 +2999,6 @@
       <!--   <volumeref ref="sc_attach_shield_logic"/> -->
       <!--   <positionref ref="sc_attach_center"/> -->
       <!-- </physvol> -->
-
-<!--CAP add tunsten shielding above crex and prex target chambers -->
-<!--Comment out if not needed -->
-<!--      <physvol name="prex_aboveW_shield">
-        <volumeref ref="prex_aboveW_shield_logic"/>
-        <positionref ref="pos_global_prex_aboveW"/>
-      </physvol> -->
-<!--
-      <physvol name="crex_aboveW_shield">
-        <volumeref ref="crex_aboveW_shield_logic"/>
-        <positionref ref="pos_global_crex_aboveW"/>
-      </physvol>-->
 
       <physvol name="septum">
         <volumeref ref="septum_logic"/>
@@ -3128,17 +3112,16 @@
         <positionref ref="dDet_ds_pos"/> 
       </physvol>
 
-      <!-- Prex and Crex Detectors - Ricky -->
       <physvol name="prex_det">
 	<volumeref ref="prex_det_logic"/>
 	<positionref ref="prex_det_pos"/>
-	<rotationref ref="scRot_1"/>  <!--changed scRot_13 to scRot_1 CAP-->
+	<rotationref ref="scRot_1"/>
       </physvol>
 
       <physvol name="crex_det">
 	<volumeref ref="crex_det_logic"/>
 	<positionref ref="crex_det_pos"/>
-	<rotationref ref="scRot_1"/> <!--changed scRot_13 to scRot_1 CAP-->
+	<rotationref ref="scRot_1"/>
       </physvol>
 
       <physvol name="beamline_1_det">
