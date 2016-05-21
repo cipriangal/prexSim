@@ -21,15 +21,15 @@ using namespace std;
 TH1F *Histo_vert_z_full[3];//particle type = photons, electrons, neutrons
 //2D histograms
 TH2F *Histo_vert_2D[3],*Histo_vert_full_2D[3];
-TH1F *Histo_vert_z_weighted_full[3],*Histo_Energy_lt_10[3],*Histo_Energy_gt_10[3];
+TH1F *Histo_vert_z_weighted_full[3],*Histo_Energy_lt_30[3],*Histo_Energy_gt_30[3];
 //create plots for three vertex ranges [ranges][particle type]
-TH1F *Histo_vert_z[3][3],*Histo_vert_z_weighted[3][3],*Histo_Energy_custom_lt_10[3][3],*Histo_Energy_custom_gt_10[3][3];
+TH1F *Histo_vert_z[3][3],*Histo_vert_z_weighted[3][3],*Histo_Energy_custom_lt_30[3][3],*Histo_Energy_custom_gt_30[3][3];
 //plot for the detector faces
 TH1F *Det_Face;
 TH3F *DetFace;
 
 Int_t low_ranges[3],up_ranges[3];
-//Flux and power parameters Full range //indices [particle type][energy ranges 0->0.1->10->1000] 
+//Flux and power parameters Full range //indices [particle type][energy ranges 0->0.1->30->1000] 
 Double_t flux[3][3],power[3][3];
 //indices[z range][energy range][particle type]
 Double_t flux_range[3][3][3],power_range[3][3][3];
@@ -104,8 +104,8 @@ void Init(){
       Histo_vert_2D[i]              ->Reset();
       Histo_vert_full_2D[i]         ->Reset();
       Histo_vert_z_weighted_full[i] ->Reset();
-      Histo_Energy_lt_10[i]         ->Reset();
-      Histo_Energy_gt_10[i]         ->Reset();
+      Histo_Energy_lt_30[i]         ->Reset();
+      Histo_Energy_gt_30[i]         ->Reset();
     }
     
     for(int j=0;j<3;j++){
@@ -115,8 +115,8 @@ void Init(){
       if(Histo_vert_z_full[i]){
       	Histo_vert_z[i][j]             ->Reset();
 	Histo_vert_z_weighted[i][j]    ->Reset();
-	Histo_Energy_custom_lt_10[i][j]->Reset();
-	Histo_Energy_custom_gt_10[i][j]->Reset();
+	Histo_Energy_custom_lt_30[i][j]->Reset();
+	Histo_Energy_custom_gt_30[i][j]->Reset();
 
       }
       
@@ -146,9 +146,9 @@ void bookHisto(){
     
     Histo_vert_z_weighted_full[i]  = new TH1F(Form("vert_z_weighted_full_%c",hPnm[i]),
 					      Form("%s Vertices (KE Weighted);z (cm);W/#muA",pType[i].Data()),300,-2600.,3400.);
-    Histo_Energy_lt_10[i]           = new TH1F(Form("Energy_lt_10_%c",hPnm[i]),
+    Histo_Energy_lt_30[i]           = new TH1F(Form("Energy_lt_30_%c",hPnm[i]),
 					      Form("%s E < 10 MeV;Energy (MeV);Counts",pType[i].Data())       ,100,0.,10.);
-    Histo_Energy_gt_10[i]           = new TH1F(Form("Energy_gt_10_%c",hPnm[i]),
+    Histo_Energy_gt_30[i]           = new TH1F(Form("Energy_gt_30_%c",hPnm[i]),
 					      Form("%s 10 < E < 1000 MeV;Energy (MeV);Counts",pType[i].Data()),100,10.,1000.);
  
     for(int j=0;j<3;j++){
@@ -159,10 +159,10 @@ void bookHisto(){
 					      Form("%s Vertices (KE Weighted for %s);z (cm);W/#muA",pType[i].Data(),sranges[j].Data()),
 					      300,low_ranges[j],up_ranges[j]);
       
-      Histo_Energy_custom_lt_10[i][j] = new TH1F(Form("Energy_custom_lt_10_rn_%d_%c",j,hPnm[i]),
+      Histo_Energy_custom_lt_30[i][j] = new TH1F(Form("Energy_custom_lt_30_rn_%d_%c",j,hPnm[i]),
 						Form("%s E < 10 MeV (%s);Energy (MeV);Counts",pType[i].Data(),sranges[j].Data()),
 						100,0.,10.);
-      Histo_Energy_custom_gt_10[i][j] = new TH1F(Form("Energy_custom_gt_10_rn_%d_%c",j,hPnm[i]),
+      Histo_Energy_custom_gt_30[i][j] = new TH1F(Form("Energy_custom_gt_30_rn_%d_%c",j,hPnm[i]),
 						Form("%s 10 < E < 1000 MeV (%s);Energy (MeV);Counts",pType[i].Data(),sranges[i].Data()),
 						100,10.,1000.);
     }
@@ -193,7 +193,7 @@ void bookHisto(){
 void PrintInfo(){
  
   TString oName[3]={"Photons  ","Electrons","Neutrons"};
-  TString eName[3]={"  0<E<0.1","0.1<E<10"," 10<E<1000"};
+  TString eName[3]={"  0<E<0.1","0.1<E<30"," 30<E<1000"};
   TString zName[3]={"-2600<z<-110"," -110<z<135","  135<z<3400"};
   cout<<" ~Printing:"<<endl;
   ofstream fout(Form("output/o_%s_%s_powerFlux.dat",ofnm.c_str(),prename.c_str()),std::ofstream::out);
@@ -277,15 +277,15 @@ void processTree(string tname){
       Histo_vert_full_2D[hist]->Fill(z_0/10,x_0/10,Energy/tot_events);
 
       if (Energy<0.10){
-	Histo_Energy_lt_10[hist]->Fill(Energy);
+	Histo_Energy_lt_30[hist]->Fill(Energy);
 	power[hist][0]+=Energy;
 	flux[hist][0]++;
-      }else if (Energy>=0.10 && Energy<10){
-	Histo_Energy_lt_10[hist]->Fill(Energy);
+      }else if (Energy>=0.10 && Energy<30){
+	Histo_Energy_lt_30[hist]->Fill(Energy);
 	power[hist][1]+=Energy;
 	flux[hist][1]++;	  
-      }else if (Energy>=10 && Energy<1000){
-	Histo_Energy_gt_10[hist]->Fill(Energy);
+      }else if (Energy>=30 && Energy<1000){
+	Histo_Energy_gt_30[hist]->Fill(Energy);
 	power[hist][2]+=Energy;
 	flux[hist][2]++;	  
       }
@@ -296,15 +296,15 @@ void processTree(string tname){
 	    Histo_vert_z_weighted[j][hist]->Fill(z_0/10,Energy/tot_events);
 	    
 	    if (Energy<0.10){
-	      Histo_Energy_custom_lt_10[j][hist]->Fill(Energy);
+	      Histo_Energy_custom_lt_30[j][hist]->Fill(Energy);
 	      power_range[j][0][hist]+=Energy;
 	      flux_range[j][0][hist]++;
-	    }else if (Energy>=0.10 && Energy<10){
-	      Histo_Energy_custom_lt_10[j][hist]->Fill(Energy);
+	    }else if (Energy>=0.10 && Energy<30){
+	      Histo_Energy_custom_lt_30[j][hist]->Fill(Energy);
 	      power_range[j][1][hist]+=Energy;
 	      flux_range[j][1][hist]++;
-	    }else if (Energy>=10 && Energy<1000){
-	      Histo_Energy_custom_gt_10[j][hist]->Fill(Energy);
+	    }else if (Energy>=30 && Energy<1000){
+	      Histo_Energy_custom_gt_30[j][hist]->Fill(Energy);
 	      power_range[j][2][hist]+=Energy;
 	      flux_range[j][2][hist]++;
 	    }
@@ -372,13 +372,13 @@ void WriteHisto(string fname){
     writeEachHisto(Histo_vert_2D[i]);
     writeEachHisto(Histo_vert_full_2D[i]);
     writeEachHisto(Histo_vert_z_weighted_full[i]);
-    writeEachHisto(Histo_Energy_lt_10[i]);
-    writeEachHisto(Histo_Energy_gt_10[i]); 
+    writeEachHisto(Histo_Energy_lt_30[i]);
+    writeEachHisto(Histo_Energy_gt_30[i]); 
     for(int j=0;j<3;j++){
       writeEachHisto(Histo_vert_z[i][j]);
       writeEachHisto(Histo_vert_z_weighted[i][j]);
-      writeEachHisto(Histo_Energy_custom_lt_10[i][j]);
-      writeEachHisto(Histo_Energy_custom_gt_10[i][j]);
+      writeEachHisto(Histo_Energy_custom_lt_30[i][j]);
+      writeEachHisto(Histo_Energy_custom_gt_30[i][j]);
     }
   }
 
