@@ -71,6 +71,7 @@
 
 
     <!-- Collimator dimensions  -->
+    <!-- CW70 inner volume dimentions-->
     <constant name="radius_cw70_coll_1" value="5.00"/> 
     <constant name="length_cw70_coll" value="10.54"/> <!-- total collimator lenght -->
 
@@ -675,8 +676,8 @@
     <position unit="cm" name="beam_cyl_det_pos"       x="0" y="0"     z="center_targ+237.535-length_septum_pipe+beam_cyl_det_length/2"/>
 
     <!-- Scattering Chamber Detectors -->
-    <position unit="cm" name="prex_det_pos" x="0" y="outer_r_new_sc+0.5" z="prex_target_center"/><!--changed x="height_new_sc/2.+1.0" to x=0 and y=0 to y=outer_r_new_sc+0.5-->
-    <position unit="cm" name="crex_det_pos" x="0" y="outer_r_new_sc+0.5" z="crex_target_center"/>  <!--changed x="height_new_sc/2.+1.0" to x=0 CAP and y="0" to y=outer_r_new_sc+0.5-->
+    <position unit="cm" name="prex_det_pos" x="height_new_sc/2.+1.0" y="0" z="prex_target_center"/>
+    <position unit="cm" name="crex_det_pos" x="height_new_sc/2.+1.0" y="0" z="crex_target_center"/>
 
     <!-- <position unit="cm" name="scTrans_1" x="0" y="-(outer_r_sc-thick_sc/2)" z="-y_cent_sc"/> -->
     <position unit="cm" name="cDet_1_trans"     x="0" y="-cDet_1_radius"     z="-1.*center_cylwall-0.5*thick_cylwall"/>
@@ -1341,9 +1342,9 @@
 
     <!--subtract spaces for main target scattering chambers and water target scattering chamber -->
     <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="sub_new_sc_prex" rmin="0.0" rmax="outer_r_new_sc+0.001" z="4*radius_sc_chamber_beam_pipe" />
-<tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="sub_new_sc_prex_water_tgt" rmin="0.0" rmax="outer_r_new_sc_water_tgt+0.001" z="4*radius_sc_chamber_beam_pipe" /> 
+    <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="sub_new_sc_prex_water_tgt" rmin="0.0" rmax="outer_r_new_sc_water_tgt+0.001" z="4*radius_sc_chamber_beam_pipe" />
     <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="sub_new_sc_crex" rmin="0.0" rmax="outer_r_new_sc+0.001" z="4*radius_sc_chamber_beam_pipe" />
- <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="sub_new_sc_crex_water_tgt" rmin="0.0" rmax="outer_r_new_sc_water_tgt+0.001" z="4*radius_sc_chamber_beam_pipe" /> 
+    <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="sub_new_sc_crex_water_tgt" rmin="0.0" rmax="outer_r_new_sc_water_tgt+0.001" z="4*radius_sc_chamber_beam_pipe" />
 
     <subtraction name ="new_sc_beampipe_4">
       <first ref="new_sc_beampipe_3"/>
@@ -1352,28 +1353,26 @@
       <rotationref ref="scRot_1"/>
     </subtraction>
 
-<!--CAP    <subtraction name ="new_sc_beampipe_5">
+    <subtraction name ="new_sc_beampipe_5">
       <first ref="new_sc_beampipe_4"/>
       <second ref="sub_new_sc_prex_water_tgt"/> 
       <positionref ref="new_sc_Trans_3"/>
       <rotationref ref="scRot_13"/>
-    </subtraction>-->
+    </subtraction>
 
-<!--CAP    <subtraction name ="new_sc_beampipe_6">-->
-  <subtraction name ="new_sc_beampipe_solid">
-<!--      <first ref="new_sc_beampipe_5"/>  -->
-   <first ref="new_sc_beampipe_4"/> 
+    <subtraction name ="new_sc_beampipe_6">
+      <first ref="new_sc_beampipe_5"/>
       <second ref="sub_new_sc_crex"/> 
       <positionref ref="new_sc_Trans_4"/>
       <rotationref ref="scRot_1"/>
     </subtraction>
 
-<!--    <subtraction name ="new_sc_beampipe_solid">
+    <subtraction name ="new_sc_beampipe_solid">
       <first ref="new_sc_beampipe_6"/>
       <second ref="sub_new_sc_crex_water_tgt"/> 
       <positionref ref="new_sc_Trans_4"/>
       <rotationref ref="scRot_13"/>
-    </subtraction>-->
+    </subtraction>
 
     <!-- Add shielding jacket to  "new_sc_beampipe -->
     <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="new_sc_beampipe_shield_0" rmin="0" rmax="radius_sc_chamber_beam_pipe + thick_sc_beampipe_shield" z="length_sc_chamber_beam_pipe_shield + thick_sc_beampipe_shield/2" />
@@ -1400,28 +1399,26 @@
       <rotationref ref="scRot_1"/>
     </subtraction>
 
-<!-- CAP comment out 5-15-16    <subtraction name ="new_sc_beampipe_shield_5">
+    <subtraction name ="new_sc_beampipe_shield_5">
       <first ref="new_sc_beampipe_shield_4"/>
       <second ref="sub_new_sc_prex_water_tgt"/> 
       <positionref ref="new_sc_Shield_Trans_3"/>
       <rotationref ref="scRot_13"/>
-    </subtraction> -->
+    </subtraction>
 
-    <subtraction name ="new_sc_beampipe_shield_solid">
-<!--CAP comment out      <first ref="new_sc_beampipe_shield_5"/> -->
-    <first ref="new_sc_beampipe_shield_4"/>  <!--CAP add -->   
+    <subtraction name ="new_sc_beampipe_shield_6">
+      <first ref="new_sc_beampipe_shield_5"/>
       <second ref="sub_new_sc_crex"/> 
       <positionref ref="new_sc_Shield_Trans_4"/>
       <rotationref ref="scRot_1"/>
     </subtraction>
 
-<!-- CAP 5-15-16 comment out so new_sc_beampipe_shield_solid same as new_sc_beampipe_shield_6 was-->
-<!--    <subtraction name ="new_sc_beampipe_shield_solid">
+    <subtraction name ="new_sc_beampipe_shield_solid">
       <first ref="new_sc_beampipe_shield_6"/>
       <second ref="sub_new_sc_crex_water_tgt"/> 
       <positionref ref="new_sc_Shield_Trans_4"/>
       <rotationref ref="scRot_13"/>
-    </subtraction> -->
+    </subtraction>
 
 
     <!--Add the  main target scattering chambers and water target scattering chamber -->
@@ -1438,81 +1435,70 @@
       <second ref="new_sc_prex_1"/> 
       <positionref ref="new_sc_Trans_0"/>
     </subtraction>
-
-<!--<subtraction name ="new_sc_prex_3">
+    <subtraction name ="new_sc_prex_3">
       <first ref="new_sc_prex_2"/>
       <second ref="sub_new_sc_prex_water_tgt"/> 
       <positionref ref="new_sc_Trans_0"/>
       <rotationref ref="scRot_13"/>
-    </subtraction>-->
-
+    </subtraction>
     <subtraction name ="new_sc_prex_solid">
-<!--      <first ref="new_sc_prex_3"/> -->
-    <first ref="new_sc_prex_2"/>  
+      <first ref="new_sc_prex_3"/>
       <second ref="sub_new_sc_beampipe_0"/> 
       <positionref ref="new_sc_Trans_0"/>
-      <rotationref ref="scRot_13"/>  <!--changed from scRot_1 to 13 CAP-->
+      <rotationref ref="scRot_1"/>
     </subtraction>
 
     <!-- Add PREX water tgt -->
-<!--CAP comment out -->
-<!--      <subtraction name ="new_sc_prex_water_tgt_2">   
+    <subtraction name ="new_sc_prex_water_tgt_2">
       <first ref="new_sc_prex_water_tgt_0"/>
       <second ref="new_sc_prex_water_tgt_1"/> 
       <positionref ref="new_sc_Trans_0"/>
-    </subtraction> -->
-<!-- CAP 5-15-16   <subtraction name ="new_sc_prex_water_tgt_solid">
-      <first ref="new_sc_prex_water_tgt_solid"/>
+    </subtraction>
+    <subtraction name ="new_sc_prex_water_tgt_solid">
+      <first ref="new_sc_prex_water_tgt_2"/>
       <second ref="sub_new_sc_beampipe_1"/> 
       <positionref ref="new_sc_Trans_0"/>
       <rotationref ref="scRot_13"/>
-    </subtraction> -->
+    </subtraction>
 
     <!-- Add CREX main and water tgt 1st -->
     <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="new_sc_crex_0" rmin="0.0" rmax="outer_r_new_sc" z="height_new_sc" />
     <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="new_sc_crex_1" rmin="0.0" rmax="outer_r_new_sc - thick_new_sc" z="height_new_sc" />
     
-<!--CAP comment out 5-15-16
     <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="new_sc_crex_water_tgt_0" rmin="0.0" rmax="outer_r_new_sc_water_tgt" z="height_new_sc_water_tgt" />
-    <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="new_sc_crex_water_tgt_1" rmin="0.0" rmax="outer_r_new_sc_water_tgt - thick_new_sc_water_tgt" z="height_new_sc_water_tgt" /> -->
+    <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="new_sc_crex_water_tgt_1" rmin="0.0" rmax="outer_r_new_sc_water_tgt - thick_new_sc_water_tgt" z="height_new_sc_water_tgt" />
     
-  <subtraction name ="new_sc_crex_2">
+
+    <subtraction name ="new_sc_crex_2">
       <first ref="new_sc_crex_0"/>
       <second ref="new_sc_crex_1"/> 
       <positionref ref="new_sc_Trans_0"/>
-    </subtraction> 
-
-
-<!-- CAP comment out 5-15-16 -->
-<!--    <subtraction name ="new_sc_crex_3">
+    </subtraction>
+    <subtraction name ="new_sc_crex_3">
       <first ref="new_sc_crex_2"/>
       <second ref="sub_new_sc_crex_water_tgt"/> 
       <positionref ref="new_sc_Trans_0"/>
       <rotationref ref="scRot_13"/>
-    </subtraction> -->
+    </subtraction>
     <subtraction name ="new_sc_crex_solid">
-<!--CAP change 5-15-16 -->
-<!--      <first ref="new_sc_crex_3"/> -->
-      <first ref="new_sc_crex_2"/>
+      <first ref="new_sc_crex_3"/>
       <second ref="sub_new_sc_beampipe_0"/> 
       <positionref ref="new_sc_Trans_0"/>
-      <rotationref ref="scRot_13"/>  <!--changed from scRot_1 to 13 CAP-->
+      <rotationref ref="scRot_1"/>
     </subtraction>
 
     <!-- Add CREX water tgt -->
-<!--CAP comment out 5-15-16 -->
-<!--    <subtraction name ="new_sc_crex_water_tgt_2">
+    <subtraction name ="new_sc_crex_water_tgt_2">
       <first ref="new_sc_crex_water_tgt_0"/>
       <second ref="new_sc_crex_water_tgt_1"/> 
       <positionref ref="new_sc_Trans_0"/>
-    </subtraction> -->
-<!--CAP comment out 5-15-16 -->
-<!--    <subtraction name ="new_sc_crex_water_tgt_solid">
+    </subtraction>
+    <subtraction name ="new_sc_crex_water_tgt_solid">
       <first ref="new_sc_crex_water_tgt_2"/>
       <second ref="sub_new_sc_beampipe_1"/> 
       <positionref ref="new_sc_Trans_0"/>
       <rotationref ref="scRot_13"/>
-    </subtraction> -->
+    </subtraction>
     
     <!-- o-rings and o-ring detectors -->
 
@@ -2607,12 +2593,12 @@
       <!-- <auxiliary auxtype="SensDet" auxvalue="planeDet"/> -->
     </volume>
 
-<!--CAP comment out 5-15-16    <volume name="new_sc_prex_water_tgt_logic">
+    <volume name="new_sc_prex_water_tgt_logic">
       <materialref ref="Aluminum"/>
       <solidref ref="new_sc_prex_water_tgt_solid"/>
-      <auxiliary auxtype="SensDet" auxvalue="volumeN5042"/> -->
+      <auxiliary auxtype="SensDet" auxvalue="volumeN5042"/>
       <!-- <auxiliary auxtype="SensDet" auxvalue="planeDet"/> -->
-<!--    </volume> -->
+    </volume>
 
     <volume name="new_sc_crex_logic">
       <materialref ref="Aluminum"/>
@@ -2621,13 +2607,12 @@
       <!-- <auxiliary auxtype="SensDet" auxvalue="planeDet"/> -->
     </volume>
 
-<!-- commented out CAP 5/15/16 -->
-<!--    <volume name="new_sc_crex_water_tgt_logic">
+    <volume name="new_sc_crex_water_tgt_logic">
       <materialref ref="Aluminum"/>
       <solidref ref="new_sc_crex_water_tgt_solid"/>
-      <auxiliary auxtype="SensDet" auxvalue="volumeN5044"/> -->
+      <auxiliary auxtype="SensDet" auxvalue="volumeN5044"/>
       <!-- <auxiliary auxtype="SensDet" auxvalue="planeDet"/> -->
-<!--    </volume> -->
+    </volume>
 
     <volume name="sc_attach_logic">
       <materialref ref="Aluminum"/>
@@ -2933,12 +2918,11 @@
 	<rotationref ref="scRot_13"/>
       </physvol>
 
-<!-- CAP comment out 5/15/16 -->
-<!--      <physvol name="new_sc_prex_water_tgt">
+      <physvol name="new_sc_prex_water_tgt">
         <volumeref ref="new_sc_prex_water_tgt_logic"/>
         <positionref ref="targ_center"/>
 	<rotationref ref="scRot_1"/>
-      </physvol> -->
+      </physvol>
 
       <physvol name="new_sc_crex">
         <volumeref ref="new_sc_crex_logic"/>
@@ -2946,12 +2930,11 @@
 	<rotationref ref="scRot_13"/>
       </physvol>
 
-<!-- commented out new_sc_crex_water_tgt CAP 05/15/16-->
-<!--      <physvol name="new_sc_crex_water_tgt">
+      <physvol name="new_sc_crex_water_tgt">
         <volumeref ref="new_sc_crex_water_tgt_logic"/>
         <positionref ref="crex_targ_center"/>
 	<rotationref ref="scRot_1"/>
-      </physvol> -->
+      </physvol>
 
       <physvol name="sc_attachment">
         <volumeref ref="sc_attach_logic"/>
@@ -3079,13 +3062,13 @@
       <physvol name="prex_det">
 	<volumeref ref="prex_det_logic"/>
 	<positionref ref="prex_det_pos"/>
-	<rotationref ref="scRot_1"/>  <!--changed scRot_13 to scRot_1 CAP-->
+	<rotationref ref="scRot_13"/>
       </physvol>
 
       <physvol name="crex_det">
 	<volumeref ref="crex_det_logic"/>
 	<positionref ref="crex_det_pos"/>
-	<rotationref ref="scRot_1"/> <!--changed scRot_13 to scRot_1 CAP-->
+	<rotationref ref="scRot_13"/>
       </physvol>
 
       <physvol name="beamline_1_det">

@@ -2562,12 +2562,12 @@
 
     <volume name="W_coll_logic">
       <materialref ref="matCW70"/>
-      <solidref ref="coll_cw70_cyln_7"/>
+      <solidref ref="coll_cw70_cyln_6"/>
     </volume>
 
     <volume name="coll_jacket_W_logic">
       <materialref ref="Tungsten"/>
-      <solidref ref="coll_jacket_w_solid_4"/>
+      <solidref ref="coll_jacket_w_solid_3"/>
     </volume>
 
     <volume name="Cu_tube_logic">
@@ -2925,26 +2925,26 @@
         <positionref ref="pos_global_coll_jacket"/>
       </physvol>
 
-      <physvol name="collimator_pig_shield">
+<!--      <physvol name="collimator_pig_shield">
         <volumeref ref="coll_pig_shield"/>
         <positionref ref="pos_global_pig_shield"/>
 	<rotationref ref="scRot_1"/>
-      </physvol>
+      </physvol> -->
 
-      <physvol name="sc_attach_pigTopShield_phys">
+<!--      <physvol name="sc_attach_pigTopShield_phys">
         <volumeref ref="sc_attach_pigTopShield_logic"/>
         <positionref ref="pos_global_pigTopShield"/>
-      </physvol>
+      </physvol> -->
 
-      <physvol name="coll_shield">
+<!--      <physvol name="coll_shield">
       	<volumeref ref="coll_shield_logic"/>
       	<positionref ref="pos_global_collShield"/>
-      </physvol>
+      </physvol>-->
 
-      <physvol name="coll_outsideW_shield">
+<!--      <physvol name="coll_outsideW_shield">
       	<volumeref ref="coll_outsideW_shield_logic"/>
       	<positionref ref="pos_global_outsideW"/>
-      </physvol>      
+      </physvol>      -->
 	  
       <!--CAP comment out if running Crex -->
       <!-- <physvol name="target"> -->

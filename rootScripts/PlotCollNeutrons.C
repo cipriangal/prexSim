@@ -1,5 +1,6 @@
 void PlotCollNeutrons(){
 
+
   //Attaching file o_Caryn20150517_ConcreteAboveColl.root as _file0...
   //TCanvas* c2 = new TCanvas("c2","c2",0,0,1200,700)
   TCanvas* c2 = new TCanvas("c2","c2",0,0,1200,700);
@@ -58,7 +59,7 @@ void PlotCollNeutrons(){
   c2b->cd(4);
   geant->Draw("x:z","volume==5050 && type==5&&y<-113&&y>-139&&kineE<0.01");
   c2b->cd(5);
-  geant->Draw("x:z","volume==5050 && type==5&&y<-113&&y>-139&&kineE>0.01&&kineE<30")
+  geant->Draw("x:z","volume==5050 && type==5&&y<-113&&y>-139&&kineE>0.01&&kineE<30");
   c2b->cd(6);
   geant->Draw("x:z","volume==5050 && type==5&&y<-113&&y>-139&&kineE>30");    
 
