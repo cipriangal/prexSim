@@ -462,6 +462,9 @@
   <rotation name="scRot_10" unit="deg" x="0" y="0" z="240"/>
   <rotation name="scRot_11" unit="deg" x="0" y="0" z="12.5"/>
   <rotation name="scRot_12" unit="deg" x="0" y="0" z="-12.5"/>
+  <rotation name="scRot_13" unit="deg" x="0"   y="90"  z="0"/>
+  <rotation name="scRot_14" unit="deg" x="0"   y="0"   z="90"/>
+  <rotation name="scRot_22" unit="deg" x="0"   y="-90" z="0"/>
   <rotation name="identity"/>
 
   <!--  Detectors for new concrete sites - Ricky -->
@@ -488,6 +491,20 @@
 	    x="-125"
 	    y="100"
 	    z="150" />
+
+
+  <!-- Dipole constants/positions -->
+  <constant name="arm_dipole_r1" value="733.32"/>
+  <constant name="arm_dipole_r2" value="956.7"/>
+  <constant name="arm_dipole_w1" value="97.0"/>
+  
+  <constant name="arm_dipole_r5" value="659.0"/>
+  <constant name="arm_dipole_r6" value="1017.4"/>
+  <constant name="arm_dipole_w3" value="255.48"/>
+  
+  <constant name="arm_dipole_center_y" value="987.0"/>
+  
+  <position unit="cm" name="arm_dipole_pos2"  x="0" y="-1.*arm_dipole_center_y" z="1.*center_cylwall -40.0" />
   
 </define>
 
@@ -1387,7 +1404,11 @@
   <box lunit="cm" name="pDet_2" x="width_mother" y="height_mother" z="0.5"/>
   <box lunit="cm" name="pDet_3" x="width_mother" y="height_mother" z="0.5"/>
   <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="cDet_1_f" rmin="cDet_1_radius" rmax="cDet_1_radius+1." z="1*height_cylwall-1*thick_cylwall" /> 
-  <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="cDet_2_f" rmin="cDet_2_radius" rmax="cDet_2_radius+1." z="1*height_cylwall-1*thick_cylwall" /> 
+  <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="cDet_2_f"
+	rmin="cDet_2_radius"
+	rmax="cDet_2_radius+1."
+	z="1*height_cylwall-1*thick_cylwall - 2." />
+  
   <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="cDet_3_f" rmin="cDet_3_radius - 1." rmax="cDet_3_radius" z="1*height_cylwall-1*thick_cylwall" /> 
 
   <subtraction name ="cDet_1_f_p1">
@@ -1431,25 +1452,36 @@
   <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="dDet_beamline_3" rmin="0" rmax="beamline[1,12]" z="0.1" />  
   <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="dDet_beamline_4" rmin="0" rmax="beamline[1,12]" z="0.1" />
 
-  <!-- Concrete sites and concrete site detectors -Ricky -->
-  <box lunit="cm" name="farDet_farside_solid" x="width_det_far" y="height_det_far" z="length_det_far"/>
-  <box lunit="cm" name="farDet_rampside_solid" x="width_det_far" y="height_det_far" z="length_det_far"/>
-  <box lunit="cm" name="slab1_0" x="width_slab1" y="height_slab" z="length_slab1"/>
-  <box lunit="cm" name="slab2_0" x="width_slab2" y="height_slab" z="length_slab2"/>
-  <box lunit="cm" name="slab1_cut" x="width_slab1" y="height_slab+0.5" z="length_slab1"/>
-  <box lunit="cm" name="slab2_cut" x="width_slab2" y="height_slab+0.5" z="length_slab2"/>
   
-  <subtraction name="slab1_solid">
-    <first ref="slab1_0"/>
-    <second ref="slab1_cut"/>
-    <positionref ref="slab1_trans"/>
+  <!-- Q1 dipole -->
+  <tube aunit="deg" startphi="90" deltaphi="360"
+	lunit="cm" name="Dipole_ip1_cut"
+	rmin="arm_dipole_r1 -5.0"
+	rmax="arm_dipole_r2 +5.0"
+	z="arm_dipole_w1 +5.0" />
+  <tube aunit="deg" startphi="181" deltaphi="42"
+	lunit="cm" name="Dipole_ip1"
+	rmin="arm_dipole_r5"
+	rmax="arm_dipole_r6"
+	z="arm_dipole_w3" />
+  <subtraction name ="Dipole_s_i_p1">
+    <first ref="Dipole_ip1"/>
+    <second ref="Dipole_ip1_cut"/>
+    <positionref ref="ped_notrans"/>
+    <rotationref ref="identity"/>
   </subtraction>
   
-  <subtraction name="slab2_solid">
-    <first ref="slab2_0"/>
-    <second ref="slab2_cut"/>
-    <positionref ref="slab2_trans"/>
-  </subtraction>
+  <tube aunit="deg" startphi="0" deltaphi="360"
+	lunit="cm" name="in_cylwall_i"
+	rmin="0.0" rmax="radius_of_cylwall"
+	z="1*height_cylwall-1*thick_cylwall" />     
+  <intersection name ="arm_i_solid">
+    <first ref="in_cylwall_i"/>
+    <second ref="Dipole_s_i_p1"/>
+    <positionref ref="arm_dipole_pos2"/>
+    <rotationref ref="scRot_22"/>
+  </intersection>
+  
   
 </solids>
 
@@ -1641,7 +1673,16 @@
       <auxiliary auxtype="SensDet" auxvalue="volumeN10004"/>
     </volume>
 
-
+    <!-- dipoles  -->
+    <volume name="dipole_logic_1">
+      <materialref ref="Iron"/>
+      <solidref ref="arm_i_solid"/>
+    </volume>
+    <volume name="dipole_logic_2">
+      <materialref ref="Iron"/>
+      <solidref ref="arm_i_solid"/>
+    </volume>
+    
     <volume name="logicMother">
       <materialref ref="Vacuum"/>
       <solidref ref="boxMother"/>
@@ -1787,6 +1828,18 @@
         <positionref ref="dDet_beamline_pos_4"/>
       </physvol>
 
+      <physvol name="dipole_left">
+        <volumeref ref="dipole_logic_1"/>
+        <positionref ref="cylwall_center"/>
+      	<rotationref ref="scRot_6"/>
+      </physvol>
+      
+      <physvol name="dipole_right">
+        <volumeref ref="dipole_logic_2"/>
+        <positionref ref="cylwall_center"/>
+      	<rotationref ref="scRot_7"/>
+      </physvol>
+      
       <physvol>
 	<file name="geometry/kriptoniteDetectors.gdml"/>
 	<positionref ref="pos_global_SEPT_elec"/>
