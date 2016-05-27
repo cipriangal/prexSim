@@ -21,15 +21,15 @@ using namespace std;
 TH1F *Histo_vert_z_full[3];//particle type = photons, electrons, neutrons
 //2D histograms
 TH2F *Histo_vert_2D[3],*Histo_vert_full_2D[3];
-TH1F *Histo_vert_z_weighted_full[3],*Histo_Energy_lt_30[3],*Histo_Energy_gt_30[3];
+TH1F *Histo_vert_z_weighted_full[3],*Histo_Energy_lt_eCut[3],*Histo_Energy_gt_eCut[3];
 //create plots for three vertex ranges [ranges][particle type]
-TH1F *Histo_vert_z[3][3],*Histo_vert_z_weighted[3][3],*Histo_Energy_custom_lt_30[3][3],*Histo_Energy_custom_gt_30[3][3];
+TH1F *Histo_vert_z[3][3],*Histo_vert_z_weighted[3][3],*Histo_Energy_custom_lt_eCut[3][3],*Histo_Energy_custom_gt_eCut[3][3];
 //plot for the detector faces
 TH1F *Det_Face;
 TH3F *DetFace;
 
 Int_t low_ranges[3],up_ranges[3];
-//Flux and power parameters Full range //indices [particle type][energy ranges 0->0.1->30->1000] 
+//Flux and power parameters Full range //indices [particle type][energy ranges 0->0.1->eCut->1000] 
 Double_t flux[3][3],power[3][3];
 //indices[z range][energy range][particle type]
 Double_t flux_range[3][3][3],power_range[3][3][3];
@@ -44,26 +44,31 @@ void processTree(string tname);
 void Init();
 void WriteHisto(string fname);
 
+double eCut(0);
 
 int main(int argc,char** argv) {
 
   if(argc < 3){
-    cout<<"Usage: anaRad [number of events] [input file name] [output file name] [list of sensative detectors #]"<<endl;
-    cout<<" for example: build/anaRad 1e6 o_HAPPEX2_1e6.root HAPPEX2_1e6 10008 10009 2001 2002 8002 8003"<<endl;
+    cout<<"Usage: anaRad [eCut for medium->HE in MeV][number of events] [input file name] [output file name] [list of sensative detectors #]"<<endl;
+    cout<<" for example: build/anaRad 10 1e6 o_HAPPEX2_1e6.root HAPPEX2_1e6 10008 10009 2001 2002 8002 8003"<<endl;
     cout<<"   Output files will be of the type: output/anaRad_OutputFileName.root"<<endl;
     return 1;
   }
-  tot_events=atof(argv[1]);
-  string ifnm=argv[2]; 
-  ofnm=argv[3];
+  eCut=atof(argv[1]);
+  tot_events=atof(argv[2]);
+  string ifnm=argv[3]; 
+  ofnm=argv[4];
   TFile *rf=new TFile(Form("output/anaRad_%s.root",ofnm.c_str()),"RECREATE");
   rf->Close();
 
   map <int,string> SensNames;
   SensNames[8002] ="HallD2";//cylindircal det at the radius close to electronic hut
   SensNames[8003] ="HallD3";//cylindircal det at the radius close to the wall
-  SensNames[10008]="HRShut";
+  SensNames[10008]="HRSele";
   SensNames[10009]="Septum";
+  SensNames[10010]="USpowS";
+  SensNames[10011]="HRSund";
+  SensNames[10012]="HRSlft";
   SensNames[10001]="BLTgt1";//beamline circle detector close to the target
   SensNames[10002]="BLTgt2";//beamline circle detector close to the target
   SensNames[10003]="BLDmp1";//beamline circle detector close to the dump
@@ -71,7 +76,7 @@ int main(int argc,char** argv) {
   SensNames[2001] ="Lpower";
   SensNames[2002] ="Rpower";
 
-  for(int i=4;i<argc;i++){
+  for(int i=5;i<argc;i++){
     TString _sensVol(argv[i]);
     SensVolume_v=_sensVol.Atoi();
     cout<<"~~~~ Sensative volue set to :" <<SensVolume_v<<endl;
@@ -104,8 +109,8 @@ void Init(){
       Histo_vert_2D[i]              ->Reset();
       Histo_vert_full_2D[i]         ->Reset();
       Histo_vert_z_weighted_full[i] ->Reset();
-      Histo_Energy_lt_30[i]         ->Reset();
-      Histo_Energy_gt_30[i]         ->Reset();
+      Histo_Energy_lt_eCut[i]         ->Reset();
+      Histo_Energy_gt_eCut[i]         ->Reset();
     }
     
     for(int j=0;j<3;j++){
@@ -115,8 +120,8 @@ void Init(){
       if(Histo_vert_z_full[i]){
       	Histo_vert_z[i][j]             ->Reset();
 	Histo_vert_z_weighted[i][j]    ->Reset();
-	Histo_Energy_custom_lt_30[i][j]->Reset();
-	Histo_Energy_custom_gt_30[i][j]->Reset();
+	Histo_Energy_custom_lt_eCut[i][j]->Reset();
+	Histo_Energy_custom_gt_eCut[i][j]->Reset();
 
       }
       
@@ -146,9 +151,9 @@ void bookHisto(){
     
     Histo_vert_z_weighted_full[i]  = new TH1F(Form("vert_z_weighted_full_%c",hPnm[i]),
 					      Form("%s Vertices (KE Weighted);z (cm);W/#muA",pType[i].Data()),300,-2600.,3400.);
-    Histo_Energy_lt_30[i]           = new TH1F(Form("Energy_lt_30_%c",hPnm[i]),
+    Histo_Energy_lt_eCut[i]           = new TH1F(Form("Energy_lt_eCut_%c",hPnm[i]),
 					      Form("%s E < 10 MeV;Energy (MeV);Counts",pType[i].Data())       ,100,0.,10.);
-    Histo_Energy_gt_30[i]           = new TH1F(Form("Energy_gt_30_%c",hPnm[i]),
+    Histo_Energy_gt_eCut[i]           = new TH1F(Form("Energy_gt_eCut_%c",hPnm[i]),
 					      Form("%s 10 < E < 1000 MeV;Energy (MeV);Counts",pType[i].Data()),100,10.,1000.);
  
     for(int j=0;j<3;j++){
@@ -159,10 +164,10 @@ void bookHisto(){
 					      Form("%s Vertices (KE Weighted for %s);z (cm);W/#muA",pType[i].Data(),sranges[j].Data()),
 					      300,low_ranges[j],up_ranges[j]);
       
-      Histo_Energy_custom_lt_30[i][j] = new TH1F(Form("Energy_custom_lt_30_rn_%d_%c",j,hPnm[i]),
+      Histo_Energy_custom_lt_eCut[i][j] = new TH1F(Form("Energy_custom_lt_eCut_rn_%d_%c",j,hPnm[i]),
 						Form("%s E < 10 MeV (%s);Energy (MeV);Counts",pType[i].Data(),sranges[j].Data()),
 						100,0.,10.);
-      Histo_Energy_custom_gt_30[i][j] = new TH1F(Form("Energy_custom_gt_30_rn_%d_%c",j,hPnm[i]),
+      Histo_Energy_custom_gt_eCut[i][j] = new TH1F(Form("Energy_custom_gt_eCut_rn_%d_%c",j,hPnm[i]),
 						Form("%s 10 < E < 1000 MeV (%s);Energy (MeV);Counts",pType[i].Data(),sranges[i].Data()),
 						100,10.,1000.);
     }
@@ -193,7 +198,7 @@ void bookHisto(){
 void PrintInfo(){
  
   TString oName[3]={"Photons  ","Electrons","Neutrons"};
-  TString eName[3]={"  0<E<0.1","0.1<E<30"," 30<E<1000"};
+  TString eName[3]={"  0<E<0.1","0.1<E<eCut"," eCut<E<1000"};
   TString zName[3]={"-2600<z<-110"," -110<z<135","  135<z<3400"};
   cout<<" ~Printing:"<<endl;
   ofstream fout(Form("output/o_%s_%s_powerFlux.dat",ofnm.c_str(),prename.c_str()),std::ofstream::out);
@@ -277,15 +282,15 @@ void processTree(string tname){
       Histo_vert_full_2D[hist]->Fill(z_0/10,x_0/10,Energy/tot_events);
 
       if (Energy<0.10){
-	Histo_Energy_lt_30[hist]->Fill(Energy);
+	Histo_Energy_lt_eCut[hist]->Fill(Energy);
 	power[hist][0]+=Energy;
 	flux[hist][0]++;
-      }else if (Energy>=0.10 && Energy<30){
-	Histo_Energy_lt_30[hist]->Fill(Energy);
+      }else if (Energy>=0.10 && Energy<eCut){
+	Histo_Energy_lt_eCut[hist]->Fill(Energy);
 	power[hist][1]+=Energy;
 	flux[hist][1]++;	  
-      }else if (Energy>=30 && Energy<1000){
-	Histo_Energy_gt_30[hist]->Fill(Energy);
+      }else if (Energy>=eCut && Energy<1000){
+	Histo_Energy_gt_eCut[hist]->Fill(Energy);
 	power[hist][2]+=Energy;
 	flux[hist][2]++;	  
       }
@@ -296,15 +301,15 @@ void processTree(string tname){
 	    Histo_vert_z_weighted[j][hist]->Fill(z_0/10,Energy/tot_events);
 	    
 	    if (Energy<0.10){
-	      Histo_Energy_custom_lt_30[j][hist]->Fill(Energy);
+	      Histo_Energy_custom_lt_eCut[j][hist]->Fill(Energy);
 	      power_range[j][0][hist]+=Energy;
 	      flux_range[j][0][hist]++;
-	    }else if (Energy>=0.10 && Energy<30){
-	      Histo_Energy_custom_lt_30[j][hist]->Fill(Energy);
+	    }else if (Energy>=0.10 && Energy<eCut){
+	      Histo_Energy_custom_lt_eCut[j][hist]->Fill(Energy);
 	      power_range[j][1][hist]+=Energy;
 	      flux_range[j][1][hist]++;
-	    }else if (Energy>=30 && Energy<1000){
-	      Histo_Energy_custom_gt_30[j][hist]->Fill(Energy);
+	    }else if (Energy>=eCut && Energy<1000){
+	      Histo_Energy_custom_gt_eCut[j][hist]->Fill(Energy);
 	      power_range[j][2][hist]+=Energy;
 	      flux_range[j][2][hist]++;
 	    }
@@ -372,13 +377,13 @@ void WriteHisto(string fname){
     writeEachHisto(Histo_vert_2D[i]);
     writeEachHisto(Histo_vert_full_2D[i]);
     writeEachHisto(Histo_vert_z_weighted_full[i]);
-    writeEachHisto(Histo_Energy_lt_30[i]);
-    writeEachHisto(Histo_Energy_gt_30[i]); 
+    writeEachHisto(Histo_Energy_lt_eCut[i]);
+    writeEachHisto(Histo_Energy_gt_eCut[i]); 
     for(int j=0;j<3;j++){
       writeEachHisto(Histo_vert_z[i][j]);
       writeEachHisto(Histo_vert_z_weighted[i][j]);
-      writeEachHisto(Histo_Energy_custom_lt_30[i][j]);
-      writeEachHisto(Histo_Energy_custom_gt_30[i][j]);
+      writeEachHisto(Histo_Energy_custom_lt_eCut[i][j]);
+      writeEachHisto(Histo_Energy_custom_gt_eCut[i][j]);
     }
   }
 

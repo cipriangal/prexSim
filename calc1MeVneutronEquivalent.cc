@@ -54,7 +54,7 @@ int main(int argc,char** argv) {
     string cuts[2]={"lt","gt"};
     for(int part=1;part<3;part++)
       for(int cut=0;cut<2;cut++){
-	string hnm=Form("%s_Energy_%s_10_%c",prename.c_str(),cuts[cut].c_str(),hPnm[part]);
+	string hnm=Form("%s_Energy_%s_eCut_%c",prename.c_str(),cuts[cut].c_str(),hPnm[part]);
 	if(!fin->GetListOfKeys()->Contains(hnm.c_str())){
 	  cout<<" skipping "<<hnm<<endl;
 	  continue;
@@ -121,6 +121,9 @@ void Init(){
   fluxFac[8003] =1e13/(1.6*451*nEvt);//cylindircal det at the radius close to the wall
   fluxFac[10008]=1e13/(1.6*40.*nEvt);
   fluxFac[10009]=1e13/(1.6*6. *nEvt);
+  fluxFac[10010]=1e13/(1.6*16.*nEvt);
+  fluxFac[10011]=1e13/(1.6*10.*nEvt);
+  fluxFac[10012]=1e13/(1.6*5.5*nEvt);
   fluxFac[10001]=1e13/(1.6*1. *nEvt);//beamline circle detector close to the target
   fluxFac[10002]=1e13/(1.6*1. *nEvt);//beamline circle detector close to the target
   fluxFac[10003]=1e13/(1.6*1. *nEvt);//beamline circle detector close to the dump
@@ -130,8 +133,11 @@ void Init(){
 
   SensNames[8002] ="HallD2";//cylindircal det at the radius close to electronic hut
   SensNames[8003] ="HallD3";//cylindircal det at the radius close to the wall
-  SensNames[10008]="HRShut";
+  SensNames[10008]="HRSele";
   SensNames[10009]="Septum";
+  SensNames[10010]="USpowS";
+  SensNames[10011]="HRSund";
+  SensNames[10012]="HRSlft";
   SensNames[10001]="BLTgt1";//beamline circle detector close to the target
   SensNames[10002]="BLTgt2";//beamline circle detector close to the target
   SensNames[10003]="BLDmp1";//beamline circle detector close to the dump
