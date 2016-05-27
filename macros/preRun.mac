@@ -89,7 +89,7 @@
    #/moller/field/setLowLim -44 cm
    #/moller/field/setHighLim 44 cm
    ### Geometry files
-   #/moller/det/setDetectorFileName geometry/prexIMother_pedestal_noshield_H2target.xml
+   #/moller/det/setDetectorFileName geometry/happex2.xml
    
    
    ########
