@@ -482,6 +482,12 @@
   <position unit="cm" name="slab2_pos" x="-425." y="-(height_slab)/2.+thick_cylwall+50." z="-1461."/>
   <position unit="cm" name="slab1_trans" x="thick_slab" y="0" z="-(thick_slab)"/>
   <position unit="cm" name="slab2_trans" x="-(thick_slab)" y="0" z="-(thick_slab)"/>
+
+   
+  <position unit="cm" name="pos_global_SEPT_elec"
+	    x="-125"
+	    y="100"
+	    z="150" />
   
 </define>
 
@@ -1453,7 +1459,6 @@
     <volume name="W_coll_logic">
       <materialref ref="Tungsten"/>
       <solidref ref="collWSolid"/>
-      <!-- <auxiliary auxtype="SensDet" auxvalue="volumeN5001"/> -->
     </volume>
 
     <volume name="target_logic">
@@ -1464,44 +1469,36 @@
     <volume name="sc_logic">
       <materialref ref="Aluminum"/>
       <solidref ref="scatt_w_holes"/>
-      <!-- <auxiliary auxtype="SensDet" auxvalue="volumeN5004"/> -->
     </volume>
     <volume name="sc_attach_logic">
       <materialref ref="Aluminum"/>
       <solidref ref="sc_attach_solid"/>
-      <!-- <auxiliary auxtype="SensDet" auxvalue="volumeN5005"/> -->
     </volume>
 
     <volume name="sc_oring_logic">
       <materialref ref="Aluminum"/>
       <solidref ref="sc_oring_solid"/>
-<!--      <auxiliary auxtype="SensDet" auxvalue="planeDet"/> -->
     </volume>
+
     <volume name="sc_oringDet_logic">
       <materialref ref="Vacuum"/>
       <solidref ref="sc_oring_det_solid"/>
-<!--      <auxiliary auxtype="SensDet" auxvalue="planeDet"/> -->
     </volume>
 
     <volume name="septum_logic">
       <materialref ref="Iron"/>
       <solidref ref="septum_solid"/>
-      <!-- <auxiliary auxtype="SensDet" auxvalue="volumeN5006"/> -->
     </volume>
 
     <volume name="septum_pipe_logic">
       <materialref ref="StainlessSteel"/>
       <solidref ref="septum_pipe_tube"/>
-      <!-- <auxiliary auxtype="SensDet" auxvalue="volumeN5007"/> -->
     </volume>
  
     <volume name="beamtube_1_logic">
       <materialref ref="Aluminum"/>
-      <!-- <materialref ref="Tungsten"/> -->
       <solidref ref="beamtube_1"/>
-      <!-- <auxiliary auxtype="SensDet" auxvalue="volumeN5008"/> -->
-    </volume>
-  
+    </volume>  
 
     <volume name="vac_enc_l_logic">
       <materialref ref="StainlessSteel"/>
@@ -1516,14 +1513,17 @@
       <materialref ref="Shield"/>
       <solidref ref="hut_solid"/>
     </volume>
+
     <volume name="scatt_cham_shld_logic">
       <materialref ref="Shield"/>
       <solidref ref="scatt_cham_shld_solid"/>
     </volume>
+
     <volume name="septShld_l_logic">
       <materialref ref="Shield"/>
       <solidref ref="sept_shld_l"/>
     </volume>
+
     <volume name="septShld_r_logic">
       <materialref ref="Shield"/>
       <solidref ref="sept_shld_r"/>
@@ -1533,18 +1533,22 @@
       <materialref ref="StainlessSteel"/>
       <solidref ref="ped_un_p19"/>
     </volume>
+
     <volume name="under_arm_logic_1">
       <materialref ref="StainlessSteel"/>
       <solidref ref="under_arm_solid"/>
     </volume>
+
     <volume name="under_arm_logic_2">
       <materialref ref="StainlessSteel"/>
       <solidref ref="under_arm_solid"/>
     </volume>
+
     <volume name="under_arm_logic_3">
       <materialref ref="Aluminum"/>
       <solidref ref="scattering_chamb_pedestal"/>
     </volume>    
+
     <volume name="top_scatchamber_logic">
       <materialref ref="Aluminum"/>
       <solidref ref="top_scatchamber_p1_6"/>
@@ -1554,87 +1558,38 @@
       <materialref ref="Concrete"/>
       <solidref ref="floor_solid"/>
     </volume>
+
     <volume name="wall_logic">
       <materialref ref="Concrete"/>
       <solidref ref="wall_solid"/>
     </volume>
+
     <volume name="cylwall_logic">
       <materialref ref="Concrete"/>
       <solidref ref="cylwall_hole"/>
-      <!-- <auxiliary auxtype="SensDet" auxvalue="volumeN5009"/> -->
     </volume>
+
     <volume name="topwall_logic">
       <materialref ref="Concrete"/>
       <solidref ref="topwall_solid"/>
-      <!-- <auxiliary auxtype="SensDet" auxvalue="volumeN5010"/> -->
     </volume>
+
     <volume name="dump_logic">
       <materialref ref="Concrete"/>
       <solidref ref="dump_solid"/>
     </volume>
+
     <volume name="ssenc_logic">
       <materialref ref="StainlessSteel"/>
       <solidref ref="dump_ss_enc"/>
     </volume>
 
-    <!-- Electronic hut @ HRS represnted by this box -->
-    <volume name="box_elec_hut_logic">
-       <materialref ref="Kryptonite"/>
-      <solidref ref="box_elec_hut"/>
-      <auxiliary auxtype="SensDet" auxvalue="volumeN10008"/> 
-    </volume>
-
-    <!-- Electronic hut @ septum represnted by this box -->
-    <volume name="box_elec_hut_sept_logic">
-      <materialref ref="Kryptonite"/>
-      <solidref ref="box_elec_hut_sept"/>
-      <auxiliary auxtype="SensDet" auxvalue="volumeN10009"/> 
-    </volume>
-
-    <!-- Detectors at concrete sites and concrete -->
-    <volume name="farDet_farside_logic">
-      <materialref ref="Kryptonite"/>
-      <solidref ref="farDet_farside_solid"/>
-      <auxiliary auxtype="SensDet" auxvalue="volumeN2001"/>
-    </volume>
-    
-    <volume name="farDet_rampside_logic">
-      <materialref ref="Kryptonite"/>
-      <solidref ref="farDet_rampside_solid"/>
-      <auxiliary auxtype="SensDet" auxvalue="volumeN2002"/>
-    </volume>
-    
-    <volume name="slab1_logic">
-      <materialref ref="Concrete"/>
-      <solidref ref="slab1_solid"/>
-    </volume>
-    
-    <volume name="slab2_logic">
-      <materialref ref="Concrete"/>
-      <solidref ref="slab2_solid"/>
-    </volume>
-
-    
     <volume name="sDet_1_logic">
       <materialref ref="Vacuum"/>
       <solidref ref="sDet_1"/>
       <auxiliary auxtype="SensDet" auxvalue="volumeN10007"/>
     </volume>
- <!--   <volume name="pDet_1_logic">
-      <materialref ref="Vacuum"/>
-      <solidref ref="pDet_1"/>
-      <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
-    </volume>
-    <volume name="pDet_2_logic">
-      <materialref ref="Vacuum"/>
-      <solidref ref="pDet_2"/>
-      <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
-    </volume>
-    <volume name="pDet_3_logic">
-      <materialref ref="Vacuum"/>
-      <solidref ref="pDet_3"/>
-      <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
-    </volume> -->
+
     <volume name="cDet_1_logic">
       <materialref ref="Vacuum"/>
       <solidref ref="cDet_1"/>
@@ -1701,13 +1656,6 @@
         <positionref ref="targ_center"/>
       </physvol>
 
-<!--      <physvol name="scattering_chamber"> -->
-<!--      <physvol name="other_0">
-        <volumeref ref="scDet_logic"/>
-        <positionref ref="sc_center"/>
-        <rotationref ref="scRot_1"/>
-      </physvol>
--->
       <physvol name="sc_other_1">
         <volumeref ref="sc_logic"/>
         <positionref ref="sc_center"/>
@@ -1717,14 +1665,6 @@
         <volumeref ref="sc_attach_logic"/>
         <positionref ref="sc_attach_center"/>
       </physvol>
-<!--  <physvol name="other_2">
-        <volumeref ref="sc_oring_logic"/>
-        <positionref ref="sc_oring_center"/>
-      </physvol>
-      <physvol name="other_3">
-        <volumeref ref="sc_oringDet_logic"/>
-        <positionref ref="sc_oringDet_center"/>
-      </physvol> -->
 
       <physvol name="septum">
         <volumeref ref="septum_logic"/>
@@ -1734,7 +1674,8 @@
      <physvol name="septum_pipe">
       <volumeref ref="septum_pipe_logic" />
       <position name="posbeamline" unit="cm" x="0" y="0" z="center_septum_pipe"/>
-    </physvol>
+     </physvol>
+     
      <physvol name="beam_pipe_1">
       <volumeref ref="beamtube_1_logic" />
       <position name="posbeamline_1" unit="cm" x="0" y="0" z="center_septum_pipe+length_septum_pipe/2+0.5*(beamline[3,1]+beamline[3,2]+beamline[3,3]+beamline[3,4]+beamline[3,5]+beamline[3,6]+beamline[3,7]+beamline[3,8]+beamline[3,9]+beamline[3,10]+beamline[3,11]+beamline[3,12]+beamline[3,13])"/>
@@ -1748,25 +1689,7 @@
         <volumeref ref="vac_enc_r_logic"/>
         <positionref ref="vac_enc_center_r"/>
       </physvol>
-<!--
-      <physvol name="shieldHut">
-        <volumeref ref="hut_logic"/>
-        <positionref ref="hut_center"/>
-      </physvol>
-      <physvol name="shieldSC">
-        <volumeref ref="scatt_cham_shld_logic"/>
-        <positionref ref="sc_center"/>
-        <rotationref ref="scRot_1"/>
-      </physvol>
-      <physvol name="shieldSept_l">
-        <volumeref ref="septShld_l_logic"/>
-        <positionref ref="septShld_center_l"/>
-      </physvol>
-      <physvol name="shieldSept_r">
-        <volumeref ref="septShld_r_logic"/>
-        <positionref ref="septShld_center_r"/>
-      </physvol>
- -->
+
       <physvol name="cylwall">
         <volumeref ref="cylwall_logic"/>
         <positionref ref="cylwall_center"/>
@@ -1787,7 +1710,6 @@
         <volumeref ref="ssenc_logic"/>
         <positionref ref="ssenc_cylcenter"/>
       </physvol>
-
  
       <physvol name="ped_union">
         <volumeref ref="ped_union_logic"/>
@@ -1814,34 +1736,11 @@
 	<rotationref ref="scRot_1"/>
       </physvol>
 
-     <!--The electronic hut @ HRS-->     
-     <physvol name="box_elec_hut_phys">
-       <volumeref ref="box_elec_hut_logic"/>
-       <positionref ref="dbox_elec_hut_pos"/>
-     </physvol>
-     
-     <!--The electronic hut @ HRS-->     
-     <physvol name="box_elec_hut_sept_phys">
-       <volumeref ref="box_elec_hut_sept_logic"/>
-       <positionref ref="dbox_elec_hut_sept_pos"/>
-     </physvol>
-
       <physvol name="sphere_det_1">
         <volumeref ref="sDet_1_logic"/>
         <positionref ref="sDet_1_pos"/>
       </physvol>	
-<!--      <physvol name="plane_det_1">
-        <volumeref ref="pDet_1_logic"/>
-        <positionref ref="pDet_1_pos"/>
-      </physvol>	
-      <physvol name="plane_det_2">
-        <volumeref ref="pDet_2_logic"/>
-        <positionref ref="pDet_2_pos"/>
-      </physvol>	
-      <physvol name="plane_det_3">
-        <volumeref ref="pDet_3_logic"/>
-        <positionref ref="pDet_3_pos"/>
-      </physvol> -->
+
       <physvol name="cyl_det_1">
         <volumeref ref="cDet_1_logic"/>
         <positionref ref="cDet_1_pos"/>
@@ -1888,25 +1787,12 @@
         <positionref ref="dDet_beamline_pos_4"/>
       </physvol>
 
-      <physvol name="farDet_farside">
-	<volumeref ref="farDet_farside_logic"/>
-	<positionref ref="farDet_farside_pos"/>
-      </physvol>
-      
-      <physvol name="farDet_rampside">
-	<volumeref ref="farDet_rampside_logic"/>
-	<positionref ref="farDet_rampside_pos"/>
-      </physvol>
-      
-      <physvol name="slab1">
-	<volumeref ref="slab1_logic"/>
-	<positionref ref="slab1_pos"/>
-      </physvol>
-      
-      <physvol name="slab2">
-	<volumeref ref="slab2_logic"/>
-	<positionref ref="slab2_pos"/>
-      </physvol>
+      <physvol>
+	<file name="geometry/kriptoniteDetectors.gdml"/>
+	<positionref ref="pos_global_SEPT_elec"/>
+	<rotationref ref="identity"/>
+      </physvol>	    
+    
       
     </volume>
   </structure>
