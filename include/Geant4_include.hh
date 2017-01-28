@@ -216,7 +216,7 @@
 
 #include "G4UserSpecialCuts.hh"
 #include "G4PAIModel.hh"
-#include "G4PAIPhotonModel.hh"
+#include "G4PAIPhotModel.hh"
 #include "G4ProductionCuts.hh"
 #include "G4Decay.hh"
 
