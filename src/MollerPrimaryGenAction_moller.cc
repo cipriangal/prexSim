@@ -5,7 +5,7 @@
 
 #include "MollerPrimaryGenAction.hh"
 #include "RootAnalysis.hh"
-
+#include <cassert>
 
 // typedef struct {
 //   double theta;
