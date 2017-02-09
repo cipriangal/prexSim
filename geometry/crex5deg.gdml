@@ -131,7 +131,7 @@
     <!-- Dimensions of volume to be subtracted at DS of Tungsten jacket (Length is 3.48 + 1.27 cm see CAD diagram)-->
     <constant name="width_w_sub_box" value="11.4"/>
     <constant name="height_w_sub_box" value="4.44"/>
-    <constant name="length_w_sub_box" value="0.1"/><!-- FIXME was 4.75-->
+    <constant name="length_w_sub_box" value="0.1"/>
 
     <!-- Dimensions of trapazoidal volume to be added at DS of Tungsten jacket : rakitha Mon Nov 18 15:12:34 EST 2013  -->
     <constant name="trap_box_x1" value="11.4"/>
@@ -674,11 +674,6 @@
     <position unit="cm" name="dDet_beamline_pos_3"       x="0" y="0"     z="center_targ+2757.199"/>
     <position unit="cm" name="dDet_beamline_pos_4"       x="0" y="0"     z="center_targ+3311.975"/>
     <position unit="cm" name="beam_cyl_det_pos"       x="0" y="0"     z="center_targ+237.535-length_septum_pipe+beam_cyl_det_length/2"/>
-
-    <!-- Scattering Chamber Detectors -->
-    <!-- <position unit="cm" name="prex_det_pos" x="0" y="5" z="prex_target_center"/> -->
-    <position unit="cm" name="prex_det_pos" x="0" y="outer_r_new_sc+0.5" z="prex_target_center"/>
-    <position unit="cm" name="prex_detUnder_pos" x="0" y="-outer_r_new_sc-0.5" z="prex_target_center"/>
     
     <position unit="cm" name="crex_det_pos" x="0" y="outer_r_new_sc+0.5" z="crex_target_center"/>  <!--changed x="height_new_sc/2.+1.0" to x=0 CAP and y="0" to y=outer_r_new_sc+0.5-->
 
@@ -879,7 +874,7 @@
     <subtraction name ="coll_cw70_cyln_2">
       <first ref="coll_cw70_cyln_1"/>
       <second ref="cw70_groove_solid"/>
-      <positionref ref="pos_rel_coll_g1"/><!-- FIXME not center -->
+      <positionref ref="pos_rel_coll_g1"/>
       <rotationref ref="identity"/>
     </subtraction>
     <!-- groove 2 -->
@@ -1196,17 +1191,6 @@
       <second ref="sc_attach_i"/>
       <positionref ref="scAttachTrans_1"/>
     </subtraction>
-<!-- FIXME remove holes from attach -->
-    <!-- <subtraction name ="sc_attach_1"> -->
-    <!--   <first ref="sc_attach_0"/> -->
-    <!--   <second ref="hole_for_l_vac_enc"/> -->
-    <!--   <positionref ref="scAttachTrans_l"/> -->
-    <!-- </subtraction> -->
-    <!-- <subtraction name ="sc_attach_2"> -->
-    <!--   <first ref="sc_attach_1"/> -->
-    <!--   <second ref="hole_for_r_vac_enc"/> -->
-    <!--   <positionref ref="scAttachTrans_r"/> -->
-    <!-- </subtraction> -->
     <subtraction name ="sc_attach_3">
       <first ref="sc_attach_0"/>
       <second ref="sc_attach_sc_chamber_beam_hole"/>
@@ -2438,15 +2422,6 @@
       <rotationref ref="scRot_1"/>
     </subtraction>
 
-    <!-- Above Scat Chamber Detectors -Ricky -->
-    <tube aunit="deg" startphi="0" deltaphi="360"
-	  lunit="cm" name="prex_det_solid"
-	  rmin="0" rmax="32.0" z="0.1"/>
-	  <!-- rmin="0" rmax="scat_det_r" z="0.1"/> 32 for tests FIXME-->
-    <tube aunit="deg" startphi="0" deltaphi="360"
-	  lunit="cm" name="prex_detUnder_solid"
-	  rmin="0" rmax="52.0" z="0.1"/>
-
    <tube aunit="deg" startphi="0" deltaphi="360"
 	  lunit="cm" name="crex_det_solid"
 	  rmin="0" rmax="scat_det_r" z="0.1"/>
@@ -2833,19 +2808,6 @@
       <!-- <auxiliary auxtype="SensDet" auxvalue="volumeN8006"/> -->
     </volume>
 
-    <volume name="prex_det_logic">
-      <!-- <materialref ref="matKryptonite"/> -->
-      <materialref ref="Vacuum"/>
-      <solidref ref="prex_det_solid"/>
-      <auxiliary auxtype="SensDet" auxvalue="volumeN7001"/>
-    </volume>
-
-    <volume name="prex_detUnder_logic">
-      <materialref ref="matKryptonite"/>
-      <solidref ref="prex_detUnder_solid"/>
-      <auxiliary auxtype="SensDet" auxvalue="volumeN10020"/>
-    </volume>
-
     
     <volume name="crex_det_logic">
       <materialref ref="Vacuum"/>
@@ -3089,18 +3051,6 @@
         <volumeref ref="dDet_ds_logic"/>
         <positionref ref="dDet_ds_pos"/> 
       </physvol>
-
-      <!-- Prex and Crex Detectors - Ricky -->
-      <!-- <physvol name="prex_det">  -->
-      <!-- 	<volumeref ref="prex_det_logic"/> -->
-      <!-- 	<positionref ref="prex_det_pos"/> -->
-      <!-- 	<rotationref ref="scRot_1"/>  -->
-      <!-- </physvol> -->
-      <!-- <physvol name="prex_detUnder">  -->
-      <!-- 	<volumeref ref="prex_detUnder_logic"/> -->
-      <!-- 	<positionref ref="prex_detUnder_pos"/> -->
-      <!-- 	<rotationref ref="scRot_1"/>  -->
-      <!-- </physvol> for tests only-->
 
       <physvol name="beamline_1_det">
         <volumeref ref="dDet_beamline_1_logic"/>
