@@ -2311,7 +2311,7 @@
 
 
     <volume name="W_coll_logic">
-       <materialref ref="CW70"/>
+       <materialref ref="matCW70"/>
        <!--       <materialref ref="Kryptonite"/> -->
        <!--      <materialref ref="Tungsten"/>  -->
       <solidref ref="coll_CW70_Solid"/>
@@ -2550,14 +2550,14 @@
 
     <!-- Electronic hut @ HRS represnted by this box -->
     <volume name="box_elec_hut_logic">
-       <materialref ref="Kryptonite"/>
+       <materialref ref="matKryptonite"/>
       <solidref ref="box_elec_hut"/>
       <auxiliary auxtype="SensDet" auxvalue="volumeN10008"/> 
     </volume>
 
     <!-- Electronic hut @ septum represnted by this box -->
     <volume name="box_elec_hut_sept_logic">
-      <materialref ref="Kryptonite"/>
+      <materialref ref="matKryptonite"/>
       <solidref ref="box_elec_hut_sept"/>
       <auxiliary auxtype="SensDet" auxvalue="volumeN10009"/> 
     </volume>
