@@ -241,7 +241,7 @@ void processTree(string tname){
   t->SetBranchAddress("z0",&z_0);
   t->SetBranchAddress("event",&event);
 
-  if ( SensVolume_v>=10008 && SensVolume_v <= 10013){
+  if ( (SensVolume_v>=10008 && SensVolume_v <= 10013)){
     t->SetBranchAddress("Edeposit",&Energy); //because these are made from Kryptonite
   }else if( SensVolume_v==8001  || SensVolume_v==8002  ||
 	    SensVolume_v==8003  || SensVolume_v==8004  || SensVolume_v==8005 ||
