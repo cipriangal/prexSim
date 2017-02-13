@@ -822,7 +822,7 @@
 	      y="(height_sc_attach + thick_sc_attach_shield )/2. + height_sc_attach_pig + height_sc_attach_pigLid"
 	      z="center_cw70_coll + length_w_coll_jacket/2 - length_cw70_coll/2"/>
 
-    <!-- 44+7 == 7 is for the width of the Pb shield -->
+    <!-- 44+7: 7 is for the width of the Pb shield -->
     <position unit="cm" name="pos_global_DStargetShield"
 	      x="0"
 	      y="44+7"
