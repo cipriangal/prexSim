@@ -6,6 +6,8 @@
 /moller/det/readGeometryFromFile true
 /gun/particle e-
 /moller/gun/gen 7
+/random/setSeeds 123515 9816459
+
 
 ############
 ### PREX II configurations

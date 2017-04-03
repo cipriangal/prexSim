@@ -13,12 +13,6 @@ using namespace CLHEP;
 
 MollerPrimaryGenAction::MollerPrimaryGenAction() : ebeam(1.05), mp(0.9382796)
 {
-  TRandom2 *random_num = new TRandom2(0);
-  //long particle_seed = (long) random_num->Integer();//this works
-  long particle_seed = (long) random_num->GetSeed();//seemed to work
-  CLHEP::HepRandom::setTheEngine(new CLHEP::MTwistEngine);
-
-  CLHEP::HepRandom::setTheSeed(particle_seed); 
   eventnumber=0;
   
   //create a messenger for this class
@@ -26,14 +20,8 @@ MollerPrimaryGenAction::MollerPrimaryGenAction() : ebeam(1.05), mp(0.9382796)
 
   G4int n_particle = 1;
   particleGun = new G4ParticleGun(n_particle);
-
-  //set particle
-  //G4ParticleTable* particleTable = G4ParticleTable::GetParticleTable();
-  //  G4ParticleDefinition* particle = G4Proton::ProtonDefinition();
   
-  G4cout << "Electron gun created!!\n" << G4endl;
-
-  //  particleGun->SetParticleDefinition(particle);
+  particleGun->SetParticleDefinition( G4ParticleTable::GetParticleTable()->FindParticle("e-") );
   particleGun->SetParticleMomentumDirection(G4ThreeVector(0.,0.,1.));
   particleGun->SetParticleEnergy(1.05*GeV);
   particleGun->SetParticlePosition(G4ThreeVector(0.*cm, 0.*cm, -1300.*cm));
@@ -48,25 +36,7 @@ MollerPrimaryGenAction::~MollerPrimaryGenAction()
 
 void MollerPrimaryGenAction::GeneratePrimaries(G4Event* anEvent)
 {
-  if(anEvent->GetEventID()==0){
-  TRandom2 *random_num = new TRandom2(0);
-  long particle_seed = (long) random_num->GetSeed();
-  particle_seed += time(0);
 
-  if (!fSetSeedConst) {
-    G4cout<<"Setting the seed to a random value for event "<<anEvent->GetEventID()<<G4endl;
-    CLHEP::HepRandom::setTheSeed(particle_seed);
-    G4cout<<"The seed is: "<<CLHEP::HepRandom::getTheSeed()<<G4endl;
-  }
-  if (fSetSeedConst) {
-    G4cout<<"Setting the seed to a constant value for event "<<anEvent->GetEventID()<<G4endl;
-    //CLHEP::HepRandom::setTheSeed(194738798457);  //First event too low angle
-    //CLHEP::HepRandom::setTheSeed(734687698678); //First event too high angle
-    CLHEP::HepRandom::setTheSeed(94528347598798); 
-    G4cout<<"The seed is: "<<CLHEP::HepRandom::getTheSeed()<<G4endl;
-  }
-
-  }
   // To add an additional generator:
   // 1. add an extra case statement here
   // 2. create another generator method in a separate file
