@@ -210,7 +210,7 @@
 #include "G4MuBremsstrahlung.hh"
 #include "G4MuPairProduction.hh"
 
-#if G4VERSION_NUMBER < 1011
+#if G4VERSION_NUMBER < 1000
 #include "G4MuonMinusCaptureAtRest.hh"
 #endif
 
@@ -225,7 +225,7 @@
 #include "G4PhotoElectricEffect.hh"
 
 // Boson Physics Models
-#if G4VERSION_NUMBER < 1011
+#if G4VERSION_NUMBER < 1000
 #include "G4GammaNuclearReaction.hh"
 #endif
 
@@ -261,7 +261,7 @@
 //
 // Gamma- and electro-nuclear models and processes
 //
-#if G4VERSION_NUMBER < 1011
+#if G4VERSION_NUMBER < 1000
 #include "G4ElectroNuclearReaction.hh"
 #endif
 #include "G4QGSModel.hh"
@@ -291,7 +291,7 @@
 // Hadronic interaction models
 // Low energy (E < 20 GeV) part only
 //
-#if G4VERSION_NUMBER < 1011
+#if G4VERSION_NUMBER < 1000
 #include "G4LElastic.hh"
 // #include "G4LEPionPlusInelastic.hh"
 // #include "G4LEPionMinusInelastic.hh"
@@ -363,7 +363,7 @@
 #include "G4AntiXiMinusInelasticProcess.hh"
 #include "G4OmegaMinusInelasticProcess.hh"
 #include "G4AntiOmegaMinusInelasticProcess.hh"
-#if G4VERSION_NUMBER < 1011
+#if G4VERSION_NUMBER < 1000
 #include "G4AntiProtonAnnihilationAtRest.hh"
 #include "G4PionMinusAbsorptionAtRest.hh"
 #include "G4KaonMinusAbsorption.hh"
@@ -376,7 +376,7 @@
 
 // models
 #include "G4CascadeInterface.hh"
-#if G4VERSION_NUMBER < 1011
+#if G4VERSION_NUMBER < 1000
 #include "G4LEPionPlusInelastic.hh"
 #include "G4LEPionMinusInelastic.hh"
 #include "G4LCapture.hh"
