@@ -52,7 +52,7 @@ def createMacFiles(config,outDir,sourceDir,nrEv,jobNr):
         call(["cp",sourceDir+"/geometry/crex5deg.gdml",outDir+"/geometry"])
     
     f=open(outDir+"/"+"/myRun.mac",'w')
-    f.write("/moller/ana/rootfilename ./o_prexSim.root\n")
+    f.write("/moller/ana/rootfilename ./o_prexSim\n")
     f.write("/run/beamOn "+str(nrEv)+"\n")
     f.close()
 
