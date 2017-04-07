@@ -28,7 +28,7 @@ def main():
         call(["cp",sourceDir+"/build/prexsim",
               outputDir+"/"+jobFullName+"/prexsim"])              
 
-        createBashScript(outputDir+"/"+jobFullName)
+        createBashScript(outputDir+"/"+jobFullName,email)
 
         ###submit job
         if submit==1:
@@ -78,7 +78,7 @@ def createMacFiles(config,outDir,sourceDir,nrEv,jobNr):
 
     return 0
     
-def createBashScript(outDir):    
+def createBashScript(outDir,email):    
     f=open(outDir+"/"+"/myScript.sh",'w')
     f.write("#!/bin/bash\n")
     f.write("#SBATCH --ntasks=1\n")
@@ -87,7 +87,7 @@ def createBashScript(outDir):
     f.write("#SBATCH --output="+outDir+"/log.out\n")
     f.write("#SBATCH --error="+outDir+"/log.err\n")
     f.write("#SBATCH --mail-type=ALL\n")
-    f.write("#SBATCH --mail-user=cg8fd@virginia.edu\n")
+    f.write("#SBATCH --mail-user="+email+"\n")
     f.write("#SBATCH --partition=serial\n")
     f.write("cd "+outDir+"\n")
     f.write("./prexsim preRun.mac myRun.mac\n")
