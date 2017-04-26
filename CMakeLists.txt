@@ -46,7 +46,7 @@ set(LINK_LIBRARIES ${Geant4_LIBRARIES} ${ROOT_LIBRARIES} )
 add_executable(prexsim prex_sim.cc ${sources} ${headers})
 target_link_libraries(prexsim ${LINK_LIBRARIES})
 
-add_executable(anaRad anaHallRadiation.cc)
+add_executable(anaRad anaHallRadiation.cc ${sources} ${headers})
 target_link_libraries(anaRad ${LINK_LIBRARIES})
 
 add_executable(calcRadDamage calc1MeVneutronEquivalent.cc)

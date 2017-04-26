@@ -14,6 +14,7 @@
 #include <TFile.h>
 #include <TChain.h>
 #include <TDirectory.h>
+#include "radDamage.hh"
 
 using namespace std;
 
@@ -27,6 +28,9 @@ TH1F *Histo_vert_z[3][3],*Histo_vert_z_weighted[3][3],*Histo_Energy_custom_lt_eC
 //plot for the detector faces
 TH1F *Det_Face;
 TH3F *DetFace;
+//histograms of NEIL and MREM values //indices [particle type][energy ranges 0->0.1->eCut->1000] 
+TH1D *hNEIL[3][3],*hMREM[3][3];
+Double_t neil[3][3],mrem[3][3];
 
 Int_t low_ranges[3],up_ranges[3];
 //Flux and power parameters Full range //indices [particle type][energy ranges 0->0.1->eCut->1000] 
@@ -36,6 +40,7 @@ Double_t flux_range[3][3][3],power_range[3][3][3];
 float tot_events;
 TDirectory* gD;
 string prename,ofnm;
+radDamage dmgCalc;
 
 int SensVolume_v;
 
@@ -114,9 +119,13 @@ void Init(){
     }
     
     for(int j=0;j<3;j++){
+      hNEIL[i][j]->Reset();
+      hMREM[i][j]->Reset();
       flux[i][j]=0.0;
       power[i][j]=0.0;
-      
+      neil[i][j]=0.;
+      mrem[i][j]=0.;
+
       if(Histo_vert_z_full[i]){
       	Histo_vert_z[i][j]             ->Reset();
 	Histo_vert_z_weighted[i][j]    ->Reset();
@@ -140,7 +149,10 @@ void bookHisto(){
   char hPnm[3]={'g','e','n'};
   TString pType[3]={"#gamma","e#pm","n"};
   TString sranges[3]={"z < -110 cm","-110 < z < 135 cm","135 < z < 3400 cm"};
- 
+  TString eranges[3]={"lowE","medE","highE"};
+  const double fixCut=eCut;
+  double eCuts[4]={0,0.1,fixCut,1000};
+  
   for(int i=0;i<3;i++){
     Histo_vert_z_full[i]  = new TH1F(Form("vert_z_full_%c",hPnm[i]),
 				     Form("%s Vertices;z (cm);%s per e-",pType[i].Data(),pType[i].Data()) ,300,-2600.,3400.);
@@ -157,6 +169,13 @@ void bookHisto(){
 					      Form("%s 10 < E < 1000 MeV;Energy (MeV);Counts",pType[i].Data()),100,10.,1000.);
  
     for(int j=0;j<3;j++){
+      hNEIL[i][j] = new TH1D(Form("hNEIL_%c_%s",hPnm[i],eranges[j].Data()),
+			     Form("NEIL value for %s and %f<=E<%f MeV",pType[i].Data(),eCuts[j],eCuts[j+1]),
+			     200,0,1);
+      hMREM[i][j] = new TH1D(Form("hMREM_%c_%s",hPnm[i],eranges[j].Data()),
+			     Form("MREM value for %s and %f<=E<%f MeV",pType[i].Data(),eCuts[j],eCuts[j+1]),
+			     200,0,1e-2);
+      
       Histo_vert_z[i][j]           = new TH1F(Form("vert_z_rn_%d_%c",j,hPnm[i]),
 					      Form("%s Vertices (%s);z (cm);%s per e-",pType[i].Data(),sranges[j].Data(),pType[i].Data()),
 					      200,low_ranges[j],up_ranges[j]);
@@ -206,8 +225,8 @@ void PrintInfo(){
   for(int i=0;i<3;i++)
     for(int j=0;j<3;j++)
     {
-      fout<<oName[i].Data()<<"\t"<<eName[j].Data()<<"\t"<<power[i][j]<<"\t"<<flux[i][j]<<endl;
-      cout<<oName[i].Data()<<"\t"<<eName[j].Data()<<"\t"<<power[i][j]<<"\t"<<flux[i][j]<<endl;
+      fout<<oName[i].Data()<<"\t"<<eName[j].Data()<<"\t"<<power[i][j]<<"\t"<<flux[i][j]<<"\t"<<neil[i][j]<<"\t"<<mrem[i][j]<<endl;
+      cout<<oName[i].Data()<<"\t"<<eName[j].Data()<<"\t"<<power[i][j]<<"\t"<<flux[i][j]<<"\t"<<neil[i][j]<<"\t"<<mrem[i][j]<<endl;
     }
   cout<<endl;
   fout<<endl;
@@ -228,6 +247,7 @@ void processTree(string tname){
   Float_t type, volume, event;
   Float_t Energy;
   Float_t x_0,y_0,z_0,xd,yd,zd;
+  Float_t pdgID;
   
   TChain *t = new TChain("geant");
   t->Add(tname.c_str());
@@ -240,6 +260,7 @@ void processTree(string tname){
   t->SetBranchAddress("y0",&y_0);
   t->SetBranchAddress("z0",&z_0);
   t->SetBranchAddress("event",&event);
+  t->SetBranchAddress("PDGid",&pdgID);
 
   if ( (SensVolume_v>=10008 && SensVolume_v <= 10013)){
     t->SetBranchAddress("Edeposit",&Energy); //because these are made from Kryptonite
@@ -281,18 +302,45 @@ void processTree(string tname){
       Histo_vert_2D[hist]     ->Fill(z_0/10,x_0/10,Energy/tot_events);
       Histo_vert_full_2D[hist]->Fill(z_0/10,x_0/10,Energy/tot_events);
 
+      double neilVal=dmgCalc.getNEIL(pdgID,Energy,0);
+      double mremVal=dmgCalc.getMREM(pdgID,Energy,0);
+
       if (Energy<0.10){
 	Histo_Energy_lt_eCut[hist]->Fill(Energy);
-	power[hist][0]+=Energy;
+	power[hist][0]+=Energy;	
 	flux[hist][0]++;
+	if(neilVal!=-999){
+	  hNEIL[hist][0]->Fill(neilVal);
+	  neil[hist][0]+=neilVal;
+	}
+	if(mremVal!=-999){
+	  hMREM[hist][0]->Fill(mremVal);
+	  mrem[hist][0]+=mremVal;
+	}
       }else if (Energy>=0.10 && Energy<eCut){
 	Histo_Energy_lt_eCut[hist]->Fill(Energy);
 	power[hist][1]+=Energy;
 	flux[hist][1]++;	  
+	if(neilVal!=-999){
+	  hNEIL[hist][1]->Fill(neilVal);
+	  neil[hist][1]+=neilVal;
+	}
+	if(mremVal!=-999){
+	  hMREM[hist][1]->Fill(mremVal);
+	  mrem[hist][1]+=mremVal;
+	}
       }else if (Energy>=eCut && Energy<1000){
 	Histo_Energy_gt_eCut[hist]->Fill(Energy);
 	power[hist][2]+=Energy;
 	flux[hist][2]++;	  
+	if(neilVal!=-999){
+	  hNEIL[hist][2]->Fill(neilVal);
+	  neil[hist][2]+=neilVal;
+	}
+	if(mremVal!=-999){
+	  hMREM[hist][2]->Fill(mremVal);
+	  mrem[hist][2]+=mremVal;
+	}
       }
       
       for(Int_t j=0;j<3;j++){
@@ -380,6 +428,8 @@ void WriteHisto(string fname){
     writeEachHisto(Histo_Energy_lt_eCut[i]);
     writeEachHisto(Histo_Energy_gt_eCut[i]); 
     for(int j=0;j<3;j++){
+      writeEachHisto(hNEIL[i][j]);
+      writeEachHisto(hMREM[i][j]);
       writeEachHisto(Histo_vert_z[i][j]);
       writeEachHisto(Histo_vert_z_weighted[i][j]);
       writeEachHisto(Histo_Energy_custom_lt_eCut[i][j]);
