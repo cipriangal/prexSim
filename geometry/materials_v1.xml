@@ -1,0 +1,137 @@
+<!-- Materials with G4_Name will be built inside the DetectorConstuction,
+     meaning that properties defined here are not used. -->
+<!-- Materials with Name will use properties defined here -->
+
+<materials>
+  <material Z="1" name="G4_Galactic" state="gas">
+    <T unit="K" value="2.73 "/>
+    <P unit="pascal" value="3e-18"/>
+    <D unit="g/cm3" value="1e-25"/>
+    <atom unit="g/mole" value="1.01"/>
+  </material>
+
+  <material Z="13" name="G4_Al" state="solid">
+    <T unit="K" value="298"/>
+    <D unit="g/cm3" value="1.999"/>
+    <atom unit="g/mole" value="1"/>
+  </material>
+
+  <material Z="13" name="G4_Si" state="solid">
+    <T unit="K" value="298"/>
+    <D unit="g/cm3" value="1.999"/>
+    <atom unit="g/mole" value="1."/>
+  </material>
+  
+  <material Z="13" name="G4_W" state="solid">
+    <T unit="K" value="298"/>
+    <D unit="g/cm3" value="1.999"/>
+    <atom unit="g/mole" value="1."/>
+  </material>
+
+  <material Z="13" name="G4_CONCRETE" state="solid">
+    <T unit="K" value="298"/>
+    <D unit="g/cm3" value="1.999"/>
+    <atom unit="g/mole" value="1."/>
+  </material>
+
+  <material Z="13" name="G4_Fe" state="solid">
+    <T unit="K" value="298"/>
+    <D unit="g/cm3" value="1.999"/>
+    <atom unit="g/mole" value="1."/>
+  </material>
+
+  <material Z="13" name="G4_Cu" state="solid">
+    <T unit="K" value="298"/>
+    <D unit="g/cm3" value="1.999"/>
+    <atom unit="g/mole" value="1."/>
+  </material>
+
+  <material Z="13" name="G4_POLYETHYLENE" state="solid">
+    <T unit="K" value="298"/>
+    <D unit="g/cm3" value="1.999"/>
+    <atom unit="g/mole" value="1."/>
+  </material>
+
+  <!-- Materials with Name will use properties defined here -->
+  <material Z="82" name="PureLead" state="solid">
+    <T unit="K" value="298"/>
+    <D unit="g/cm3" value="11.35"/>
+    <atom unit="g/mole" value="208"/>
+  </material>
+    
+  <element Z="74." name="Tungsten" formula="W">
+    <atom unit="g/mole" value="183.84"/>
+  </element>
+  <element Z="29" name="Copper" formula="Cu">
+    <atom unit="g/mole" value="63.55"/>
+  </element>
+  <material name="CW70" state="solid">
+    <T unit="K" value="298"/>
+    <D unit="g/cm3" value="14.18"/>
+    <fraction n="0.3" ref="Copper"/>
+    <fraction n="0.7" ref="Tungsten"/>
+  </material>
+    
+  <element Z="6" name="Carbon" formula="C">
+    <atom unit="g/mole" value="12.011"/>
+  </element>
+  <element Z="14" name="Silicon" formula="Si">
+    <atom unit="g/mole" value="28.086"/>
+  </element>
+  <element Z="15" name="Phosphorus" formula="P">
+    <atom unit="g/mole" value="30.974"/>
+  </element>
+  <element Z="16" name="Sulfur" formula="S">
+    <atom unit="g/mole" value="32.066"/>
+  </element>
+  <element Z="25" name="Manganese" formula="Mn">
+    <atom unit="g/mole" value="54.938"/>
+  </element>
+  <element Z="26" name="Iron" formula="Fe">
+    <atom unit="g/mole" value="55.933"/>
+  </element>
+  <element Z="28" name="Nickel" formula="Ni">
+    <atom unit="g/mole" value="58.693"/>
+  </element>
+  <element Z="29" name="Copper" formula="Cu">
+    <atom unit="g/mole" value="63.546"/>
+  </element>
+  <material name="StainlessSteel" state="solid">
+    <T unit="K" value="298"/>
+    <D unit="g/cm3" value="8."/>
+    <fraction n="0.02000" ref="Manganese"/>
+    <fraction n="0.00080" ref="Carbon"/>
+    <fraction n="0.19000" ref="Chromium"/>
+    <fraction n="0.09000" ref="Nickel"/>
+    <fraction n="0.68845" ref="Iron"/>
+    <fraction n="0.01000" ref="Silicon"/>
+    <fraction n="0.00045" ref="Phosphorus"/>
+    <fraction n="0.00030" ref="Sulfur"/>
+  </material>
+    
+  <material Z="18" name="Kryptonite" state="solid">
+    <T unit="K" value="298"/>
+    <D unit="mg/cm3" value="0.00000001"/>
+    <atom unit="g/mole" value="39.948"/>
+  </material>
+    
+  <material Z="20" name="Calcium48" state="solid">
+    <T unit="K" value="298"/>
+    <D unit="g/cm3" value="1.84"/>
+    <atom unit="g/mole" value="47.953"/>
+  </material>
+
+  <material Z="20" name="Calcium40" state="solid">
+    <T unit="K" value="298"/>
+    <D unit="g/cm3" value="1.55"/>
+    <atom unit="g/mole" value="39.96"/>
+  </material>    
+
+  <!--From Greg S. in QweakG4DD code-->
+  <material Z="2" name="H2Liquid" state="liquid">
+    <T unit="K" value="20"/>
+    <P unit="pascal" value="224079.612"/>
+    <D unit="g/cm3" value="0.071287"/>
+    <atom unit="g/mole" value="2.02"/>
+  </material>
+</materials>
