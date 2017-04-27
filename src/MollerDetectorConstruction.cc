@@ -57,7 +57,7 @@
 using namespace CLHEP;
 
 MollerDetectorConstruction::MollerDetectorConstruction()
-  :pGlobalMagnetField(0)
+  :pGlobalMagnetField(0), processPart(0)
 {
   G4cout << G4endl <<"Setting Magnetic field " << G4endl ;
   SetGlobalMagneticField();
@@ -142,7 +142,7 @@ G4VPhysicalVolume* MollerDetectorConstruction::Construct()
 	G4cout << " is a " << det_type << G4endl;
 
 	snprintf(detectorname,200,"/detector%i",k+1);
-	collimatordetector[k] = new MollerDetectorSD(detectorname);
+	collimatordetector[k] = new MollerDetectorSD(detectorname,processPart);
 
         if (collimatordetector[k] != 0)
         {

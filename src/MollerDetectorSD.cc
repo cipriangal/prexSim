@@ -14,8 +14,8 @@
 #include "G4Navigator.hh"
 #include "G4VProcess.hh"
 
-MollerDetectorSD::MollerDetectorSD(G4String name)
-:G4VSensitiveDetector(name)
+MollerDetectorSD::MollerDetectorSD(G4String name,G4int proc)
+  :G4VSensitiveDetector(name),processPart(proc)
 {
   G4String HCname;
   collectionName.insert(HCname="hitsColl");
@@ -183,10 +183,10 @@ G4bool MollerDetectorSD::ProcessHits(G4Step* aStep, G4TouchableHistory*)
     //G4cout<<worldPos[0]<<", "<<worldPos[1]<<", "<<worldPos[2]<<", "<<vertexPos[0]<<", "<<vertexPos[1]<<", "<<vertexPos[2]<<", "<<momentum[0]<<", "<<momentum[1]<<", "<<momentum[2]<<", "<<kineE<<", "<<vertexMomentum[0]<<", "<<vertexMomentum[1]<<", "<<vertexMomentum[2]<<", "<<kineE0<<", "<<scat_ang<<", "<<process<<", "<<particle<<", "<<ion<<", "<<partType<<", "<<volume<<", "<<trackID<<G4endl;
     
     G4cout<<G4endl;
-    */
+  */
+  if(processPart==0 || (processPart==1 && pdgID==2112))
+    hitsCollection->insert( newHit );
 
-  hitsCollection->insert( newHit );
-  
   return true;
 }
 

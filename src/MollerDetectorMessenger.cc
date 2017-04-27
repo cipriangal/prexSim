@@ -106,6 +106,12 @@ MollerDetectorMessenger::MollerDetectorMessenger(MollerDetectorConstruction* myD
   shldConfigCmd->SetDefaultValue(0);
   shldConfigCmd->AvailableForStates(G4State_PreInit);
 
+  processPartCmd = new G4UIcmdWithAnInteger("/moller/det/processPart",this);
+  processPartCmd->SetGuidance("0: All 1: neutrons only");
+  processPartCmd->SetParameterName("processPart",false);
+  processPartCmd->SetDefaultValue(0);
+  processPartCmd->AvailableForStates(G4State_PreInit);
+
   hallCmd = new G4UIcmdWithABool("/moller/det/setDrawHall",this);
   hallCmd->SetGuidance("Set whether to draw the hall.");
   hallCmd->SetParameterName("fDrawHall",true);
@@ -171,6 +177,7 @@ MollerDetectorMessenger::~MollerDetectorMessenger()
   delete septumCmd;
   delete NumCollCmd;
   delete shldConfigCmd;
+  delete processPartCmd;
   delete DetGeomFileCmd;
   delete ReadGeomFileCmd;
   delete detDir;
@@ -190,6 +197,8 @@ void MollerDetectorMessenger::SetNewValue(G4UIcommand* command, G4String newValu
     { myDetector->setShieldMaterial(newValue);}
   else if (command == shldConfigCmd ) 
     { myDetector->setShieldConfig(shldConfigCmd ->GetNewIntValue(newValue));}
+  else if (command == processPartCmd ) 
+    { myDetector->SetProcessParticles(processPartCmd ->GetNewIntValue(newValue));}
 
   else if ( command == targetCenterCmd ) 
     { myDetector->setTargetCenter(targetCenterCmd->GetNewDoubleValue(newValue));}

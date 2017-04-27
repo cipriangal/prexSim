@@ -80,13 +80,16 @@ public:
   G4double GetLowLimMagneticShield() {return mg_field_low;};
   G4double GetHighLimMagneticShield() {return mg_field_high;};
   G4double GetMagFieldScaleFactor(){return mgFieldScaleFactor;}
-  
+
+  void SetProcessParticles(const G4int val){processPart=val;};
 protected:
 
   //void DefineDipoleFields();
   void DefineQuadFields();
 
 private:
+  G4int processPart;
+
   void DefineMaterials();
 
   G4Material*  shieldMaterial;

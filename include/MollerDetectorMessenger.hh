@@ -58,6 +58,7 @@ private:
   G4UIcmdWithABool* septumCmd;
   G4UIcmdWithAnInteger* NumCollCmd;
   G4UIcmdWithAnInteger* shldConfigCmd;
+  G4UIcmdWithAnInteger* processPartCmd;
 
   G4UIcmdWithAString*         DetGeomFileCmd;
   G4UIcmdWithAString*         WriteGeomFileCmd;
