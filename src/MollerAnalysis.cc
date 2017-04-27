@@ -433,25 +433,18 @@ void MollerAnalysis::UserSteppingAction(const G4Step *aStep)
 }
 
 void MollerAnalysis::EndOfEventAction(const G4Event *anEvent)
-{
-  
-  if (gSystem) gSystem->ProcessEvents();
-  
+{  
+  if (gSystem) gSystem->ProcessEvents();  
   G4HCofThisEvent * HCE = anEvent->GetHCofThisEvent();
-  
-  event = anEvent->GetEventID();
-  
-  std::vector<MollerDetectorHitsCollection*> THC;
-  
+  event = anEvent->GetEventID();  
+  std::vector<MollerDetectorHitsCollection*> THC; 
   
   if(HCE) {
     for (int i=0; i<NUM_DETS; i++) {
       THC.push_back ((MollerDetectorHitsCollection*)(HCE->GetHC(hitsCollID[i])));
     }
   }
-  //  G4cout<<"Checking for hits..."<<G4endl;
   for (int i=0; i<NUM_DETS; i++) {
-    // somehow use: aHit->GetTrackID()==1 and aHit->GetTrackID()==2 with an indicator of first entry for that event/track?
     if(THC[i]){
       int n_hit = THC[i]->entries();
 
