@@ -4,10 +4,10 @@
 
 class radDamage{
 private:
-  std::vector<std::vector<double>> xValNEIL;
-  std::vector<std::vector<double>> yValNEIL;
-  std::vector<std::vector<double>> xValMREM;
-  std::vector<std::vector<double>> yValMREM;
+  std::vector<std::vector<double> > xValNEIL;
+  std::vector<std::vector<double> > yValNEIL;
+  std::vector<std::vector<double> > xValMREM;
+  std::vector<std::vector<double> > yValMREM;
   void InitNEIL();
   void InitMREM();
   double interpolate(std::vector<double> xV,
