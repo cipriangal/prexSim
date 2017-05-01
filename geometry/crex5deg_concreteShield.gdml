@@ -15,7 +15,7 @@
     <constant name="fDeltaCaTargetZ" value="0."/>
 
 
-    <!-- Shielding -->giant
+    <!-- Shielding -->
     <constant name="fHutShieldThick" value="20."/>
     <constant name="fSCShieldThick" value="40."/>
     <constant name="fSeptPipeShieldThick" value="15."/>
@@ -836,7 +836,7 @@
 	<position unit="cm" name="pos_global_giantShield"
 	      x="0"
 	      y="50+27.75"
-	      z="prex_target_center-6"
+	      z="prex_target_center - 6"
 	/>
 
 </define>
@@ -983,7 +983,7 @@
 	 x="40" y="14" z="30"/> -->
 	 
 	 <box lunit="cm" name="giantShield_solid"
-	     x="55.5" y="300.6" z="300.6"/>
+	     x="300.6" y="55.5" z="300.6"/>
      
     <!-- Scattering Chamber -->
     <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="outScattChamber" rmin="0.0" rmax="outer_r_sc" z="height_sc" />
@@ -2912,10 +2912,12 @@
 	<rotationref ref="scRot_1"/>
       </physvol>
 
+      <!--
       <physvol name="sc_attach_pigTopShield_phys">
         <volumeref ref="sc_attach_pigTopShield_logic"/>
         <positionref ref="pos_global_pigTopShield"/>
       </physvol>
+      -->
 
       <physvol name="coll_shield">
       	<volumeref ref="coll_shield_logic"/>
