@@ -5,30 +5,34 @@ import sys,os,time
 def main():
 
     ### always check that these are the options you want
-    sourceDir="/home/cg8fd/prex/prexSim"
-    outputDir="/home/cg8fd/prex/prexSim/output"
-    email="cg8fd@virginia.edu"
+    uva_id    = 'ajz3ee'
+    sourceDir = "/scratch/" + uva_id + "/prexSim"
+    outputDir = "/scratch/" + uva_id + "/prexSim/output"
+    email     = uva_id + "@virginia.edu"
     submit=1
 
     ##only crex5 defined for now
-    configuration="crex5"
-    nrEv=100
-    nrStart=0
-    nrStop =5
+    configuration = "crex5"
+    nrEv   = 500000
+    nrStart= 0
+    nrStop = 20
+    identifier = '_hdpeShield'
+
+    print('Running ' + str(nrEv*(nrStop - nrStart)) + ' events...')
 
     jobName=configuration+'_%03dkEv'%(nrEv/1000)
     
     for nr in range(nrStart,nrStop): # repeat for nr jobs
-        print "Starting job setup for jobID:",nr
+        print("Starting job setup for jobID: " + str(nr))
         
-        jobFullName=jobName+'_%04d'%nr
-        createMacFiles(configuration,outputDir+"/"+jobFullName,sourceDir,nrEv,nr)
+        jobFullName = jobName + '_%04d'%nr + identifier
+        createMacFiles(configuration, outputDir+"/"+jobFullName, sourceDir, nrEv, nr, identifier)
 
         ###copy executable
         call(["cp",sourceDir+"/build/prexsim",
               outputDir+"/"+jobFullName+"/prexsim"])              
 
-        createBashScript(outputDir+"/"+jobFullName,email)
+        createBashScript(outputDir+"/"+jobFullName, email)
 
         ###submit job
         if submit==1:
@@ -40,7 +44,7 @@ def main():
     print "All done"
 
     
-def createMacFiles(config,outDir,sourceDir,nrEv,jobNr):
+def createMacFiles(config,outDir,sourceDir,nrEv,jobNr,identifier):
 
     if not os.path.exists(outDir+"/geometry"):
         os.makedirs(outDir+"/geometry")
@@ -49,7 +53,7 @@ def createMacFiles(config,outDir,sourceDir,nrEv,jobNr):
     call(["cp",sourceDir+"/geometry/kriptoniteDetectors.gdml",outDir+"/geometry/"])
     call(["cp","-r",sourceDir+"/geometry/schema",outDir+"/geometry"])    
     if config=="crex5":
-        call(["cp",sourceDir+"/geometry/crex5deg.gdml",outDir+"/geometry"])
+        call(["cp",sourceDir+"/geometry/crex5deg" + identifier + ".gdml",outDir+"/geometry"])
     
     f=open(outDir+"/"+"/myRun.mac",'w')
     f.write("/moller/ana/rootfilename ./o_prexSim\n")
@@ -69,7 +73,7 @@ def createMacFiles(config,outDir,sourceDir,nrEv,jobNr):
         f.write("/moller/field/setFieldScaleFactor 2.35\n")
         f.write("/moller/field/setLowLim -74 cm\n")
         f.write("/moller/field/setHighLim 74 cm\n")
-        f.write("/moller/det/setDetectorFileName geometry/crex5deg.gdml\n")
+        f.write("/moller/det/setDetectorFileName geometry/crex5deg" + identifier + ".gdml\n")
     
     f.write("/moller/det/setShieldMaterial polyethylene\n")
     f.write("/testhadr/CutsAll 0.7 mm\n")
@@ -78,18 +82,18 @@ def createMacFiles(config,outDir,sourceDir,nrEv,jobNr):
 
     return 0
     
-def createBashScript(outDir,email):    
+def createBashScript(outDir, email):    
     f=open(outDir+"/"+"/myScript.sh",'w')
     f.write("#!/bin/bash\n")
     f.write("#SBATCH --ntasks=1\n")
     f.write("#SBATCH --ntasks-per-node=1\n")
     f.write("#SBATCH --time=12:00:00\n")
-    f.write("#SBATCH --output="+outDir+"/log.out\n")
-    f.write("#SBATCH --error="+outDir+"/log.err\n")
-    f.write("#SBATCH --mail-type=ALL\n")
-    f.write("#SBATCH --mail-user="+email+"\n")
+    f.write("#SBATCH --output=" + outDir + "/log.out\n")
+    f.write("#SBATCH --error=" + outDir + "/log.err\n")
+    #f.write("#SBATCH --mail-type=ALL\n")
+    #f.write("#SBATCH --mail-user=" + email + "\n")
     f.write("#SBATCH --partition=serial\n")
-    f.write("cd "+outDir+"\n")
+    f.write("cd " + outDir + "\n")
     f.write("./prexsim preRun.mac myRun.mac\n")
     f.close()
     return 0  
