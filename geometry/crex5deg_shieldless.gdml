@@ -2576,7 +2576,7 @@
       <solidref ref="tubeTarget"/>
     </volume>
 
-    <!--
+    
     <volume name="DStargetShield_logic">
       <materialref ref="PureLead"/>
       <solidref ref="DStargetShield_solid"/>
@@ -2585,7 +2585,7 @@
       <materialref ref="PureLead"/>
       <solidref ref="targetShield_solid"/>
     </volume>
-    -->
+    
 
     <!-- New dual Scattering Chamber -->
     <volume name="new_sc_beampipe_logic">
@@ -2897,10 +2897,12 @@
 	<rotationref ref="scRot_1"/>
       </physvol>
 
+	  <!--
       <physvol name="sc_attach_pigTopShield_phys">
         <volumeref ref="sc_attach_pigTopShield_logic"/>
         <positionref ref="pos_global_pigTopShield"/>
       </physvol>
+      -->
 
       <physvol name="coll_shield">
       	<volumeref ref="coll_shield_logic"/>

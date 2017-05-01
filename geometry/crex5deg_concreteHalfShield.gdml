@@ -835,8 +835,8 @@
 	      />-->
 	<position unit="cm" name="pos_global_giantShield"
 	      x="0"
-	      y="50+69"
-	      z="prex_target_center + 9.1"
+	      y="50+13.875"
+	      z="prex_target_center + 4.9"
 	/>
 
 </define>
@@ -983,7 +983,7 @@
 	 x="40" y="14" z="30"/> -->
 	 
 	 <box lunit="cm" name="giantShield_solid"
-	     x="460.1" y="138" z="460.1"/>
+	     x="247" y="27.75" z="247"/>
      
     <!-- Scattering Chamber -->
     <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="outScattChamber" rmin="0.0" rmax="outer_r_sc" z="height_sc" />
@@ -2598,7 +2598,7 @@
       <!-- <solidref ref="targetShield_solid"/>
     </volume> -->
     <volume name="giantShield_logic">
-      <materialref ref="Shield"/>
+      <materialref ref="Concrete"/>
       <solidref ref="giantShield_solid"/>
     </volume>
 

@@ -323,7 +323,7 @@
 
     <!-- Shielding -->
 
-    <constant name="width_hut" value="width_septum+2*fHutShieldThick"/>
+    <constant name="width_hut" value="width_https://github.com/ajz3ee/prexSim/blob/master/geometry/crex5deg_concreteShield.gdmlseptum+2*fHutShieldThick"/>
     <constant name="height_hut" value="height_septum+2*fHutShieldThick"/>
     <constant name="length_hut" value="length_septum+(center_septum-length_septum/2-(center_targ+outer_r_sc+deltaz_sc))"/>
     <constant name="width_hut_hole" value="width_septum + 4"/>
@@ -836,7 +836,7 @@
 	<position unit="cm" name="pos_global_giantShield"
 	      x="0"
 	      y="50+27.75"
-	      z="prex_target_center - 6"
+	      z="prex_target_center + 6"
 	/>
 
 </define>
