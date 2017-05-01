@@ -825,6 +825,8 @@
 
     <position unit="cm" name="pos_rel_beamKill"
 	      x="0" y="0" z="-1."/>
+    <position unit="cm" name="pos_rel_cylWall_beamKill"
+	      x="0" y="-1.0*radius_of_cylwall-0.5*thick_cylwall" z="-1.*center_cylwall"/>
     <position unit="cm" name="pos_global_beamKill"
 	      x="0" y="0" z="1750"/>
     <position unit="cm" name="pos_rel_scAttach_dDet"
@@ -2327,7 +2329,7 @@
       <second ref="in_cylwall"/>
       <positionref ref="cylwallTrans_1"/>
     </subtraction>
-    <subtraction name ="cylwall_hole">
+    <subtraction name ="cylwall_hole_woBeamKill">
       <first ref="cylwall_full"/>
       <second ref="wall_cylhole"/>
       <positionref ref="cylwallTrans_2"/>
@@ -2360,7 +2362,7 @@
     <box lunit="cm" name="dump_ss_0_enc" x="width_dump_hole" y="height_dump_hole" z="thick_dump_ss_enc"/>
     <cone aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="dump_ss_enc_hole" rmin1="0.0" rmax1="dump_ss_enc_hole_radius" rmin2="0.0" rmax2="dump_ss_enc_hole_radius" z="1.001*thick_dump_ss_enc"/>
 
-    <subtraction name ="dump_solid">
+    <subtraction name ="dump_solid_woBeamKill">
       <first ref="dump_0_solid"/>
       <second ref="dump_hole"/>
       <positionref ref="dumpTrans_1"/>
@@ -2474,7 +2476,19 @@
       <positionref ref="pos_rel_beamKill"/>
       <rotationref ref="identity"/>
     </subtraction>
-    
+
+    <subtraction name ="dump_solid">
+      <first ref="dump_solid_woBeamKill"/>
+      <second ref="beamKillS"/>
+      <positionref ref="pos_rel_beamKill"/>
+    </subtraction>
+    <subtraction name ="cylwall_hole">
+      <first ref="cylwall_hole_woBeamKill"/>
+      <second ref="beamKillS"/>
+      <positionref ref="pos_rel_cylWall_beamKill"/>
+      <rotationref ref="scRot_1"/>
+    </subtraction>
+
     <!-- <tube aunit="deg" startphi="0" deltaphi="360" -->
     <!-- 	  lunit="cm" name="dDet_ds" -->
     <!-- 	  rmin="0" rmax="(coll_bore_inner_r2)*1.0001" -->
