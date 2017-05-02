@@ -4,6 +4,7 @@
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
+using namespace CLHEP;
 
 MollerGlobalMagnetField::MollerGlobalMagnetField() 
 {	
