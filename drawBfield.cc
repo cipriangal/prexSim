@@ -15,7 +15,8 @@ int main(int argc, char **argv){
   }
   string config=argv[1];
   const int nSteps=atoi(argv[2]);
-  
+  double offset=69.91;
+
   MollerGlobalMagnetField bField;
   bField.SetConfiguration(config);
 
@@ -23,25 +24,34 @@ int main(int argc, char **argv){
   TGraph *bx=new TGraph();
   TGraph *by=new TGraph();
   TGraph *bz=new TGraph();
-  double point[4]={-1*CLHEP::cm,0,0,0};    
+  double point[4]={-1*CLHEP::cm,0,0,0};
+  double deltaY=0.001*CLHEP::cm;  
   for(int i=0;i<nSteps;i++){
     if(i%100==1) cout<<"at step\t"<<i<<endl;
-    double x = -110 + 69.91 + 220.*i/nSteps;
-    point[2]=x*CLHEP::cm;
-    double y[3]={0,0,0};
-    bField.GetFieldValue(point,y);
-    bx->SetPoint(i,x,y[0]);
-    by->SetPoint(i,x,y[1]);
-    bz->SetPoint(i,x,y[2]);
+    double z = -110 + 220.*i/nSteps;//local septum position
+
+    point[2]=(z+offset)*CLHEP::cm;//global position needed for calculation
+    point[1]=0;
+    double p1[3]={0,0,0};
+    bField.GetFieldValue(point,p1);
+
+    point[2]=(z+offset)*CLHEP::cm;//global position needed for calculation
+    point[1]=deltaY;
+    double p2[3]={0,0,0};
+    bField.GetFieldValue(point,p2);
+
+    bx->SetPoint(i,z,(p2[0]/CLHEP::gauss - p1[0]/CLHEP::gauss)/deltaY);
+    by->SetPoint(i,z,(p2[1]/CLHEP::gauss - p1[1]/CLHEP::gauss)/deltaY);
+    bz->SetPoint(i,z,(p2[2]/CLHEP::gauss - p1[2]/CLHEP::gauss)/deltaY);
   }
   bx->SetName("xField");
-  bx->SetTitle(Form("Bx for %s configuration at(-1cm,0,z); z [cm]",config.c_str()));
+  bx->SetTitle(Form("dBx/dy for %s configuration at(-1cm,0,z); z [cm]; gauss/cm",config.c_str()));
   bx->Write();
   by->SetName("yField");
-  by->SetTitle(Form("By for %s configuration at(-1cm,0,z); z [cm]",config.c_str()));
+  by->SetTitle(Form("dBy/dy for %s configuration at(-1cm,0,z); z [cm]; gauss/cm",config.c_str()));
   by->Write();
   bz->SetName("zField");
-  bz->SetTitle(Form("Bz for %s configuration at(-1cm,0,z); z [cm]",config.c_str()));
+  bz->SetTitle(Form("dBz/dy for %s configuration at(-1cm,0,z); z [cm]; gauss/cm",config.c_str()));
   bz->Write();
 
   fout->Close();
