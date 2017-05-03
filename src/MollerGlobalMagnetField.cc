@@ -67,7 +67,8 @@ MollerGlobalMagnetField::MollerGlobalMagnetField()
     fMagneticField_MiniMagnet->InitializeGrid();
     
   }
-
+  configuration = "crex";
+  
   G4cout << G4endl
 	 << "Magnetic Shielding low limit= " << mg_field_low
 	 << "   Magnetic Shielding high limit= " << mg_field_high << G4endl;  
@@ -88,17 +89,17 @@ void MollerGlobalMagnetField::SetConfiguration(const G4String val){
   configuration = val;
 
   if( val == "prex1" ){
-    magScaleFactor = 1.;
+    magScaleFactor = 10.;
     mg_field_low = -44*cm;
     mg_field_high = 44*cm;
   }else if( val == "prex2" ){
-    magScaleFactor = 1.;
+    magScaleFactor = 10.;
     mg_field_low = -74*cm;
     mg_field_high = 74*cm;    
   }else if( val == "crex" ){
-    magScaleFactor = 2.35;
-    mg_field_low = -74*cm;
-    mg_field_high = 74*cm;    
+    magScaleFactor = 2.19;
+    mg_field_low = -69*cm;
+    mg_field_high = 61*cm;    
   }else{
     G4cerr<<__LINE__<<"\t"<<__PRETTY_FUNCTION__
 	  <<"\n\tUnknown magnetic field configuration! Quitting!\n";
@@ -123,11 +124,8 @@ void MollerGlobalMagnetField::GetFieldValuePREX2(const G4double Point[4], G4doub
 {
   
   G4double myLocalPointInMainMagnet[4];
-  G4double myLocalPointInMiniMagnet[4];  
   G4double myLocalBfieldInMainMagnet[3];
-  G4double myLocalBfieldInMiniMagnet[3];
 
-  G4bool readfrommap = false;
   G4double dBxdy = 0.*gauss/cm;
   G4double dBydx = 0.*gauss/cm;
 
@@ -156,19 +154,10 @@ void MollerGlobalMagnetField::GetFieldValuePREX2(const G4double Point[4], G4doub
   myLocalPointInMainMagnet[1] = Point[1];             // y-pos
   myLocalPointInMainMagnet[2] = Point[2]-69.91*cm;    // z-pos
   myLocalPointInMainMagnet[3] = Point[3];             // time
-  //---------------------------------------------------------------
-  // (2) transformation into local MiniMagnet coordinate is easy
-  //     since MiniMagnet is shifted by 505*cm in z
-  myLocalPointInMiniMagnet[0] = Point[0];             // x-pos
-  myLocalPointInMiniMagnet[1] = Point[1];             // y-pos
-  myLocalPointInMiniMagnet[2] = Point[2];             // z-pos
-  myLocalPointInMiniMagnet[3] = Point[3];             // time
 
-
-  //  G4cout << "reading septum magnetic field" << G4endl;
   // Parameterizing the gradient as two gaussians at each end of the septum, defined for different z values
   // within the radius of the beampipe through the septum, r = 4.128 cm.
-  if( !readfrommap && sqrt(pow(myLocalPointInMainMagnet[0],2)+pow(myLocalPointInMainMagnet[1],2))<4.128*cm){    
+  if(sqrt(pow(myLocalPointInMainMagnet[0],2)+pow(myLocalPointInMainMagnet[1],2))<4.128*cm){    
     if ((myLocalPointInMainMagnet[2]>-100*cm)&&(myLocalPointInMainMagnet[2]<100*cm)){
       if (myLocalPointInMainMagnet[2]<mg_field_low){ 
 	dBxdy = a*(exp(-((pow(myLocalPointInMainMagnet[2]-bu,2))/(2*pow(c2,2)))));
@@ -204,13 +193,9 @@ void MollerGlobalMagnetField::GetFieldValuePREX2(const G4double Point[4], G4doub
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 void MollerGlobalMagnetField::GetFieldValueCREX(const G4double Point[4], G4double *Bfield ) const
 {
-  
   G4double myLocalPointInMainMagnet[4];
-  G4double myLocalPointInMiniMagnet[4];  
   G4double myLocalBfieldInMainMagnet[3];
-  G4double myLocalBfieldInMiniMagnet[3];
 
-  G4bool readfrommap = false;
   G4double dBxdy = 0.*gauss/cm;
   G4double dBydx = 0.*gauss/cm;
 
@@ -228,41 +213,32 @@ void MollerGlobalMagnetField::GetFieldValueCREX(const G4double Point[4], G4doubl
 
   G4double z_intercept_low = mg_field_low + 11.7*cm;
   G4double z_intercept_high = mg_field_high - 8.5*cm;
-  
+
   //---------------------------------------------------------------
   // translation from global Point[4] into local magnet coordinates
   //---------------------------------------------------------------
   myLocalPointInMainMagnet[0] = Point[0];             // x-pos
   myLocalPointInMainMagnet[1] = Point[1];             // y-pos
-  myLocalPointInMainMagnet[2] = Point[2]-69.91*cm;    // z-pos
+  myLocalPointInMainMagnet[2] = Point[2] - 69.91*cm;  // z-pos
   myLocalPointInMainMagnet[3] = Point[3];             // time
-  //---------------------------------------------------------------
-  // (2) transformation into local MiniMagnet coordinate is easy
-  //     since MiniMagnet is shifted by 505*cm in z
-  myLocalPointInMiniMagnet[0] = Point[0];             // x-pos
-  myLocalPointInMiniMagnet[1] = Point[1];             // y-pos
-  myLocalPointInMiniMagnet[2] = Point[2];             // z-pos
-  myLocalPointInMiniMagnet[3] = Point[3];             // time
 
-
-  //  G4cout << "reading septum magnetic field" << G4endl;
   // Parameterizing the gradient as two gaussians at each end of the septum, defined for different z values
   // within the radius of the beampipe through the septum, r = 4.128 cm.
-  if( !readfrommap && sqrt(pow(myLocalPointInMainMagnet[0],2)+pow(myLocalPointInMainMagnet[1],2))<4.128*cm){    
+  if( sqrt(pow(myLocalPointInMainMagnet[0],2)+pow(myLocalPointInMainMagnet[1],2))<4.128*cm){    
     if ((myLocalPointInMainMagnet[2]>-100*cm)&&(myLocalPointInMainMagnet[2]<100*cm)){
       if (myLocalPointInMainMagnet[2]<mg_field_low){ 
 	dBxdy = shielded+(0.667)*a*(exp(-((pow(myLocalPointInMainMagnet[2]-bu,2))/(2*pow(c2,2)))));
       } else if ((myLocalPointInMainMagnet[2]>=mg_field_low)&&(myLocalPointInMainMagnet[2]<z_intercept_low)){
 	dBxdy = shielded+(0.667)*a*(exp(-(pow(mg_field_low-bu                         ,2)/(2*pow(c2,2)))))*
-	  (exp(-(pow(myLocalPointInMainMagnet[2]-mg_field_low,2)/(2*pow(c1,2)))));
+	                           (exp(-(pow(myLocalPointInMainMagnet[2]-mg_field_low,2)/(2*pow(c1,2)))));
       } else if ((myLocalPointInMainMagnet[2]>=z_intercept_low)&&(myLocalPointInMainMagnet[2]<=z_intercept_high)){
 	dBxdy = shielded+a*(exp(-(pow(myLocalPointInMainMagnet[2],2)/(2*pow(c_mid,2)))));
       } else if ((myLocalPointInMainMagnet[2]<=mg_field_high)&&(myLocalPointInMainMagnet[2]>z_intercept_high)){
 	dBxdy = shielded+(1.58)*a*(exp(-(pow(mg_field_high-bd                         ,2)/(2*pow(c2,2)))))*
-	  (exp(-(pow(myLocalPointInMainMagnet[2]-mg_field_high,2)/(2*pow(c1,2)))));
-	} else if ((myLocalPointInMainMagnet[2]>mg_field_high)){ 
+	                          (exp(-(pow(myLocalPointInMainMagnet[2]-mg_field_high,2)/(2*pow(c1,2)))));
+      } else if ((myLocalPointInMainMagnet[2]>mg_field_high)){ 
 	dBxdy = shielded+(1.58)*a*(exp(-((pow(myLocalPointInMainMagnet[2]-bd,2))/(2*pow(c2,2)))));
-	} else {
+      } else {
 	dBxdy=0;
       }     	
       dBydx=dBxdy;      
