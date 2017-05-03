@@ -20,23 +20,10 @@
    #### beam energy
    #/gun/energy 1.05 GeV ##PREX
    /gun/energy 2.2 GeV ##CREX
-   #### Scale factor for fringe mag field
-   ##PREX
-   #/moller/field/setFieldScaleFactor 1.
-   ##CREX
-   /moller/field/setFieldScaleFactor 2.35
-   ####Limits for Fringe field
-   /moller/field/setLowLim -74 cm
-   /moller/field/setHighLim 74 cm
+   #### Set B field configuration (prex1, prex2, crex)
+   /moller/field/setConfiguration crex
    #### Geometry files
-   #/moller/det/setDetectorFileName geometry/prexII_coll_prototype_4_complete.gdml
-   #/moller/det/setDetectorFileName geometry/prexII_rickyTest.gdml
-   #/moller/det/setDetectorFileName geometry/prexCrexLeadTarget.gdml
    /moller/det/setDetectorFileName geometry/crex5deg.gdml
-   #/moller/det/setDetectorFileName geometry/kriptoniteDetectors.gdml
-   #/moller/det/setDetectorFileName geometry/prexCrexCalcTarget.gdml
-   #/moller/det/setDetectorFileName geometry/prexII_newSC_update.gdml
-   #/moller/det/setDetectorFileName geometry/newPigDesign_1.gdml
 
 
 ############
@@ -49,11 +36,8 @@
    ############
    #### beam energy
    #/gun/energy 1.05 GeV
-   #### Scale factor for fringe mag field
-   #/moller/field/setFieldScaleFactor 1.
-   ####Limits for Fringe field
-   #/moller/field/setLowLim -44 cm
-   #/moller/field/setHighLim 44 cm
+   #### Set B field configuration (prex1, prex2, crex)
+   #/moller/field/setConfiguration prex1
    #### Geometry files
    #/moller/det/setDetectorFileName geometry/prexIMother_pedestal_noshield.xml
 
