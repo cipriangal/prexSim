@@ -10,16 +10,14 @@ using namespace std;
 int main(int argc, char **argv){
 
   if(argc!=3){
-    cout<<"run as:\n\tbuild/drawBfield <configName -- can be either prex or crex> <nSteps>\n";
+    cout<<"run as:\n\tbuild/drawBfield <configName -- can be either prex1, prex2 or crex> <nSteps>\n";
     return 1;
   }
   string config=argv[1];
   const int nSteps=atoi(argv[2]);
   
   MollerGlobalMagnetField bField;
-  bField.SetLowLimSeptumField(-74*CLHEP::cm);
-  bField.SetHighLimSeptumField(74*CLHEP::cm);
-  bField.SetScaleFactor(1);
+  bField.SetConfiguration(config);
 
   TFile *fout=new TFile(Form("o_drawBfield_%s.root",config.c_str()),"RECREATE");
   TGraph *bx=new TGraph();
