@@ -279,7 +279,7 @@ void MollerGlobalMagnetField::WriteMagField()
     point[3] = 0.*ns;
     G4double point2[4];
     double gr_dy = 0.001*cm;
-    point2[0] = -1.*cm;
+    point2[0] = 1.*cm;
     point2[1] = gr_dy;
     point2[3] = 0.*ns;
     for (int i=0; i<201; i++) {
