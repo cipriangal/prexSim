@@ -47,6 +47,11 @@ MollerGlobalMagnetFieldMessenger::MollerGlobalMagnetFieldMessenger(MollerGlobalM
   magScaleFactorCmd->SetParameterName("magScaleFactor",true);
   magScaleFactorCmd->SetDefaultValue(1.);
 
+  configurationCmd = new G4UIcmdWithAString("/moller/field/setConfiguration",this);
+  configurationCmd->SetGuidance("Possible options: prex1, prex2, crex");
+  configurationCmd->SetParameterName("configuration",true);
+  configurationCmd->SetDefaultValue("crex");
+
 
 }
 
@@ -57,6 +62,7 @@ MollerGlobalMagnetFieldMessenger::~MollerGlobalMagnetFieldMessenger()
   delete fieldDir;
   delete magLowLimCmd;
   delete magHighLimCmd;
+  delete configurationCmd;
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -70,6 +76,8 @@ void MollerGlobalMagnetFieldMessenger::SetNewValue(G4UIcommand* command, G4Strin
     setField->SetHighLimSeptumField(magHighLimCmd->GetNewDoubleValue(newValue)); 
   } else if (command == magScaleFactorCmd ){
     setField->SetScaleFactor(magScaleFactorCmd->GetNewDoubleValue(newValue));
+  } else if (command == configurationCmd ){
+    setField->SetConfiguration(newValue);
   }
 }
 
