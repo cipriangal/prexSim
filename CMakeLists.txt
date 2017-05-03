@@ -49,6 +49,9 @@ target_link_libraries(prexsim ${LINK_LIBRARIES})
 add_executable(anaRad anaHallRadiation.cc ${sources} ${headers})
 target_link_libraries(anaRad ${LINK_LIBRARIES})
 
+add_executable(drawBfield drawBfield.cc ${sources} ${headers})
+target_link_libraries(drawBfield ${LINK_LIBRARIES})
+
 add_executable(calcRadDamage calc1MeVneutronEquivalent.cc)
 target_link_libraries(calcRadDamage ${LINK_LIBRARIES})
 
