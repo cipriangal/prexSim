@@ -89,15 +89,15 @@ void MollerGlobalMagnetField::SetConfiguration(const G4String val){
   configuration = val;
 
   if( val == "prex1" ){
-    magScaleFactor = 10.;
+    magScaleFactor = 1.;
     mg_field_low = -44*cm;
     mg_field_high = 44*cm;
   }else if( val == "prex2" ){
-    magScaleFactor = 10.;
+    magScaleFactor = 1.;
     mg_field_low = -74*cm;
     mg_field_high = 74*cm;    
   }else if( val == "crex" ){
-    magScaleFactor = 2.19;
+    magScaleFactor = 0.219;
     mg_field_low = -69*cm;
     mg_field_high = 61*cm;    
   }else{
@@ -290,7 +290,7 @@ void MollerGlobalMagnetField::WriteMagField()
       for (int j=0; j<3; j++) grB[i][j]=(double)g4grB[i][j]/gauss;
       GetFieldValue(point2,g4grB[i]);
       for (int j=0; j<3; j++) grB2[i][j]=(double)g4grB[i][j]/gauss;
-      gr_dBxdy[i] = (grB2[i][0]- grB[i][0])/gr_dy;
+      gr_dBxdy[i] = (grB2[i][0]- grB[i][0])/(gr_dy/cm);
       G4cout << z[i] << " " << point[2]/cm << " " << gr_dBxdy[i] << G4endl;
     }
     TGraph * graph_Mag_field = new TGraph(201,z,gr_dBxdy);

@@ -40,9 +40,9 @@ int main(int argc, char **argv){
     double p2[3]={0,0,0};
     bField.GetFieldValue(point,p2);
 
-    bx->SetPoint(i,z,(p2[0]/CLHEP::gauss - p1[0]/CLHEP::gauss)/deltaY);
-    by->SetPoint(i,z,(p2[1]/CLHEP::gauss - p1[1]/CLHEP::gauss)/deltaY);
-    bz->SetPoint(i,z,(p2[2]/CLHEP::gauss - p1[2]/CLHEP::gauss)/deltaY);
+    bx->SetPoint(i,z,(p2[0]/CLHEP::gauss - p1[0]/CLHEP::gauss)/(deltaY/CLHEP::cm));
+    by->SetPoint(i,z,(p2[1]/CLHEP::gauss - p1[1]/CLHEP::gauss)/(deltaY/CLHEP::cm));
+    bz->SetPoint(i,z,(p2[2]/CLHEP::gauss - p1[2]/CLHEP::gauss)/(deltaY/CLHEP::cm));
   }
   bx->SetName("xField");
   bx->SetTitle(Form("dBx/dy for %s configuration at(-1cm,0,z); z [cm]; gauss/cm",config.c_str()));
