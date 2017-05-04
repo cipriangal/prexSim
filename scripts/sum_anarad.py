@@ -18,10 +18,10 @@ def get_energy(key):
 
 n_files = 20
 sensative_det = 10013
-identifier = '_concreteShield'
+identifier = '_concreteLHalfWidthThick'
 dir_path = 'output/'
-f_prefix = 'o_crex5_' + identifier
-output_filename = 'crex5_summed_out_' + identifier[:-1]
+f_prefix = 'o_crex5_'
+output_filename = 'crex5_summed_out' + identifier
 
 e = 'energy'; f = 'flux'
 
@@ -39,7 +39,7 @@ for key in keys:
 for n in range(0, n_files):
 	f_num    = '%04d'%n
 	
-	fname = dir_path + f_prefix + f_num + '_SV' + str(sensative_det) + '_powerFlux.dat'
+	fname = dir_path + f_prefix + f_num + identifier + '_SV' + str(sensative_det) + '_powerFlux.dat'
 	
 	infile = open(fname)
 	lines = infile.readlines()

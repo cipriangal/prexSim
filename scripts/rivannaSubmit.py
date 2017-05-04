@@ -14,9 +14,9 @@ def main():
     ##only crex5 defined for now
     configuration = "crex5"
     nrEv   = 500000
-    nrStart= 0
-    nrStop = 20
-    identifier = '_hdpeShield'
+    nrStart= 20
+    nrStop = 80
+    identifier = '_shieldless'
 
     print('Running ' + str(nrEv*(nrStop - nrStart)) + ' events...')
 
