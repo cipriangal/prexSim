@@ -19,7 +19,7 @@ using namespace std;
 void niceLogBins(TH1*);
 //energy/neil/mrem
 //photons/electron/neutrons
-const int nBins=10;
+const int nBins=100;
 vector<vector<vector<TH1D*> > > hTotal, hAvg, valAvg;
 vector<vector<vector<vector<int> > > > intAvg;
 void UpdateMeans();
@@ -198,24 +198,27 @@ void Initialize(){
     vector<vector<TH1D*> > dt1,da1,dv1;
     intAvg.push_back(vector<vector<vector<int> > >(3, vector<vector<int> >(3, vector<int>(nBins))));
     for(int ip=0;ip<3;ip++){
+      int nrBins=nBins;
+      if(ip==2)
+	nrBins/=10;
       vector<TH1D*> dt2,da2,dv2;
       for(int idmg=0;idmg<3;idmg++){
 	TH1D *h=new TH1D(Form("ht_%d_%s_%s",detNr[id],hPnm[ip].c_str(),type[idmg].c_str()),
 			 Form("Total hits for det %d| part: %s| %s; energy [MeV]",detNr[id],hPnm[ip].c_str(),type[idmg].c_str()),
-			 nBins,-4,4);
+			 nrBins,-4,4);
 	niceLogBins(h);
 	dt2.push_back(h);
 
 	TH1D *a=new TH1D(Form("ha_%d_%s_%s",detNr[id],hPnm[ip].c_str(),type[idmg].c_str()),
 			 Form("Hits/(%d ev) hits for det %d| part: %s| %s; energy [MeV]",nAvg,detNr[id],hPnm[ip].c_str(),type[idmg].c_str()),
-			 nBins,-4,4);
+			 nrBins,-4,4);
 	niceLogBins(a);
 	da2.push_back(a);
 
 	//dummy histograms
 	TH1D *v=new TH1D(Form("hv_%d_%s_%s",detNr[id],hPnm[ip].c_str(),type[idmg].c_str()),
 			 Form("Hits/(%d ev) hits for det %d| part: %s| %s; energy [MeV]",nAvg,detNr[id],hPnm[ip].c_str(),type[idmg].c_str()),
-			 nBins,-4,4);
+			 nrBins,-4,4);
 	niceLogBins(v);
 	dv2.push_back(v);
       }
