@@ -14,9 +14,9 @@ def main():
     ##only crex5 defined for now
     configuration = "crex5"
     nrEv   = 500000
-    nrStart= 20
+    nrStart= 0
     nrStop = 80
-    identifier = '_shieldless'
+    identifier = '_concretePbLHalfMassHalfWidth'
 
     print('Running ' + str(nrEv*(nrStop - nrStart)) + ' events...')
 

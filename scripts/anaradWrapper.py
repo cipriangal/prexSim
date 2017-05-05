@@ -3,16 +3,18 @@
 import subprocess
 import sys,os,time
 
+startfile = 0
+endfile = 80
 event_count = 500000
 e_cut = str(30)
 short_events = str(event_count/1000) + 'k'
-identifier = '_concreteLHalfWidth45cut'
+identifier = '_shieldless'
 dir_prefix = 'crex5_' + short_events + 'Ev_'
 filename = 'o_prexSim.root'
 outfile_prefix = 'crex5_'
 sensative_dets = [10013]
 
-for n in range(0, 20):
+for n in range(startfile, endfile):
 	file_num = '%04d'%n
 	infile = '../output/' + dir_prefix + file_num + identifier + '/' + filename
 	outfile = outfile_prefix + file_num + identifier

@@ -18,7 +18,7 @@ def get_energy(key):
 
 n_files = 20
 sensative_det = 10013
-identifier = '_concreteLHalfWidthThick'
+identifier = '_concretePbL'
 dir_path = 'output/'
 f_prefix = 'o_crex5_'
 output_filename = 'crex5_summed_out' + identifier
