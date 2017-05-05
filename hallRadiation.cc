@@ -21,7 +21,7 @@ void niceLogBins(TH1*);
 //photons/electron/neutrons
 vector<vector<vector<TH1D*> > > hTotal, hAvg, valAvg;
 vector<vector<vector<vector<int> > > > intAvg;
-void updateMeans();
+void UpdateMeans();
 int nAvg(-1);
 
 TFile *fout;
@@ -31,7 +31,7 @@ void Initialize();
 void WriteOutput();
 
 long currentEv(0),prevEv(0),processedEv(0);
-void processOne(string);
+void ProcessOne(string);
 radDamage radDmg;
 
 int main(int argc, char **argv){
@@ -42,27 +42,33 @@ int main(int argc, char **argv){
   }
   string finNm=argv[1];
   nAvg = atoi(argv[2]);
-  for(int i=3;i<argc;i++)
+  cout<<"looking at file: "<<finNm
+      <<"\n\twith an average of "<<nAvg<<" and for detectors:"<<endl;
+  for(int i=3;i<argc;i++){
     detNr.push_back(atoi(argv[i]));
+    cout<<"\t\t"<<detNr[i-3]<<endl;
+  }
 
   string foutNm = Form("%s_hallRad.root",finNm.substr(0,finNm.find(".")).c_str());
-  fout=new TFile(foutNm.c_str(),"UPDATE");
+  fout=new TFile(foutNm.c_str(),"RECREATE");
 
+  Initialize();
   if ( finNm.find(".root") < finNm.size() ){
-    processOne(finNm);
+    ProcessOne(finNm);
   }else{
     ifstream ifile(finNm.c_str());
     string data;
     while(ifile>>data){
-      processOne(data);
+      ProcessOne(data);
     }
   }
   cout<<"Processed a total of "<<processedEv<<endl;
-
+  WriteOutput();
+  cout<<"written"<<endl;
   return 0;
 }
 
-void processOne(string fnm){
+void ProcessOne(string fnm){
   TFile *fin=new TFile(fnm.c_str(),"READ");
   if(!fin->IsOpen()){
     cout<<"Problem: can't find file: "<<fnm<<endl;
@@ -84,26 +90,31 @@ void processOne(string fnm){
   t->SetBranchAddress("x0",&x0);
   t->SetBranchAddress("y0",&y0);
   t->SetBranchAddress("z0",&z0);
-  t->SetBranchAddress("event",&evNr);
+  t->SetBranchAddress("ev_num",&evNr);
   t->SetBranchAddress("PDGid",&pdgID);
   t->SetBranchAddress("Edeposit",&Edeposit);
   t->SetBranchAddress("kineE",&kinE);
 
   long nEntries= t->GetEntries();
+  float currentProc=1,procStep=10;
   int nDet=detNr.size();
   for(long i=0;i<nEntries;i++){
-
+    t->GetEntry(i);
+    if( float(i+1)/nEntries*100 > currentProc){
+      cout<<"at event\t"<<i<<"\t"<< float(i+1)/nEntries*100<<" %"<<endl;
+      currentProc+=procStep;
+    }
     currentEv += evNr - prevEv;
     prevEv = evNr;
     if( currentEv > nAvg ){
       currentEv=currentEv - nAvg;
-      updateMeans();
+      UpdateMeans();
     }
 
     int nHist(-1);
     for(int id=0;id<nDet;id++)
       if(volume==detNr[id]){
-	nHist=i;
+	nHist=id;
 	break;
       }
     if(nHist==-1) continue;
@@ -122,7 +133,7 @@ void processOne(string fnm){
       energy = Edeposit;
     else //vacuum detectors
       energy = kinE;
-
+    //cout<<nHist<<" "<<nPart<<" "<<volume<<endl;
     hTotal[nHist][nPart][0]->Fill(energy);
     valAvg[nHist][nPart][0]->Fill(energy);
 
@@ -139,17 +150,18 @@ void processOne(string fnm){
       valAvg[nHist][nPart][2]->Fill(energy,val);
     }
   }
+
   processedEv += ceil(prevEv/1000.)*1000;
   prevEv = 0;
   fin->Close();
   delete fin;
 }
 
-void updateMeans(){
+void UpdateMeans(){
   int nDet=detNr.size();
   for(int id=0;id<nDet;id++){
     for(int ip=0;ip<3;ip++){
-      for(int idmg=0;idmg<4;idmg++){
+      for(int idmg=0;idmg<3;idmg++){
 	int nbins= hAvg[id][ip][idmg]->GetXaxis()->GetNbins();
 	for(int ib=1;ib<=nbins;ib++){
 	  double val = valAvg[id][ip][idmg]->GetBinContent(ib)/nAvg;
@@ -167,7 +179,7 @@ void updateMeans(){
 	    if(intAvg[id][ip][idmg][ib]>=2)
 	      hAvg[id][ip][idmg]->SetBinError(ib,newVar);
 	  }
-	  valAvg[id][ip][idmg]->SetBinContent(ib,0);
+	  valAvg[id][ip][idmg]->SetBinContent(ib,0);	  
 	}
       }
     }
@@ -187,20 +199,20 @@ void Initialize(){
       for(int idmg=0;idmg<3;idmg++){
 	TH1D *h=new TH1D(Form("ht_%d_%s_%s",detNr[id],hPnm[ip].c_str(),type[idmg].c_str()),
 			 Form("Total hits for det %d| part: %s| %s; energy [MeV]",detNr[id],hPnm[ip].c_str(),type[idmg].c_str()),
-			 100,1e-8,2e3);
+			 100,-4,4);
 	niceLogBins(h);
 	dt2.push_back(h);
 
 	TH1D *a=new TH1D(Form("ha_%d_%s_%s",detNr[id],hPnm[ip].c_str(),type[idmg].c_str()),
 			 Form("Hits/(%d ev) hits for det %d| part: %s| %s; energy [MeV]",nAvg,detNr[id],hPnm[ip].c_str(),type[idmg].c_str()),
-			 100,1e-8,2e3);
+			 100,-4,4);
 	niceLogBins(a);
 	da2.push_back(a);
 
 	//dummy histograms
 	TH1D *v=new TH1D(Form("hv_%d_%s_%s",detNr[id],hPnm[ip].c_str(),type[idmg].c_str()),
 			 Form("Hits/(%d ev) hits for det %d| part: %s| %s; energy [MeV]",nAvg,detNr[id],hPnm[ip].c_str(),type[idmg].c_str()),
-			 100,1e-8,2e3);
+			 100,-4,4);
 	niceLogBins(v);
 	dv2.push_back(v);
       }
@@ -222,7 +234,7 @@ void WriteOutput(){
     fout->mkdir(Form("Det_%d",detNr[id]));
     fout->cd(Form("Det_%d",detNr[id]));
     for(int ip=0;ip<3;ip++){
-      for(int idmg=0;idmg<4;idmg++){
+      for(int idmg=0;idmg<3;idmg++){
 	hTotal[id][ip][idmg]->Write();
 	int nbins = hAvg[id][ip][idmg]->GetXaxis()->GetNbins();
 	for(int ib=1;ib<=nbins;ib++)
