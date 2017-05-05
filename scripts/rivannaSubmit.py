@@ -11,12 +11,13 @@ def main():
     email     = uva_id + "@virginia.edu"
     submit=1
 
-    ##only crex5 defined for now
+    ##only crex5, prexII defined for now
     configuration = "crex5"
+    #configuration = "prexII"
     nrEv   = 500000
     nrStart= 0
     nrStop = 80
-    identifier = '_concretePbLHalfMassHalfWidth'
+    identifier = 'concretePbLHalfMassHalfWidth'
 
     print('Running ' + str(nrEv*(nrStop - nrStart)) + ' events...')
 
@@ -25,7 +26,7 @@ def main():
     for nr in range(nrStart,nrStop): # repeat for nr jobs
         print("Starting job setup for jobID: " + str(nr))
         
-        jobFullName = jobName + '_%04d'%nr + identifier
+        jobFullName = jobName + '_%04d'%nr + '_' + identifier
         createMacFiles(configuration, outputDir+"/"+jobFullName, sourceDir, nrEv, nr, identifier)
 
         ###copy executable
@@ -53,7 +54,9 @@ def createMacFiles(config,outDir,sourceDir,nrEv,jobNr,identifier):
     call(["cp",sourceDir+"/geometry/kriptoniteDetectors.gdml",outDir+"/geometry/"])
     call(["cp","-r",sourceDir+"/geometry/schema",outDir+"/geometry"])    
     if config=="crex5":
-        call(["cp",sourceDir+"/geometry/crex5deg" + identifier + ".gdml",outDir+"/geometry"])
+        call(["cp",sourceDir+"/geometry/crex5deg" + '_' + identifier + ".gdml",outDir+"/geometry"])
+    elif config == 'prexII':
+    	call(['cp',sourceDir + "geometry/pregIIdeg" + '_' + identifier + ".gdml",outDir+"/geometry"])
     
     f=open(outDir+"/"+"/myRun.mac",'w')
     f.write("/moller/ana/rootfilename ./o_prexSim\n")
@@ -73,7 +76,13 @@ def createMacFiles(config,outDir,sourceDir,nrEv,jobNr,identifier):
         f.write("/moller/field/setFieldScaleFactor 2.35\n")
         f.write("/moller/field/setLowLim -74 cm\n")
         f.write("/moller/field/setHighLim 74 cm\n")
-        f.write("/moller/det/setDetectorFileName geometry/crex5deg" + identifier + ".gdml\n")
+        f.write("/moller/det/setDetectorFileName geometry/crex5deg_" + identifier + ".gdml\n")
+    elif config=="prexII":
+    	f.write("/gun/energy 1.05 GeV\n")
+        f.write("/moller/field/setFieldScaleFactor 1.\n")
+        f.write("/moller/field/setLowLim -74 cm\n")
+        f.write("/moller/field/setHighLim 74 cm\n")
+        f.write("/moller/det/setDetectorFileName geometry/prexIIdeg_" + identifier + ".gdml\n")
     
     f.write("/moller/det/setShieldMaterial polyethylene\n")
     f.write("/testhadr/CutsAll 0.7 mm\n")

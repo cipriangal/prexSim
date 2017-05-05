@@ -21,14 +21,16 @@ def anarad_string(run_num, identifier):
 	event_count = 500000
 	e_cut = str(30)
 	short_events = str(event_count/1000) + 'k'
-	dir_prefix = 'crex5_' + short_events + 'Ev_'
+	config = 'crex5'
+	#config = 'prexII'
+	dir_prefix = config + 'crex5_' + short_events + 'Ev_'
 	filename = 'o_prexSim.root'
-	outfile_prefix = 'crex5_'
+	outfile_prefix = config + '_'
 	sensative_dets = [10013]
 
 	file_num = '%04d'%run_num
-	infile = '../output/' + dir_prefix + file_num + identifier + '/' + filename
-	outfile = outfile_prefix + file_num + identifier
+	infile = '../output/' + dir_prefix + file_num + '_' + identifier + '/' + filename
+	outfile = outfile_prefix + file_num + '_' + identifier
 
 	det_str = ''
 	for det in sensative_dets:
@@ -41,7 +43,7 @@ def anarad_string(run_num, identifier):
 	return bash_command
 
 #Initialize stuff pertaining to files and locations
-identifier = '_shieldless'
+identifier = 'shieldless'
 outdir = 'analysis'
 start_run = 0
 end_run = 80
@@ -52,7 +54,7 @@ for n in range(start_run, end_run):
 	job = anarad_string(n, identifier)
 
 	#Create and write the sh file containing that string
-	file_title = outdir + "/anarad" + "_" + '%04d'%n + identifier
+	file_title = outdir + "/anarad" + "_" + '%04d'%n + '_' + identifier
 	create_bash_script(job, file_title)
 
 	#Submit as batch
