@@ -246,7 +246,8 @@ void WriteOutput(){
 	  }
 	  else 
 	    hAvg[id][ip][idmg]->SetBinError(ib, sqrt(hAvg[id][ip][idmg]->GetBinError(ib)));
-	hAvg[id][ip][idmg]->Write();
+	  hAvg[id][ip][idmg]->Write();
+	}
       }
     }
   }
