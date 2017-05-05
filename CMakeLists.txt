@@ -55,6 +55,10 @@ target_link_libraries(drawBfield ${LINK_LIBRARIES})
 add_executable(calcRadDamage calc1MeVneutronEquivalent.cc)
 target_link_libraries(calcRadDamage ${LINK_LIBRARIES})
 
+add_definitions(-std=c++11)
+add_executable(hallRad hallRadiation.cc ${sources} ${headers})
+target_link_libraries(hallRad ${LINK_LIBRARIES})
+
 #----------------------------------------------------------------------------
 # Copy all scripts to the build directory, i.e. the directory in which we
 # build N02. This is so that we can run the executable directly because it
