@@ -237,8 +237,15 @@ void WriteOutput(){
       for(int idmg=0;idmg<3;idmg++){
 	hTotal[id][ip][idmg]->Write();
 	int nbins = hAvg[id][ip][idmg]->GetXaxis()->GetNbins();
-	for(int ib=1;ib<=nbins;ib++)
-	  hAvg[id][ip][idmg]->SetBinError(ib, sqrt(hAvg[id][ip][idmg]->GetBinError(ib)));
+	for(int ib=1;ib<=nbins;ib++){
+	  double v = hAvg[id][ip][idmg]->GetBinContent(ib);
+	  double d = hAvg[id][ip][idmg]->GetBinError(ib);
+	  if( v-d < 0 ){
+	    hAvg[id][ip][idmg]->SetBinError(ib,0);
+	    hAvg[id][ip][idmg]->SetBinContent(ib,0);
+	  }
+	  else 
+	    hAvg[id][ip][idmg]->SetBinError(ib, sqrt(hAvg[id][ip][idmg]->GetBinError(ib)));
 	hAvg[id][ip][idmg]->Write();
       }
     }
