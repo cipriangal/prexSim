@@ -99,11 +99,13 @@ void ProcessOne(string fnm){
   float currentProc=1,procStep=10;
   int nDet=detNr.size();
   for(long i=0;i<nEntries;i++){
+    //if( float(i+1)/nEntries*100 > 51) continue;
     t->GetEntry(i);
     if( float(i+1)/nEntries*100 > currentProc){
       cout<<"at event\t"<<i<<"\t"<< float(i+1)/nEntries*100<<" %"<<endl;
       currentProc+=procStep;
     }
+    
     currentEv += evNr - prevEv;
     prevEv = evNr;
     if( currentEv > nAvg ){
@@ -133,7 +135,7 @@ void ProcessOne(string fnm){
       energy = Edeposit;
     else //vacuum detectors
       energy = kinE;
-    //cout<<nHist<<" "<<nPart<<" "<<volume<<endl;
+
     hTotal[nHist][nPart][0]->Fill(energy);
     valAvg[nHist][nPart][0]->Fill(energy);
 
@@ -165,6 +167,7 @@ void UpdateMeans(){
 	int nbins= hAvg[id][ip][idmg]->GetXaxis()->GetNbins();
 	for(int ib=1;ib<=nbins;ib++){
 	  double val = valAvg[id][ip][idmg]->GetBinContent(ib)/nAvg;
+	  valAvg[id][ip][idmg]->SetBinContent(ib,0);	  
 	  if(val > 0){
 	    intAvg[id][ip][idmg][ib]++;
 	    double currentMean = hAvg[id][ip][idmg]->GetBinContent(ib);
@@ -176,10 +179,9 @@ void UpdateMeans(){
 	    double newVar  = currentVar + delta*delta2;
 
 	    hAvg[id][ip][idmg]->SetBinContent(ib,newMean);
-	    if(intAvg[id][ip][idmg][ib]>=2)
-	      hAvg[id][ip][idmg]->SetBinError(ib,newVar);
+	    hAvg[id][ip][idmg]->SetBinError(ib,newVar);
+	    
 	  }
-	  valAvg[id][ip][idmg]->SetBinContent(ib,0);	  
 	}
       }
     }
@@ -239,15 +241,18 @@ void WriteOutput(){
 	int nbins = hAvg[id][ip][idmg]->GetXaxis()->GetNbins();
 	for(int ib=1;ib<=nbins;ib++){
 	  double v = hAvg[id][ip][idmg]->GetBinContent(ib);
-	  double d = hAvg[id][ip][idmg]->GetBinError(ib);
-	  if( v-d < 0 ){
+	  double d(0);
+	  if(intAvg[id][ip][idmg][ib]>=2)
+	    d = sqrt(hAvg[id][ip][idmg]->GetBinError(ib)/(intAvg[id][ip][idmg][ib]-1));
+
+	  if(d==0){
 	    hAvg[id][ip][idmg]->SetBinError(ib,0);
 	    hAvg[id][ip][idmg]->SetBinContent(ib,0);
 	  }
 	  else 
-	    hAvg[id][ip][idmg]->SetBinError(ib, sqrt(hAvg[id][ip][idmg]->GetBinError(ib)));
-	  hAvg[id][ip][idmg]->Write();
+	    hAvg[id][ip][idmg]->SetBinError(ib, d);
 	}
+	hAvg[id][ip][idmg]->Write();
       }
     }
   }
