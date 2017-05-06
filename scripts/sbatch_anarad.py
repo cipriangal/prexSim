@@ -3,6 +3,8 @@ from subprocess import call
 import subprocess
 import sys,os,time
 
+import config_reader as cr
+
 def create_bash_script(job_string, file_title):    
     f = open(file_title + '.sh','w')
     f.write("#!/bin/bash\n")
@@ -18,12 +20,12 @@ def create_bash_script(job_string, file_title):
     f.close()
 
 def anarad_string(run_num, identifier):
-	event_count = 500000
-	e_cut = str(30)
+	event_count = cr.nr_events()
+	e_cut = str(cr.e_cut())
 	short_events = str(event_count/1000) + 'k'
-	config = 'crex5'
-	#config = 'prexII'
-	dir_prefix = config + 'crex5_' + short_events + 'Ev_'
+	#config = 'crex5'
+	config = cr.config()
+	dir_prefix = config + '_' + short_events + 'Ev_'
 	filename = 'o_prexSim.root'
 	outfile_prefix = config + '_'
 	sensative_dets = [10013]
@@ -43,10 +45,10 @@ def anarad_string(run_num, identifier):
 	return bash_command
 
 #Initialize stuff pertaining to files and locations
-identifier = 'shieldless'
+identifier = cr.identifier()
 outdir = 'analysis'
-start_run = 0
-end_run = 80
+start_run = cr.start_run()
+end_run = cr.end_run()
 
 #Loop over events
 for n in range(start_run, end_run):

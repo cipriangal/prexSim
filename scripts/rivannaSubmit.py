@@ -2,22 +2,24 @@
 from subprocess import call
 import sys,os,time
 
+import config_reader as cr
+
 def main():
 
     ### always check that these are the options you want
-    uva_id    = 'ajz3ee'
+    uva_id    = cr.uva_id()
     sourceDir = "/scratch/" + uva_id + "/prexSim"
     outputDir = "/scratch/" + uva_id + "/prexSim/output"
     email     = uva_id + "@virginia.edu"
     submit=1
 
     ##only crex5, prexII defined for now
-    configuration = "crex5"
-    #configuration = "prexII"
-    nrEv   = 500000
-    nrStart= 0
-    nrStop = 80
-    identifier = 'concretePbLHalfMassHalfWidth'
+    #configuration = "crex5"
+    configuration = cr.config()
+    nrEv   = cr.nr_events()
+    nrStart= cr.start_run()
+    nrStop = cr.end_run()
+    identifier = cr.identifier()
 
     print('Running ' + str(nrEv*(nrStop - nrStart)) + ' events...')
 
@@ -56,7 +58,7 @@ def createMacFiles(config,outDir,sourceDir,nrEv,jobNr,identifier):
     if config=="crex5":
         call(["cp",sourceDir+"/geometry/crex5deg" + '_' + identifier + ".gdml",outDir+"/geometry"])
     elif config == 'prexII':
-    	call(['cp',sourceDir + "geometry/pregIIdeg" + '_' + identifier + ".gdml",outDir+"/geometry"])
+    	call(['cp',sourceDir + "/geometry/prex5deg" + '_' + identifier + ".gdml",outDir+"/geometry"])
     
     f=open(outDir+"/"+"/myRun.mac",'w')
     f.write("/moller/ana/rootfilename ./o_prexSim\n")
@@ -82,7 +84,7 @@ def createMacFiles(config,outDir,sourceDir,nrEv,jobNr,identifier):
         f.write("/moller/field/setFieldScaleFactor 1.\n")
         f.write("/moller/field/setLowLim -74 cm\n")
         f.write("/moller/field/setHighLim 74 cm\n")
-        f.write("/moller/det/setDetectorFileName geometry/prexIIdeg_" + identifier + ".gdml\n")
+        f.write("/moller/det/setDetectorFileName geometry/prex5deg_" + identifier + ".gdml\n")
     
     f.write("/moller/det/setShieldMaterial polyethylene\n")
     f.write("/testhadr/CutsAll 0.7 mm\n")
@@ -96,7 +98,7 @@ def createBashScript(outDir, email):
     f.write("#!/bin/bash\n")
     f.write("#SBATCH --ntasks=1\n")
     f.write("#SBATCH --ntasks-per-node=1\n")
-    f.write("#SBATCH --time=12:00:00\n")
+    f.write("#SBATCH --time=02:00:00\n")
     f.write("#SBATCH --output=" + outDir + "/log.out\n")
     f.write("#SBATCH --error=" + outDir + "/log.err\n")
     #f.write("#SBATCH --mail-type=ALL\n")

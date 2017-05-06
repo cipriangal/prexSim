@@ -1,3 +1,5 @@
+import config_reader as cr
+
 def get_particle(key):
 	if key == lg or key == mg or key == hg:   return 'g'
 	elif key == le or key == me or key == he: return 'e'
@@ -18,11 +20,12 @@ def get_energy(key):
 #|        | /        \ ======= |    \|      |====== |=======| |/   |==== #
 ##########################################################################
 
-n_files = 80
+start_file = cr.start_run()
+end_file = cr.end_run()
 sensative_det = 10013
-config = 'crex5'
-#config = 'prexII'
-identifier = 'shieldless'
+#config = 'crex5'
+config = cr.config()
+identifier = cr.identifier()
 dir_path = 'output/'
 f_prefix = 'o_' + config + '_'
 output_filename = config + '_summed_out_' + identifier
@@ -42,7 +45,7 @@ summed_data = {e: {}, f: {}}
 for key in keys:
 	summed_data[e][key] = 0; summed_data[f][key] = 0
 
-for n in range(0, n_files):
+for n in range(start_file, end_file):
 	f_num    = '%04d'%n
 	
 	fname = dir_path + f_prefix + f_num + '_' + identifier + '_SV' + str(sensative_det) + '_powerFlux.dat'

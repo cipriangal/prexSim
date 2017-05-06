@@ -1,0 +1,16 @@
+#Config File
+config=prexII
+#config=crex5
+
+ident=shieldless
+#ident=concreteL
+#ident=concretePbL
+
+start_run=0
+end_run=80
+
+n_events=500000
+
+e_cut=30
+
+uva_id=ajz3ee
