@@ -10,7 +10,7 @@ using namespace std;
 int main(int argc, char **argv){
 
   if(argc!=3){
-    cout<<"run as:\n\tbuild/drawBfield <configName -- can be either prex1, prex2 or crex> <nSteps>\n";
+    cout<<"run as:\n\tbuild/drawBfield <configName -- can be either prex1, prex2, crex or pvdis> <nSteps>\n";
     return 1;
   }
   string config=argv[1];
@@ -25,7 +25,7 @@ int main(int argc, char **argv){
   TGraph *by=new TGraph();
   TGraph *bz=new TGraph();
   double point[4]={-1*CLHEP::cm,0,0,0};
-  double deltaY=0.001*CLHEP::cm;  
+  double deltaY=0.001*CLHEP::cm;
   for(int i=0;i<nSteps;i++){
     if(i%100==1) cout<<"at step\t"<<i<<endl;
     double z = -110 + 220.*i/nSteps;//local septum position
@@ -55,6 +55,6 @@ int main(int argc, char **argv){
   bz->Write();
 
   fout->Close();
-  
+
   return 0;
 }
