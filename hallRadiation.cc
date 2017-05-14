@@ -60,6 +60,7 @@ int main(int argc, char **argv){
     ifstream ifile(finNm.c_str());
     string data;
     while(ifile>>data){
+      cout<<" processing: "<<data<<endl;
       ProcessOne(data);
     }
   }
@@ -132,7 +133,7 @@ void ProcessOne(string fnm){
     if(z0== -17720) continue;
 
     double energy(-1);
-    if( volume >=10008 && volume <= 10013 ) //Kryptonite detectors
+    if( (volume >=10008 && volume <= 10013) || volume==10101 || volume==10102 ) //Kryptonite detectors
       energy = Edeposit;
     else //vacuum detectors
       energy = kinE;
