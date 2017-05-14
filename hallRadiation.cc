@@ -175,20 +175,19 @@ void UpdateMeans(){
 	for(int ib=1;ib<=nbins;ib++){
 	  double val = valAvg[id][ip][idmg]->GetBinContent(ib)/nAvg;
 	  valAvg[id][ip][idmg]->SetBinContent(ib,0);	  
-	  if(val > 0){
-	    intAvg[id][ip][idmg][ib]++;
-	    double currentMean = hAvg[id][ip][idmg]->GetBinContent(ib);
-	    double currentVar  = hAvg[id][ip][idmg]->GetBinError(ib);
 
-	    double delta   = val - currentMean;
-	    double newMean = currentMean + delta/intAvg[id][ip][idmg][ib];
-	    double delta2  = val - newMean;
-	    double newVar  = currentVar + delta*delta2;
+	  intAvg[id][ip][idmg][ib]++;
+	  double currentMean = hAvg[id][ip][idmg]->GetBinContent(ib);
+	  double currentVar  = hAvg[id][ip][idmg]->GetBinError(ib);
 
-	    hAvg[id][ip][idmg]->SetBinContent(ib,newMean);
-	    hAvg[id][ip][idmg]->SetBinError(ib,newVar);
+	  double delta   = val - currentMean;
+	  double newMean = currentMean + delta/intAvg[id][ip][idmg][ib];
+	  double delta2  = val - newMean;
+	  double newVar  = currentVar + delta*delta2;
+
+	  hAvg[id][ip][idmg]->SetBinContent(ib,newMean);
+	  hAvg[id][ip][idmg]->SetBinError(ib,newVar);
 	    
-	  }
 	}
       }
     }
