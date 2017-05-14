@@ -19,9 +19,10 @@ using namespace std;
 void niceLogBins(TH1*);
 //energy/neil/mrem
 //photons/electron/neutrons
-const int nBins=100;
 vector<vector<vector<TH1D*> > > hTotal, hAvg, valAvg;
 vector<vector<vector<vector<int> > > > intAvg;
+const int nBins=100;
+TH1D *hSummary[3];//energy, neil, mRem
 void UpdateMeans();
 int nAvg(-1);
 
@@ -29,6 +30,8 @@ TFile *fout;
 vector<int> detNr;
 
 void Initialize();
+void Summarize();
+void FinalizeAvg();
 void WriteOutput();
 
 long currentEv(0),prevEv(0),processedEv(0);
@@ -65,6 +68,8 @@ int main(int argc, char **argv){
     }
   }
   cout<<"Processed a total of "<<processedEv<<endl;
+  FinalizeAvg();
+  Summarize();
   WriteOutput();
   cout<<"written"<<endl;
   return 0;
@@ -104,7 +109,7 @@ void ProcessOne(string fnm){
     //if( float(i+1)/nEntries*100 > 51) continue;
     t->GetEntry(i);
     if( float(i+1)/nEntries*100 > currentProc){
-      cout<<"at event\t"<<i<<"\t"<< float(i+1)/nEntries*100<<" %"<<endl;
+      cout<<"at tree entry\t"<<i<<"\t"<< float(i+1)/nEntries*100<<" %"<<endl;
       currentProc+=procStep;
     }
     
@@ -231,21 +236,42 @@ void Initialize(){
     hAvg.push_back(da1);
     valAvg.push_back(dv1);
   }
+  for(int i=0;i<3;i++){
+    hSummary[i]=new TH1D(Form("hSummary_%s",type[i].c_str()),Form("summary histogram per electron on target| %s",type[i].c_str()),
+			 detNr.size()*2,0,detNr.size()*2);
+    for(int ib=1;ib<=int(detNr.size());ib++){
+      hSummary[i]->GetXaxis()->SetBinLabel(2*ib-1,Form("%d Tot",detNr[ib-1]));
+      hSummary[i]->GetXaxis()->SetBinLabel(2*ib ,Form("%d Avg",detNr[ib-1]));
+    }
+  }
 }
 
-void WriteOutput(){
-  fout->cd();
+void Summarize(){
+  for(int idmg=0;idmg<3;idmg++){
+    for(int idet=1;idet<=int(detNr.size());idet++){
+      double tot(0),avg(0),sig(0);
+      for(int ipart=0;ipart<3;ipart++){
+	tot+=hTotal[idet-1][ipart][idmg]->Integral();
+	for(int ib=1;ib<=hAvg[idet-1][ipart][idmg]->GetXaxis()->GetNbins();ib++){
+	    avg += hAvg[idet-1][ipart][idmg]->GetBinContent(ib);
+	    sig = sqrt(pow(hAvg[idet-1][ipart][idmg]->GetBinError(ib),2) + pow(sig,2));
+	}
+      }
+      hSummary[idmg]->SetBinContent(2*idet-1,tot/processedEv);
+      hSummary[idmg]->SetBinError(2*idet-1,0);
+      hSummary[idmg]->SetBinContent(2*idet,avg);
+      hSummary[idmg]->SetBinError(2*idet,sig);
+    }
+  }
+}
+
+void FinalizeAvg(){
   int nDet=detNr.size();
   for(int id=0;id<nDet;id++){
-    fout->cd();
-    fout->mkdir(Form("Det_%d",detNr[id]));
-    fout->cd(Form("Det_%d",detNr[id]));
     for(int ip=0;ip<3;ip++){
       for(int idmg=0;idmg<3;idmg++){
-	hTotal[id][ip][idmg]->Write();
 	int nbins = hAvg[id][ip][idmg]->GetXaxis()->GetNbins();
 	for(int ib=1;ib<=nbins;ib++){
-	  //double v = hAvg[id][ip][idmg]->GetBinContent(ib);
 	  double d(0);
 	  if(intAvg[id][ip][idmg][ib]>=2)
 	    d = sqrt(hAvg[id][ip][idmg]->GetBinError(ib)/(intAvg[id][ip][idmg][ib]-1));
@@ -257,6 +283,23 @@ void WriteOutput(){
 	  else 
 	    hAvg[id][ip][idmg]->SetBinError(ib, d);
 	}
+      }
+    }
+  }
+}
+void WriteOutput(){
+  fout->cd();
+  for(int i=0;i<3;i++)
+    hSummary[i]->Write();
+  int nDet=detNr.size();
+
+  for(int id=0;id<nDet;id++){
+    fout->cd();
+    fout->mkdir(Form("Det_%d",detNr[id]));
+    fout->cd(Form("Det_%d",detNr[id]));
+    for(int ip=0;ip<3;ip++){
+      for(int idmg=0;idmg<3;idmg++){
+	hTotal[id][ip][idmg]->Write();
 	hAvg[id][ip][idmg]->Write();
       }
     }
