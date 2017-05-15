@@ -11,16 +11,16 @@ private:
   void InitNEIL();
   void InitMREM();
   double interpolate(std::vector<double> xV,
-		     std::vector<double> yV,
-		     double energy);
-		     
+                     std::vector<double> yV,
+                     double energy);
+
 public:
   radDamage(){InitNEIL();InitMREM();};
   ~radDamage(){};
 
-  double getNEIL(int partType,double energy,double theta=0);  
-  double getMREM(int partType,double energy,double theta=0);  
-  
+  double getNEIL(int partType,double energy,double theta=0);
+  double getMREM(int partType,double energy,double theta=0);
+
 };
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
