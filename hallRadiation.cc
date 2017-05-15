@@ -41,7 +41,7 @@ radDamage radDmg;
 int main(int argc, char **argv){
   if(argc<4){
     cout<<"Usage: build/hallRad <inputFile name: either rootfile or list of rootfiles> <nr of events to average over> <list of detector IDs>\n"
-	<<"\tfor example: build/hallRad o_SimName.root 5000 10013 10008 10009\n";
+        <<"\tfor example: build/hallRad o_SimName.root 5000 10013 10008 10009\n";
     return 1;
   }
   string finNm=argv[1];
@@ -112,7 +112,7 @@ void ProcessOne(string fnm){
       cout<<"at tree entry\t"<<i<<"\t"<< float(i+1)/nEntries*100<<" %"<<endl;
       currentProc+=procStep;
     }
-    
+
     currentEv += evNr - prevEv;
     prevEv = evNr;
     if( currentEv > nAvg ){
@@ -123,8 +123,8 @@ void ProcessOne(string fnm){
     int nHist(-1);
     for(int id=0;id<nDet;id++)
       if(volume==detNr[id]){
-	nHist=id;
-	break;
+        nHist=id;
+        break;
       }
     if(nHist==-1) continue;
 
@@ -171,24 +171,24 @@ void UpdateMeans(){
   for(int id=0;id<nDet;id++){
     for(int ip=0;ip<3;ip++){
       for(int idmg=0;idmg<3;idmg++){
-	int nbins= hAvg[id][ip][idmg]->GetXaxis()->GetNbins();
-	for(int ib=1;ib<=nbins;ib++){
-	  double val = valAvg[id][ip][idmg]->GetBinContent(ib)/nAvg;
-	  valAvg[id][ip][idmg]->SetBinContent(ib,0);	  
+        int nbins= hAvg[id][ip][idmg]->GetXaxis()->GetNbins();
+        for(int ib=1;ib<=nbins;ib++){
+          double val = valAvg[id][ip][idmg]->GetBinContent(ib)/nAvg;
+          valAvg[id][ip][idmg]->SetBinContent(ib,0);
 
-	  intAvg[id][ip][idmg][ib]++;
-	  double currentMean = hAvg[id][ip][idmg]->GetBinContent(ib);
-	  double currentVar  = hAvg[id][ip][idmg]->GetBinError(ib);
+          intAvg[id][ip][idmg][ib]++;
+          double currentMean = hAvg[id][ip][idmg]->GetBinContent(ib);
+          double currentVar  = hAvg[id][ip][idmg]->GetBinError(ib);
 
-	  double delta   = val - currentMean;
-	  double newMean = currentMean + delta/intAvg[id][ip][idmg][ib];
-	  double delta2  = val - newMean;
-	  double newVar  = currentVar + delta*delta2;
+          double delta   = val - currentMean;
+          double newMean = currentMean + delta/intAvg[id][ip][idmg][ib];
+          double delta2  = val - newMean;
+          double newVar  = currentVar + delta*delta2;
 
-	  hAvg[id][ip][idmg]->SetBinContent(ib,newMean);
-	  hAvg[id][ip][idmg]->SetBinError(ib,newVar);
-	    
-	}
+          hAvg[id][ip][idmg]->SetBinContent(ib,newMean);
+          hAvg[id][ip][idmg]->SetBinError(ib,newVar);
+
+        }
       }
     }
   }
@@ -205,27 +205,27 @@ void Initialize(){
     for(int ip=0;ip<3;ip++){
       int nrBins=nBins;
       if(ip==2)
-	nrBins/=10;
+        nrBins/=10;
       vector<TH1D*> dt2,da2,dv2;
       for(int idmg=0;idmg<3;idmg++){
-	TH1D *h=new TH1D(Form("ht_%d_%s_%s",detNr[id],hPnm[ip].c_str(),type[idmg].c_str()),
-			 Form("Total hits for det %d| part: %s| %s; energy [MeV]",detNr[id],hPnm[ip].c_str(),type[idmg].c_str()),
-			 nrBins,-4,4);
-	niceLogBins(h);
-	dt2.push_back(h);
+        TH1D *h=new TH1D(Form("ht_%d_%s_%s",detNr[id],hPnm[ip].c_str(),type[idmg].c_str()),
+                         Form("Total hits for det %d| part: %s| %s; energy [MeV]",detNr[id],hPnm[ip].c_str(),type[idmg].c_str()),
+                         nrBins,-4,4);
+        niceLogBins(h);
+        dt2.push_back(h);
 
-	TH1D *a=new TH1D(Form("ha_%d_%s_%s",detNr[id],hPnm[ip].c_str(),type[idmg].c_str()),
-			 Form("Hits/(%d ev) hits for det %d| part: %s| %s; energy [MeV]",nAvg,detNr[id],hPnm[ip].c_str(),type[idmg].c_str()),
-			 nrBins,-4,4);
-	niceLogBins(a);
-	da2.push_back(a);
+        TH1D *a=new TH1D(Form("ha_%d_%s_%s",detNr[id],hPnm[ip].c_str(),type[idmg].c_str()),
+                         Form("Hits/(%d ev) hits for det %d| part: %s| %s; energy [MeV]",nAvg,detNr[id],hPnm[ip].c_str(),type[idmg].c_str()),
+                         nrBins,-4,4);
+        niceLogBins(a);
+        da2.push_back(a);
 
-	//dummy histograms
-	TH1D *v=new TH1D(Form("hv_%d_%s_%s",detNr[id],hPnm[ip].c_str(),type[idmg].c_str()),
-			 Form("Hits/(%d ev) hits for det %d| part: %s| %s; energy [MeV]",nAvg,detNr[id],hPnm[ip].c_str(),type[idmg].c_str()),
-			 nrBins,-4,4);
-	niceLogBins(v);
-	dv2.push_back(v);
+        //dummy histograms
+        TH1D *v=new TH1D(Form("hv_%d_%s_%s",detNr[id],hPnm[ip].c_str(),type[idmg].c_str()),
+                         Form("Hits/(%d ev) hits for det %d| part: %s| %s; energy [MeV]",nAvg,detNr[id],hPnm[ip].c_str(),type[idmg].c_str()),
+                         nrBins,-4,4);
+        niceLogBins(v);
+        dv2.push_back(v);
       }
       dt1.push_back(dt2);
       da1.push_back(da2);
@@ -237,7 +237,7 @@ void Initialize(){
   }
   for(int i=0;i<3;i++){
     hSummary[i]=new TH1D(Form("hSummary_%s",type[i].c_str()),Form("summary histogram per electron on target| %s",type[i].c_str()),
-			 detNr.size()*2,0,detNr.size()*2);
+                         detNr.size()*2,0,detNr.size()*2);
     for(int ib=1;ib<=int(detNr.size());ib++){
       hSummary[i]->GetXaxis()->SetBinLabel(2*ib-1,Form("%d Tot",detNr[ib-1]));
       hSummary[i]->GetXaxis()->SetBinLabel(2*ib ,Form("%d Avg",detNr[ib-1]));
@@ -250,11 +250,11 @@ void Summarize(){
     for(int idet=1;idet<=int(detNr.size());idet++){
       double tot(0),avg(0),sig(0);
       for(int ipart=0;ipart<3;ipart++){
-	tot+=hTotal[idet-1][ipart][idmg]->Integral();
-	for(int ib=1;ib<=hAvg[idet-1][ipart][idmg]->GetXaxis()->GetNbins();ib++){
-	    avg += hAvg[idet-1][ipart][idmg]->GetBinContent(ib);
-	    sig = sqrt(pow(hAvg[idet-1][ipart][idmg]->GetBinError(ib),2) + pow(sig,2));
-	}
+        tot+=hTotal[idet-1][ipart][idmg]->Integral();
+        for(int ib=1;ib<=hAvg[idet-1][ipart][idmg]->GetXaxis()->GetNbins();ib++){
+          avg += hAvg[idet-1][ipart][idmg]->GetBinContent(ib);
+          sig = sqrt(pow(hAvg[idet-1][ipart][idmg]->GetBinError(ib),2) + pow(sig,2));
+        }
       }
       hSummary[idmg]->SetBinContent(2*idet-1,tot/processedEv);
       hSummary[idmg]->SetBinError(2*idet-1,0);
@@ -269,19 +269,20 @@ void FinalizeAvg(){
   for(int id=0;id<nDet;id++){
     for(int ip=0;ip<3;ip++){
       for(int idmg=0;idmg<3;idmg++){
-	int nbins = hAvg[id][ip][idmg]->GetXaxis()->GetNbins();
-	for(int ib=1;ib<=nbins;ib++){
-	  double d(0);
-	  if(intAvg[id][ip][idmg][ib]>=2)
-	    d = sqrt(hAvg[id][ip][idmg]->GetBinError(ib)/(intAvg[id][ip][idmg][ib]-1));
+        int nbins = hAvg[id][ip][idmg]->GetXaxis()->GetNbins();
+        for(int ib=1;ib<=nbins;ib++){
+          double d(0);
+          if(intAvg[id][ip][idmg][ib]>=2)
+            d = sqrt(hAvg[id][ip][idmg]->GetBinError(ib)/(intAvg[id][ip][idmg][ib]-1))/sqrt(intAvg[id][ip][idmg][ib]);
 
-	  if(d==0){
-	    hAvg[id][ip][idmg]->SetBinError(ib,0);
-	    hAvg[id][ip][idmg]->SetBinContent(ib,0);
-	  }
-	  else 
+          if(d==0){
+            hAvg[id][ip][idmg]->SetBinError(ib,0);
+            hAvg[id][ip][idmg]->SetBinContent(ib,0);
+          }
+          else{
 	    hAvg[id][ip][idmg]->SetBinError(ib, d);
-	}
+	  }
+        }
       }
     }
   }
@@ -298,8 +299,8 @@ void WriteOutput(){
     fout->cd(Form("Det_%d",detNr[id]));
     for(int ip=0;ip<3;ip++){
       for(int idmg=0;idmg<3;idmg++){
-	hTotal[id][ip][idmg]->Write();
-	hAvg[id][ip][idmg]->Write();
+        hTotal[id][ip][idmg]->Write();
+        hAvg[id][ip][idmg]->Write();
       }
     }
   }
@@ -308,17 +309,17 @@ void WriteOutput(){
 
 void niceLogBins(TH1*h)
 {
-   TAxis *axis = h->GetXaxis();
-   int bins = axis->GetNbins();
+  TAxis *axis = h->GetXaxis();
+  int bins = axis->GetNbins();
 
-   double from = axis->GetXmin();
-   double to = axis->GetXmax();
-   double width = (to - from) / bins;
-   double *new_bins = new double[bins + 1];
+  double from = axis->GetXmin();
+  double to = axis->GetXmax();
+  double width = (to - from) / bins;
+  double *new_bins = new double[bins + 1];
 
-   for (int i = 0; i <= bins; i++) {
-     new_bins[i] = pow(10, from + i * width);
-   }
-   axis->Set(bins, new_bins);
-   delete new_bins;
+  for (int i = 0; i <= bins; i++) {
+    new_bins[i] = pow(10, from + i * width);
+  }
+  axis->Set(bins, new_bins);
+  delete new_bins;
 }
