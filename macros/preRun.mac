@@ -22,6 +22,7 @@
    /gun/energy 2.2 GeV ##CREX
    #### Set B field configuration (prex1, prex2, crex)
    /moller/field/setConfiguration crex
+   /moller/field/useQ1fringeField true
    #### Geometry files
    /moller/det/setDetectorFileName geometry/crex5deg.gdml
 
@@ -38,6 +39,7 @@
    #/gun/energy 1.05 GeV
    #### Set B field configuration (prex1, prex2, crex)
    #/moller/field/setConfiguration prex1
+   #/moller/field/useQ1fringeField false
    #### Geometry files
    #/moller/det/setDetectorFileName geometry/prexIMother_pedestal_noshield.xml
 
