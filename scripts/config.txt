@@ -1,10 +1,17 @@
 #Config File
-config=prexII
-#config=crex5
+#config=prexII
+config=crex5
 
-ident=shieldless
+#ident=shieldless
 #ident=concreteL
 #ident=concretePbL
+#ident=concrete2blocks28thick
+ident=concrete2blocksPlusW
+#ident=concreteLHalfWidth45cutPlusWthick
+#ident=concrete2blocks28thick247Wide7cmZmovePlusW
+#ident=concrete2blocks28thick125WidePlusW
+#ident=concrete2blocks40thick247WideMove7cmZPlusW
+#ident=concreteWings
 
 start_run=0
 end_run=80
