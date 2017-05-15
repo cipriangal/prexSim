@@ -16,17 +16,18 @@
 #include "G4UImessenger.hh"
 #include "G4UIdirectory.hh"
 #include "G4UIcmdWithAString.hh"
+#include "G4UIcmdWithABool.hh"
 #include "G4UIcmdWithADoubleAndUnit.hh"
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 MollerGlobalMagnetFieldMessenger::MollerGlobalMagnetFieldMessenger(MollerGlobalMagnetField* myField)
-:setField(myField)
+  :setField(myField)
 {
   fieldDir = new G4UIdirectory("/moller/field/");
   fieldDir->SetGuidance("Magnet field control.");
 
-  magLowLimCmd = new G4UIcmdWithADoubleAndUnit("/moller/field/setLowLim",this);  
+  magLowLimCmd = new G4UIcmdWithADoubleAndUnit("/moller/field/setLowLim",this);
   magLowLimCmd->SetGuidance("Set Lower limit for shield in the Septum field.");
   magLowLimCmd->SetParameterName("Mfield_low",true);
   magLowLimCmd->SetDefaultValue(-44.0);
@@ -34,7 +35,7 @@ MollerGlobalMagnetFieldMessenger::MollerGlobalMagnetFieldMessenger(MollerGlobalM
   magLowLimCmd->SetRange("Mfield_low<=-44.0");
   //  magLowLimCmd->AvailableForStates(G4State_Init,G4State_PreInit,G4State_Idle, G4State_GeomClosed,G4State_Quit);
 
-  magHighLimCmd = new G4UIcmdWithADoubleAndUnit("/moller/field/setHighLim",this);  
+  magHighLimCmd = new G4UIcmdWithADoubleAndUnit("/moller/field/setHighLim",this);
   magHighLimCmd->SetGuidance("Set Higher limit for shield in the Septum field.");
   magHighLimCmd->SetParameterName("Mfield_high",true);
   magHighLimCmd->SetDefaultValue(44.0);
@@ -42,7 +43,7 @@ MollerGlobalMagnetFieldMessenger::MollerGlobalMagnetFieldMessenger(MollerGlobalM
   magHighLimCmd->SetRange("Mfield_high>=44.0");
   //  magHighLimCmd->AvailableForStates(G4State_Init,G4State_PreInit,G4State_Idle, G4State_GeomClosed,G4State_Quit);
 
-  magScaleFactorCmd = new G4UIcmdWithADouble("/moller/field/setFieldScaleFactor",this);  
+  magScaleFactorCmd = new G4UIcmdWithADouble("/moller/field/setFieldScaleFactor",this);
   magScaleFactorCmd->SetGuidance("Set magnetic field scale factor.");
   magScaleFactorCmd->SetParameterName("magScaleFactor",true);
   magScaleFactorCmd->SetDefaultValue(1.);
@@ -51,6 +52,11 @@ MollerGlobalMagnetFieldMessenger::MollerGlobalMagnetFieldMessenger(MollerGlobalM
   configurationCmd->SetGuidance("Possible options: prex1, prex2, crex");
   configurationCmd->SetParameterName("configuration",true);
   configurationCmd->SetDefaultValue("crex");
+
+  q1FringeFieldCmd = new G4UIcmdWithABool("/moller/field/useQ1fringeField",this);
+  q1FringeFieldCmd->SetGuidance("Possible options: true, false");
+  q1FringeFieldCmd->SetParameterName("q1FringeField",true);
+  q1FringeFieldCmd->SetDefaultValue(false);
 
 
 }
@@ -63,6 +69,7 @@ MollerGlobalMagnetFieldMessenger::~MollerGlobalMagnetFieldMessenger()
   delete magLowLimCmd;
   delete magHighLimCmd;
   delete configurationCmd;
+  delete q1FringeFieldCmd;
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -73,11 +80,13 @@ void MollerGlobalMagnetFieldMessenger::SetNewValue(G4UIcommand* command, G4Strin
   if (command ==  magLowLimCmd ){
     setField->SetLowLimSeptumField(magLowLimCmd->GetNewDoubleValue(newValue));
   } else if (command == magHighLimCmd ){
-    setField->SetHighLimSeptumField(magHighLimCmd->GetNewDoubleValue(newValue)); 
+    setField->SetHighLimSeptumField(magHighLimCmd->GetNewDoubleValue(newValue));
   } else if (command == magScaleFactorCmd ){
     setField->SetScaleFactor(magScaleFactorCmd->GetNewDoubleValue(newValue));
   } else if (command == configurationCmd ){
     setField->SetConfiguration(newValue);
+  } else if (command == q1FringeFieldCmd ){
+    setField->SetQ1fringeValue(q1FringeFieldCmd->GetNewBoolValue(newValue));
   }
 }
 

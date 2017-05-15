@@ -30,6 +30,7 @@ public:
   void SetLowLimSeptumField(G4double value) { mg_field_low = value; };
   void SetHighLimSeptumField(G4double value) { mg_field_high = value; };
   void SetScaleFactor(G4double value) {magScaleFactor=value;}
+  void SetQ1fringeValue(G4bool val){addQ1fringe=val;}
 
   G4double ReadLowLimSeptumField() {return mg_field_low;};
   G4double ReadHighLimSeptumField() {return mg_field_high;};
@@ -37,12 +38,15 @@ public:
 
   void GetFieldValue( const  G4double Point[4], G4double *Bfield ) const;
   void GetFieldValuePREX2( const  G4double Point[4], G4double *Bfield ) const;
+  void GetFieldValueQ1( const  G4double Point[4], G4double *Bfield ) const;
   void GetFieldValueCREX( const  G4double Point[4], G4double *Bfield ) const;
   void WriteMagField();
 
 private:
 
-  //MollerGlobalMagnetFieldMessenger*      fGlobalMagnetFieldMessenger;
+  G4double interpolate(std::vector<double> xV,
+		       std::vector<double> yV,
+		       G4double val)const;
 
   MollerMagnetFieldMap*  fMagneticField_MainMagnet;
   MollerMagnetFieldMap*  fMagneticField_MiniMagnet;
@@ -55,6 +59,8 @@ private:
   G4String upstreamFilename;
   G4String hybridFilename;
   G4String configuration;
+
+  G4bool addQ1fringe;
 
   G4double magScaleFactor;
   G4double mg_field_low;

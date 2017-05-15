@@ -9,26 +9,36 @@ using namespace std;
 
 int main(int argc, char **argv){
 
-  if(argc!=3){
-    cout<<"run as:\n\tbuild/drawBfield <configName -- can be either prex1, prex2 or crex> <nSteps>\n";
+  if(argc!=4){
+    cout<<"run as:\n\tbuild/drawBfield <configName -- can be either prex1, prex2 or crex> <nSteps> <with Q1 fringe?: can be 0 or 1>\n";
     return 1;
   }
   string config=argv[1];
   const int nSteps=atoi(argv[2]);
+  const int withQ1Fringe=atoi(argv[3]);
   double offset=69.91;
 
   MollerGlobalMagnetField bField;
   bField.SetConfiguration(config);
+  string foutNm;
+  if(withQ1Fringe){
+    bField.SetQ1fringeValue(true);
+    foutNm = Form("o_drawBfield_%s_withQ1fringe.root",config.c_str());
+  }else{
+    foutNm = Form("o_drawBfield_%s_woutQ1fringe.root",config.c_str());
+  }
 
-  TFile *fout=new TFile(Form("o_drawBfield_%s.root",config.c_str()),"RECREATE");
+
+
+  TFile *fout=new TFile(foutNm.c_str(),"RECREATE");
   TGraph *bx=new TGraph();
   TGraph *by=new TGraph();
   TGraph *bz=new TGraph();
   double point[4]={-1*CLHEP::cm,0,0,0};
-  double deltaY=0.001*CLHEP::cm;  
+  double deltaY=0.001*CLHEP::cm;
   for(int i=0;i<nSteps;i++){
     if(i%100==1) cout<<"at step\t"<<i<<endl;
-    double z = -110 + 220.*i/nSteps;//local septum position
+    double z = -220 + 440.*i/nSteps;//local septum position
 
     point[2]=(z+offset)*CLHEP::cm;//global position needed for calculation
     point[1]=0;
@@ -55,6 +65,6 @@ int main(int argc, char **argv){
   bz->Write();
 
   fout->Close();
-  
+
   return 0;
 }
