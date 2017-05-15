@@ -120,11 +120,8 @@ void MollerGlobalMagnetField::GetFieldValue(const G4double Point[4], G4double *B
     GetFieldValueCREX(Point,Bfield);
   }
 
-  G4cout<<Point[2]<<" "<<Bfield[0]<<" "<<Bfield[1]<<G4endl;
   if(addQ1fringe)
     GetFieldValueQ1(Point,Bfield);
-  G4cout<<Point[2]<<" "<<Bfield[0]<<" "<<Bfield[1]<<G4endl;
-  std::cin.ignore();
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -222,10 +219,8 @@ void MollerGlobalMagnetField::GetFieldValueQ1(const G4double Point[4], G4double 
       dBydx = interpolate(z,b,myLocalPointInMainMagnet[2]/cm)*gauss/cm;
     }
   }
-  G4cout<<myLocalPointInMainMagnet[2]<<" "<<Bfield[0]<<" "<<Bfield[1]<<" "<<dBydx<<G4endl;
   Bfield[0] += -myLocalPointInMainMagnet[1]*dBydx;
   Bfield[1] += -myLocalPointInMainMagnet[0]*dBydx;
-  G4cout<<myLocalPointInMainMagnet[2]<<" "<<Bfield[0]<<" "<<Bfield[1]<<G4endl;
 }
 
 G4double MollerGlobalMagnetField::interpolate(std::vector<double> xV,
