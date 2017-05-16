@@ -102,6 +102,10 @@ void MollerGlobalMagnetField::SetConfiguration(const G4String val){
     magScaleFactor = 0.219;
     mg_field_low = -69*cm;
     mg_field_high = 61*cm;
+  }else if( val == "pvdis" ){
+    magScaleFactor = 0.;
+    mg_field_low = -69*cm;
+    mg_field_high = 61*cm;
   }else{
     G4cerr<<__LINE__<<"\t"<<__PRETTY_FUNCTION__
           <<"\n\tUnknown magnetic field configuration! Quitting!\n";
@@ -118,6 +122,8 @@ void MollerGlobalMagnetField::GetFieldValue(const G4double Point[4], G4double *B
     GetFieldValuePREX2(Point,Bfield);
   }else if( configuration == "crex" ){
     GetFieldValueCREX(Point,Bfield);
+  }else if( configuration == "pvdis" ){
+    GetFieldValuePREX2(Point,Bfield);
   }
 
   if(addQ1fringe)
