@@ -250,7 +250,17 @@ void processTree(string tname){
   Float_t pdgID;
 
   TChain *t = new TChain("geant");
-  t->Add(tname.c_str());
+  if ( tname.find(".root") < tname.size() ){
+    t->Add(tname.c_str());
+  }else{
+    ifstream ifile(tname.c_str());
+    string data;
+    while(ifile>>data){
+      cout<<"adding: "<<data<<endl;
+      t->Add(data.c_str());
+    }
+  }
+
   t->SetBranchAddress("type",&type);
   t->SetBranchAddress("volume",&volume);
   t->SetBranchAddress("x",&xd);
