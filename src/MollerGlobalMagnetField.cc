@@ -135,7 +135,6 @@ void MollerGlobalMagnetField::GetFieldValuePREX2(const G4double Point[4], G4doub
 {
 
   G4double myLocalPointInMainMagnet[4];
-  G4double myLocalBfieldInMainMagnet[3];
 
   G4double dBxdy = 0.*gauss/cm;
   G4double dBydx = 0.*gauss/cm;
@@ -153,8 +152,6 @@ void MollerGlobalMagnetField::GetFieldValuePREX2(const G4double Point[4], G4doub
 
   // Worksite for new gaussian - Ricky
   // Calculating the new peaks au and ad
-  G4double au = a*(exp(-((pow(mg_field_low-bu,2))/(2*pow(c2,2)))));
-  G4double ad = a*(exp(-((pow(mg_field_high-bd,2))/(2*pow(c2,2)))));
   G4double z_intercept_low = mg_field_low + pow( (2*pow(c1,2)*log(a*exp(-(pow(mg_field_low-bu,2)/(2*pow(c2,2))))/shielded)),0.5);
   G4double z_intercept_high =  mg_field_high - pow( (2*pow(c1,2)*log(a*exp(-(pow(mg_field_high-bd,2)/(2*pow(c2,2))))/shielded)),0.5);
 
@@ -255,7 +252,6 @@ G4double MollerGlobalMagnetField::interpolate(std::vector<double> xV,
 void MollerGlobalMagnetField::GetFieldValueCREX(const G4double Point[4], G4double *Bfield ) const
 {
   G4double myLocalPointInMainMagnet[4];
-  G4double myLocalBfieldInMainMagnet[3];
 
   G4double dBxdy = 0.*gauss/cm;
   G4double dBydx = 0.*gauss/cm;
