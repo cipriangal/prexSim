@@ -332,10 +332,10 @@
         <positionref ref="gateValve_posRel"/>
       </physvol>
 
-      <physvol>
-      	<file name="geometry/prex1Beampipe.gdml"/>
-      	<position name="prex1beampipe_posRel" unit="cm" x="0" y="-100" z="0"/>
-      </physvol>
+      <!-- <physvol> -->
+      <!-- 	<file name="geometry/prex1Beampipe.gdml"/> -->
+      <!-- 	<position name="prex1beampipe_posRel" unit="cm" x="0" y="-100" z="0"/> -->
+      <!-- </physvol> -->
 
     </volume>
   </structure>
