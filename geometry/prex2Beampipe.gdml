@@ -11,8 +11,8 @@
     <position name="det03_posRel" unit="cm" x="0" y="0" z="350.740"/>
     <position name="det04_posRel" unit="cm" x="0" y="0" z="2500"/>
     <position name="det05_posRel" unit="cm" x="0" y="0" z="3067"/>
-    <position name="det06_posRel" unit="cm" x="0" y="0" z="1764"/>
-    <position name="det07_posRel" unit="cm" x="0" y="0" z="1983"/>
+    <position name="det06_posRel" unit="cm" x="0" y="0" z="2793"/>
+    <position name="det07_posRel" unit="cm" x="0" y="0" z="3012"/>
     <position name="gateValve_cylinder_box_posRel" unit="cm" x="0" y="-8" z="0"/>
     <position name="gateValve_posRel" unit="cm" x="0" y="0" z="166.715"/>
   </define>
@@ -130,16 +130,16 @@
       <zplane rmin="30.162" rmax="45.72" z="954.96"/>
       <zplane rmin="30.162" rmax="45.72" z="955.96"/>
       <zplane rmin="45.402" rmax="45.72" z="955.96"/>
-      <zplane rmin="45.402" rmax="45.72" z="1505.56"/>
-      <zplane rmin="47.67" rmax="48.15" z="1505.6"/>
-      <zplane rmin="29.89" rmax="30.37" z="1530.9"/>
-      <zplane rmin="29.89" rmax="30.37" z="1764.5"/>
-      <zplane rmin="4.13" rmax="30.37" z="1764.5"/>
-      <zplane rmin="4.13" rmax="30.37" z="1766.5"/>
-      <zplane rmin="29.89" rmax="30.37" z="1766.5"/>
-      <zplane rmin="29.89" rmax="30.37" z="1983.3"/>
-      <zplane rmin="15.23" rmax="15.70" z="1998.9"/>
-      <zplane rmin="15.23" rmax="15.70" z="2003.7"/>
+      <zplane rmin="45.402" rmax="45.72" z="2534.74"/>
+      <zplane rmin="47.67" rmax="48.15" z="2534.8"/>
+      <zplane rmin="29.89" rmax="30.37" z="2560.1"/>
+      <zplane rmin="29.89" rmax="30.37" z="2793.7"/>
+      <zplane rmin="4.13" rmax="30.37" z="2793.7"/>
+      <zplane rmin="4.13" rmax="30.37" z="2795.7"/>
+      <zplane rmin="29.89" rmax="30.37" z="2795.7"/>
+      <zplane rmin="29.89" rmax="30.37" z="3012.5"/>
+      <zplane rmin="15.23" rmax="15.70" z="3028.1"/>
+      <zplane rmin="15.23" rmax="15.70" z="3032.9"/>
     </polycone>
 
     <!-- gate valve: estimate from VAT Series 47: 471_1VFE.pdf and pictures of the hall-->
@@ -332,10 +332,10 @@
         <positionref ref="gateValve_posRel"/>
       </physvol>
 
-      <!-- <physvol> -->
-      <!-- 	<file name="geometry/prex1Beampipe.gdml"/> -->
-      <!-- 	<position name="prex1beampipe_posRel" unit="cm" x="0" y="-100" z="0"/> -->
-      <!-- </physvol> -->
+      <physvol>
+      	<file name="geometry/prex1Beampipe.gdml"/>
+      	<position name="prex1beampipe_posRel" unit="cm" x="0" y="-100" z="0"/>
+      </physvol>
 
     </volume>
   </structure>

@@ -73,14 +73,15 @@ def beamPREX2():
     p2nSlices=6
     #### 0 is a connection to 8 in gate valve. JLAB DWG. NO. 65620-C-38500-04 (placed after the gate valve)
     #### 1-5 connection to the wall of the hall. JLAB DWG NO 65620-E-38500-07
+    #### 5 extended based on JLAB DWG NO 65620-E-38500-01
     ## pipe outer diameter in cm
     p2dMax     =[ 34.29 ,  20.955,  25.400,  30.480,  60.960,   91.440]
     ## pipe thickens in cm
     p2Thickness=[  6.96 ,   0.318,   0.318,   0.318,   0.318,    0.318]
     ## length in cm
-    p2bLen=[       1.905,  94.456,  30.48 , 106.200, 551.180,  549.600]
+    p2bLen=[       1.905,  94.456,  30.48 , 106.200, 551.180, 1578.780]
     ## center position in cm
-    p2bCen=[     172.69 , 220.871, 283.34 , 351.680, 680.370, 1230.760]
+    p2bCen=[     172.69 , 220.871, 283.34 , 351.680, 680.370, 1745.350]
     f1.write("\t\t<polycone aunit=\"deg\" startphi=\"0\" deltaphi=\"360\" lunit=\"cm\" name=\"beamPipe_solid2\">\n")
     for i in range(0,p2nSlices):
         print i
@@ -97,19 +98,19 @@ def beamPREX2():
 
     #### the neck down before the difuser: JLAB DWG NO JL0009934
     ### conical neck down
-    f1.write("\t\t\t<zplane rmin=\"47.67\" rmax=\"48.15\" z=\"1505.6\"/>\n")
-    f1.write("\t\t\t<zplane rmin=\"29.89\" rmax=\"30.37\" z=\"1530.9\"/>\n")
+    f1.write("\t\t\t<zplane rmin=\"47.67\" rmax=\"48.15\" z=\"2534.8\"/>\n")
+    f1.write("\t\t\t<zplane rmin=\"29.89\" rmax=\"30.37\" z=\"2560.1\"/>\n")
     ### straight piece
-    f1.write("\t\t\t<zplane rmin=\"29.89\" rmax=\"30.37\" z=\"1764.5\"/>\n")
+    f1.write("\t\t\t<zplane rmin=\"29.89\" rmax=\"30.37\" z=\"2793.7\"/>\n")
     #### center plate JLAB DWG NO JL0014254
-    f1.write("\t\t\t<zplane rmin=\"4.13\" rmax=\"30.37\" z=\"1764.5\"/>\n")
-    f1.write("\t\t\t<zplane rmin=\"4.13\" rmax=\"30.37\" z=\"1766.5\"/>\n")
-    f1.write("\t\t\t<zplane rmin=\"29.89\" rmax=\"30.37\" z=\"1766.5\"/>\n")
+    f1.write("\t\t\t<zplane rmin=\"4.13\" rmax=\"30.37\" z=\"2793.7\"/>\n")
+    f1.write("\t\t\t<zplane rmin=\"4.13\" rmax=\"30.37\" z=\"2795.7\"/>\n")
+    f1.write("\t\t\t<zplane rmin=\"29.89\" rmax=\"30.37\" z=\"2795.7\"/>\n")
     ### back to straigh piece
-    f1.write("\t\t\t<zplane rmin=\"29.89\" rmax=\"30.37\" z=\"1983.3\"/>\n")
+    f1.write("\t\t\t<zplane rmin=\"29.89\" rmax=\"30.37\" z=\"3012.5\"/>\n")
     ### further neck down
-    f1.write("\t\t\t<zplane rmin=\"15.23\" rmax=\"15.70\" z=\"1998.9\"/>\n")
-    f1.write("\t\t\t<zplane rmin=\"15.23\" rmax=\"15.70\" z=\"2003.7\"/>\n")
+    f1.write("\t\t\t<zplane rmin=\"15.23\" rmax=\"15.70\" z=\"3028.1\"/>\n")
+    f1.write("\t\t\t<zplane rmin=\"15.23\" rmax=\"15.70\" z=\"3032.9\"/>\n")
     f1.write("\t\t</polycone>\n")
 
     f1.close()
