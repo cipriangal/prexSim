@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+
+<gdml xmlns:gdml="http://cern.ch/2001/Schemas/GDML"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="./schema/gdml.xsd">
+
+  <define>
+    <!--Positions are relative to the end of the septum beamPipe-->
+    <position name="center_posRel" unit="cm" x="0" y="0" z="0"/>
+    <position name="det02_posRel" unit="cm" x="0" y="0" z="111.004"/>
+    <position name="det03_posRel" unit="cm" x="0" y="0" z="350.740"/>
+    <position name="det04_posRel" unit="cm" x="0" y="0" z="2500"/>
+    <position name="det05_posRel" unit="cm" x="0" y="0" z="3067"/>
+    <position name="gateValve_cylinder_box_posRel" unit="cm" x="0" y="-8" z="0"/>
+    <position name="gateValve_posRel" unit="cm" x="0" y="0" z="166.715"/>
+  </define>
+
+  <materials>
+    <material Z="1" name="Vacuum" state="gas">
+      <T unit="K" value="2.73"/>
+      <P unit="pascal" value="3e-18"/>
+      <D unit="g/cm3" value="1e-25"/>
+      <atom unit="g/mole" value="1.01"/>
+    </material>
+
+    <material Z="13" name="Aluminum" state="solid">
+      <T unit="K" value="298"/>
+      <D unit="g/cm3" value="2.699"/>
+      <atom unit="g/mole" value="26.982"/>
+    </material>
+
+    <material Z="13" name="StainlessSteel" state="solid">
+      <T unit="K" value="298"/>
+      <D unit="g/cm3" value="2.699"/>
+      <atom unit="g/mole" value="26.982"/>
+    </material>
+  </materials>
+
+  <solids>
+    <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="det01_solid"
+	  rmin="0"
+	  rmax="3.8"
+	  z="0.1"/>
+
+    <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="det02_solid"
+	  rmin="0"
+	  rmax="6.25"
+	  z="0.1"/>
+
+    <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="det03_solid"
+	  rmin="0"
+	  rmax="15.45"
+	  z="0.1"/>
+
+    <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="det04_solid"
+	  rmin="0"
+	  rmax="45.62"
+	  z="0.1"/>
+
+    <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="det05_solid"
+	  rmin="0"
+	  rmax="45.62"
+	  z="0.1"/>
+
+    <polycone aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="beamPipe_solid1">
+      <zplane rmin="4.102" rmax="4.1275" z="-1"/>
+      <zplane rmin="4.102" rmax="4.1275" z="0"/>
+      <zplane rmin="3.8195" rmax="4.1275" z="0.0"/>
+      <zplane rmin="3.8195" rmax="4.1275" z="27.018"/>
+      <zplane rmin="3.8195" rmax="4.445" z="27.018"/>
+      <zplane rmin="3.8195" rmax="4.445" z="28.018"/>
+      <zplane rmin="4.137" rmax="4.445" z="28.018"/>
+      <zplane rmin="4.137" rmax="4.445" z="46.028"/>
+      <zplane rmin="4.137" rmax="4.7625" z="46.028"/>
+      <zplane rmin="4.137" rmax="4.7625" z="47.028"/>
+      <zplane rmin="4.4545" rmax="4.7625" z="47.028"/>
+      <zplane rmin="4.4545" rmax="4.7625" z="61.268"/>
+      <zplane rmin="4.4545" rmax="5.08" z="61.268"/>
+      <zplane rmin="4.4545" rmax="5.08" z="62.268"/>
+      <zplane rmin="4.772" rmax="5.08" z="62.268"/>
+      <zplane rmin="4.772" rmax="5.08" z="98.296"/>
+      <zplane rmin="4.772" rmax="6.35" z="98.296"/>
+      <zplane rmin="4.772" rmax="6.35" z="99.296"/>
+      <zplane rmin="6.042" rmax="6.35" z="99.296"/>
+      <zplane rmin="6.042" rmax="6.35" z="121.712"/>
+      <zplane rmin="6.042" rmax="7.62" z="121.712"/>
+      <zplane rmin="6.042" rmax="7.62" z="122.712"/>
+      <zplane rmin="7.312" rmax="7.62" z="122.7115"/>
+      <zplane rmin="7.312" rmax="7.62" z="149.3345"/>
+      <zplane rmin="7.312" rmax="10.16" z="149.3345"/>
+      <zplane rmin="7.312" rmax="10.16" z="150.3345"/>
+      <zplane rmin="9.949" rmax="10.16" z="150.3355"/>
+      <zplane rmin="9.949" rmax="10.16" z="158.7845"/>
+      <zplane rmin="9.949" rmax="17.145" z="158.7845"/>
+      <zplane rmin="9.949" rmax="17.145" z="159.7845"/>
+      <zplane rmin="10.185" rmax="17.145" z="159.7875"/>
+      <zplane rmin="10.185" rmax="17.145" z="161.6925"/>
+    </polycone>
+    <polycone aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="beamPipe_solid2">
+      <zplane rmin="10.185" rmax="17.145" z="171.7375"/>
+      <zplane rmin="10.185" rmax="17.145" z="172.6425"/>
+      <zplane rmin="10.185" rmax="10.4775" z="172.6425"/>
+      <zplane rmin="10.185" rmax="10.4775" z="173.6425"/>
+      <zplane rmin="10.1595" rmax="10.4775" z="173.643"/>
+      <zplane rmin="10.1595" rmax="10.4775" z="267.099"/>
+      <zplane rmin="10.1595" rmax="12.7" z="267.099"/>
+      <zplane rmin="10.1595" rmax="12.7" z="268.099"/>
+      <zplane rmin="12.382" rmax="12.7" z="268.1"/>
+      <zplane rmin="12.382" rmax="12.7" z="297.58"/>
+      <zplane rmin="12.382" rmax="15.24" z="297.58"/>
+      <zplane rmin="12.382" rmax="15.24" z="298.58"/>
+      <zplane rmin="14.922" rmax="15.24" z="298.58"/>
+      <zplane rmin="14.922" rmax="15.24" z="403.78"/>
+      <zplane rmin="14.922" rmax="30.48" z="403.78"/>
+      <zplane rmin="14.922" rmax="30.48" z="404.78"/>
+      <zplane rmin="30.162" rmax="30.48" z="404.78"/>
+      <zplane rmin="30.162" rmax="30.48" z="954.96"/>
+      <zplane rmin="30.162" rmax="45.72" z="954.96"/>
+      <zplane rmin="30.162" rmax="45.72" z="955.96"/>
+      <zplane rmin="45.402" rmax="45.72" z="955.96"/>
+      <zplane rmin="45.402" rmax="45.72" z="1505.56"/>
+      <zplane rmin="47.67" rmax="48.15" z="1505.6"/>
+      <zplane rmin="29.89" rmax="30.37" z="1530.9"/>
+      <zplane rmin="29.89" rmax="30.37" z="1764.5"/>
+      <zplane rmin="4.13" rmax="30.37" z="1764.5"/>
+      <zplane rmin="4.13" rmax="30.37" z="1766.5"/>
+      <zplane rmin="29.89" rmax="30.37" z="1766.5"/>
+      <zplane rmin="29.89" rmax="30.37" z="1983.3"/>
+      <zplane rmin="15.23" rmax="15.70" z="1998.9"/>
+      <zplane rmin="15.23" rmax="15.70" z="2003.7"/>
+    </polycone>
+
+    <!-- gate valve: estimate from VAT Series 47: 471_1VFE.pdf and pictures of the hall-->
+    <!-- x=O1/2;y=(M+N)/2; z=K/2; -->
+    <box lunit="cm" name="gateValve_s1" x="33.6" y="50.3" z="3.9"/>
+    <!-- <box lunit="cm" name="gateValve_s1" x="16.8" y="45.15" z="3.9"/> -->
+    <!-- rmax=B/2;z=A/2 -->
+    <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="gateValve_s2"
+	  rmin="0"
+	  rmax="15.5"
+	  z="8.0"/>
+    <!-- rmax=D/2;z=A/2+1 -->
+    <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="gateValve_s3"
+	  rmin="0"
+	  rmax="10.0"
+	  z="9.0"/>
+    <union name ="gateValve_s4">
+      <first ref="gateValve_s2"/>
+      <second ref="gateValve_s1"/>
+      <positionref ref="gateValve_cylinder_box_posRel"/>
+    </union>
+    <subtraction name ="gateValve_solid">
+      <first ref="gateValve_s4"/>
+      <second ref="gateValve_s3"/>
+      <positionref ref="center_posRel"/>
+    </subtraction>
+
+    <!-- Union of all objects so that there is a space to physically add them -->
+    <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="bP2worldUnion0"
+	  rmin="0"
+	  rmax="4.102"
+	  z="0.1"/>
+
+    <union name ="bP2worldUnion1">
+      <first ref="bP2worldUnion0"/>
+      <second ref="beamPipe_solid1"/>
+      <positionref ref="center_posRel"/>
+    </union>
+    <union name ="bP2worldUnion2">
+      <first ref="bP2worldUnion1"/>
+      <second ref="det02_solid"/>
+      <positionref ref="det02_posRel"/>
+    </union>
+    <union name ="bP2worldUnion3">
+      <first ref="bP2worldUnion2"/>
+      <second ref="det03_solid"/>
+      <positionref ref="det03_posRel"/>
+    </union>
+    <union name ="bP2worldUnion4">
+      <first ref="bP2worldUnion3"/>
+      <second ref="det04_solid"/>
+      <positionref ref="det04_posRel"/>
+    </union>
+    <union name ="bP2worldUnion5">
+      <first ref="bP2worldUnion4"/>
+      <second ref="det05_solid"/>
+      <positionref ref="det05_posRel"/>
+    </union>
+    <union name ="bP2worldUnion6">
+      <first ref="bP2worldUnion5"/>
+      <second ref="beamPipe_solid2"/>
+      <positionref ref="center_posRel"/>
+    </union>
+    <union name ="bP2worldUnion7">
+      <first ref="bP2worldUnion6"/>
+      <second ref="gateValve_solid"/>
+      <positionref ref="gateValve_posRel"/>
+    </union>
+
+  </solids>
+
+  <structure>
+
+    <volume name="det01_logic">
+      <materialref ref="Vacuum"/>
+      <solidref ref="det01_solid"/>
+      <auxiliary auxtype="SensDet" auxvalue="volumeN10001"/>
+    </volume>
+
+    <volume name="det02_logic">
+      <materialref ref="Vacuum"/>
+      <solidref ref="det02_solid"/>
+      <auxiliary auxtype="SensDet" auxvalue="volumeN10002"/>
+    </volume>
+
+    <volume name="det03_logic">
+      <materialref ref="Vacuum"/>
+      <solidref ref="det03_solid"/>
+      <auxiliary auxtype="SensDet" auxvalue="volumeN10003"/>
+    </volume>
+
+    <volume name="det04_logic">
+      <materialref ref="Vacuum"/>
+      <solidref ref="det04_solid"/>
+      <auxiliary auxtype="SensDet" auxvalue="volumeN10004"/>
+    </volume>
+
+    <volume name="det05_logic">
+      <materialref ref="Vacuum"/>
+      <solidref ref="det05_solid"/>
+      <auxiliary auxtype="SensDet" auxvalue="volumeN10005"/>
+    </volume>
+
+    <volume name="beamPipe_logic1">
+      <materialref ref="Aluminum"/>
+      <solidref ref="beamPipe_solid1"/>
+    </volume>
+    <volume name="beamPipe_logic2">
+      <materialref ref="Aluminum"/>
+      <solidref ref="beamPipe_solid2"/>
+    </volume>
+    <volume name="gateValve_logic">
+      <materialref ref="StainlessSteel"/>
+      <solidref ref="gateValve_solid"/>
+    </volume>
+
+    <volume name="beamPipeP2">
+      <materialref ref="Vacuum"/>
+      <solidref ref="bP2worldUnion7"/>
+
+      <physvol name="det01_phys">
+        <volumeref ref="det01_logic"/>
+        <positionref ref="center_posRel"/>
+      </physvol>
+
+      <physvol name="det02_phys">
+        <volumeref ref="det02_logic"/>
+        <positionref ref="det02_posRel"/>
+      </physvol>
+
+      <physvol name="det03_phys">
+        <volumeref ref="det03_logic"/>
+        <positionref ref="det03_posRel"/>
+      </physvol>
+
+      <physvol name="det04_phys">
+        <volumeref ref="det04_logic"/>
+        <positionref ref="det04_posRel"/>
+      </physvol>
+
+      <physvol name="det05_phys">
+        <volumeref ref="det05_logic"/>
+        <positionref ref="det05_posRel"/>
+      </physvol>
+
+      <physvol name="beamPipe_phys1">
+        <volumeref ref="beamPipe_logic1"/>
+        <positionref ref="center_posRel"/>
+      </physvol>
+
+      <physvol name="beamPipe_phys2">
+        <volumeref ref="beamPipe_logic2"/>
+        <positionref ref="center_posRel"/>
+      </physvol>
+
+      <physvol name="gateValve_phys">
+        <volumeref ref="gateValve_logic"/>
+        <positionref ref="gateValve_posRel"/>
+      </physvol>
+
+      <!-- <physvol> -->
+      <!-- 	<file name="geometry/prex1Beampipe.gdml"/> -->
+      <!-- 	<position name="prex1beampipe_posRel" unit="cm" x="0" y="-100" z="0"/> -->
+      <!-- </physvol> -->
+
+    </volume>
+  </structure>
+
+  <setup name="beamPipe_prex2" version="1.0">
+    <world ref="beamPipeP2"/>
+  </setup>
+
+</gdml>
