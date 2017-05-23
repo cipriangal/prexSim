@@ -11,6 +11,8 @@
     <position name="det03_posRel" unit="cm" x="0" y="0" z="350.740"/>
     <position name="det04_posRel" unit="cm" x="0" y="0" z="2500"/>
     <position name="det05_posRel" unit="cm" x="0" y="0" z="3067"/>
+    <position name="det06_posRel" unit="cm" x="0" y="0" z="1764"/>
+    <position name="det07_posRel" unit="cm" x="0" y="0" z="1983"/>
     <position name="gateValve_cylinder_box_posRel" unit="cm" x="0" y="-8" z="0"/>
     <position name="gateValve_posRel" unit="cm" x="0" y="0" z="166.715"/>
   </define>
@@ -44,7 +46,7 @@
 
     <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="det02_solid"
 	  rmin="0"
-	  rmax="6.25"
+	  rmax="6.0"
 	  z="0.1"/>
 
     <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="det03_solid"
@@ -60,6 +62,16 @@
     <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="det05_solid"
 	  rmin="0"
 	  rmax="45.62"
+	  z="0.1"/>
+
+    <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="det06_solid"
+	  rmin="0"
+	  rmax="29.8"
+	  z="0.1"/>
+
+    <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="det07_solid"
+	  rmin="0"
+	  rmax="29.8"
 	  z="0.1"/>
 
     <polycone aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="beamPipe_solid1">
@@ -196,6 +208,16 @@
       <second ref="gateValve_solid"/>
       <positionref ref="gateValve_posRel"/>
     </union>
+    <union name ="bP2worldUnion8">
+      <first ref="bP2worldUnion7"/>
+      <second ref="det06_solid"/>
+      <positionref ref="det06_posRel"/>
+    </union>
+    <union name ="bP2worldUnion9">
+      <first ref="bP2worldUnion8"/>
+      <second ref="det07_solid"/>
+      <positionref ref="det07_posRel"/>
+    </union>
 
   </solids>
 
@@ -231,6 +253,18 @@
       <auxiliary auxtype="SensDet" auxvalue="volumeN10005"/>
     </volume>
 
+    <volume name="det06_logic">
+      <materialref ref="Vacuum"/>
+      <solidref ref="det06_solid"/>
+      <auxiliary auxtype="SensDet" auxvalue="volumeN10006"/>
+    </volume>
+
+    <volume name="det07_logic">
+      <materialref ref="Vacuum"/>
+      <solidref ref="det07_solid"/>
+      <auxiliary auxtype="SensDet" auxvalue="volumeN10007"/>
+    </volume>
+
     <volume name="beamPipe_logic1">
       <materialref ref="Aluminum"/>
       <solidref ref="beamPipe_solid1"/>
@@ -246,7 +280,7 @@
 
     <volume name="beamPipeP2">
       <materialref ref="Vacuum"/>
-      <solidref ref="bP2worldUnion7"/>
+      <solidref ref="bP2worldUnion9"/>
 
       <physvol name="det01_phys">
         <volumeref ref="det01_logic"/>
@@ -271,6 +305,16 @@
       <physvol name="det05_phys">
         <volumeref ref="det05_logic"/>
         <positionref ref="det05_posRel"/>
+      </physvol>
+
+      <physvol name="det06_phys">
+        <volumeref ref="det06_logic"/>
+        <positionref ref="det06_posRel"/>
+      </physvol>
+
+      <physvol name="det07_phys">
+        <volumeref ref="det07_logic"/>
+        <positionref ref="det07_posRel"/>
       </physvol>
 
       <physvol name="beamPipe_phys1">
