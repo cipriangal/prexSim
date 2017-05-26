@@ -2,6 +2,12 @@
 # Setup the project
 #
 cmake_minimum_required(VERSION 2.6 FATAL_ERROR)
+SITE_NAME(mySite)
+message("On this thing: " ${mySite})
+if(${mySite} MATCHES "udc-*")
+    set(CMAKE_C_COMPILER gcc)	
+    set(CMAKE_CXX_COMPILER g++)
+endif()
 project(prexsim)
 set(useROOT true)        # use true or false
 #----------------------------------------------------------------------------
@@ -24,9 +30,7 @@ include(FindROOT.cmake)
 message(STATUS "Found Root ${ROOT_LIBRARY_DIR}")
 include(${Geant4_USE_FILE})
 include_directories(${PROJECT_SOURCE_DIR}/include ${ROOT_INCLUDE_DIR} )
-set(LINK_DIRECTORIES
-${ROOT_LIBRARY_DIR}
-)
+set(LINK_DIRECTORIES ${ROOT_LIBRARY_DIR})
 link_directories( ${LINK_DIRECTORIES})
 
 #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=address")
@@ -49,8 +53,15 @@ target_link_libraries(prexsim ${LINK_LIBRARIES})
 add_executable(anaRad anaHallRadiation.cc ${sources} ${headers})
 target_link_libraries(anaRad ${LINK_LIBRARIES})
 
+add_executable(drawBfield drawBfield.cc ${sources} ${headers})
+target_link_libraries(drawBfield ${LINK_LIBRARIES})
+
 add_executable(calcRadDamage calc1MeVneutronEquivalent.cc)
 target_link_libraries(calcRadDamage ${LINK_LIBRARIES})
+
+add_definitions(-std=c++11)
+add_executable(hallRad hallRadiation.cc ${sources} ${headers})
+target_link_libraries(hallRad ${LINK_LIBRARIES})
 
 #----------------------------------------------------------------------------
 # Copy all scripts to the build directory, i.e. the directory in which we
