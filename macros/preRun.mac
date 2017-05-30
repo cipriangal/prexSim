@@ -24,7 +24,7 @@
    /moller/field/setConfiguration crex
    /moller/field/useQ1fringeField true
    #### Geometry files
-   /moller/det/setDetectorFileName geometry/crex5deg.gdml
+   /moller/det/setDetectorFileName geometry/crex5deg_concrete2blocksPlusW.gdml
 
 
 ############
