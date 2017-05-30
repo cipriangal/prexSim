@@ -103,17 +103,11 @@ int main(int argc,char** argv) {
 void Init(){
   low_ranges[0]=-2600;
   low_ranges[1]=-110;
-  low_ranges[2]= -40;
+  low_ranges[2]= 135;
   up_ranges[0]=-110;
-<<<<<<< HEAD
-  up_ranges[1]= -100;
-  up_ranges[2]= 0;
-  
-=======
   up_ranges[1]= 135;
   up_ranges[2]= 3400;
 
->>>>>>> upstream/master
   for(int i=0;i<3;i++){
     if(Histo_vert_z_full[i]){
       Histo_vert_z_full[i]          ->Reset();
@@ -154,7 +148,7 @@ void Init(){
 void bookHisto(){
   char hPnm[3]={'g','e','n'};
   TString pType[3]={"#gamma","e#pm","n"};
-  TString sranges[3]={"z0 < -110 cm","-110 < z0 < -100 cm","-40 < z0 < 0 cm"};
+  TString sranges[3]={"z < -110 cm","-110 < z < 135 cm","135 < z < 3400 cm"};
   TString eranges[3]={"lowE","medE","highE"};
   const double fixCut=eCut;
   double eCuts[4]={0,0.1,fixCut,1000};
@@ -224,7 +218,7 @@ void PrintInfo(){
 
   TString oName[3]={"Photons  ","Electrons","Neutrons"};
   TString eName[3]={"  0<E<0.1","0.1<E<eCut"," eCut<E<1000"};
-  TString zName[3]={"-2600<z0<-110"," -110<z0<-100","  -40<z0<0"};
+  TString zName[3]={"-2600<z<-110"," -110<z<135","  135<z<3400"};
   cout<<" ~Printing:"<<endl;
   ofstream fout(Form("output/o_%s_%s_powerFlux.dat",ofnm.c_str(),prename.c_str()),std::ofstream::out);
 
@@ -360,26 +354,6 @@ void processTree(string tname){
       }
 
       for(Int_t j=0;j<3;j++){
-<<<<<<< HEAD
-	if (low_ranges[j] <= z_0/10 && z_0/10 < up_ranges[j]&&abs(x_0)<200&&abs(y_0)<200){
-	    Histo_vert_z[j][hist]->Fill(z_0/10,1/tot_events);
-	    Histo_vert_z_weighted[j][hist]->Fill(z_0/10,Energy/tot_events);
-	    
-	    if (Energy<0.10){
-	      Histo_Energy_custom_lt_eCut[j][hist]->Fill(Energy);
-	      power_range[j][0][hist]+=Energy;
-	      flux_range[j][0][hist]++;
-	    }else if (Energy>=0.10 && Energy<eCut){
-	      Histo_Energy_custom_lt_eCut[j][hist]->Fill(Energy);
-	      power_range[j][1][hist]+=Energy;
-	      flux_range[j][1][hist]++;
-	    }else if (Energy>=eCut && Energy<1000){
-	      Histo_Energy_custom_gt_eCut[j][hist]->Fill(Energy);
-	      power_range[j][2][hist]+=Energy;
-	      flux_range[j][2][hist]++;
-	    }
-	}
-=======
         if (low_ranges[j] <= z_0/10 && z_0/10 < up_ranges[j]){
           Histo_vert_z[j][hist]->Fill(z_0/10,1/tot_events);
           Histo_vert_z_weighted[j][hist]->Fill(z_0/10,Energy/tot_events);
@@ -398,7 +372,6 @@ void processTree(string tname){
             flux_range[j][2][hist]++;
           }
         }
->>>>>>> upstream/master
       }
     }
 
