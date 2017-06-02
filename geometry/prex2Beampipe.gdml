@@ -11,11 +11,11 @@
     <position name="det03_posRel" unit="cm" x="0" y="0" z="350.740"/>
     <position name="det04_posRel" unit="cm" x="0" y="0" z="2500"/>
     <position name="det05_posRel" unit="cm" x="0" y="0" z="3067"/>
-    <position name="det06_posRel" unit="cm" x="0" y="0" z="2793"/>
-    <position name="det07_posRel" unit="cm" x="0" y="0" z="2796"/>
+    <position name="det06_posRel" unit="cm" x="0" y="0" z="2789.385"/>
+    <position name="det07_posRel" unit="cm" x="0" y="0" z="2791.985"/>
     <position name="det08_posRel" unit="cm" x="0" y="0" z="3012"/>
     <position name="gateValve_cylinder_box_posRel" unit="cm" x="0" y="-8" z="0"/>
-    <position name="gateValve_posRel" unit="cm" x="0" y="0" z="166.715"/>
+    <position name="gateValve_posRel" unit="cm" x="0" y="0" z="163.784"/>
   </define>
 
   <materials>
@@ -83,7 +83,7 @@
     <polycone aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="beamPipe_solid1">
       <zplane rmin="4.102" rmax="4.1275" z="-1"/>
       <zplane rmin="4.102" rmax="4.1275" z="0"/>
-      <zplane rmin="3.8195" rmax="4.1275" z="0.0"/>
+      <zplane rmin="3.8195" rmax="4.1275" z="0"/>
       <zplane rmin="3.8195" rmax="4.1275" z="27.018"/>
       <zplane rmin="3.8195" rmax="4.445" z="27.018"/>
       <zplane rmin="3.8195" rmax="4.445" z="28.018"/>
@@ -103,50 +103,50 @@
       <zplane rmin="6.042" rmax="6.35" z="121.712"/>
       <zplane rmin="6.042" rmax="7.62" z="121.712"/>
       <zplane rmin="6.042" rmax="7.62" z="122.712"/>
-      <zplane rmin="7.312" rmax="7.62" z="122.7115"/>
-      <zplane rmin="7.312" rmax="7.62" z="149.3345"/>
-      <zplane rmin="7.312" rmax="10.16" z="149.3345"/>
-      <zplane rmin="7.312" rmax="10.16" z="150.3345"/>
-      <zplane rmin="9.949" rmax="10.16" z="150.3355"/>
-      <zplane rmin="9.949" rmax="10.16" z="158.7845"/>
-      <zplane rmin="9.949" rmax="17.145" z="158.7845"/>
-      <zplane rmin="9.949" rmax="17.145" z="159.7845"/>
-      <zplane rmin="10.185" rmax="17.145" z="159.7875"/>
-      <zplane rmin="10.185" rmax="17.145" z="161.6925"/>
+      <zplane rmin="7.312" rmax="7.62" z="122.712"/>
+      <zplane rmin="7.312" rmax="7.62" z="149.335"/>
+      <zplane rmin="7.312" rmax="10.16" z="149.335"/>
+      <zplane rmin="7.312" rmax="10.16" z="150.335"/>
+      <zplane rmin="9.949" rmax="10.16" z="150.335"/>
+      <zplane rmin="9.949" rmax="10.16" z="157.879"/>
+      <zplane rmin="9.949" rmax="17.145" z="157.879"/>
+      <zplane rmin="9.949" rmax="17.145" z="158.514"/>
+      <zplane rmin="10.185" rmax="17.145" z="158.514"/>
+      <zplane rmin="10.185" rmax="17.145" z="159.784"/>
     </polycone>
     <polycone aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="beamPipe_solid2">
-      <zplane rmin="10.185" rmax="17.145" z="171.7375"/>
-      <zplane rmin="10.185" rmax="17.145" z="172.6425"/>
-      <zplane rmin="10.185" rmax="10.4775" z="172.6425"/>
-      <zplane rmin="10.185" rmax="10.4775" z="173.6425"/>
-      <zplane rmin="10.1595" rmax="10.4775" z="173.643"/>
-      <zplane rmin="10.1595" rmax="10.4775" z="267.099"/>
-      <zplane rmin="10.1595" rmax="12.7" z="267.099"/>
-      <zplane rmin="10.1595" rmax="12.7" z="268.099"/>
-      <zplane rmin="12.382" rmax="12.7" z="268.1"/>
-      <zplane rmin="12.382" rmax="12.7" z="297.58"/>
-      <zplane rmin="12.382" rmax="15.24" z="297.58"/>
-      <zplane rmin="12.382" rmax="15.24" z="298.58"/>
-      <zplane rmin="14.922" rmax="15.24" z="298.58"/>
-      <zplane rmin="14.922" rmax="15.24" z="403.78"/>
-      <zplane rmin="14.922" rmax="30.48" z="403.78"/>
-      <zplane rmin="14.922" rmax="30.48" z="404.78"/>
-      <zplane rmin="30.162" rmax="30.48" z="404.78"/>
-      <zplane rmin="30.162" rmax="30.48" z="954.96"/>
-      <zplane rmin="30.162" rmax="45.72" z="954.96"/>
-      <zplane rmin="30.162" rmax="45.72" z="955.96"/>
-      <zplane rmin="45.402" rmax="45.72" z="955.96"/>
-      <zplane rmin="45.402" rmax="45.72" z="2534.74"/>
-      <zplane rmin="47.67" rmax="48.15" z="2534.8"/>
-      <zplane rmin="29.89" rmax="30.37" z="2560.1"/>
-      <zplane rmin="29.89" rmax="30.37" z="2793.7"/>
-      <zplane rmin="4.13" rmax="30.37" z="2793.7"/>
-      <zplane rmin="4.13" rmax="30.37" z="2795.7"/>
-      <zplane rmin="29.89" rmax="30.37" z="2795.7"/>
-      <zplane rmin="29.89" rmax="30.37" z="3012.5"/>
-      <zplane rmin="15.23" rmax="15.70" z="3028.1"/>
-      <zplane rmin="15.23" rmax="15.70" z="3032.9"/>
+      <zplane rmin="10.185" rmax="17.145" z="167.784"/>
+      <zplane rmin="10.185" rmax="17.145" z="169.689"/>
+      <zplane rmin="10.1595" rmax="10.4775" z="169.689"/>
+      <zplane rmin="10.1595" rmax="10.4775" z="263.145"/>
+      <zplane rmin="10.1595" rmax="12.7" z="263.145"/>
+      <zplane rmin="10.1595" rmax="12.7" z="264.145"/>
+      <zplane rmin="12.382" rmax="12.7" z="264.145"/>
+      <zplane rmin="12.382" rmax="12.7" z="293.625"/>
+      <zplane rmin="12.382" rmax="15.24" z="293.625"/>
+      <zplane rmin="12.382" rmax="15.24" z="294.625"/>
+      <zplane rmin="14.922" rmax="15.24" z="294.625"/>
+      <zplane rmin="14.922" rmax="15.24" z="399.825"/>
+      <zplane rmin="14.922" rmax="30.48" z="399.825"/>
+      <zplane rmin="14.922" rmax="30.48" z="400.825"/>
+      <zplane rmin="30.162" rmax="30.48" z="400.825"/>
+      <zplane rmin="30.162" rmax="30.48" z="951.005"/>
+      <zplane rmin="30.162" rmax="45.72" z="951.005"/>
+      <zplane rmin="30.162" rmax="45.72" z="952.005"/>
+      <zplane rmin="45.402" rmax="45.72" z="952.005"/>
+      <zplane rmin="45.402" rmax="45.72" z="2530.785"/>
+      <zplane rmin="45.402" rmax="48.15" z="2530.785"/>
+      <zplane rmin="47.67" rmax="48.15" z="2530.785"/>
+      <zplane rmin="29.89" rmax="30.37" z="2556.085"/>
+      <zplane rmin="29.89" rmax="30.37" z="2789.685"/>
+      <zplane rmin="4.13" rmax="30.37" z="2789.685"/>
+      <zplane rmin="4.13" rmax="30.37" z="2791.685"/>
+      <zplane rmin="29.89" rmax="30.37" z="2791.685"/>
+      <zplane rmin="29.89" rmax="30.37" z="3008.485"/>
+      <zplane rmin="15.23" rmax="15.70" z="3024.085"/>
+      <zplane rmin="15.23" rmax="15.70" z="3028.885"/>
     </polycone>
+
 
     <!-- gate valve: estimate from VAT Series 47: 471_1VFE.pdf and pictures of the hall-->
     <!-- x=O1/2;y=(M+N)/2; z=K/2; -->

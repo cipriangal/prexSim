@@ -2972,12 +2972,6 @@
                     <positionref ref="dDet_ds_pos"/>
                   </physvol>
 
-                  <!-- Downstream of collimator -->
-                  <physvol name="beam_pipe_1">
-                    <volumeref ref="beamtube_1_logic" />
-                    <position name="posbeamline_1" unit="cm" x="0" y="0" z="center_septum_pipe+length_septum_pipe/2+0.5*(beamline[3,1]+beamline[3,2]+beamline[3,3]+beamline[3,4]+beamline[3,5]+beamline[3,6]+beamline[3,7]+beamline[3,8]+beamline[3,9]+beamline[3,10]+beamline[3,11]+beamline[3,12]+beamline[3,13])"/>
-                  </physvol>
-
                   <physvol name="cylwall">
                     <volumeref ref="cylwall_logic"/>
                     <positionref ref="cylwall_center"/>
@@ -2994,26 +2988,15 @@
                     <positionref ref="ssenc_cylcenter"/>
                   </physvol>
 
-                  <physvol name="beamline_1_det">
-                    <volumeref ref="dDet_beamline_1_logic"/>
+		  <!-- <physvol> -->
+      		  <!--   <file name="geometry/prex1Beampipe.gdml"/> -->
+                  <!--   <positionref ref="dDet_beamline_pos_1"/> -->
+		  <!-- </physvol> -->
+
+		  <physvol>
+      		    <file name="geometry/prex2Beampipe.gdml"/>
                     <positionref ref="dDet_beamline_pos_1"/>
-                  </physvol>
-
-                  <physvol name="beamline_2_det">
-                    <volumeref ref="dDet_beamline_2_logic"/>
-                    <positionref ref="dDet_beamline_pos_2"/>
-                  </physvol>
-
-                  <physvol name="beamline_3_det">
-                    <volumeref ref="dDet_beamline_3_logic"/>
-                    <positionref ref="dDet_beamline_pos_3"/>
-                  </physvol>
-
-                  <physvol name="beamline_4_det">
-                    <volumeref ref="dDet_beamline_4_logic"/>
-                    <positionref ref="dDet_beamline_pos_4"/>
-                  </physvol>
-
+		  </physvol>
                 </volume>
               </structure>
 

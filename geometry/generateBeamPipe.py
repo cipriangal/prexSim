@@ -42,7 +42,7 @@ def beamPREX2():
     f1.write("\t<solids>\n")
     nSlices=8
     #### 0-6 are for telescoping beampipe from target to exit beampipe. JLAB DWG. NO. 65620-D-38500-11
-    #### 7 is a connection to 8 in gate valve. JLAB DWG. NO. 65620-C-38500-04
+    #### 7 is a connection to 8inch gate valve. JLAB DWG. NO. 65620-C-38500-04
     ## pipe outer diameter in cm
     dMax     =[ 8.255,  8.890,   9.525, 10.160,  12.7,   15.240, 20.320,  34.290]
     ## pipe thickens in cm
@@ -50,28 +50,36 @@ def beamPREX2():
     ## length in cm
     bLen=[     28.018, 19.010,  15.240, 37.028,  23.416, 27.623,  9.449,   1.905]
     ## center position in cm
-    bCen=[     14.009, 37.523,  54.648, 80.782, 111.004,136.523,155.06 , 160.740]
+    ##bCen=[     14.009, 37.523,  54.648, 80.782, 111.004,136.523,155.06 , 160.740]
 
     septumRmax=4.102
     f1.write("\t\t<polycone aunit=\"deg\" startphi=\"0\" deltaphi=\"360\" lunit=\"cm\" name=\"beamPipe_solid1\">\n")
     f1.write("\t\t\t<zplane rmin=\""+str(septumRmax)+"\" rmax=\""+str(dMax[0]/2)+"\" z=\""+str(-1)+"\"/>\n")
     f1.write("\t\t\t<zplane rmin=\""+str(septumRmax)+"\" rmax=\""+str(dMax[0]/2)+"\" z=\""+str(0)+"\"/>\n")
-    for i in range(0,nSlices):
-        print i
-        f1.write("\t\t\t<zplane rmin=\""+str(dMax[i]/2 - thickness[i])+"\" rmax=\""+str(dMax[i]/2)+"\" z=\""+str(bCen[i]-bLen[i]/2)+"\"/>\n")
-        if i==7:
-            f1.write("\t\t\t<zplane rmin=\""+str(dMax[i]/2 - thickness[i])+"\" rmax=\""+str(dMax[i]/2)+"\" z=\""+str(bCen[i]+bLen[i]/2)+"\"/>\n")
-        else:
-            f1.write("\t\t\t<zplane rmin=\""+str(dMax[i]/2 - thickness[i])+"\" rmax=\""+str(dMax[i]/2)+"\" z=\""+str(bCen[i]+bLen[i]/2-1)+"\"/>\n")
+    zPos = 0
+    for i in range(0,nSlices-2):
+        print i, "center",zPos
+        f1.write("\t\t\t<zplane rmin=\""+str(dMax[i]/2 - thickness[i])+"\" rmax=\""+str(dMax[i]/2)+"\" z=\""+str(zPos)+"\"/>\n")
+        zPos += bLen[i]
+        f1.write("\t\t\t<zplane rmin=\""+str(dMax[i]/2 - thickness[i])+"\" rmax=\""+str(dMax[i]/2)+"\" z=\""+str(zPos-1)+"\"/>\n")
 
-        if i<7:
-            print i,"step 2"
-            f1.write("\t\t\t<zplane rmin=\""+str(dMax[i]/2 - thickness[i])+"\" rmax=\""+str(dMax[i+1]/2)+"\" z=\""+str(bCen[i]+bLen[i]/2 -1)+"\"/>\n")
-            f1.write("\t\t\t<zplane rmin=\""+str(dMax[i]/2 - thickness[i])+"\" rmax=\""+str(dMax[i+1]/2)+"\" z=\""+str(bCen[i]+bLen[i]/2)+"\"/>\n")
+        print i,"step 2"
+        f1.write("\t\t\t<zplane rmin=\""+str(dMax[i]/2 - thickness[i])+"\" rmax=\""+str(dMax[i+1]/2)+"\" z=\""+str(zPos -1)+"\"/>\n")
+        f1.write("\t\t\t<zplane rmin=\""+str(dMax[i]/2 - thickness[i])+"\" rmax=\""+str(dMax[i+1]/2)+"\" z=\""+str(zPos)+"\"/>\n")
+
+    f1.write("\t\t\t<zplane rmin=\""+str(dMax[6]/2 - thickness[6])+"\" rmax=\""+str(dMax[6]/2)+"\" z=\""+str(zPos)+"\"/>\n")
+    zPos += bLen[6]
+    f1.write("\t\t\t<zplane rmin=\""+str(dMax[6]/2 - thickness[6])+"\" rmax=\""+str(dMax[6]/2)+"\" z=\""+str(zPos-1.905)+"\"/>\n")
+    f1.write("\t\t\t<zplane rmin=\""+str(dMax[6]/2 - thickness[6])+"\" rmax=\""+str(dMax[7]/2)+"\" z=\""+str(zPos-1.905)+"\"/>\n")
+    f1.write("\t\t\t<zplane rmin=\""+str(dMax[6]/2 - thickness[6])+"\" rmax=\""+str(dMax[7]/2)+"\" z=\""+str(zPos-1.27)+"\"/>\n")
+    f1.write("\t\t\t<zplane rmin=\""+str(dMax[7]/2 - thickness[7])+"\" rmax=\""+str(dMax[7]/2)+"\" z=\""+str(zPos-1.27)+"\"/>\n")
+    f1.write("\t\t\t<zplane rmin=\""+str(dMax[7]/2 - thickness[7])+"\" rmax=\""+str(dMax[7]/2)+"\" z=\""+str(zPos)+"\"/>\n")
     f1.write("\t\t</polycone>\n")
 
+    lengthGateValve=8##cm
+    print "Gate valve center at: ",zPos+4
     p2nSlices=6
-    #### 0 is a connection to 8 in gate valve. JLAB DWG. NO. 65620-C-38500-04 (placed after the gate valve)
+    #### 0 is a connection to 8inch gate valve. JLAB DWG. NO. 65620-C-38500-04 (placed after the gate valve)
     #### 1-5 connection to the wall of the hall. JLAB DWG NO 65620-E-38500-07
     #### 5 extended based on JLAB DWG NO 65620-E-38500-01
     ## pipe outer diameter in cm
@@ -81,36 +89,50 @@ def beamPREX2():
     ## length in cm
     p2bLen=[       1.905,  94.456,  30.48 , 106.200, 551.180, 1578.780]
     ## center position in cm
-    p2bCen=[     172.69 , 220.871, 283.34 , 351.680, 680.370, 1745.350]
+    ##p2bCen=[     172.69 , 220.871, 283.34 , 351.680, 680.370, 1745.350]
     f1.write("\t\t<polycone aunit=\"deg\" startphi=\"0\" deltaphi=\"360\" lunit=\"cm\" name=\"beamPipe_solid2\">\n")
-    for i in range(0,p2nSlices):
+    zPos += lengthGateValve
+    f1.write("\t\t\t<zplane rmin=\""+str(p2dMax[0]/2 - p2Thickness[0])+"\" rmax=\""+str(p2dMax[0]/2)+"\" z=\""+str(zPos)+"\"/>\n")
+    zPos += p2bLen[0]
+    f1.write("\t\t\t<zplane rmin=\""+str(p2dMax[0]/2 - p2Thickness[0])+"\" rmax=\""+str(p2dMax[0]/2)+"\" z=\""+str(zPos)+"\"/>\n")
+    #f1.write("\t\t\t<zplane rmin=\""+str(p2dMax[1]/2 - p2Thickness[1])+"\" rmax=\""+str(p2dMax[1]/2)+"\" z=\""+str(zPos)+"\"/>\n")
+    for i in range(1,p2nSlices):
+        zPos += p2bLen[i]/2
         print i
-        f1.write("\t\t\t<zplane rmin=\""+str(p2dMax[i]/2-p2Thickness[i])+"\" rmax=\""+str(p2dMax[i]/2)+"\" z=\""+str(p2bCen[i]-p2bLen[i]/2)+"\"/>\n")
+        f1.write("\t\t\t<zplane rmin=\""+str(p2dMax[i]/2-p2Thickness[i])+"\" rmax=\""+str(p2dMax[i]/2)+"\" z=\""+str(zPos-p2bLen[i]/2)+"\"/>\n")
         if i==5:
-            f1.write("\t\t\t<zplane rmin=\""+str(p2dMax[i]/2-p2Thickness[i])+"\" rmax=\""+str(p2dMax[i]/2)+"\" z=\""+str(p2bCen[i]+p2bLen[i]/2)+"\"/>\n")
+            f1.write("\t\t\t<zplane rmin=\""+str(p2dMax[i]/2-p2Thickness[i])+"\" rmax=\""+str(p2dMax[i]/2)+"\" z=\""+str(zPos+p2bLen[i]/2)+"\"/>\n")
         else:
-            f1.write("\t\t\t<zplane rmin=\""+str(p2dMax[i]/2-p2Thickness[i])+"\" rmax=\""+str(p2dMax[i]/2)+"\" z=\""+str(p2bCen[i]+p2bLen[i]/2-1)+"\"/>\n")
+            f1.write("\t\t\t<zplane rmin=\""+str(p2dMax[i]/2-p2Thickness[i])+"\" rmax=\""+str(p2dMax[i]/2)+"\" z=\""+str(zPos+p2bLen[i]/2-1)+"\"/>\n")
 
         if i<5:
             print i,"step 2"
-            f1.write("\t\t\t<zplane rmin=\""+str(p2dMax[i]/2-p2Thickness[i])+"\" rmax=\""+str(p2dMax[i+1]/2)+"\" z=\""+str(p2bCen[i]+p2bLen[i]/2 -1)+"\"/>\n")
-            f1.write("\t\t\t<zplane rmin=\""+str(p2dMax[i]/2-p2Thickness[i])+"\" rmax=\""+str(p2dMax[i+1]/2)+"\" z=\""+str(p2bCen[i]+p2bLen[i]/2)+"\"/>\n")
+            f1.write("\t\t\t<zplane rmin=\""+str(p2dMax[i]/2-p2Thickness[i])+"\" rmax=\""+str(p2dMax[i+1]/2)+"\" z=\""+str(zPos+p2bLen[i]/2 -1)+"\"/>\n")
+            f1.write("\t\t\t<zplane rmin=\""+str(p2dMax[i]/2-p2Thickness[i])+"\" rmax=\""+str(p2dMax[i+1]/2)+"\" z=\""+str(zPos+p2bLen[i]/2)+"\"/>\n")
+        zPos += p2bLen[i]/2
 
     #### the neck down before the difuser: JLAB DWG NO JL0009934
     ### conical neck down
-    f1.write("\t\t\t<zplane rmin=\"47.67\" rmax=\"48.15\" z=\"2534.8\"/>\n")
-    f1.write("\t\t\t<zplane rmin=\"29.89\" rmax=\"30.37\" z=\"2560.1\"/>\n")
+    f1.write("\t\t\t<zplane rmin=\"45.402\" rmax=\"48.15\" z=\""+str(zPos)+"\"/>\n")
+    f1.write("\t\t\t<zplane rmin=\"47.67\" rmax=\"48.15\" z=\""+str(zPos)+"\"/>\n")
+    zPos += 25.3
+    f1.write("\t\t\t<zplane rmin=\"29.89\" rmax=\"30.37\" z=\""+str(zPos)+"\"/>\n")
     ### straight piece
-    f1.write("\t\t\t<zplane rmin=\"29.89\" rmax=\"30.37\" z=\"2793.7\"/>\n")
-    #### center plate JLAB DWG NO JL0014254
-    f1.write("\t\t\t<zplane rmin=\"4.13\" rmax=\"30.37\" z=\"2793.7\"/>\n")
-    f1.write("\t\t\t<zplane rmin=\"4.13\" rmax=\"30.37\" z=\"2795.7\"/>\n")
-    f1.write("\t\t\t<zplane rmin=\"29.89\" rmax=\"30.37\" z=\"2795.7\"/>\n")
+    zPos += 233.6
+    f1.write("\t\t\t<zplane rmin=\"29.89\" rmax=\"30.37\" z=\""+str(zPos)+"\"/>\n")
+    #### center plate (donut) JLAB DWG NO JL0014254
+    f1.write("\t\t\t<zplane rmin=\"4.13\" rmax=\"30.37\" z=\""+str(zPos)+"\"/>\n")
+    zPos += 2
+    f1.write("\t\t\t<zplane rmin=\"4.13\" rmax=\"30.37\" z=\""+str(zPos)+"\"/>\n")
+    f1.write("\t\t\t<zplane rmin=\"29.89\" rmax=\"30.37\" z=\""+str(zPos)+"\"/>\n")
     ### back to straigh piece
-    f1.write("\t\t\t<zplane rmin=\"29.89\" rmax=\"30.37\" z=\"3012.5\"/>\n")
+    zPos += 216.8
+    f1.write("\t\t\t<zplane rmin=\"29.89\" rmax=\"30.37\" z=\""+str(zPos)+"\"/>\n")
     ### further neck down
-    f1.write("\t\t\t<zplane rmin=\"15.23\" rmax=\"15.70\" z=\"3028.1\"/>\n")
-    f1.write("\t\t\t<zplane rmin=\"15.23\" rmax=\"15.70\" z=\"3032.9\"/>\n")
+    zPos += 15.6
+    f1.write("\t\t\t<zplane rmin=\"15.23\" rmax=\"15.70\" z=\""+str(zPos)+"\"/>\n")
+    zPos += 4.8
+    f1.write("\t\t\t<zplane rmin=\"15.23\" rmax=\"15.70\" z=\""+str(zPos)+"\"/>\n")
     f1.write("\t\t</polycone>\n")
 
     f1.close()
