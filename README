@@ -1,6 +1,6 @@
-*PREX simulation package
+#PREX simulation package
 
-**Table of Contents**
+##Table of Contents
 - [[#getting-code][Getting the code]]
   - [[#workflow][Workflow]]
   - [[#compiling-code][Compiling the code]]
@@ -11,10 +11,10 @@
 - [[#package-contents][Package contents]]
 - [[#output-tree][Output format]]
 
-**Getting the code**
+##Getting the code
  `git clone git@github.com:cipriangal/prexSim`
 
-***Workflow***
+###Workflow
 If you intend to make changes to the code and contribute it is suggested that you fork this repository into your own github account. (There is a button for that on the top right of the page). You will then have a backup for your local repository on github. To get your own repository run the same line as above but change "cipriangal" to your username.
 
 Before you start working on the code make sure you update your local repository from the remote:
@@ -28,7 +28,7 @@ If you have a feature in your fork and you would like to make it available to ot
 
 This repository contains multiple branches for working on different issues. You can see the list of branches at the top of the file list. If you want to create your own branch follow instrucations at [[https://git-scm.com/book/en/v2/Git-Branching-Basic-Branching-and-Merging][basic branching]].
 
-***Compiling the code***
+###Compiling the code
  ```
  mkdir build
  cd build
@@ -36,15 +36,15 @@ This repository contains multiple branches for working on different issues. You 
  make
  cd -
  ```
-***Running the code***
+###Running the code
  build/prexsim macros/prex_prerunCiprian.mac (to visualize)
  build/prexsim macros/prex_prerunCiprian.mac macros/myRun.mac (for batch mode)
 
 These two .mac files need to be modified in order to run exactly what you want. Make sure you change the number of detectors when changing from prex1 to prex2 configurations.
 
-***Analyzing output***
+###Analyzing output
 
-****anaRad****
+####anaRad
  ```
  mkdir output
  build/anaRad 
@@ -52,14 +52,14 @@ These two .mac files need to be modified in order to run exactly what you want. 
  
 The last line will give you instructions on what is needed as input for the executable. This will produce tables of flux and power in each detector separated by energy. The output rootfile will have additional granularity.
 
-****Dose estimates****
+####Dose estimates
  `build/hallRad`
  
 The last line will give you instructions on what is needed as input for the executable.
 
 This analysis executable will run over sensitive detectors and will calculate a 1MeV neutron equivalent and a radiation dose rate measured in mili-rem. A series of detectors are hardcoded as being kryptonite ( [10008,100013], 10101, 10102 ) while the rest are assumed to be vacuum. This is important because the energy being used in the routine to estimate the radiation damage/dose will be either the deposited energy (kryptonite) or the kinetic energy (vacuum).
 
-**Package contents**
+##Package contents
 This folder contains:
 
 prex_sim.cc:    Main Routine for Simulation.
@@ -78,7 +78,7 @@ scripts/:		Folder with scripts to submit large number of jobs to farms.
 
 rootScripts/:		Folder for small analysis scripts that can be run from the root prompt.
 
-**Output tree**
+##Output tree
 
 The data structure of the NTuple is as follows:
 
