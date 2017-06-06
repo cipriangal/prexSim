@@ -108,16 +108,16 @@ Detector, it creates a Hit with the following data:
 * **process**	-Not properly defined at the moment
 * **event**	-Not properly defined at the moment.
 * **creator**	-Process that created this particle, as assigned by G4
- 	* eIoni->         0     
+	* eIoni->         0     
 	* conv->          1
 	* Decay->         2
 	* annihil->       3
 	* Brem->          4
 	* phot->          5
- 	* compt->         6
-   	* Transportation->7
-    	* msc->           8
-     	* All Others->    9
+	* compt->         6
+	* Transportation->7
+	* msc->           8
+	* All Others->    9
 * **hit**	-Same as trackID (see below).
 * **kineE_org** - Vertex energy of THIS particle. 
 * **theta_org** - Scattering Angle of THIS particle.
