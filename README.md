@@ -25,6 +25,7 @@ If you have a feature in your fork and you would like to make it available to ot
 This repository contains multiple branches for working on different issues. You can see the list of branches at the top of the file list. If you want to create your own branch follow instrucations at https://git-scm.com/book/en/v2/Git-Branching-Basic-Branching-and-Merging 
 
 ### Compiling the code
+This code has been known to compile with G4 version up to 4.10.2.3.	
  ```
  mkdir build
  cd build
