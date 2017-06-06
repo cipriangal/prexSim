@@ -124,4 +124,4 @@ Detector, it creates a Hit with the following data:
 * **track**	-Track number as assigned by GEANT. Each particle created in an Event is given an incremental trackID number. In this case, Moller1 has track=1 and Moller2 has track=2.
 * **diffXS**	-Differential cross-section calculated in generator.
 * **totXS**	-Total cross-section calculated in generator.
-* **rate*    -Rate calculated in generator.
+* **rate**    -Rate calculated in generator.
