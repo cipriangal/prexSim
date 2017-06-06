@@ -1,16 +1,5 @@
 # PREX simulation package
 
-## Table of Contents
-- [[#getting-code][Getting the code]]
-  - [[#workflow][Workflow]]
-  - [[#compiling-code][Compiling the code]]
-  - [[#running-code][Running the code]]
-  - [[#analyzing-output][Analyzing output]]
-    - [[#anaRad][anaRad]]
-    - [[#dose-estimate][Does Estimates]]
-- [[#package-contents][Package contents]]
-- [[#output-tree][Output format]]
-
 ## Getting the code
  `git clone git@github.com:cipriangal/prexSim`
 
