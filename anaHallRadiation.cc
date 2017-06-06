@@ -56,7 +56,6 @@ int main(int argc,char** argv) {
   if(argc < 3){
     cout<<"Usage: anaRad [eCut for medium->HE in MeV][number of events] [input file name] [output file name] [list of sensative detectors #]"<<endl;
     cout<<" for example: build/anaRad 10 1e6 o_HAPPEX2_1e6.root HAPPEX2_1e6 1001 1002 2001 2002 2005 2003"<<endl;
-    cout<<"  NOTE: This build of prexsim uses the new detector numbers"<<endl;
     cout<<"   Output files will be of the type: output/anaRad_OutputFileName.root"<<endl;
     return 1;
   }
@@ -195,10 +194,17 @@ void bookHisto(){
 
   Det_Face = new TH1F("Det_Face","Detector Face Hit",8,-0.5,7.5);
 
+<<<<<<< HEAD
   int knownDet[4]={1001,1002,2001,2002};
   float ranges[5][3][2]={
     {{3500,5501},{-1000,1001},{17000,21001}},//1001
     {{-1750,-749},{500,1501},{1000,2001}},//1002
+=======
+  int knownDet[4]={10008,10009,2001,2002};
+  float ranges[5][3][2]={
+    {{3500,5501},{-1000,1001},{17000,21001}},//10008
+    {{-1750,-749},{500,1501},{1000,2001}},//10009
+>>>>>>> a283c8ba482adac29b88585a6efcc48653b47835
     {{8100,9101},{-500,501},{-15110,-14109}},//2001
     {{-4750,-3749},{-500,501},{-15110,-14109}},//2002
     {{-10000,10000},{-10000,10000},{-10000,10000}}
@@ -275,7 +281,14 @@ void processTree(string tname){
 
   if ( (SensVolume_v>=1001 && SensVolume_v <= 2000)){
     t->SetBranchAddress("Edeposit",&Energy); //because these are made from Kryptonite
+<<<<<<< HEAD
   }else if( SensVolume_v>=2001 && SensVolume_v<=3000) {
+=======
+  }else if( SensVolume_v==8001  || SensVolume_v==8002  ||
+            SensVolume_v==8003  || SensVolume_v==8004  || SensVolume_v==8005 ||
+            SensVolume_v==10001 || SensVolume_v==10002 || SensVolume_v==10003||
+            SensVolume_v==10004 || SensVolume_v==7001  || SensVolume_v==7002) {
+>>>>>>> a283c8ba482adac29b88585a6efcc48653b47835
     t->SetBranchAddress("kineE",&Energy); //because these are vacuum
   }else if( SensVolume_v>=3001 && SensVolume_v<=4000){
 	t->SetBranchAddress("Edeposit",&Energy); //Because we're only looking for energy going into a material volume.
@@ -287,7 +300,11 @@ void processTree(string tname){
   Double_t hit_radius_min = 0.; //cm
 
   //inner radius of the beam pipe 45.72 cm and outer radius of the beam pipe 46.038 cm
+<<<<<<< HEAD
   if ( SensVolume_v==2002  || SensVolume_v==2003)
+=======
+  if ( SensVolume_v==8002  || SensVolume_v==8003)
+>>>>>>> a283c8ba482adac29b88585a6efcc48653b47835
     hit_radius_min = 46.038; //cm
 
 
@@ -393,7 +410,11 @@ void processTree(string tname){
         else if ( (xd>-4750 && xd<-3750) && yd==500 && (zd>-15110 && zd<-14110) ) Det_Face->Fill(5);
         else if ( (xd>-4750 && xd<-3750) && yd==-500 && (zd>-15110 && zd<-14110) ) Det_Face->Fill(6);
       }
+<<<<<<< HEAD
       if (SensVolume_v == 1001){
+=======
+      if (SensVolume_v == 10008){
+>>>>>>> a283c8ba482adac29b88585a6efcc48653b47835
         if ( (xd>3500 && xd<5500) && (yd>-1000 && yd<1000) && zd==21000 ) Det_Face->Fill(1);
         else if ( (xd>3500 && xd<5500) && (yd>-1000 && yd<1000) && zd==17000 ) Det_Face->Fill(2);
         else if ( xd==5500 && (yd>-1000 && yd<1000) && (zd>17000 && zd<21000) ) Det_Face->Fill(3);
@@ -401,7 +422,11 @@ void processTree(string tname){
         else if ( (xd>3500 && xd<5500) && yd==1000 && (zd>17000 && zd<21000) ) Det_Face->Fill(5);
         else if ( (xd>3500 && xd<5500) && yd==-1000 && (zd>17000 && zd<21000) ) Det_Face->Fill(6);
       }
+<<<<<<< HEAD
       if (SensVolume_v == 1002){
+=======
+      if (SensVolume_v == 10009){
+>>>>>>> a283c8ba482adac29b88585a6efcc48653b47835
         if ( (xd>-1750 && xd<-750) && (yd>500 && yd<1500) && zd==2000 ) Det_Face->Fill(1);
         else if ( (xd>-1750 && xd<-750) && (yd>500 && yd<1500) && zd==1000 ) Det_Face->Fill(2);
         else if ( xd==-750 && (yd>500 && yd<1500) && (zd>1000 && zd<2000) ) Det_Face->Fill(3);
