@@ -10,7 +10,7 @@ using namespace std;
 int main(int argc, char **argv){
 
   if(argc!=4){
-    cout<<"run as:\n\tbuild/drawBfield <configName -- can be either prex1, prex2 or crex> <nSteps> <with Q1 fringe?: can be 0 or 1>\n";
+    cout<<"run as:\n\tbuild/drawBfield <configName -- can be either prex1, prex2, crex, prex2JayNoQ1shield, crexJayNoQ1shield, prex2UpdatedSeptumShield_allOn, crexUpdatedSeptumShield_allOn, test> <nSteps> <with Q1 fringe?: can be 0 or 1>\n";
     return 1;
   }
   string config=argv[1];
