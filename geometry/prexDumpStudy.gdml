@@ -2380,12 +2380,12 @@
     </subtraction>
 
     <box  lunit="cm" name="beamKillFull"
-          x="420"
-          y="600"
+          x="620"
+          y="800"
           z="3700" />
     <box  lunit="cm" name="beamKillSub"
-          x="419"
-          y="599"
+          x="619"
+          y="799"
           z="3699" />
     <subtraction name ="beamKillS">
       <first ref="beamKillFull"/>
@@ -2393,7 +2393,6 @@
       <positionref ref="pos_rel_beamKill"/>
       <rotationref ref="identity"/>
     </subtraction>
-
     <subtraction name ="dump_solid">
       <first ref="dump_solid_woBeamKill"/>
       <second ref="beamKillS"/>
@@ -2895,10 +2894,10 @@
         <positionref ref="dump_center"/>
       </physvol>
 
-      <physvol name="ssenc">
-        <volumeref ref="ssenc_logic"/>
-        <positionref ref="ssenc_cylcenter"/>
-      </physvol>
+      <!-- <physvol name="ssenc"> -->
+      <!--   <volumeref ref="ssenc_logic"/> -->
+      <!--   <positionref ref="ssenc_cylcenter"/> -->
+      <!-- </physvol> -->
 
       <!-- <physvol> -->
       <!--   <file name="geometry/prex1Beampipe.gdml"/> -->
