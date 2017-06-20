@@ -146,12 +146,6 @@ def beamPREX2():
 
     f1.write("<position name=\"dumpSSdoor_pos\" unit=\"cm\" x=\"0\" y=\"-42\" z=\""+str(donutZpos+318)+"\"/>\n")
 
-    # f1.write("<position name=\"dumpICS1_beamR_pos\" unit=\"cm\" x=\"-68\" y=\""+str(-27-41.5)+"\" z=\""+str(donutZpos-37+31)+"\"/>\n")
-    # f1.write("<position name=\"dumpICS2_beamR_pos\" unit=\"cm\" x=\"-68\" y=\""+str(-27-84+21.5)+"\" z=\""+str(donutZpos+89-31)+"\"/>\n")
-    # f1.write("<position name=\"dumpICS3_beamR_pos\" unit=\"cm\" x=\"-68\" y=\""+str(-27-41.5)+"\" z=\""+str(donutZpos+89+31)+"\"/>\n")
-
-    # f1.write("<position name=\"dumpSSdoor_pos\" unit=\"cm\" x=\"0\" y=\"-51\" z=\""+str(donutZpos+318)+"\"/>\n")
-
     f1.close()
 
 
