@@ -125,6 +125,7 @@ def beamPREX2():
     zPos += 2
     f1.write("\t\t\t<zplane rmin=\"4.13\" rmax=\"30.37\" z=\""+str(zPos)+"\"/>\n")
     f1.write("\t\t\t<zplane rmin=\"29.89\" rmax=\"30.37\" z=\""+str(zPos)+"\"/>\n")
+    donutZpos=zPos
     ### back to straigh piece
     zPos += 216.8
     f1.write("\t\t\t<zplane rmin=\"29.89\" rmax=\"30.37\" z=\""+str(zPos)+"\"/>\n")
@@ -134,6 +135,22 @@ def beamPREX2():
     zPos += 4.8
     f1.write("\t\t\t<zplane rmin=\"15.23\" rmax=\"15.70\" z=\""+str(zPos)+"\"/>\n")
     f1.write("\t\t</polycone>\n")
+
+    f1.write("<position name=\"dumpICS1_beamL_pos\" unit=\"cm\" x=\"68\" y=\""+str(-27-83)+"\" z=\""+str(donutZpos-37+30.5)+"\"/>\n")
+    f1.write("<position name=\"dumpICS2_beamL_pos\" unit=\"cm\" x=\"68\" y=\""+str(-27-166+41)+"\" z=\""+str(donutZpos+90-30.5)+"\"/>\n")
+    f1.write("<position name=\"dumpICS3_beamL_pos\" unit=\"cm\" x=\"68\" y=\""+str(-27-83)+"\" z=\""+str(donutZpos+90+30.5)+"\"/>\n")
+
+    f1.write("<position name=\"dumpICS1_beamR_pos\" unit=\"cm\" x=\"-68\" y=\""+str(-27-83)+"\" z=\""+str(donutZpos-37+30.5)+"\"/>\n")
+    f1.write("<position name=\"dumpICS2_beamR_pos\" unit=\"cm\" x=\"-68\" y=\""+str(-27-166+41)+"\" z=\""+str(donutZpos+90-30.5)+"\"/>\n")
+    f1.write("<position name=\"dumpICS3_beamR_pos\" unit=\"cm\" x=\"-68\" y=\""+str(-27-83)+"\" z=\""+str(donutZpos+90+30.5)+"\"/>\n")
+
+    f1.write("<position name=\"dumpSSdoor_pos\" unit=\"cm\" x=\"0\" y=\"-42\" z=\""+str(donutZpos+318)+"\"/>\n")
+
+    # f1.write("<position name=\"dumpICS1_beamR_pos\" unit=\"cm\" x=\"-68\" y=\""+str(-27-41.5)+"\" z=\""+str(donutZpos-37+31)+"\"/>\n")
+    # f1.write("<position name=\"dumpICS2_beamR_pos\" unit=\"cm\" x=\"-68\" y=\""+str(-27-84+21.5)+"\" z=\""+str(donutZpos+89-31)+"\"/>\n")
+    # f1.write("<position name=\"dumpICS3_beamR_pos\" unit=\"cm\" x=\"-68\" y=\""+str(-27-41.5)+"\" z=\""+str(donutZpos+89+31)+"\"/>\n")
+
+    # f1.write("<position name=\"dumpSSdoor_pos\" unit=\"cm\" x=\"0\" y=\"-51\" z=\""+str(donutZpos+318)+"\"/>\n")
 
     f1.close()
 
