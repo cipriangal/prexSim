@@ -10,13 +10,13 @@ using namespace CLHEP;
 
 MollerSteppingVerbose::MollerSteppingVerbose()
 {
-  textfile.open("results_geant.txt");
+  //textfile.open("results_geant.txt");
 }
 
 
 MollerSteppingVerbose::~MollerSteppingVerbose()
 {
-  textfile.close();
+  //textfile.close();
 }
  
 
