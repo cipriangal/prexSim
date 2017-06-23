@@ -24,6 +24,10 @@
     <position name="dumpICS3_beamR_pos" unit="cm" x="-68" y="-110" z="2912.185"/>
     <position name="dumpSSdoor_pos" unit="cm" x="0" y="-42" z="3109.685"/>
     <position name="dumpSSdoor_posRel" unit="cm" x="0" y="42" z="0"/>
+    <position name="dumpIC_beamR_pos" unit="cm" x="-68" y="-80" z="2851.185"/>
+    <position name="dumpIC_beamL_pos" unit="cm" x="68" y="-80" z="2851.185"/>
+    <position name="target_posRel" unit="cm" x="0" y="0" z="-342.9"/>
+    <rotation name="x90" unit="deg" x="90" y="0" z="0"/>
   </define>
 
   <materials>
@@ -51,9 +55,22 @@
       <D unit="g/cm3" value="2.699"/>
       <atom unit="g/mole" value="26.982"/>
     </material>
+
+    <material Z="13" name="PureLead" state="solid">
+      <T unit="K" value="298"/>
+      <D unit="g/cm3" value="2.699"/>
+      <atom unit="g/mole" value="26.982"/>
+    </material>
   </materials>
 
   <solids>
+    <!-- Target  -->
+    <tube aunit="deg" startphi="0" deltaphi="360"
+          lunit="cm" name="target_solid"
+          rmin="0.0"
+          rmax="4.0"
+          z="0.05" />
+
     <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="det01_solid"
 	  rmin="0"
 	  rmax="3.8"
@@ -150,7 +167,7 @@
       <zplane rmin="45.402" rmax="45.72" z="952.005"/>
       <zplane rmin="45.402" rmax="45.72" z="2530.785"/>
       <zplane rmin="45.402" rmax="48.15" z="2530.785"/>
-      <zplane rmin="47.67" rmax="48.15" z="2530.785"/>
+      <zplane rmin="47.67" rmax="48.15" z="2530.795"/>
       <zplane rmin="29.89" rmax="30.37" z="2556.085"/>
       <zplane rmin="29.89" rmax="30.37" z="2789.685"/>
       <zplane rmin="4.13" rmax="30.37" z="2789.685"/>
@@ -165,6 +182,12 @@
     <box lunit="cm" name="dumpIonChShield1_solid" x="38" y="166" z="61"/>
     <box lunit="cm" name="dumpIonChShield2_solid" x="38" y="82"  z="61"/>
     <box lunit="cm" name="dumpIonChShield3_solid" x="38" y="166" z="61"/>
+
+    <!-- Ion Chamber tube -->
+    <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="dumpIonChamber_solid"
+	  rmin="0.635"
+	  rmax="2.54"
+	  z="50.0"/>
 
     <!-- Stainless Steel Door -->
     <box lunit="cm" name="dumpSSdoor_0" x="138" y="292" z="5"/>
@@ -202,6 +225,9 @@
       <second ref="gateValve_s3"/>
       <positionref ref="center_posRel"/>
     </subtraction>
+
+    <!-- Alternative world box to run just this geometry -->
+    <box lunit="cm" name="runWorld" x="10000" y="10000" z="10000"/>
 
     <!-- Union of all objects so that there is a space to physically add them -->
     <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="bP2worldUnion0"
@@ -294,6 +320,18 @@
       <second ref="dumpSSdoor_solid"/>
       <positionref ref="dumpSSdoor_pos"/>
     </union>
+    <union name ="bP2worldUnion18">
+      <first ref="bP2worldUnion17"/>
+      <second ref="dumpIonChamber_solid"/>
+      <positionref ref="dumpIC_beamL_pos"/>
+      <rotationref ref="x90"/>
+    </union>
+    <union name ="bP2worldUnion19">
+      <first ref="bP2worldUnion18"/>
+      <second ref="dumpIonChamber_solid"/>
+      <positionref ref="dumpIC_beamR_pos"/>
+      <rotationref ref="x90"/>
+    </union>
 
   </solids>
 
@@ -382,10 +420,33 @@
       <solidref ref="dumpIonChShield3_solid"/>
     </volume>
 
+    <volume name="dumpIonChamber_beamL_logic">
+      <materialref ref="G4_N"/>
+      <solidref ref="dumpIonChamber_solid"/>
+      <auxiliary auxtype="SensDet" auxvalue="volumeN11002"/>
+    </volume>
+
+    <volume name="dumpIonChamber_beamR_logic">
+      <materialref ref="G4_N"/>
+      <solidref ref="dumpIonChamber_solid"/>
+      <auxiliary auxtype="SensDet" auxvalue="volumeN11001"/>
+    </volume>
+
+    <volume name="target_logic">
+      <materialref ref="PureLead"/>
+      <solidref ref="target_solid"/>
+    </volume>
 
     <volume name="beamPipeP2">
       <materialref ref="Vacuum"/>
-      <solidref ref="bP2worldUnion17"/>
+      <solidref ref="bP2worldUnion19"/>
+      <!-- <solidref ref="runWorld"/> -->
+
+      <!-- <!-\- Put this in only when you want to run with this gdml alone -\-> -->
+      <!-- <physvol name="target_phys"> -->
+      <!--   <volumeref ref="target_logic"/> -->
+      <!--   <positionref ref="target_posRel"/> -->
+      <!-- </physvol> -->
 
       <physvol name="det01_phys">
         <volumeref ref="det01_logic"/>
@@ -475,6 +536,18 @@
       <physvol name="dumpIonChShield3_beamR_phys">
         <volumeref ref="dumpIonChShield3_logic"/>
         <positionref ref="dumpICS3_beamR_pos"/>
+      </physvol>
+
+      <physvol name="dumpIonChamber_beamR_phys">
+        <volumeref ref="dumpIonChamber_beamR_logic"/>
+        <positionref ref="dumpIC_beamR_pos"/>
+	<rotationref ref="x90"/>
+      </physvol>
+
+      <physvol name="dumpIonChamber_beamL_phys">
+        <volumeref ref="dumpIonChamber_beamL_logic"/>
+        <positionref ref="dumpIC_beamL_pos"/>
+	<rotationref ref="x90"/>
       </physvol>
 
       <!-- ~~~For side by side comparisons only~~~ -->
