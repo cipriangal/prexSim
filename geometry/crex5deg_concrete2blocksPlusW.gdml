@@ -3173,6 +3173,12 @@
 	<positionref ref="pos_global_SEPT_elec"/>
 	<rotationref ref="identity"/>
       </physvol>
+
+	  <physvol>
+		<file name="geometry/plasticDetectors.gdml"/>
+		<position unit="cm" x="0" y="0" z="11.7"/>
+		<rotationref ref="identity"/>
+	  </physvol>
 	    
     </volume>
   </structure>

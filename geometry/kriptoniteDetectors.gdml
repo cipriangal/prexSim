@@ -171,31 +171,31 @@
     <volume name="logic_HRS_elec">
       <materialref ref="matKryptonite"/>
       <solidref ref="solid_HRS_elec"/>
-      <auxiliary auxtype="SensDet" auxvalue="volumeN10008"/> 
+      <auxiliary auxtype="SensDet" auxvalue="volumeN1001"/> 
     </volume>
 
     <volume name="logic_SEPT_elec">
       <materialref ref="matKryptonite"/>
       <solidref ref="solid_SEPT_elec"/>
-      <auxiliary auxtype="SensDet" auxvalue="volumeN10009"/> 
+      <auxiliary auxtype="SensDet" auxvalue="volumeN1002"/> 
     </volume>
 
     <volume name="logic_upstreamRight_elec">
       <materialref ref="matKryptonite"/>
       <solidref ref="solid_upstreamRight_elec"/>
-      <auxiliary auxtype="SensDet" auxvalue="volumeN10010"/>
+      <auxiliary auxtype="SensDet" auxvalue="volumeN1003"/>
     </volume>
 
     <volume name="logic_HRS_side_elec">
       <materialref ref="matKryptonite"/>
       <solidref ref="solid_HRS_side_elec"/>
-      <auxiliary auxtype="SensDet" auxvalue="volumeN10011"/>
+      <auxiliary auxtype="SensDet" auxvalue="volumeN1004"/>
     </volume>
 
     <volume name="logic_HRS_underDipole_elec">
       <materialref ref="matKryptonite"/>
       <solidref ref="solid_HRS_underDipole_elec"/>
-      <auxiliary auxtype="SensDet" auxvalue="volumeN10012"/>
+      <auxiliary auxtype="SensDet" auxvalue="volumeN1005"/>
     </volume>
 
     <volume name="logic_usRightIron_shield">
@@ -206,18 +206,18 @@
     <volume name="logic_Hall_Lid">
       <materialref ref="matKryptonite"/>
       <solidref ref="solid_Hall_Lid"/>
-      <auxiliary auxtype="SensDet" auxvalue="volumeN10013"/>
+      <auxiliary auxtype="SensDet" auxvalue="volumeN1006"/>
     </volume>
 
     <volume name="logic_W10mDet">
       <materialref ref="matKryptonite"/>
       <solidref ref="solid_W10mDet"/>
-      <auxiliary auxtype="SensDet" auxvalue="volumeN10101"/>
+      <auxiliary auxtype="SensDet" auxvalue="volumeN1101"/>
     </volume>
     <volume name="logic_NW10mDet">
       <materialref ref="matKryptonite"/>
       <solidref ref="solid_NW10mDet"/>
-      <auxiliary auxtype="SensDet" auxvalue="volumeN10102"/>
+      <auxiliary auxtype="SensDet" auxvalue="volumeN1102"/>
     </volume>
 	
     <volume name="logicKripDetectors">

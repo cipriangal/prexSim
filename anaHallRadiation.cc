@@ -67,17 +67,17 @@ int main(int argc,char** argv) {
   rf->Close();
 
   map <int,string> SensNames;
-  SensNames[8002] ="HallD2";//cylindircal det at the radius close to electronic hut
-  SensNames[8003] ="HallD3";//cylindircal det at the radius close to the wall
-  SensNames[10008]="HRSele";
-  SensNames[10009]="Septum";
-  SensNames[10010]="USpowS";
-  SensNames[10011]="HRSund";
-  SensNames[10012]="HRSlft";
-  SensNames[10001]="BLTgt1";//beamline circle detector close to the target
-  SensNames[10002]="BLTgt2";//beamline circle detector close to the target
-  SensNames[10003]="BLDmp1";//beamline circle detector close to the dump
-  SensNames[10004]="BLDmp2";//beamline circle detector close to the dump
+  SensNames[2002] ="HallD2";//cylindircal det at the radius close to electronic hut
+  SensNames[2003] ="HallD3";//cylindircal det at the radius close to the wall
+  SensNames[1001] ="HRSele";
+  SensNames[1002] ="Septum";
+  SensNames[1003] ="USpowS";
+  SensNames[1004] ="HRSund";
+  SensNames[1005] ="HRSlft";
+  SensNames[2201]="BLTgt1";//beamline circle detector close to the target
+  SensNames[2202]="BLTgt2";//beamline circle detector close to the target
+  SensNames[2203]="BLDmp1";//beamline circle detector close to the dump
+  SensNames[2204]="BLDmp2";//beamline circle detector close to the dump
   SensNames[2001] ="Lpower";
   SensNames[2002] ="Rpower";
 
@@ -194,10 +194,10 @@ void bookHisto(){
 
   Det_Face = new TH1F("Det_Face","Detector Face Hit",8,-0.5,7.5);
 
-  int knownDet[4]={10008,10009,2001,2002};
+  int knownDet[4]={1001,1002,2001,2002};
   float ranges[5][3][2]={
-    {{3500,5501},{-1000,1001},{17000,21001}},//10008
-    {{-1750,-749},{500,1501},{1000,2001}},//10009
+    {{3500,5501},{-1000,1001},{17000,21001}},//1001
+    {{-1750,-749},{500,1501},{1000,2001}},//1002
     {{8100,9101},{-500,501},{-15110,-14109}},//2001
     {{-4750,-3749},{-500,501},{-15110,-14109}},//2002
     {{-10000,10000},{-10000,10000},{-10000,10000}}
@@ -272,13 +272,12 @@ void processTree(string tname){
   t->SetBranchAddress("event",&event);
   t->SetBranchAddress("PDGid",&pdgID);
 
-  if ( (SensVolume_v>=10008 && SensVolume_v <= 10013)){
+  if ( (SensVolume_v>=1001 && SensVolume_v <= 2000)){
     t->SetBranchAddress("Edeposit",&Energy); //because these are made from Kryptonite
-  }else if( SensVolume_v==8001  || SensVolume_v==8002  ||
-            SensVolume_v==8003  || SensVolume_v==8004  || SensVolume_v==8005 ||
-            SensVolume_v==10001 || SensVolume_v==10002 || SensVolume_v==10003||
-            SensVolume_v==10004 || SensVolume_v==7001  || SensVolume_v==7002) {
+  }else if( SensVolume_v>=2001 && SensVolume_v<=3000) {
     t->SetBranchAddress("kineE",&Energy); //because these are vacuum
+  }else if( SensVolume_v>=3001 && SensVolume_v<=4000){
+	t->SetBranchAddress("Edeposit",&Energy); //Because we're only looking for energy going into a material volume.
   }else{
     cout<<"did you know that this detector does not have an energy associated? results will be useless"<<endl;
     std::cin.ignore();
@@ -287,7 +286,7 @@ void processTree(string tname){
   Double_t hit_radius_min = 0.; //cm
 
   //inner radius of the beam pipe 45.72 cm and outer radius of the beam pipe 46.038 cm
-  if ( SensVolume_v==8002  || SensVolume_v==8003)
+  if ( SensVolume_v==2002  || SensVolume_v==2003)
     hit_radius_min = 46.038; //cm
 
 
@@ -393,7 +392,7 @@ void processTree(string tname){
         else if ( (xd>-4750 && xd<-3750) && yd==500 && (zd>-15110 && zd<-14110) ) Det_Face->Fill(5);
         else if ( (xd>-4750 && xd<-3750) && yd==-500 && (zd>-15110 && zd<-14110) ) Det_Face->Fill(6);
       }
-      if (SensVolume_v == 10008){
+      if (SensVolume_v == 1001){
         if ( (xd>3500 && xd<5500) && (yd>-1000 && yd<1000) && zd==21000 ) Det_Face->Fill(1);
         else if ( (xd>3500 && xd<5500) && (yd>-1000 && yd<1000) && zd==17000 ) Det_Face->Fill(2);
         else if ( xd==5500 && (yd>-1000 && yd<1000) && (zd>17000 && zd<21000) ) Det_Face->Fill(3);
@@ -401,7 +400,7 @@ void processTree(string tname){
         else if ( (xd>3500 && xd<5500) && yd==1000 && (zd>17000 && zd<21000) ) Det_Face->Fill(5);
         else if ( (xd>3500 && xd<5500) && yd==-1000 && (zd>17000 && zd<21000) ) Det_Face->Fill(6);
       }
-      if (SensVolume_v == 10009){
+      if (SensVolume_v == 1002){
         if ( (xd>-1750 && xd<-750) && (yd>500 && yd<1500) && zd==2000 ) Det_Face->Fill(1);
         else if ( (xd>-1750 && xd<-750) && (yd>500 && yd<1500) && zd==1000 ) Det_Face->Fill(2);
         else if ( xd==-750 && (yd>500 && yd<1500) && (zd>1000 && zd<2000) ) Det_Face->Fill(3);

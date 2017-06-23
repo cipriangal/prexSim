@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+
+<gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="./schema/gdml.xsd">
+	<define>
+		<constant name="coil_hose_x_thick" value="22.7"/>
+		<constant name="coil_hose_y_thick" value="6.4"/>
+		<constant name="coil_hose_z_thick" value="6.8"/>
+
+		<constant name="x_outer_midplane" value="22.21"/>
+		<constant name="y_outer_midplane" value="40.93"/>
+		<constant name="x_inner_midplane" value="24.96"/>
+		<constant name="y_inner_midplane" value="32.27"/>
+		<constant name="z_midplane" value="0"/>
+
+		<position unit="cm" name="pos_center" x="0" y="0" z="0" />
+
+		<position unit="cm" name="outer_tl" x="x_outer_midplane" y="y_outer_midplane" z="z_midplane"/>
+		<position unit="cm" name="inner_tl" x="x_inner_midplane" y="y_inner_midplane" z="z_midplane"/>
+		<position unit="cm" name="outer_tr" x="-x_outer_midplane" y="y_outer_midplane" z="z_midplane"/>
+		<position unit="cm" name="inner_tr" x="-x_inner_midplane" y="y_inner_midplane" z="z_midplane"/>
+		<position unit="cm" name="outer_bl" x="x_outer_midplane" y="-y_outer_midplane" z="z_midplane"/>
+		<position unit="cm" name="inner_bl" x="x_inner_midplane" y="-y_inner_midplane" z="z_midplane"/>
+		<position unit="cm" name="outer_br" x="-x_outer_midplane" y="-y_outer_midplane" z="z_midplane"/>
+		<position unit="cm" name="inner_br" x="-x_inner_midplane" y="-y_inner_midplane" z="z_midplane"/>
+
+	</define>
+
+	<materials>
+		<element Z="6" formula="C" name="Carbon">
+ 			<atom value="12" />
+		</element>
+		<element Z="1" formula="H" name="Hydrogen">
+			<atom value="1"/>
+		</element>
+
+		<material Z="16" name="HDPE" state="solid">
+			<T unit="K" value="298"/>
+			<D unit="g/cm3" value="0.97"/>
+			<composite n="2" ref="Carbon"/>
+			<composite n="4" ref="Hydrogen"/>
+    	</material>
+		<material Z="1" name="Vacuum" state="gas">
+      		<T unit="K" value="2.73"/>
+      		<P unit="pascal" value="3e-18"/>
+      		<D unit="g/cm3" value="1e-25"/>
+      		<atom unit="g/mole" value="1.01"/>
+    	</material>
+	</materials>
+
+	<solids>		
+		<box lunit="cm" name="solid_coil_hose_det" x="coil_hose_x_thick" y="coil_hose_y_thick" z="coil_hose_z_thick"/>
+		<box lunit="cm" name="solid_total_volume" 
+		x="2*x_inner_midplane + coil_hose_x_thick" 
+		y="2*y_outer_midplane + coil_hose_y_thick"
+		z="coil_hose_z_thick"/>
+	</solids>
+
+	<structure>
+		<volume name="logic_outer_tl_det">
+			<materialref ref="HDPE"/>
+			<solidref ref="solid_coil_hose_det"/>
+			<auxiliary auxtype="SensDet" auxvalue="volumeN3201"/>
+		</volume>
+		<volume name="logic_inner_tl_det">
+			<materialref ref="HDPE"/>
+			<solidref ref="solid_coil_hose_det"/>
+			<auxiliary auxtype="SensDet" auxvalue="volumeN3202"/>
+		</volume>
+		<volume name="logic_outer_tr_det">
+			<materialref ref="HDPE"/>
+			<solidref ref="solid_coil_hose_det"/>
+			<auxiliary auxtype="SensDet" auxvalue="volumeN3203"/>
+		</volume>
+		<volume name="logic_inner_tr_det">
+			<materialref ref="HDPE"/>
+			<solidref ref="solid_coil_hose_det"/>
+			<auxiliary auxtype="SensDet" auxvalue="volumeN3204"/>
+		</volume>
+		<volume name="logic_outer_bl_det">
+			<materialref ref="HDPE"/>
+			<solidref ref="solid_coil_hose_det"/>
+			<auxiliary auxtype="SensDet" auxvalue="volumeN3205"/>
+		</volume>
+		<volume name="logic_inner_bl_det">
+			<materialref ref="HDPE"/>
+			<solidref ref="solid_coil_hose_det"/>
+			<auxiliary auxtype="SensDet" auxvalue="volumeN3206"/>
+		</volume>
+		<volume name="logic_outer_br_det">
+			<materialref ref="HDPE"/>
+			<solidref ref="solid_coil_hose_det"/>
+			<auxiliary auxtype="SensDet" auxvalue="volumeN3207"/>
+		</volume>
+		<volume name="logic_inner_br_det">
+			<materialref ref="HDPE"/>
+			<solidref ref="solid_coil_hose_det"/>
+			<auxiliary auxtype="SensDet" auxvalue="volumeN3208"/>
+		</volume>
+
+		<volume name="logic_coilHoses">
+			<materialref ref="Vacuum"/>
+			<solidref ref="solid_total_volume"/>
+
+			<physvol name="outer_tl_det">
+				<volumeref ref="logic_outer_tl_det"/>
+				<positionref ref="outer_tl"/>
+			</physvol>
+			<physvol name="inner_tl_det">
+				<volumeref ref="logic_inner_tl_det"/>
+				<positionref ref="inner_tl"/>
+			</physvol>
+			<physvol name="outer_tr_det">
+				<volumeref ref="logic_outer_tr_det"/>
+				<positionref ref="outer_tr"/>
+			</physvol>
+			<physvol name="inner_tr_det">
+				<volumeref ref="logic_inner_tr_det"/>
+				<positionref ref="inner_tr"/>
+			</physvol>
+			<physvol name="outer_bl_det">
+				<volumeref ref="logic_outer_bl_det"/>
+				<positionref ref="outer_bl"/>
+			</physvol>
+			<physvol name="inner_bl_det">
+				<volumeref ref="logic_inner_bl_det"/>
+				<positionref ref="inner_bl"/>
+			</physvol>
+			<physvol name="outer_br_det">
+				<volumeref ref="logic_outer_br_det"/>
+				<positionref ref="outer_br"/>
+			</physvol>
+			<physvol name="inner_br_det">
+				<volumeref ref="logic_inner_br_det"/>
+				<positionref ref="inner_br"/>
+			</physvol>
+		</volume>		
+
+	</structure>
+
+	<setup name="coilHoses" version="1.0">
+		<world ref="logic_coilHoses"/>
+	</setup>
+
+</gdml>

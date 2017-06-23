@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+
+<gdml xmlns:gdml="http://cern.ch/2001/Schemas/GDML"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="./schema/gdml.xsd">
+
+	<define>
+		<constant name="sc_outer_radius" value="30.48"/>
+		<constant name="sc_inner_radius" value="29.845"/>
+		<constant name="sc_length" value="25.4"/>
+		<constant name="target_cut_radius" value="9.525"/>
+
+		<constant name="rear_flange_z" value="3.96875"/>
+		<constant name="rear_flange_cut_rad" value="17.4625"/>
+		<constant name="front_flange_z" value="3.175"/>
+
+		<constant name="mother_length" value="sc_length + 2*rear_flange_z"/>
+		<constant name="mother_inner_rad" value="7.5"/>
+
+		<position name="pos_center" unit="cm" x="0" y="0" z="0"/>
+		<position name="pos_front_flange" unit="cm" x="0" y="0" z="14.2875"/>
+		<position name="pos_rear_flange" unit="cm" x="0" y="0" z="-0.5*(rear_flange_z + sc_length)"/>
+
+		<rotation name="target_cut_rot" unit="deg" x="0" y="90" z="0"/>
+	</define>
+
+	<materials>
+		<material name="Aluminum" Z="13" state="solid">
+			<T unit="K" value="298"/>
+			<D unit="g/cm3" value="2.699"/>
+ 			<atom unit="g/mole" value="26.982"/>
+		</material>
+		<material Z="1" name="Vacuum" state="gas">
+      		<T unit="K" value="2.73"/>
+      		<P unit="pascal" value="3e-18"/>
+      		<D unit="g/cm3" value="1e-25"/>
+      		<atom unit="g/mole" value="1.01"/>
+    	</material>
+	</materials>
+
+	<solids>
+		<tube lunit="cm" aunit="deg" name="sc_body" z="sc_length" rmin="sc_inner_radius" rmax="sc_outer_radius" 
+		startphi="0" deltaphi="360"/>
+		<tube lunit="cm" aunit="deg" name="target_cut" z="2.01*sc_outer_radius" rmin="0" rmax="target_cut_radius"
+		startphi="0" deltaphi="360"/>
+		<subtraction name="sc_with_cut">
+			<first ref="sc_body"/>
+			<second ref="target_cut"/>
+			<positionref ref="pos_center"/>
+			<rotationref ref="target_cut_rot"/>
+		</subtraction>
+
+		<tube lunit="cm" aunit="deg" name="front_flange" z="front_flange_z" rmin="mother_inner_rad" rmax="sc_outer_radius"
+		startphi="0" deltaphi="360"/>
+		<tube lunit="cm" aunit="deg" name="rear_flange" z="rear_flange_z" rmin="rear_flange_cut_rad" rmax="sc_outer_radius"
+		startphi="0" deltaphi="360"/>
+
+		<tube lunit="cm" aunit="deg" name="sc_mother" z="mother_length" rmin="mother_inner_rad" rmax="sc_outer_radius"
+		startphi="0" deltaphi="360"/>
+	</solids>
+
+	<structure>
+		<volume name="logic_sc_body">
+			<materialref ref="Aluminum"/>
+			<solidref ref="sc_with_cut"/>
+		</volume>
+		<volume name="logic_front_flange">
+			<materialref ref="Aluminum"/>
+			<solidref ref="front_flange"/>
+		</volume>
+		<volume name="logic_rear_flange">
+			<materialref ref="Aluminum"/>
+			<solidref ref="rear_flange"/>
+		</volume>
+
+		<volume name="logicTargetChamber">
+			<materialref ref="Vacuum"/>
+			<solidref ref="sc_mother"/>
+			
+			<physvol name="phys_sc_body">
+				<volumeref ref="logic_sc_body"/>
+				<positionref ref="pos_center"/>
+			</physvol>		
+			<physvol name="phys_front_flange">
+				<volumeref ref="logic_front_flange"/>
+				<positionref ref="pos_front_flange"/>
+			</physvol>
+			<physvol name="phys_rear_flange">
+				<volumeref ref="logic_rear_flange"/>
+				<positionref ref="pos_rear_flange"/>
+			</physvol>
+		</volume>
+	</structure>
+
+	<setup name="Target_Chamber" version="1.0">
+		<world ref="logicTargetChamber"/>
+	</setup>
+
+</gdml>

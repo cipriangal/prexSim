@@ -2976,6 +2976,7 @@
       </physvol>
       -->
 
+	<!--
       <physvol name="coll_shield">
       	<volumeref ref="coll_shield_logic"/>
       	<positionref ref="pos_global_collShield"/>
@@ -2986,7 +2987,7 @@
       	<volumeref ref="coll_outsideW_shield_logic"/>
       	<positionref ref="pos_global_outsideW"/>
       </physvol>   
-      
+	-->
 	  
       <physvol name="target">
         <volumeref ref="target_logic"/>
@@ -3007,24 +3008,26 @@
         <volumeref ref="giantShield_logic"/>
         <positionref ref="pos_global_giantShield"/>
       </physvol>
-
+	<!--
       <physvol name="new_sc_beampipe">
         <volumeref ref="new_sc_beampipe_logic"/>
         <positionref ref="new_sc_center"/>
-	<rotationref ref="scRot_14"/>
+		<rotationref ref="scRot_14"/>
       </physvol>
-
+	-->
+	<!--
       <physvol name="new_sc_prex">
         <volumeref ref="new_sc_prex_logic"/>
         <positionref ref="targ_center"/>
 	<rotationref ref="scRot_13"/>
       </physvol>
-
+	-->
+	<!--
       <physvol name="sc_attachment">
         <volumeref ref="sc_attach_logic"/>
         <positionref ref="sc_attach_center"/>
       </physvol>
-
+	-->
       <physvol name="septum">
         <volumeref ref="septum_logic"/>
         <positionref ref="septum_center"/>
@@ -3173,13 +3176,28 @@
 	<positionref ref="pos_global_SEPT_elec"/>
 	<rotationref ref="identity"/>
       </physvol>
-	  
-	  <physvol>
-		<file name="geometry/plasticDetectors.gdml"/>
-		<position unit="cm" x="0" y="0" z="center_septum - 0.5*length_septum - 0.5*29.11"/>
-		<rotationref ref="identity"/>
-	  </physvol>
-	    
+	<!--
+		<physvol>
+			<file name="geometry/subCoilHoses.gdml"/>
+			<position name="coil_hose_pos" unit="cm" x="0" y="0" z="center_septum - 0.5*length_septum - 0.5*29.11"/>
+			<rotationref ref="identity"/>
+	  	</physvol>
+	-->
+		<physvol>
+			<file name="geometry/subQ1HosesCylRedesign.gdml"/>
+			<position name="q1_hose_cyl_pos" unit="cm" x="0" y="0" z="210"/>
+		</physvol>
+
+		<physvol>
+			<file name="geometry/subTargetChamber.gdml"/>
+			<position name="target_chamber_center" unit="cm" x="0" y="0" z="prex_target_center"/>
+		</physvol>
+
+		
+		<physvol>
+			<file name="geometry/subCollShields.gdml"/>
+			<position name="coll_shield_pos" unit="cm" x="0" y="-31.802" z="-57.531"/>
+	    </physvol>
     </volume>
   </structure>
 
