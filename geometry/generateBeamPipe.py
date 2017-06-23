@@ -114,7 +114,7 @@ def beamPREX2():
     #### the neck down before the difuser: JLAB DWG NO JL0009934
     ### conical neck down
     f1.write("\t\t\t<zplane rmin=\"45.402\" rmax=\"48.15\" z=\""+str(zPos)+"\"/>\n")
-    f1.write("\t\t\t<zplane rmin=\"47.67\" rmax=\"48.15\" z=\""+str(zPos)+"\"/>\n")
+    f1.write("\t\t\t<zplane rmin=\"47.67\" rmax=\"48.15\" z=\""+str(zPos+0.01)+"\"/>\n")
     zPos += 25.3
     f1.write("\t\t\t<zplane rmin=\"29.89\" rmax=\"30.37\" z=\""+str(zPos)+"\"/>\n")
     ### straight piece
@@ -145,6 +145,8 @@ def beamPREX2():
     f1.write("<position name=\"dumpICS3_beamR_pos\" unit=\"cm\" x=\"-68\" y=\""+str(-27-83)+"\" z=\""+str(donutZpos+90+30.5)+"\"/>\n")
 
     f1.write("<position name=\"dumpSSdoor_pos\" unit=\"cm\" x=\"0\" y=\"-42\" z=\""+str(donutZpos+318)+"\"/>\n")
+    f1.write("<position name=\"dumpIC_beamR_pos\" unit=\"cm\" x=\"-68\" y=\""+str(-27-53)+"\" z=\""+str(donutZpos+90-30.5)+"\"/>\n")
+    f1.write("<position name=\"dumpIC_beamL_pos\" unit=\"cm\" x=\"68\" y=\""+str(-27-53)+"\" z=\""+str(donutZpos+90-30.5)+"\"/>\n")
 
     f1.close()
 
