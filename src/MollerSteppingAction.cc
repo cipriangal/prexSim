@@ -52,7 +52,7 @@ void MollerSteppingAction::UserSteppingAction(const G4Step* aStep)
       //}
       //}
     }
-  gRootAnalysis->UserSteppingAction(aStep);  
+  gRootAnalysis->UserSteppingAction(aStep);
 }
 
 
