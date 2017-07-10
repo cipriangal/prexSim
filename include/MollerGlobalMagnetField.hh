@@ -38,15 +38,13 @@ public:
 
   void GetFieldValue( const  G4double Point[4], G4double *Bfield ) const;
   void GetFieldValuePREX2( const  G4double Point[4], G4double *Bfield ) const;
-  void GetFieldValueQ1( const  G4double Point[4], G4double *Bfield ) const;
+  void InterpolateFieldValue( const  G4double Point[4], G4double *Bfield ) const;
   void GetFieldValueCREX( const  G4double Point[4], G4double *Bfield ) const;
   void WriteMagField();
 
 private:
 
-  G4double interpolate(std::vector<double> xV,
-		       std::vector<double> yV,
-		       G4double val)const;
+  G4double interpolate(G4double val)const;
 
   MollerMagnetFieldMap*  fMagneticField_MainMagnet;
   MollerMagnetFieldMap*  fMagneticField_MiniMagnet;
@@ -65,7 +63,8 @@ private:
   G4double magScaleFactor;
   G4double mg_field_low;
   G4double mg_field_high;
-
+  std::vector<double> zPosition;
+  std::vector<double> bXcomponent;
 };
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
