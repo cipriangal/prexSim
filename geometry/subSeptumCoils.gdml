@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+
+<gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="./schema/gdml.xsd">
+	<define>
+
+	</define>
+
+	<materials>
+		<element Z="29" formula="Cu" name="Copper">
+ 			<atom value="63" />
+		</element>
+	</materials>
+
+	<solids>		
+
+	</solids>
+
+	<structure>
+		
+		<volume name="logic_q1_hoses">
+			<materialref ref="Vacuum"/>
+			<solidref ref="solid_q1_hose_volume"/>
+			
+		</volume>		
+
+	</structure>
+
+	<setup name="Septum_Coils" version="1.0">
+		<world ref="logic_septum_coils"/>
+	</setup>
+
+</gdml>

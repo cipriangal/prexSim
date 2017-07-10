@@ -54,6 +54,7 @@ def createMacFiles(config,outDir,sourceDir,nrEv,jobNr,identifier):
 
     call(["cp",sourceDir+"/geometry/materials.xml",outDir+"/geometry/"])
     call(["cp",sourceDir+"/geometry/kriptoniteDetectors.gdml",outDir+"/geometry/"])
+    call(["cp",sourceDir+"/geometry/plasticDetectors.gdml",outDir+"/geometry/"])
     call(["cp","-r",sourceDir+"/geometry/schema",outDir+"/geometry"])    
     if config=="crex5":
         call(["cp",sourceDir+"/geometry/crex5deg" + '_' + identifier + ".gdml",outDir+"/geometry"])
@@ -74,18 +75,15 @@ def createMacFiles(config,outDir,sourceDir,nrEv,jobNr,identifier):
     f.write("/random/setSeeds "+str(seedA)+" "+str(seedB)+"\n")
 
     if config=="crex5":
-        f.write("/gun/energy 2.2 GeV\n")
-        f.write("/moller/field/setFieldScaleFactor 2.35\n")
-        f.write("/moller/field/setLowLim -74 cm\n")
-        f.write("/moller/field/setHighLim 74 cm\n")
+        f.write("/gun/energy 2. GeV\n")
+        f.write("/moller/field/setConfiguration crex\n")
         f.write("/moller/det/setDetectorFileName geometry/crex5deg_" + identifier + ".gdml\n")
     elif config=="prexII":
     	f.write("/gun/energy 1.05 GeV\n")
-        f.write("/moller/field/setFieldScaleFactor 1.\n")
-        f.write("/moller/field/setLowLim -74 cm\n")
-        f.write("/moller/field/setHighLim 74 cm\n")
+        f.write("/moller/field/setConfiguration prex2\n")
         f.write("/moller/det/setDetectorFileName geometry/prex5deg_" + identifier + ".gdml\n")
     
+    f.write("/moller/field/useQ1fringeField true\n")
     f.write("/moller/det/setShieldMaterial polyethylene\n")
     f.write("/testhadr/CutsAll 0.7 mm\n")
     f.write("/run/initialize\n")

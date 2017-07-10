@@ -810,8 +810,8 @@
 
     <position unit="cm" name="pos_rel_outsideW_wrt_collShield"
 	      x="0"
-	      y="height_sc_attach/2 + 3."
-	      z=" - innerR_sc_attach_pig/4. + 13."/>
+	      y="height_sc_attach/2 + 3.+26"
+	      z=" - innerR_sc_attach_pig/4. + 13. -21"/>
     <position unit="cm" name="pos_global_outsideW"
 	      x="0"
 	      y="height_sc_attach/2 + 3."
@@ -833,33 +833,34 @@
 	      y="44+7"
 	      z="prex_target_center"
 	      />-->
+
+        <position unit="cm" name="pos_global_giantPbShield"
+              x="0"
+              y="50-20+35"
+              z="-65.4+9"
+        />
 	<position unit="cm" name="pos_global_giantShield"
 	      x="0"
-	      y="50+20"
+	      y="50+13.875+36.125-25"
 	      z="prex_target_center + 4.9"
 	/>
 
         <position unit="cm" name="pos_rel_giantShield1"
               x="0"
-              y="-20"
+              y="-20-36.125+25"
               z="53"
         />
 
         <position unit="cm" name="pos_rel_giantShield2"
               x="-105"
-              y="-100"
+              y="-100-36.125+25"
               z="-110"
         />
 
         <position unit="cm" name="pos_rel_giantShield3"
               x="0"
-              y="0"
-              z="71.4+74/2.-4.9"
-        />
-        <position unit="cm" name="pos_rel_giantShield4"
-              x="0"
-              y="45"
-              z="-4.9+71.4+70"
+              y="-36.125"
+              z="86+22"
         />
 
 
@@ -997,7 +998,7 @@
 	  lunit="cm" name="tubeTarget"
 	  rmin="inner_rad_targ"
 	  rmax="outer_rad_targ"
-	  z="0.05" />
+	  z="0.6" />
 
     <!-- Target shielding -->
     <!--
@@ -1005,17 +1006,16 @@
 	 x="64" y="14" z="35"/>
     <box lunit="cm" name="targetShield_solid"
 	 x="40" y="14" z="30"/> -->
-	 
+         <box lunit="cm" name="giantShieldPb_solid"
+             x="123.5" y="70" z="18"/>	 
 	 <box lunit="cm" name="giantShield_solid0"
-	     x="123.5" y="40" z="247"/>
+	     x="123.5" y="50" z="247"/>
          <box lunit="cm" name="giantShield_solid1"
              x="123.5" y="50" z="36"/>
          <box lunit="cm" name="giantShield_solid2"
-             x="247" y="247" z="247"/>
+             x="247" y="247+100" z="247"/>
          <box lunit="cm" name="giantShield_solid3"
-             x="280" y="100" z="74"/>
-         <box lunit="cm" name="giantShield_solid4"
-             x="123.5" y="40" z="140"/>     
+             x="280" y="300" z="146"/>     
 
     <!-- Scattering Chamber -->
     <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="outScattChamber" rmin="0.0" rmax="outer_r_sc" z="height_sc" />
@@ -1127,30 +1127,24 @@
 	 <rotationref ref="identity"/>
 	 </subtraction>
     -->
-<!--    <union name ="giantShield_solid_temp">
+    <union name ="giantShield_solid_temp">
       <first ref="giantShield_solid0"/>
       <second ref="giantShield_solid1"/>
       <positionref ref="pos_rel_giantShield1"/>
       <rotationref ref="identity"/>
-    </union>-->
+    </union>
     <subtraction name ="giantShield_solid_temp2">
-      <first ref="giantShield_solid0"/>
+      <first ref="giantShield_solid_temp"/>
       <second ref="giantShield_solid2"/>
       <positionref ref="pos_rel_giantShield2"/>
       <rotationref ref="scRot_3"/>
     </subtraction>
-    <subtraction name ="giantShield_solid_temp3">
+    <subtraction name ="giantShield_solid">
       <first ref="giantShield_solid_temp2"/>
       <second ref="giantShield_solid3"/>
       <positionref ref="pos_rel_giantShield3"/>
       <rotationref ref="identity"/>
     </subtraction>
-    <union name ="giantShield_solid">
-      <first ref="giantShield_solid_temp3"/>
-      <second ref="giantShield_solid4"/>
-      <positionref ref="pos_rel_giantShield4"/>
-      <rotationref ref="identity"/>
-    </union>
 
     <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="real_sc_top" rmin="1.*real_sc_radius_top-1.*real_sc_thick_top" rmax="real_sc_radius_top" z="0.5*height_sc+1.*y_cent_sc-1.*(0.5*real_sc_high_4+1.*real_sc_center_4)" />
     <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="real_sc_bottom" rmin="1.*real_sc_radius_bottom-1.*real_sc_thick_top" rmax="real_sc_radius_bottom" z="0.5*height_sc-1.*y_cent_sc-1.*(0.5*real_sc_high_4-1.*real_sc_center_4)" />
@@ -1807,11 +1801,11 @@
       <positionref ref="pos_rel_dsShield1_wrt_collShield"/>
     </union> 
     
-    <!-- Block of W  -->
+    <!-- Block of concrete  -->
     <box lunit="cm" name="sc_attach_outside_w"
-    	 x="width_sc_attach + 0.1"
-    	 y="6."
-    	 z="length_sc_attach - innerR_sc_attach_pig*2. - 2."/>    
+    	 x="width_sc_attach + 0.1+100"
+    	 y="50."
+    	 z="length_sc_attach - innerR_sc_attach_pig*2. - 2.+50"/>    
     <subtraction name="coll_shield_6">
       <first ref="coll_shield_5"/>
       <second ref="sc_attach_outside_w"/>
@@ -2621,12 +2615,12 @@
       <solidref ref="coll_shield_6"/>
     </volume>
 
-   
+    <!--
     <volume name="coll_outsideW_shield_logic">
       <materialref ref="Tungsten"/>
       <solidref ref="sc_attach_outside_w"/>
     </volume>
-    
+    -->
 
     <volume name="coll_pig_shield">
       <materialref ref="PureLead"/> 
@@ -2639,7 +2633,7 @@
     </volume>
 
     <volume name="target_logic">
-      <materialref ref="PureLead"/>
+      <materialref ref="Calcium48"/>
       <solidref ref="tubeTarget"/>
     </volume>
 
@@ -2659,11 +2653,16 @@
       <solidref ref="giantShield_solid"/>
     </volume>
 
+    <volume name="giantShieldPb_logic">
+      <materialref ref="PureLead"/>
+      <solidref ref="giantShieldPb_solid"/>
+    </volume>
+
     <!-- New dual Scattering Chamber -->
     <volume name="new_sc_beampipe_logic">
       <materialref ref="Aluminum"/>
       <solidref ref="new_sc_beampipe_solid"/>
-      <auxiliary auxtype="SensDet" auxvalue="volumeN3001"/>
+      <auxiliary auxtype="SensDet" auxvalue="volumeN5040"/>
       <!-- <auxiliary auxtype="SensDet" auxvalue="planeDet"/> -->
     </volume>
 
@@ -2678,7 +2677,7 @@
     <volume name="new_sc_prex_logic">
       <materialref ref="Aluminum"/>
       <solidref ref="new_sc_prex_solid"/>
-      <auxiliary auxtype="SensDet" auxvalue="volumeN3101"/>
+      <auxiliary auxtype="SensDet" auxvalue="volumeN5041"/>
       <!-- <auxiliary auxtype="SensDet" auxvalue="planeDet"/> -->
     </volume>
 
@@ -2692,7 +2691,7 @@
     <volume name="new_sc_crex_logic">
       <materialref ref="Aluminum"/>
       <solidref ref="new_sc_crex_solid"/>
-      <auxiliary auxtype="SensDet" auxvalue="volumeN3102"/>
+      <auxiliary auxtype="SensDet" auxvalue="volumeN5043"/>
       <!-- <auxiliary auxtype="SensDet" auxvalue="planeDet"/> -->
     </volume>
 
@@ -2707,7 +2706,7 @@
     <volume name="sc_attach_logic">
       <materialref ref="Aluminum"/>
       <solidref ref="sc_attach_solid"/>
-      <auxiliary auxtype="SensDet" auxvalue="volumeN3103"/>
+      <auxiliary auxtype="SensDet" auxvalue="volumeN5050"/>
     </volume>
 
     <!-- Pylons for pics - Ricky -->
@@ -2719,7 +2718,7 @@
     <volume name="sc_attach_shield_logic">
       <materialref ref="Shield"/>
       <solidref ref="sc_attach_shield_8"/>
-      <auxiliary auxtype="SensDet" auxvalue="volumeN3111"/>
+      <auxiliary auxtype="SensDet" auxvalue="volumeN5051"/>
     </volume>
 
     <volume name="sc_oring_logic">
@@ -2766,7 +2765,7 @@
     <volume name="sc_attach_hut_logic">
       <materialref ref="Shield"/>
       <solidref ref="sc_attach_hut_solid"/>
-      <auxiliary auxtype="SensDet" auxvalue="volumeN3112"/>
+      <auxiliary auxtype="SensDet" auxvalue="volumeN5011"/>
     </volume>
     <volume name="hut_logic">
       <materialref ref="Shield"/>
@@ -2776,7 +2775,7 @@
     <volume name="scatt_cham_shld_logic">
       <materialref ref="Shield"/>
       <solidref ref="scatt_cham_shld_solid"/>
-      <auxiliary auxtype="SensDet" auxvalue="volumeN3113"/>
+      <auxiliary auxtype="SensDet" auxvalue="volumeN5012"/>
     </volume>
     <volume name="septpipeShld_logic">
       <materialref ref="Shield"/>
@@ -2842,24 +2841,24 @@
     <volume name="sDet_1_logic">
       <materialref ref="Vacuum"/>
       <solidref ref="sDet_1"/>
-      <auxiliary auxtype="SensDet" auxvalue="volumeN2212"/>
+      <auxiliary auxtype="SensDet" auxvalue="volumeN10007"/>
     </volume>
 
     <!-- hall detectors -->
     <volume name="cDet_1_logic">
       <materialref ref="Vacuum"/>
       <solidref ref="cDet_1"/>
-      <auxiliary auxtype="SensDet" auxvalue="volumeN2003"/>
+      <auxiliary auxtype="SensDet" auxvalue="volumeN8001"/>
     </volume>
     <volume name="cDet_2_logic">
       <materialref ref="Vacuum"/>
       <solidref ref="cDet_2"/>
-      <auxiliary auxtype="SensDet" auxvalue="volumeN2004"/> 
+      <auxiliary auxtype="SensDet" auxvalue="volumeN8002"/> 
     </volume>
     <volume name="cDet_3_logic">
       <materialref ref="Vacuum"/>
       <solidref ref="cDet_3"/>
-      <auxiliary auxtype="SensDet" auxvalue="volumeN2005"/>
+      <auxiliary auxtype="SensDet" auxvalue="volumeN8003"/>
     </volume>
 
     <!-- Collimator detectors -->
@@ -2867,12 +2866,12 @@
       <materialref ref="Vacuum"/>
       <!-- <materialref ref="matKryptonite"/> -->
       <solidref ref="dDet_us"/>
-      <auxiliary auxtype="SensDet" auxvalue="volumeN2101"/>
+      <auxiliary auxtype="SensDet" auxvalue="volumeN8004"/>
     </volume>
     <volume name="dDet_ds_logic">
       <materialref ref="Vacuum"/>
       <solidref ref="dDet_ds"/>
-      <auxiliary auxtype="SensDet" auxvalue="volumeN2102"/>
+      <auxiliary auxtype="SensDet" auxvalue="volumeN8005"/>
     </volume>
 
 
@@ -2886,45 +2885,45 @@
     <volume name="crex_det_logic">
       <materialref ref="Vacuum"/>
       <solidref ref="crex_det_solid"/>
-      <auxiliary auxtype="SensDet" auxvalue="volumeN2301"/>
+      <auxiliary auxtype="SensDet" auxvalue="volumeN7002"/>
     </volume>
 
 
     <volume name="box_det_1_logic">
       <materialref ref="Vacuum"/>
       <solidref ref="box_det_1"/>
-      <auxiliary auxtype="SensDet" auxvalue="volumeN2103"/>
+      <auxiliary auxtype="SensDet" auxvalue="volumeN8007"/>
     </volume>
 
-    <!--
+    
     <volume name="dDet_beamline_1_logic">
       <materialref ref="Vacuum"/>
       <solidref ref="dDet_beamline_1"/>
-      <auxiliary auxtype="SensDet" auxvalue="volumeN2201"/>
+      <auxiliary auxtype="SensDet" auxvalue="volumeN10001"/>
     </volume>
 
     <volume name="dDet_beamline_2_logic">
       <materialref ref="Vacuum"/>
       <solidref ref="dDet_beamline_2"/>
-      <auxiliary auxtype="SensDet" auxvalue="volumeN2202"/>
+      <auxiliary auxtype="SensDet" auxvalue="volumeN10002"/>
     </volume>
 
     <volume name="dDet_beamline_3_logic">
       <materialref ref="Vacuum"/>
       <solidref ref="dDet_beamline_3"/>
-      <auxiliary auxtype="SensDet" auxvalue="volumeN2203"/>
+      <auxiliary auxtype="SensDet" auxvalue="volumeN10003"/>
     </volume>
 
     <volume name="dDet_beamline_4_logic">
       <materialref ref="Vacuum"/>
       <solidref ref="dDet_beamline_4"/>
-      <auxiliary auxtype="SensDet" auxvalue="volumeN2204"/>
+      <auxiliary auxtype="SensDet" auxvalue="volumeN10004"/>
     </volume>
-	-->
+
     <volume name="beam_cyl_det_logic">
       <materialref ref="Vacuum"/>
       <solidref ref="beam_cyl_det"/>
-      <auxiliary auxtype="SensDet" auxvalue="volumeN2211"/>
+      <auxiliary auxtype="SensDet" auxvalue="volumeN10005"/>
     </volume>
 
     <!-- Accept Logic - Ricky -->
@@ -2976,18 +2975,17 @@
       </physvol>
       -->
 
-	<!--
       <physvol name="coll_shield">
       	<volumeref ref="coll_shield_logic"/>
       	<positionref ref="pos_global_collShield"/>
       </physvol>
 
-     
+      <!--
       <physvol name="coll_outsideW_shield">
       	<volumeref ref="coll_outsideW_shield_logic"/>
       	<positionref ref="pos_global_outsideW"/>
       </physvol>   
-	-->
+      -->   
 	  
       <physvol name="target">
         <volumeref ref="target_logic"/>
@@ -3008,26 +3006,29 @@
         <volumeref ref="giantShield_logic"/>
         <positionref ref="pos_global_giantShield"/>
       </physvol>
-	<!--
+
+      <physvol name="giantShieldPb">
+        <volumeref ref="giantShieldPb_logic"/>
+        <positionref ref="pos_global_giantPbShield"/>
+      </physvol>
+
       <physvol name="new_sc_beampipe">
         <volumeref ref="new_sc_beampipe_logic"/>
         <positionref ref="new_sc_center"/>
-		<rotationref ref="scRot_14"/>
+	<rotationref ref="scRot_14"/>
       </physvol>
-	-->
-	<!--
+
       <physvol name="new_sc_prex">
         <volumeref ref="new_sc_prex_logic"/>
         <positionref ref="targ_center"/>
 	<rotationref ref="scRot_13"/>
       </physvol>
-	-->
-	<!--
+
       <physvol name="sc_attachment">
         <volumeref ref="sc_attach_logic"/>
         <positionref ref="sc_attach_center"/>
       </physvol>
-	-->
+
       <physvol name="septum">
         <volumeref ref="septum_logic"/>
         <positionref ref="septum_center"/>
@@ -3049,12 +3050,12 @@
 	<position name="posbeamline" unit="cm" x="0" y="0" z="center_septum_pipe"/>
       </physvol>
 
-	<!--
+
       <physvol name="beam_pipe_1">
       	<volumeref ref="beamtube_1_logic" />
       	<position name="posbeamline_1" unit="cm" x="0" y="0" z="center_septum_pipe+length_septum_pipe/2+0.5*(beamline[3,1]+beamline[3,2]+beamline[3,3]+beamline[3,4]+beamline[3,5]+beamline[3,6]+beamline[3,7]+beamline[3,8]+beamline[3,9]+beamline[3,10]+beamline[3,11]+beamline[3,12]+beamline[3,13])"/>
       </physvol>
-	-->
+
 
       <physvol name="vacEnc_l">
         <volumeref ref="vac_enc_l_logic"/>
@@ -3082,12 +3083,11 @@
         <positionref ref="dump_center"/>
       </physvol>
 
-	<!--
+
       <physvol name="ssenc">
         <volumeref ref="ssenc_logic"/>
         <positionref ref="ssenc_cylcenter"/>
       </physvol>
-	-->
 
       <physvol name="ped_union">
         <volumeref ref="ped_union_logic"/>
@@ -3140,7 +3140,6 @@
         <positionref ref="dDet_ds_pos"/> 
       </physvol>
 
-	<!--
       <physvol name="beamline_1_det">
         <volumeref ref="dDet_beamline_1_logic"/>
         <positionref ref="dDet_beamline_pos_1"/>
@@ -3160,7 +3159,6 @@
         <volumeref ref="dDet_beamline_4_logic"/>
         <positionref ref="dDet_beamline_pos_4"/>
       </physvol>
-	-->		
 
       <physvol name="dipole_left">
         <volumeref ref="dipole_logic_1"/>
@@ -3179,32 +3177,7 @@
 	<positionref ref="pos_global_SEPT_elec"/>
 	<rotationref ref="identity"/>
       </physvol>
-	<!--
-		<physvol>
-			<file name="geometry/subCoilHoses.gdml"/>
-			<position name="coil_hose_pos" unit="cm" x="0" y="0" z="center_septum - 0.5*length_septum - 0.5*29.11"/>
-			<rotationref ref="identity"/>
-	  	</physvol>
-	-->
-		<physvol>
-			<file name="geometry/subQ1HosesCylRedesign.gdml"/>
-			<position name="q1_hose_cyl_pos" unit="cm" x="0" y="0" z="210"/>
-		</physvol>
-
-		<physvol>
-			<file name="geometry/subTargetChamber.gdml"/>
-			<position name="target_chamber_center" unit="cm" x="0" y="0" z="prex_target_center"/>
-		</physvol>
-	
-		<physvol>
-			<file name="geometry/subCollShields.gdml"/>
-			<position name="coll_shield_pos" unit="cm" x="0" y="-31.802" z="-57.531"/>
-	    </physvol>
-
-		<physvol>
-			<file name="geometry/subBeamPipe.gdml"/>
-			<positionref ref="dDet_beamline_pos_1"/>
-		</physvol>
+	    
     </volume>
   </structure>
 
