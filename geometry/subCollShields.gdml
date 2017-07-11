@@ -49,21 +49,21 @@
 		
 		<position name="W_wrt_top" unit="cm" x="0" y="-front_abs_y_pos+W_y_pos" z="-top_z_pos+W_z_pos"/>
 
-		<position name="top_wrt_bot" unit="cm" x="0" y="2*front_abs_y_pos" z="top_z_pos-bot_z_pos"/>
-		<position name="W_wrt_bot" unit="cm" x="0" y="W_y_pos+front_abs_y_pos" z="W_z_pos-bot_z_pos"/>
-		<position name="back_wrt_bot" unit="cm" x="0" y="back_y_pos+front_abs_y_pos" z="back_z_pos-bot_z_pos"/>
-		<position name="left_wrt_bot" unit="cm" x="-side_abs_x_pos" y="side_abs_y_pos+front_abs_y_pos" z="left_z_pos-bot_z_pos"/>
-		<position name="right_wrt_bot" unit="cm" x="side_abs_x_pos" y="side_abs_y_pos+front_abs_y_pos" z="right_z_pos-bot_z_pos"/>
+		<position name="top_wrt_bot" unit="cm" x="0" y="2*front_abs_y_pos" z="top_z_pos - bot_z_pos"/>
+		<position name="W_wrt_bot" unit="cm" x="0" y="W_y_pos+front_abs_y_pos" z="W_z_pos - bot_z_pos"/>
+		<position name="back_wrt_bot" unit="cm" x="0" y="back_y_pos+front_abs_y_pos" z="back_z_pos - bot_z_pos"/>
+		<position name="left_wrt_bot" unit="cm" x="-side_abs_x_pos" y="side_abs_y_pos+front_abs_y_pos" z="left_z_pos - bot_z_pos"/>
+		<position name="right_wrt_bot" unit="cm" x="side_abs_x_pos" y="side_abs_y_pos+front_abs_y_pos" z="right_z_pos - bot_z_pos"/>
 		
 		<constant name="cen_tb_z_pos" value="0.5*(bot_z_pos-0.5*bot_z+top_z_pos+0.5*top_z)"/>
 		<position name="cen_tb" unit="cm" x="0" y="0" z="cen_tb_z_pos"/>
-		<position name="W_wrt_cen_tb" unit="cm" x="0" y="W_y_pos" z="W_z_pos-cen_tb_z_pos"/>
+		<position name="W_wrt_cen_tb" unit="cm" x="0" y="W_y_pos" z="W_z_pos - cen_tb_z_pos"/>
 		<position name="back_wrt_cen_tb" unit="cm" x="0" y="back_y_pos+front_abs_y_pos" z="back_z_pos+cen_tb_z_pos"/>
 		<constant name="cen_tbWb_z_pos" value="0.5*(back_z_pos+0.5*back_z+bot_z_pos-0.5*bot_z)"/>
 		<position name="cen_tbWb" unit="cm" x="0" y="0" z="cen_tbWb_z_pos"/>
 		
-		<position name="right_wrt_left" unit="cm" x="2*side_abs_x_pos" y="0" z="right_z_pos-left_z_pos"/>
-		<position name="curtains_wrt_bot" unit="cm" x="-side_abs_x_pos" y="side_abs_y_pos+front_abs_y_pos" z="left_z_pos-bot_z_pos"/>
+		<position name="right_wrt_left" unit="cm" x="2*side_abs_x_pos" y="0" z="right_z_pos - left_z_pos"/>
+		<position name="curtains_wrt_bot" unit="cm" x="-side_abs_x_pos" y="side_abs_y_pos+front_abs_y_pos" z="left_z_pos - bot_z_pos"/>
 	</define>
 
 	&materials;
