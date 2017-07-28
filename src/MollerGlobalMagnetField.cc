@@ -257,7 +257,7 @@ void MollerGlobalMagnetField::InterpolateFieldValue(const G4double Point[4], G4d
   myLocalPointInMainMagnet[2] = Point[2]-69.91*cm;    // z-pos
   myLocalPointInMainMagnet[3] = Point[3];             // time
 
-  double beamEscale=1;
+  G4double beamEscale=1;
   if(configuration=="prex2")
     beamEscale=2;
   // within the radius of the beampipe through the septum, r = 4.128 cm.
@@ -266,6 +266,7 @@ void MollerGlobalMagnetField::InterpolateFieldValue(const G4double Point[4], G4d
       dBydx = interpolate(myLocalPointInMainMagnet[2]/cm)*gauss/cm /beamEscale;
     }
   }
+
   if((configuration=="prex2" || configuration=="crex") && addQ1fringe){
     Bfield[0] += -myLocalPointInMainMagnet[1]*dBydx;
     Bfield[1] += -myLocalPointInMainMagnet[0]*dBydx;
@@ -273,6 +274,7 @@ void MollerGlobalMagnetField::InterpolateFieldValue(const G4double Point[4], G4d
     Bfield[0] = -myLocalPointInMainMagnet[1]*dBydx;
     Bfield[1] = -myLocalPointInMainMagnet[0]*dBydx;
   }
+  Bfield[2] = 0;
 }
 
 G4double MollerGlobalMagnetField::interpolate(G4double val) const
