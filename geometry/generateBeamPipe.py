@@ -3,6 +3,7 @@
 def main():
     print "generate some temp files with gdml code to be copy pasted somewhere else"
     beamPREX1()
+    beamPREX1v2()
     beamPREX2()
 
 def beamPREX1():
@@ -32,6 +33,47 @@ def beamPREX1():
             print i,"step 2"
             f1.write("\t\t\t<zplane rmin=\""+str(rMin[i])+"\" rmax=\""+str(rMax[i+1])+"\" z=\""+str(bCen[i]+bLen[i]/2 -1)+"\"/>\n")
             f1.write("\t\t\t<zplane rmin=\""+str(rMin[i])+"\" rmax=\""+str(rMax[i+1])+"\" z=\""+str(bCen[i]+bLen[i]/2)+"\"/>\n")
+    f1.write("</polycone>\n")
+    f1.write("<position name=\"beamPipe_pos_rel\" unit=\"cm\" x=\"0\" y=\"0\" z=\"0\"/>\n")
+    f1.close()
+
+def beamPREX1v2():
+    f1=open("beamPipePREX1v2.temp","w")
+
+    f1.write("\t<solids>\n")
+    nSlices=12
+    ## determined by JM see haplog XXXX
+    ### everything is in cm
+    rMin=[ 4.128,  4.445,  4.763,  5.080,  6.350,   7.620,   10.160,  10.478,  12.700,  15.240,  30.480,   45.720]
+    rMax=[ 4.432,  4.750,  5.067,  5.385,  6.655,   7.925,   10.478,  10.795,  13.018,  15.558,  30.798,   46.038]
+    bLen=[28.018, 19.010, 15.240, 37.028, 23.416,  27.622,   22.368,  94.456,  30.480, 106.204, 551.180, 1564.642]
+    bCen=[14.009, 37.523, 54.648, 80.782, 111.004, 136.523, 161.518, 219.930, 282.398, 350.740, 679.432, 1737.343]
+    septumRmax=4.102
+    f1.write("\t\t<polycone aunit=\"deg\" startphi=\"0\" deltaphi=\"360\" lunit=\"cm\" name=\"beamPipe_solid\">\n")
+    f1.write("\t\t\t<zplane rmin=\""+str(septumRmax)+"\" rmax=\""+str(rMax[0])+"\" z=\""+str(-1)+"\"/>\n")
+    f1.write("\t\t\t<zplane rmin=\""+str(septumRmax)+"\" rmax=\""+str(rMax[0])+"\" z=\""+str(0)+"\"/>\n")
+    for i in range(0,nSlices):
+        print i
+        f1.write("\t\t\t<zplane rmin=\""+str(rMin[i])+"\" rmax=\""+str(rMax[i])+"\" z=\""+str(bCen[i]-bLen[i]/2)+"\"/>\n")
+        if i==11:
+            f1.write("\t\t\t<zplane rmin=\""+str(rMin[i])+"\" rmax=\""+str(rMax[i])+"\" z=\""+str(bCen[i]+bLen[i]/2)+"\"/>\n")
+        else:
+            f1.write("\t\t\t<zplane rmin=\""+str(rMin[i])+"\" rmax=\""+str(rMax[i])+"\" z=\""+str(bCen[i]+bLen[i]/2-1)+"\"/>\n")
+
+        if i<11:
+            print i,"step 2"
+            f1.write("\t\t\t<zplane rmin=\""+str(rMin[i])+"\" rmax=\""+str(rMax[i+1])+"\" z=\""+str(bCen[i]+bLen[i]/2 -1)+"\"/>\n")
+            f1.write("\t\t\t<zplane rmin=\""+str(rMin[i])+"\" rmax=\""+str(rMax[i+1])+"\" z=\""+str(bCen[i]+bLen[i]/2)+"\"/>\n")
+
+    zPos=bCen[-1]+bLen[-1]/2 + 325.755 ### (10 ft 8/25'' to front face of orif)
+    f1.write("\t\t\t<zplane rmin=\""+str(rMin[-1])+"\" rmax=\""+str(rMax[-1])+"\" z=\""+str(zPos)+"\"/>\n")
+    f1.write("\t\t\t<zplane rmin=\"5.08\" rmax=\""+str(rMax[-1])+"\" z=\""+str(zPos)+"\"/>\n")
+    zPos += 3.65/3 ##(1 7/16)/3
+    f1.write("\t\t\t<zplane rmin=\"5.08\" rmax=\""+str(rMax[-1])+"\" z=\""+str(zPos)+"\"/>\n")
+    f1.write("\t\t\t<zplane rmin=\"5.08\" rmax=\"8.73\" z=\""+str(zPos)+"\"/>\n")
+    zPos += 7.30 - 3.65/3
+    f1.write("\t\t\t<zplane rmin=\"5.08\" rmax=\"8.73\" z=\""+str(zPos)+"\"/>\n")
+
     f1.write("</polycone>\n")
     f1.write("<position name=\"beamPipe_pos_rel\" unit=\"cm\" x=\"0\" y=\"0\" z=\"0\"/>\n")
     f1.close()
@@ -87,7 +129,7 @@ def beamPREX2():
     ## pipe thickens in cm
     p2Thickness=[  6.96 ,   0.318,   0.318,   0.318,   0.318,    0.318]
     ## length in cm
-    p2bLen=[       1.905,  94.456,  30.48 , 106.200, 551.180, 1578.780]
+    p2bLen=[       1.905,  94.456,  30.48 , 106.200, 551.180, 1478.780]
     ## center position in cm
     ##p2bCen=[     172.69 , 220.871, 283.34 , 351.680, 680.370, 1745.350]
     f1.write("\t\t<polycone aunit=\"deg\" startphi=\"0\" deltaphi=\"360\" lunit=\"cm\" name=\"beamPipe_solid2\">\n")
@@ -144,7 +186,7 @@ def beamPREX2():
     f1.write("<position name=\"dumpICS2_beamR_pos\" unit=\"cm\" x=\"-68\" y=\""+str(-27-166+41)+"\" z=\""+str(donutZpos+90-30.5)+"\"/>\n")
     f1.write("<position name=\"dumpICS3_beamR_pos\" unit=\"cm\" x=\"-68\" y=\""+str(-27-83)+"\" z=\""+str(donutZpos+90+30.5)+"\"/>\n")
 
-    f1.write("<position name=\"dumpSSdoor_pos\" unit=\"cm\" x=\"0\" y=\"-42\" z=\""+str(donutZpos+318)+"\"/>\n")
+    f1.write("<position name=\"dumpDoor_pos\" unit=\"cm\" x=\"0\" y=\"-42\" z=\""+str(donutZpos+318)+"\"/>\n")
     f1.write("<position name=\"dumpIC_beamR_pos\" unit=\"cm\" x=\"-68\" y=\""+str(-27-53)+"\" z=\""+str(donutZpos+90-30.5)+"\"/>\n")
     f1.write("<position name=\"dumpIC_beamL_pos\" unit=\"cm\" x=\"68\" y=\""+str(-27-53)+"\" z=\""+str(donutZpos+90-30.5)+"\"/>\n")
 
