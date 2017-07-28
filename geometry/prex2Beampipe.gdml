@@ -6,28 +6,31 @@
 
   <define>
     <!--Positions are relative to the end of the septum beamPipe-->
+    <position name="target_posRel" unit="cm" x="0" y="0" z="-342.9"/>
     <position name="center_posRel" unit="cm" x="0" y="0" z="0"/>
     <position name="det02_posRel" unit="cm" x="0" y="0" z="111.004"/>
     <position name="det03_posRel" unit="cm" x="0" y="0" z="350.740"/>
-    <position name="det04_posRel" unit="cm" x="0" y="0" z="2500"/>
-    <position name="det05_posRel" unit="cm" x="0" y="0" z="3067"/>
-    <position name="det06_posRel" unit="cm" x="0" y="0" z="2789.385"/>
-    <position name="det07_posRel" unit="cm" x="0" y="0" z="2791.985"/>
-    <position name="det08_posRel" unit="cm" x="0" y="0" z="3012"/>
+    <position name="det04_posRel" unit="cm" x="0" y="0" z="2400"/>
+    <position name="det05_posRel" unit="cm" x="0" y="0" z="2967"/>
+    <position name="det06_posRel" unit="cm" x="0" y="0" z="2689.385"/>
+    <position name="det07_posRel" unit="cm" x="0" y="0" z="2691.985"/>
+    <position name="det08_posRel" unit="cm" x="0" y="0" z="2912"/>
     <position name="gateValve_cylinder_box_posRel" unit="cm" x="0" y="-8" z="0"/>
     <position name="gateValve_posRel" unit="cm" x="0" y="0" z="163.784"/>
-    <position name="dumpICS1_beamL_pos" unit="cm" x="68" y="-110" z="2785.185"/>
-    <position name="dumpICS2_beamL_pos" unit="cm" x="68" y="-152" z="2851.185"/>
-    <position name="dumpICS3_beamL_pos" unit="cm" x="68" y="-110" z="2912.185"/>
-    <position name="dumpICS1_beamR_pos" unit="cm" x="-68" y="-110" z="2785.185"/>
-    <position name="dumpICS2_beamR_pos" unit="cm" x="-68" y="-152" z="2851.185"/>
-    <position name="dumpICS3_beamR_pos" unit="cm" x="-68" y="-110" z="2912.185"/>
-    <position name="dumpSSdoor_pos" unit="cm" x="0" y="-42" z="3109.685"/>
     <position name="dumpSSdoor_posRel" unit="cm" x="0" y="42" z="0"/>
-    <position name="dumpIC_beamR_pos" unit="cm" x="-68" y="-80" z="2851.185"/>
-    <position name="dumpIC_beamL_pos" unit="cm" x="68" y="-80" z="2851.185"/>
-    <position name="target_posRel" unit="cm" x="0" y="0" z="-342.9"/>
     <rotation name="x90" unit="deg" x="90" y="0" z="0"/>
+
+    <!-- Stuff from generateBeamPipe.py -->
+    <position name="dumpICS1_beamL_pos" unit="cm" x="68" y="-110" z="2685.185"/>
+    <position name="dumpICS2_beamL_pos" unit="cm" x="68" y="-152" z="2751.185"/>
+    <position name="dumpICS3_beamL_pos" unit="cm" x="68" y="-110" z="2812.185"/>
+    <position name="dumpICS1_beamR_pos" unit="cm" x="-68" y="-110" z="2685.185"/>
+    <position name="dumpICS2_beamR_pos" unit="cm" x="-68" y="-152" z="2751.185"/>
+    <position name="dumpICS3_beamR_pos" unit="cm" x="-68" y="-110" z="2812.185"/>
+    <position name="dumpSSdoor_pos" unit="cm" x="0" y="-42" z="3009.685"/>
+    <position name="dumpIC_beamR_pos" unit="cm" x="-68" y="-80" z="2751.185"/>
+    <position name="dumpIC_beamL_pos" unit="cm" x="68" y="-80" z="2751.185"/>
+
   </define>
 
   <materials>
@@ -72,44 +75,44 @@
           z="0.05" />
 
     <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="det01_solid"
-	  rmin="0"
-	  rmax="3.8"
-	  z="0.1"/>
+          rmin="0"
+          rmax="3.8"
+          z="0.1"/>
 
     <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="det02_solid"
-	  rmin="0"
-	  rmax="6.0"
-	  z="0.1"/>
+          rmin="0"
+          rmax="6.0"
+          z="0.1"/>
 
     <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="det03_solid"
-	  rmin="0"
-	  rmax="15.45"
-	  z="0.1"/>
+          rmin="0"
+          rmax="15.45"
+          z="0.1"/>
 
     <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="det04_solid"
-	  rmin="0"
-	  rmax="45.62"
-	  z="0.1"/>
+          rmin="0"
+          rmax="45.62"
+          z="0.1"/>
 
     <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="det05_solid"
-	  rmin="0"
-	  rmax="45.62"
-	  z="0.1"/>
+          rmin="0"
+          rmax="45.62"
+          z="0.1"/>
 
     <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="det06_solid"
-	  rmin="0"
-	  rmax="29.8"
-	  z="0.1"/>
+          rmin="0"
+          rmax="29.8"
+          z="0.1"/>
 
     <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="det07_solid"
-	  rmin="0"
-	  rmax="29.8"
-	  z="0.1"/>
+          rmin="0"
+          rmax="29.8"
+          z="0.1"/>
 
     <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="det08_solid"
-	  rmin="0"
-	  rmax="29.8"
-	  z="0.1"/>
+          rmin="0"
+          rmax="29.8"
+          z="0.1"/>
 
     <polycone aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="beamPipe_solid1">
       <zplane rmin="4.102" rmax="4.1275" z="-1"/>
@@ -165,17 +168,17 @@
       <zplane rmin="30.162" rmax="45.72" z="951.005"/>
       <zplane rmin="30.162" rmax="45.72" z="952.005"/>
       <zplane rmin="45.402" rmax="45.72" z="952.005"/>
-      <zplane rmin="45.402" rmax="45.72" z="2530.785"/>
-      <zplane rmin="45.402" rmax="48.15" z="2530.785"/>
-      <zplane rmin="47.67" rmax="48.15" z="2530.795"/>
-      <zplane rmin="29.89" rmax="30.37" z="2556.085"/>
-      <zplane rmin="29.89" rmax="30.37" z="2789.685"/>
-      <zplane rmin="4.13" rmax="30.37" z="2789.685"/>
-      <zplane rmin="4.13" rmax="30.37" z="2791.685"/>
-      <zplane rmin="29.89" rmax="30.37" z="2791.685"/>
-      <zplane rmin="29.89" rmax="30.37" z="3008.485"/>
-      <zplane rmin="15.23" rmax="15.70" z="3024.085"/>
-      <zplane rmin="15.23" rmax="15.70" z="3028.885"/>
+      <zplane rmin="45.402" rmax="45.72" z="2430.785"/>
+      <zplane rmin="45.402" rmax="48.15" z="2430.785"/>
+      <zplane rmin="47.67" rmax="48.15" z="2430.795"/>
+      <zplane rmin="29.89" rmax="30.37" z="2456.085"/>
+      <zplane rmin="29.89" rmax="30.37" z="2689.685"/>
+      <zplane rmin="4.13" rmax="30.37" z="2689.685"/>
+      <zplane rmin="4.13" rmax="30.37" z="2691.685"/>
+      <zplane rmin="29.89" rmax="30.37" z="2691.685"/>
+      <zplane rmin="29.89" rmax="30.37" z="2908.485"/>
+      <zplane rmin="15.23" rmax="15.70" z="2924.085"/>
+      <zplane rmin="15.23" rmax="15.70" z="2928.885"/>
     </polycone>
 
     <!-- Ion Chamber shielding -->
@@ -185,16 +188,16 @@
 
     <!-- Ion Chamber tube -->
     <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="dumpIonChamber_solid"
-	  rmin="0.635"
-	  rmax="2.54"
-	  z="50.0"/>
+          rmin="0.635"
+          rmax="2.54"
+          z="50.0"/>
 
     <!-- Stainless Steel Door -->
     <box lunit="cm" name="dumpSSdoor_0" x="138" y="292" z="5"/>
     <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="dumpSSdoor_1"
-	  rmin="0"
-	  rmax="20.3"
-	  z="6.0"/>
+          rmin="0"
+          rmax="20.3"
+          z="6.0"/>
     <subtraction name ="dumpSSdoor_solid">
       <first ref="dumpSSdoor_0"/>
       <second ref="dumpSSdoor_1"/>
@@ -207,14 +210,14 @@
     <!-- <box lunit="cm" name="gateValve_s1" x="16.8" y="45.15" z="3.9"/> -->
     <!-- rmax=B/2;z=A/2 -->
     <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="gateValve_s2"
-	  rmin="0"
-	  rmax="15.5"
-	  z="8.0"/>
+          rmin="0"
+          rmax="15.5"
+          z="8.0"/>
     <!-- rmax=D/2;z=A/2+1 -->
     <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="gateValve_s3"
-	  rmin="0"
-	  rmax="10.0"
-	  z="9.0"/>
+          rmin="0"
+          rmax="10.0"
+          z="9.0"/>
     <union name ="gateValve_s4">
       <first ref="gateValve_s2"/>
       <second ref="gateValve_s1"/>
@@ -231,9 +234,9 @@
 
     <!-- Union of all objects so that there is a space to physically add them -->
     <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="bP2worldUnion0"
-	  rmin="0"
-	  rmax="4.102"
-	  z="0.1"/>
+          rmin="0"
+          rmax="4.102"
+          z="0.1"/>
 
     <union name ="bP2worldUnion1">
       <first ref="bP2worldUnion0"/>
@@ -541,19 +544,19 @@
       <physvol name="dumpIonChamber_beamR_phys">
         <volumeref ref="dumpIonChamber_beamR_logic"/>
         <positionref ref="dumpIC_beamR_pos"/>
-	<rotationref ref="x90"/>
+        <rotationref ref="x90"/>
       </physvol>
 
       <physvol name="dumpIonChamber_beamL_phys">
         <volumeref ref="dumpIonChamber_beamL_logic"/>
         <positionref ref="dumpIC_beamL_pos"/>
-	<rotationref ref="x90"/>
+        <rotationref ref="x90"/>
       </physvol>
 
       <!-- ~~~For side by side comparisons only~~~ -->
       <!-- <physvol> -->
-      <!-- 	<file name="geometry/prex1Beampipe.gdml"/> -->
-      <!-- 	<position name="prex1beampipe_posRel" unit="cm" x="0" y="-100" z="0"/> -->
+      <!--   <file name="geometry/prex1BeampipeV2.gdml"/> -->
+      <!--   <position name="prex1beampipe_posRel" unit="cm" x="0" y="-100" z="0"/> -->
       <!-- </physvol> -->
 
     </volume>
