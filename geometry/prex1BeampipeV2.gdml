@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+
+<gdml xmlns:gdml="http://cern.ch/2001/Schemas/GDML"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="./schema/gdml.xsd">
+
+  <define>
+    <!--Positions are relative to the end of the septum beamPipe-->
+    <position name="det01_posRel" unit="cm" x="0" y="0" z="0"/>
+    <position name="det02_posRel" unit="cm" x="0" y="0" z="111.004"/>
+    <position name="det03_posRel" unit="cm" x="0" y="0" z="350.740"/>
+    <position name="det04_posRel" unit="cm" x="0" y="0" z="2500"/>
+    <position name="det05_posRel" unit="cm" x="0" y="0" z="3067"/>
+  </define>
+
+  <materials>
+    <material Z="1" name="Vacuum" state="gas">
+      <T unit="K" value="2.73"/>
+      <P unit="pascal" value="3e-18"/>
+      <D unit="g/cm3" value="1e-25"/>
+      <atom unit="g/mole" value="1.01"/>
+    </material>
+
+    <material Z="13" name="Aluminum" state="solid">
+      <T unit="K" value="298"/>
+      <D unit="g/cm3" value="2.699"/>
+      <atom unit="g/mole" value="26.982"/>
+    </material>
+  </materials>
+
+  <solids>
+
+    <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="det01_solid"
+	  rmin="0"
+	  rmax="4.10"
+	  z="0.1"/>
+
+    <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="det02_solid"
+	  rmin="0"
+	  rmax="6.25"
+	  z="0.1"/>
+
+    <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="det03_solid"
+	  rmin="0"
+	  rmax="15.45"
+	  z="0.1"/>
+
+    <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="det04_solid"
+	  rmin="0"
+	  rmax="45.62"
+	  z="0.1"/>
+
+    <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="det05_solid"
+	  rmin="0"
+	  rmax="45.62"
+	  z="0.1"/>
+
+    <polycone aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="beamPipe_solid">
+      <zplane rmin="4.102" rmax="4.432" z="-1"/>
+      <zplane rmin="4.102" rmax="4.432" z="0"/>
+      <zplane rmin="4.128" rmax="4.432" z="0.0"/>
+      <zplane rmin="4.128" rmax="4.432" z="27.018"/>
+      <zplane rmin="4.128" rmax="4.75" z="27.018"/>
+      <zplane rmin="4.128" rmax="4.75" z="28.018"/>
+      <zplane rmin="4.445" rmax="4.75" z="28.018"/>
+      <zplane rmin="4.445" rmax="4.75" z="46.028"/>
+      <zplane rmin="4.445" rmax="5.067" z="46.028"/>
+      <zplane rmin="4.445" rmax="5.067" z="47.028"/>
+      <zplane rmin="4.763" rmax="5.067" z="47.028"/>
+      <zplane rmin="4.763" rmax="5.067" z="61.268"/>
+      <zplane rmin="4.763" rmax="5.385" z="61.268"/>
+      <zplane rmin="4.763" rmax="5.385" z="62.268"/>
+      <zplane rmin="5.08" rmax="5.385" z="62.268"/>
+      <zplane rmin="5.08" rmax="5.385" z="98.296"/>
+      <zplane rmin="5.08" rmax="6.655" z="98.296"/>
+      <zplane rmin="5.08" rmax="6.655" z="99.296"/>
+      <zplane rmin="6.35" rmax="6.655" z="99.296"/>
+      <zplane rmin="6.35" rmax="6.655" z="121.712"/>
+      <zplane rmin="6.35" rmax="7.925" z="121.712"/>
+      <zplane rmin="6.35" rmax="7.925" z="122.712"/>
+      <zplane rmin="7.62" rmax="7.925" z="122.712"/>
+      <zplane rmin="7.62" rmax="7.925" z="149.334"/>
+      <zplane rmin="7.62" rmax="10.478" z="149.334"/>
+      <zplane rmin="7.62" rmax="10.478" z="150.334"/>
+      <zplane rmin="10.16" rmax="10.478" z="150.334"/>
+      <zplane rmin="10.16" rmax="10.478" z="171.702"/>
+      <zplane rmin="10.16" rmax="10.795" z="171.702"/>
+      <zplane rmin="10.16" rmax="10.795" z="172.702"/>
+      <zplane rmin="10.478" rmax="10.795" z="172.702"/>
+      <zplane rmin="10.478" rmax="10.795" z="266.158"/>
+      <zplane rmin="10.478" rmax="13.018" z="266.158"/>
+      <zplane rmin="10.478" rmax="13.018" z="267.158"/>
+      <zplane rmin="12.7" rmax="13.018" z="267.158"/>
+      <zplane rmin="12.7" rmax="13.018" z="296.638"/>
+      <zplane rmin="12.7" rmax="15.558" z="296.638"/>
+      <zplane rmin="12.7" rmax="15.558" z="297.638"/>
+      <zplane rmin="15.24" rmax="15.558" z="297.638"/>
+      <zplane rmin="15.24" rmax="15.558" z="402.842"/>
+      <zplane rmin="15.24" rmax="30.798" z="402.842"/>
+      <zplane rmin="15.24" rmax="30.798" z="403.842"/>
+      <zplane rmin="30.48" rmax="30.798" z="403.842"/>
+      <zplane rmin="30.48" rmax="30.798" z="954.022"/>
+      <zplane rmin="30.48" rmax="46.038" z="954.022"/>
+      <zplane rmin="30.48" rmax="46.038" z="955.022"/>
+      <zplane rmin="45.72" rmax="46.038" z="955.022"/>
+      <zplane rmin="45.72" rmax="46.038" z="2518.664"/>
+      <zplane rmin="45.72" rmax="46.038" z="2519.664"/>
+      <zplane rmin="45.72" rmax="46.038" z="2845.419"/>
+      <zplane rmin="5.08" rmax="46.038" z="2845.419"/>
+      <zplane rmin="5.08" rmax="46.038" z="2846.63566667"/>
+      <zplane rmin="5.08" rmax="8.73" z="2846.63566667"/>
+      <zplane rmin="5.08" rmax="8.73" z="2852.719"/>
+    </polycone>
+
+    <!-- Union of all objects so that there is a space to physically add them -->
+    <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="worldUnion0"
+	  rmin="0"
+	  rmax="4.102"
+	  z="0.1"/>
+
+    <union name ="worldUnion1">
+      <first ref="worldUnion0"/>
+      <second ref="beamPipe_solid"/>
+      <positionref ref="det01_posRel"/>
+    </union>
+    <union name ="worldUnion2">
+      <first ref="worldUnion1"/>
+      <second ref="det02_solid"/>
+      <positionref ref="det02_posRel"/>
+    </union>
+    <union name ="worldUnion3">
+      <first ref="worldUnion2"/>
+      <second ref="det03_solid"/>
+      <positionref ref="det03_posRel"/>
+    </union>
+    <union name ="worldUnion4">
+      <first ref="worldUnion3"/>
+      <second ref="det04_solid"/>
+      <positionref ref="det04_posRel"/>
+    </union>
+    <union name ="worldUnion5">
+      <first ref="worldUnion4"/>
+      <second ref="det05_solid"/>
+      <positionref ref="det05_posRel"/>
+    </union>
+
+  </solids>
+
+  <structure>
+
+    <volume name="det01_logic">
+      <materialref ref="Vacuum"/>
+      <solidref ref="det01_solid"/>
+      <auxiliary auxtype="SensDet" auxvalue="volumeN10001"/>
+    </volume>
+
+    <volume name="det02_logic">
+      <materialref ref="Vacuum"/>
+      <solidref ref="det02_solid"/>
+      <auxiliary auxtype="SensDet" auxvalue="volumeN10002"/>
+    </volume>
+
+    <volume name="det03_logic">
+      <materialref ref="Vacuum"/>
+      <solidref ref="det03_solid"/>
+      <auxiliary auxtype="SensDet" auxvalue="volumeN10003"/>
+    </volume>
+
+    <volume name="det04_logic">
+      <materialref ref="Vacuum"/>
+      <solidref ref="det04_solid"/>
+      <auxiliary auxtype="SensDet" auxvalue="volumeN10004"/>
+    </volume>
+
+    <volume name="det05_logic">
+      <materialref ref="Vacuum"/>
+      <solidref ref="det05_solid"/>
+      <auxiliary auxtype="SensDet" auxvalue="volumeN10005"/>
+    </volume>
+
+    <volume name="beamPipe_logic">
+      <materialref ref="Aluminum"/>
+      <solidref ref="beamPipe_solid"/>
+    </volume>
+
+    <volume name="beamPipeP1">
+      <materialref ref="Vacuum"/>
+      <solidref ref="worldUnion5"/>
+
+      <physvol name="det01_phys">
+        <volumeref ref="det01_logic"/>
+        <positionref ref="det01_posRel"/>
+      </physvol>
+
+      <physvol name="det02_phys">
+        <volumeref ref="det02_logic"/>
+        <positionref ref="det02_posRel"/>
+      </physvol>
+
+      <physvol name="det03_phys">
+        <volumeref ref="det03_logic"/>
+        <positionref ref="det03_posRel"/>
+      </physvol>
+
+      <physvol name="det04_phys">
+        <volumeref ref="det04_logic"/>
+        <positionref ref="det04_posRel"/>
+      </physvol>
+
+      <physvol name="det05_phys">
+        <volumeref ref="det05_logic"/>
+        <positionref ref="det05_posRel"/>
+      </physvol>
+
+      <physvol name="beamPipe_phys">
+        <volumeref ref="beamPipe_logic"/>
+        <positionref ref="det01_posRel"/>
+      </physvol>
+    </volume>
+  </structure>
+
+  <setup name="beamPipe_prex1" version="1.0">
+    <world ref="beamPipeP1"/>
+  </setup>
+
+</gdml>
