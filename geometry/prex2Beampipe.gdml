@@ -13,7 +13,7 @@
     <position name="det05_posRel" unit="cm" x="0" y="0" z="2967"/>
     <position name="det06_posRel" unit="cm" x="0" y="0" z="2689.385"/>
     <position name="det07_posRel" unit="cm" x="0" y="0" z="2691.985"/>
-    <position name="det08_posRel" unit="cm" x="0" y="0" z="2912"/>
+    <position name="det08_posRel" unit="cm" x="0" y="0" z="2906"/>
     <position name="gateValve_cylinder_box_posRel" unit="cm" x="0" y="-8" z="0"/>
     <position name="gateValve_posRel" unit="cm" x="0" y="0" z="163.784"/>
     <position name="dumpDoor_posRel" unit="cm" x="0" y="42" z="0"/>
