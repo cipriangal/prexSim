@@ -9,8 +9,13 @@
     <position name="det01_posRel" unit="cm" x="0" y="0" z="0"/>
     <position name="det02_posRel" unit="cm" x="0" y="0" z="111.004"/>
     <position name="det03_posRel" unit="cm" x="0" y="0" z="350.740"/>
-    <position name="det04_posRel" unit="cm" x="0" y="0" z="2500"/>
-    <position name="det05_posRel" unit="cm" x="0" y="0" z="3067"/>
+    <position name="det04_posRel" unit="cm" x="0" y="0" z="2400"/>
+    <position name="det05_posRel" unit="cm" x="0" y="0" z="2967"/>
+    <position name="det06_posRel" unit="cm" x="0" y="0" z="2779"/>
+    <position name="det07_posRel" unit="cm" x="0" y="0" z="2787"/>
+
+    <position name="dumpDoor_posRel" unit="cm" x="0" y="42" z="0"/>
+    <position name="dumpDoor_pos" unit="cm" x="0" y="-42" z="2977"/>
   </define>
 
   <materials>
@@ -31,29 +36,39 @@
   <solids>
 
     <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="det01_solid"
-	  rmin="0"
-	  rmax="4.10"
-	  z="0.1"/>
+          rmin="0"
+          rmax="4.10"
+          z="0.1"/>
 
     <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="det02_solid"
-	  rmin="0"
-	  rmax="6.25"
-	  z="0.1"/>
+          rmin="0"
+          rmax="6.25"
+          z="0.1"/>
 
     <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="det03_solid"
-	  rmin="0"
-	  rmax="15.45"
-	  z="0.1"/>
+          rmin="0"
+          rmax="15.45"
+          z="0.1"/>
 
     <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="det04_solid"
-	  rmin="0"
-	  rmax="45.62"
-	  z="0.1"/>
+          rmin="0"
+          rmax="45.62"
+          z="0.1"/>
 
     <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="det05_solid"
-	  rmin="0"
-	  rmax="45.62"
-	  z="0.1"/>
+          rmin="0"
+          rmax="55.62"
+          z="0.1"/>
+
+    <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="det06_solid"
+          rmin="0"
+          rmax="45.62"
+          z="0.1"/>
+
+   <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="det07_solid"
+          rmin="0"
+          rmax="45.62"
+          z="0.1"/>
 
     <polycone aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="beamPipe_solid">
       <zplane rmin="4.102" rmax="4.432" z="-1"/>
@@ -105,18 +120,29 @@
       <zplane rmin="45.72" rmax="46.038" z="955.022"/>
       <zplane rmin="45.72" rmax="46.038" z="2518.664"/>
       <zplane rmin="45.72" rmax="46.038" z="2519.664"/>
-      <zplane rmin="45.72" rmax="46.038" z="2845.419"/>
-      <zplane rmin="5.08" rmax="46.038" z="2845.419"/>
-      <zplane rmin="5.08" rmax="46.038" z="2846.63566667"/>
-      <zplane rmin="5.08" rmax="8.73" z="2846.63566667"/>
-      <zplane rmin="5.08" rmax="8.73" z="2852.719"/>
+      <zplane rmin="45.72" rmax="46.038" z="2779.419"/>
+      <zplane rmin="5.08" rmax="46.038" z="2779.419"/>
+      <zplane rmin="5.08" rmax="46.038" z="2780.63566667"/>
+      <zplane rmin="5.08" rmax="8.73" z="2780.63566667"/>
+      <zplane rmin="5.08" rmax="8.73" z="2786.719"/>
     </polycone>
+
+    <box lunit="cm" name="dumpDoor_0" x="208" y="292" z="5"/>
+    <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="dumpDoor_1"
+          rmin="0"
+          rmax="31.75"
+          z="6.0"/>
+    <subtraction name ="dumpDoor_solid">
+      <first ref="dumpDoor_0"/>
+      <second ref="dumpDoor_1"/>
+      <positionref ref="dumpDoor_posRel"/>
+    </subtraction>
 
     <!-- Union of all objects so that there is a space to physically add them -->
     <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="worldUnion0"
-	  rmin="0"
-	  rmax="4.102"
-	  z="0.1"/>
+          rmin="0"
+          rmax="4.102"
+          z="0.1"/>
 
     <union name ="worldUnion1">
       <first ref="worldUnion0"/>
@@ -143,6 +169,21 @@
       <second ref="det05_solid"/>
       <positionref ref="det05_posRel"/>
     </union>
+    <union name ="worldUnion6">
+      <first ref="worldUnion5"/>
+      <second ref="det06_solid"/>
+      <positionref ref="det06_posRel"/>
+    </union>
+    <union name ="worldUnion7">
+      <first ref="worldUnion6"/>
+      <second ref="det07_solid"/>
+      <positionref ref="det07_posRel"/>
+    </union>
+    <union name ="worldUnion8">
+      <first ref="worldUnion7"/>
+      <second ref="dumpDoor_solid"/>
+      <positionref ref="dumpDoor_pos"/>
+    </union>
 
   </solids>
 
@@ -151,31 +192,43 @@
     <volume name="det01_logic">
       <materialref ref="Vacuum"/>
       <solidref ref="det01_solid"/>
-      <auxiliary auxtype="SensDet" auxvalue="volumeN10001"/>
+      <auxiliary auxtype="SensDet" auxvalue="volumeN2201"/>
     </volume>
 
     <volume name="det02_logic">
       <materialref ref="Vacuum"/>
       <solidref ref="det02_solid"/>
-      <auxiliary auxtype="SensDet" auxvalue="volumeN10002"/>
+      <auxiliary auxtype="SensDet" auxvalue="volumeN2202"/>
     </volume>
 
     <volume name="det03_logic">
       <materialref ref="Vacuum"/>
       <solidref ref="det03_solid"/>
-      <auxiliary auxtype="SensDet" auxvalue="volumeN10003"/>
+      <auxiliary auxtype="SensDet" auxvalue="volumeN2203"/>
     </volume>
 
     <volume name="det04_logic">
       <materialref ref="Vacuum"/>
       <solidref ref="det04_solid"/>
-      <auxiliary auxtype="SensDet" auxvalue="volumeN10004"/>
+      <auxiliary auxtype="SensDet" auxvalue="volumeN2204"/>
     </volume>
 
     <volume name="det05_logic">
       <materialref ref="Vacuum"/>
       <solidref ref="det05_solid"/>
-      <auxiliary auxtype="SensDet" auxvalue="volumeN10005"/>
+      <auxiliary auxtype="SensDet" auxvalue="volumeN2205"/>
+    </volume>
+
+    <volume name="det06_logic">
+      <materialref ref="Vacuum"/>
+      <solidref ref="det06_solid"/>
+      <auxiliary auxtype="SensDet" auxvalue="volumeN2206"/>
+    </volume>
+
+    <volume name="det07_logic">
+      <materialref ref="Vacuum"/>
+      <solidref ref="det07_solid"/>
+      <auxiliary auxtype="SensDet" auxvalue="volumeN2207"/>
     </volume>
 
     <volume name="beamPipe_logic">
@@ -183,9 +236,14 @@
       <solidref ref="beamPipe_solid"/>
     </volume>
 
+    <volume name="dumpDoor_logic">
+      <materialref ref="Aluminum"/>
+      <solidref ref="dumpDoor_solid"/>
+    </volume>
+
     <volume name="beamPipeP1">
       <materialref ref="Vacuum"/>
-      <solidref ref="worldUnion5"/>
+      <solidref ref="worldUnion8"/>
 
       <physvol name="det01_phys">
         <volumeref ref="det01_logic"/>
@@ -210,6 +268,21 @@
       <physvol name="det05_phys">
         <volumeref ref="det05_logic"/>
         <positionref ref="det05_posRel"/>
+      </physvol>
+
+      <physvol name="det06_phys">
+        <volumeref ref="det06_logic"/>
+        <positionref ref="det06_posRel"/>
+      </physvol>
+
+      <physvol name="det07_phys">
+        <volumeref ref="det07_logic"/>
+        <positionref ref="det07_posRel"/>
+      </physvol>
+
+      <physvol name="dumpDoor_phys">
+        <volumeref ref="dumpDoor_logic"/>
+        <positionref ref="dumpDoor_pos"/>
       </physvol>
 
       <physvol name="beamPipe_phys">
