@@ -9,7 +9,8 @@ void parseBtable(){
   //ifstream fin("../crex_septumShieldPlus3odPipe_quadsWithConicalShieldPipe.table");
 
   //ifstream fin("../prex_all_on_170609_properSeptumShield.table");
-  ifstream fin("../crex_all_on_170609_properSeptumShield.table");
+  //ifstream fin("../crex_all_on_170609_properSeptumShield.table");
+  ifstream fin("../crex_all_on_Gavalya.table");
   // ifstream fin("../prex_Q1Q2off_170609_properSeptumShield.table");
   // ifstream fin("../crex_Q1Q2off_170609_properSeptumShield.table");
   // ifstream fin("../prex_Q2off_170609_properSeptumShield.table");
