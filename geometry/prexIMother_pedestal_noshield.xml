@@ -1447,10 +1447,10 @@
     <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="dDet_ds" rmin="0" rmax="(coll_inner_r2)*1.0001" z="0.1" />
 
     <!-- Disk detectors inside the beamline : Rakitha Tue Nov  5 15:17:02 EST 2013 -->
-    <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="dDet_beamline_1" rmin="0" rmax="beamline[1,1]" z="0.1" />
-    <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="dDet_beamline_2" rmin="0" rmax="beamline[1,4]" z="0.1" />  
-    <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="dDet_beamline_3" rmin="0" rmax="beamline[1,12]" z="0.1" />  
-    <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="dDet_beamline_4" rmin="0" rmax="beamline[1,12]" z="0.1" />
+    <!-- <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="dDet_beamline_1" rmin="0" rmax="beamline[1,1]" z="0.1" /> -->
+    <!-- <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="dDet_beamline_2" rmin="0" rmax="beamline[1,4]" z="0.1" />   -->
+    <!-- <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="dDet_beamline_3" rmin="0" rmax="beamline[1,12]" z="0.1" />   -->
+    <!-- <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="dDet_beamline_4" rmin="0" rmax="beamline[1,12]" z="0.1" /> -->
 
     <!-- Concrete sites and concrete site detectors -Ricky -->
     <box lunit="cm" name="farDet_farside_solid" x="width_det_far" y="height_det_far" z="length_det_far"/>
@@ -1671,29 +1671,29 @@
       <auxiliary auxtype="SensDet" auxvalue="volumeN8005"/>
     </volume>
 
-    <volume name="dDet_beamline_1_logic">
-      <materialref ref="Vacuum"/>
-      <solidref ref="dDet_beamline_1"/>
-      <auxiliary auxtype="SensDet" auxvalue="volumeN10001"/>
-    </volume>
+    <!-- <volume name="dDet_beamline_1_logic"> -->
+    <!--   <materialref ref="Vacuum"/> -->
+    <!--   <solidref ref="dDet_beamline_1"/> -->
+    <!--   <auxiliary auxtype="SensDet" auxvalue="volumeN10001"/> -->
+    <!-- </volume> -->
 
-    <volume name="dDet_beamline_2_logic">
-      <materialref ref="Vacuum"/>
-      <solidref ref="dDet_beamline_2"/>
-      <auxiliary auxtype="SensDet" auxvalue="volumeN10002"/>
-    </volume>
+    <!-- <volume name="dDet_beamline_2_logic"> -->
+    <!--   <materialref ref="Vacuum"/> -->
+    <!--   <solidref ref="dDet_beamline_2"/> -->
+    <!--   <auxiliary auxtype="SensDet" auxvalue="volumeN10002"/> -->
+    <!-- </volume> -->
 
-    <volume name="dDet_beamline_3_logic">
-      <materialref ref="Vacuum"/>
-      <solidref ref="dDet_beamline_3"/>
-      <auxiliary auxtype="SensDet" auxvalue="volumeN10003"/>
-    </volume>
+    <!-- <volume name="dDet_beamline_3_logic"> -->
+    <!--   <materialref ref="Vacuum"/> -->
+    <!--   <solidref ref="dDet_beamline_3"/> -->
+    <!--   <auxiliary auxtype="SensDet" auxvalue="volumeN10003"/> -->
+    <!-- </volume> -->
 
-    <volume name="dDet_beamline_4_logic">
-      <materialref ref="Vacuum"/>
-      <solidref ref="dDet_beamline_4"/>
-      <auxiliary auxtype="SensDet" auxvalue="volumeN10004"/>
-    </volume>
+    <!-- <volume name="dDet_beamline_4_logic"> -->
+    <!--   <materialref ref="Vacuum"/> -->
+    <!--   <solidref ref="dDet_beamline_4"/> -->
+    <!--   <auxiliary auxtype="SensDet" auxvalue="volumeN10004"/> -->
+    <!-- </volume> -->
 
     <!-- dipoles  -->
     <volume name="dipole_logic_1">
@@ -1739,10 +1739,10 @@
 	<position name="posbeamline" unit="cm" x="0" y="0" z="center_septum_pipe"/>
       </physvol>
 
-      <physvol name="beam_pipe_1">
-	<volumeref ref="beamtube_1_logic" />
-	<position name="posbeamline_1" unit="cm" x="0" y="0" z="center_septum_pipe+length_septum_pipe/2+0.5*(beamline[3,1]+beamline[3,2]+beamline[3,3]+beamline[3,4]+beamline[3,5]+beamline[3,6]+beamline[3,7]+beamline[3,8]+beamline[3,9]+beamline[3,10]+beamline[3,11]+beamline[3,12]+beamline[3,13])"/>
-      </physvol>
+      <!-- <physvol name="beam_pipe_1"> -->
+      <!-- 	<volumeref ref="beamtube_1_logic" /> -->
+      <!-- 	<position name="posbeamline_1" unit="cm" x="0" y="0" z="center_septum_pipe+length_septum_pipe/2+0.5*(beamline[3,1]+beamline[3,2]+beamline[3,3]+beamline[3,4]+beamline[3,5]+beamline[3,6]+beamline[3,7]+beamline[3,8]+beamline[3,9]+beamline[3,10]+beamline[3,11]+beamline[3,12]+beamline[3,13])"/> -->
+      <!-- </physvol> -->
       
       <physvol name="vacEnc_l">
         <volumeref ref="vac_enc_l_logic"/>
@@ -1769,10 +1769,10 @@
         <volumeref ref="dump_logic"/>
         <positionref ref="dump_center"/>
       </physvol>
-      <physvol name="ssenc">
-        <volumeref ref="ssenc_logic"/>
-        <positionref ref="ssenc_cylcenter"/>
-      </physvol>
+      <!-- <physvol name="ssenc"> -->
+      <!--   <volumeref ref="ssenc_logic"/> -->
+      <!--   <positionref ref="ssenc_cylcenter"/> -->
+      <!-- </physvol> -->
       
       <physvol name="ped_union">
         <volumeref ref="ped_union_logic"/>
@@ -1830,25 +1830,25 @@
         <positionref ref="dDet_ds_pos"/> 
       </physvol>
 
-      <physvol name="beamline_1_det">
-        <volumeref ref="dDet_beamline_1_logic"/>
-        <positionref ref="dDet_beamline_pos_1"/>
-      </physvol>
+      <!-- <physvol name="beamline_1_det"> -->
+      <!--   <volumeref ref="dDet_beamline_1_logic"/> -->
+      <!--   <positionref ref="dDet_beamline_pos_1"/> -->
+      <!-- </physvol> -->
 
-      <physvol name="beamline_2_det">
-        <volumeref ref="dDet_beamline_2_logic"/>
-        <positionref ref="dDet_beamline_pos_2"/>
-      </physvol>
+      <!-- <physvol name="beamline_2_det"> -->
+      <!--   <volumeref ref="dDet_beamline_2_logic"/> -->
+      <!--   <positionref ref="dDet_beamline_pos_2"/> -->
+      <!-- </physvol> -->
 
-      <physvol name="beamline_3_det">
-        <volumeref ref="dDet_beamline_3_logic"/>
-        <positionref ref="dDet_beamline_pos_3"/>
-      </physvol>
+      <!-- <physvol name="beamline_3_det"> -->
+      <!--   <volumeref ref="dDet_beamline_3_logic"/> -->
+      <!--   <positionref ref="dDet_beamline_pos_3"/> -->
+      <!-- </physvol> -->
 
-      <physvol name="beamline_4_det">
-        <volumeref ref="dDet_beamline_4_logic"/>
-        <positionref ref="dDet_beamline_pos_4"/>
-      </physvol>
+      <!-- <physvol name="beamline_4_det"> -->
+      <!--   <volumeref ref="dDet_beamline_4_logic"/> -->
+      <!--   <positionref ref="dDet_beamline_pos_4"/> -->
+      <!-- </physvol> -->
 
       <physvol name="dipole_left">
         <volumeref ref="dipole_logic_1"/>
@@ -1868,6 +1868,11 @@
 	<rotationref ref="identity"/>
       </physvol>
 
+      <physvol>
+	<file name="geometry/prex1BeampipeV2.gdml"/>
+	<positionref ref="dDet_beamline_pos_1"/>
+      </physvol>
+      
     </volume>
   </structure>
 
