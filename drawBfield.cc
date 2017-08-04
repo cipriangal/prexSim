@@ -10,7 +10,7 @@ using namespace std;
 int main(int argc, char **argv){
 
   if(argc!=4){
-    cout<<"run as:\n\tbuild/drawBfield <configName -- can be either prex1, prex2, crex, prex2JayNoQ1shield, crexJayNoQ1shield, prex2UpdatedSeptumShield_allOn, crexUpdatedSeptumShield_allOn, test> <nSteps> <with Q1 fringe?: can be 0 or 1>\n";
+    cout<<"run as:\n\tbuild/drawBfield <configName -- can be either prex1, prex2, crex, prex2JayNoQ1shield, crexJayNoQ1shield, prex2UpdatedSeptumShield_allOn, crexUpdatedSeptumShield_allOn, crex_2PipeSeptumShield_allOn, test> <nSteps> <with Q1 fringe?: can be 0 or 1>\n";
     return 1;
   }
   string config=argv[1];
@@ -53,6 +53,7 @@ int main(int argc, char **argv){
     bx->SetPoint(i,z,(p2[0]/CLHEP::gauss - p1[0]/CLHEP::gauss)/(deltaY/CLHEP::cm));
     by->SetPoint(i,z,(p2[1]/CLHEP::gauss - p1[1]/CLHEP::gauss)/(deltaY/CLHEP::cm));
     bz->SetPoint(i,z,(p2[2]/CLHEP::gauss - p1[2]/CLHEP::gauss)/(deltaY/CLHEP::cm));
+    //cout<<"\t"<<z<<"\t"<<(p2[0]/CLHEP::gauss - p1[0]/CLHEP::gauss)/(deltaY/CLHEP::cm)<<endl;
   }
   bx->SetName("xField");
   bx->SetTitle(Form("dBx/dy for %s configuration at(-1cm,0,z); z [cm]; gauss/cm",config.c_str()));
