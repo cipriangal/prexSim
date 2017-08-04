@@ -166,18 +166,20 @@ void MollerGlobalMagnetField::GetFieldValue(const G4double Point[4], G4double *B
     GetFieldValuePREX2(Point,Bfield);
   }else if( configuration == "prex2JayNoQ1shield" ||
 	    configuration == "crexJayNoQ1shield"  ||
-	    configuration == "prex2UpdatedSeptumShield_allOn" ||
-	    configuration == "crexUpdatedSeptumShield_allOn" ||
-	    configuration == "crex_2PipeSeptumShield_allOn" ||
 	    configuration == "test"){
     InterpolateFieldValue(Point,Bfield);
+  }else if(configuration == "crex_2PipeSeptumShield_allOn" ||
+	   configuration == "prex2UpdatedSeptumShield_allOn" ||
+	   configuration == "crexUpdatedSeptumShield_allOn"){
+    if( Point[2]-69.91*cm < 91*cm || addQ1fringe )
+      InterpolateFieldValue(Point,Bfield);
   }else{
     G4cerr<<"In: "<<__PRETTY_FUNCTION__<<" at line "<<__LINE__
           <<"\n\tUnknown magnetic field configuration! Quitting!\n";
     exit(1);
   }
 
-  if(addQ1fringe)
+  if(addQ1fringe && (configuration=="prex2" || configuration=="crex"))
     InterpolateFieldValue(Point,Bfield);
 }
 
