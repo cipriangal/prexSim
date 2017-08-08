@@ -46,11 +46,11 @@ public:
   // G4UserRunAction
   void BeginOfRunAction(const G4Run*); //used
   void EndOfRunAction(const G4Run*);   //used
-  
+
   // G4UserEventAction
   void BeginOfEventAction(const G4Event*); //used
   void EndOfEventAction(const G4Event*); //used
-  
+
   // G4UserSteppingAction
   void UserSteppingAction(const G4Step*); //used
 
@@ -96,88 +96,88 @@ public:
 
   void AddData(MollerDetectorHit *aHit){
 
-  fntup[0] = aHit->GetIon();
-  fntup[1] = aHit->GetWorldPos().x();
-  fntup[2] = aHit->GetWorldPos().y();
-  fntup[3] = aHit->GetWorldPos().z();
-  //fntup[4] = (Float_t)x0;
-  //fntup[5] = (Float_t)y0;
-  //fntup[6] = (Float_t)z0;
-  fntup[4] = aHit->GetVertexPos().x();
-  fntup[5] = aHit->GetVertexPos().y();
-  fntup[6] = aHit->GetVertexPos().z();
-  fntup[7] = aHit->GetKineticEnergy();
-  fntup[8] = aHit->GetMomentum().x();
-  fntup[9] = aHit->GetMomentum().y();
-  fntup[10] = aHit->GetMomentum().z();
-  
-  fntup[11] = (Float_t)kineE0;
-  fntup[12] = (Float_t)px0;
-  fntup[13] = (Float_t)py0;
-  fntup[14] = (Float_t)pz0;
-  fntup[15] = (Float_t)kineE1;
-  fntup[16] = (Float_t)px1;
-  fntup[17] = (Float_t)py1;
-  fntup[18] = (Float_t)pz1;
-  /*
-  fntup[19] = (Float_t)kineE2;
-  fntup[20] = (Float_t)px2;
-  fntup[21] = (Float_t)py2;
-  fntup[22] = (Float_t)pz2;
-  */
-  fntup[19] = aHit->GetKineticEnergy2();
-  fntup[20] = aHit->GetMomentum2().x();
-  fntup[21] = aHit->GetMomentum2().y();
-  fntup[22] = aHit->GetMomentum2().z();
+    fntup[0] = aHit->GetIon();
+    fntup[1] = aHit->GetWorldPos().x();
+    fntup[2] = aHit->GetWorldPos().y();
+    fntup[3] = aHit->GetWorldPos().z();
+    //fntup[4] = (Float_t)x0;
+    //fntup[5] = (Float_t)y0;
+    //fntup[6] = (Float_t)z0;
+    fntup[4] = aHit->GetVertexPos().x();
+    fntup[5] = aHit->GetVertexPos().y();
+    fntup[6] = aHit->GetVertexPos().z();
+    fntup[7] = aHit->GetKineticEnergy();
+    fntup[8] = aHit->GetMomentum().x();
+    fntup[9] = aHit->GetMomentum().y();
+    fntup[10] = aHit->GetMomentum().z();
 
-  fntup[23] = aHit->GetType();
-  fntup[24] = (Float_t)aHit->GetVolume();
-  fntup[25] = (Float_t)theta0;
-  fntup[26] = (Float_t)theta1;
-  fntup[27] = (Float_t)theta2;
-  fntup[28] = (Float_t)ev_num;
-  fntup[29] = (Float_t)splitProcess;
-  fntup[30] = (Float_t)event;
-  fntup[31] = (Float_t)creatorProcess;
-  
-  if (!index&&
-      (aHit->GetIon()||splitProcess==0)&&
-      kineE0>0&&
-      aHit->GetType()==0) {
-    
-    if (aHit->GetIon()) {
-      fntup[32] = 2;
-      fntup[33] = kineE2;
-      fntup[34] = theta2;
-    }else{
+    fntup[11] = (Float_t)kineE0;
+    fntup[12] = (Float_t)px0;
+    fntup[13] = (Float_t)py0;
+    fntup[14] = (Float_t)pz0;
+    fntup[15] = (Float_t)kineE1;
+    fntup[16] = (Float_t)px1;
+    fntup[17] = (Float_t)py1;
+    fntup[18] = (Float_t)pz1;
+    /*
+      fntup[19] = (Float_t)kineE2;
+      fntup[20] = (Float_t)px2;
+      fntup[21] = (Float_t)py2;
+      fntup[22] = (Float_t)pz2;
+    */
+    fntup[19] = aHit->GetKineticEnergy2();
+    fntup[20] = aHit->GetMomentum2().x();
+    fntup[21] = aHit->GetMomentum2().y();
+    fntup[22] = aHit->GetMomentum2().z();
+
+    fntup[23] = aHit->GetType();
+    fntup[24] = (Float_t)aHit->GetVolume();
+    fntup[25] = (Float_t)theta0;
+    fntup[26] = (Float_t)theta1;
+    fntup[27] = (Float_t)theta2;
+    fntup[28] = (Float_t)ev_num;
+    fntup[29] = (Float_t)splitProcess;
+    fntup[30] = (Float_t)event;
+    fntup[31] = (Float_t)creatorProcess;
+
+    if (!index&&
+        (aHit->GetIon()||splitProcess==0)&&
+        kineE0>0&&
+        aHit->GetType()==0) {
+
+      if (aHit->GetIon()) {
+        fntup[32] = 2;
+        fntup[33] = kineE2;
+        fntup[34] = theta2;
+      }else{
+        fntup[32] = 1;
+        fntup[33] = kineE1;
+        fntup[34] = theta1;
+      }
+    }else if (aHit->GetTrackID()==1){
       fntup[32] = 1;
       fntup[33] = kineE1;
       fntup[34] = theta1;
+    }else if (aHit->GetTrackID()==2){
+      fntup[32] = 2;
+      fntup[33] = kineE2;
+      fntup[34] = theta2;
+    }else {
+      fntup[32] = 0;
+      fntup[33] = 0;
+      fntup[34] = 0;
     }
-  }else if (aHit->GetTrackID()==1){ 
-    fntup[32] = 1;
-    fntup[33] = kineE1;
-    fntup[34] = theta1;
-  }else if (aHit->GetTrackID()==2){ 
-    fntup[32] = 2;
-    fntup[33] = kineE2;
-    fntup[34] = theta2;
-  }else { 
-    fntup[32] = 0;
-    fntup[33] = 0;
-    fntup[34] = 0;
-  }
-  
-  fntup[35] = aHit->GetTrackID();
-  
-  fntup[36] = aHit->GetParentID();
-  fntup[37] = aHit->GetPDG();
-  fntup[38] = rate; /*Not in use I guess. all values are zero. Rakitha on Fri May 10 14:44:02 EDT 2013*/  
-  fntup[39] = aHit->GetEdep();
-  fntup[40] = aHit->GetTrackStatus();
 
-  ntup->Fill(fntup);
-}
+    fntup[35] = aHit->GetTrackID();
+
+    fntup[36] = aHit->GetParentID();
+    fntup[37] = aHit->GetPDG();
+    fntup[38] = rate; /*Not in use I guess. all values are zero. Rakitha on Fri May 10 14:44:02 EDT 2013*/
+    fntup[39] = aHit->GetEdep();
+    fntup[40] = aHit->GetTrackStatus();
+
+    ntup->Fill(fntup);
+  }
 
   void AddGDMLFileName(const G4String&);
   void AddMacro_1(const G4String&);
@@ -185,7 +185,7 @@ public:
   void SetLowLimMagneticShield(G4double value) {mg_field_low = value; };
   void SetHighLimMagneticShield(G4double value) { mg_field_high = value; };
   void SetMagFieldScaleFactor(G4double value) {mgFieldScaleFactor = value; }
-  
+
   void UpdateSimInputs();
 
 private:
@@ -211,7 +211,7 @@ private:
   G4double mgFieldScaleFactor;
 
   G4int ev_num, index;
-  G4int partType, splitProcess, creatorProcess; 
+  G4int partType, splitProcess, creatorProcess;
 
   TNtuple *ntup;
   Float_t fntup[41];
@@ -219,7 +219,7 @@ private:
   std::vector<G4int> hitsCollID;
 
   G4int verboseLevel;
-  
+
   G4double generator, event;
 
   G4double kineE0;
@@ -252,6 +252,3 @@ private:
 
 
 #endif
-  
-
-
