@@ -1104,19 +1104,6 @@
       <positionref ref="real_hole_sc_trans1"/>
       <rotationref ref="identity"/>
     </union>
-    <!--  <subtraction name ="scatt_w_holes">
-         <first ref="scatt_w_holes_p6"/>
-         <second ref="real_hole_sc_6"/>
-         <positionref ref="real_hole_sc_trans1"/>
-         <rotationref ref="identity"/>
-         </subtraction>
-    -->
-    <!--    <union name ="giantShield_solid_temp">
-         <first ref="giantShield_solid0"/>
-         <second ref="giantShield_solid1"/>
-         <positionref ref="pos_rel_giantShield1"/>
-         <rotationref ref="identity"/>
-         </union>-->
     <subtraction name ="giantShield_solid_temp2">
       <first ref="giantShield_solid0"/>
       <second ref="giantShield_solid2"/>
@@ -2974,11 +2961,17 @@
         <file name="geometry/subBeamPipe.gdml"/>
         <positionref ref="dDet_beamline_pos_1"/>
       </physvol>
-</volume>
-</structure>
 
-<setup name="Default" version="1.0">
-  <world ref="logicMother"/>
-</setup>
+      <physvol>
+        <file name="geometry/subDumpShield.gdml"/>
+        <position name="dumpShield_posRel" unit="cm" x="0" y="-115" z="2400"/>
+      </physvol>
+
+    </volume>
+  </structure>
+
+  <setup name="Default" version="1.0">
+    <world ref="logicMother"/>
+  </setup>
 
 </gdml>
