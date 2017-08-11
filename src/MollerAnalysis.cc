@@ -485,7 +485,7 @@ void MollerAnalysis::EndOfRunAction(const G4Run */*aRun*/)
   pGlobalMagnetField->SetLowLimSeptumField(mg_field_low);
   pGlobalMagnetField->SetHighLimSeptumField(mg_field_high);
   pGlobalMagnetField->SetScaleFactor(mgFieldScaleFactor);
-  pGlobalMagnetField->WriteMagField();
+  //pGlobalMagnetField->WriteMagField();
 
   hfile->Close();
 
