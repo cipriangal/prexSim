@@ -30,16 +30,22 @@
       <D unit="g/cm3" value="2.699"/>
       <atom unit="g/mole" value="26.982"/>
     </material>
+
+    <material Z="13" name="Iron" state="solid">
+      <T unit="K" value="298"/>
+      <D unit="g/cm3" value="2.699"/>
+      <atom unit="g/mole" value="26.982"/>
+    </material>
   </materials>
 
   <solids>
 
-    <box lunit="cm" name="midlBlock_solid" x="135" y="137" z="31"/>
-    <box lunit="cm" name="leftBlock_solid" x="122" y="244" z="31"/>
-    <box lunit="cm" name="righBlock_solid" x="122" y="244" z="31"/>
+    <box lunit="cm" name="midlBlock_solid" x="135" y="137" z="75"/>
+    <box lunit="cm" name="leftBlock_solid" x="122" y="244" z="75"/>
+    <box lunit="cm" name="righBlock_solid" x="122" y="244" z="75"/>
 
     <!-- Union of all objects so that there is a space to physically add them -->
-    <box lunit="cm" name="worldUnion0" x="134" y="137" z="31"/>
+    <box lunit="cm" name="worldUnion0" x="134" y="137" z="75"/>
 
     <union name ="worldUnion1">
       <first ref="worldUnion0"/>
@@ -58,19 +64,22 @@
 
     <volume name="midlBlock_logic">
       <!-- <materialref ref="Shield"/> -->
-      <materialref ref="Concrete"/>
+      <!-- <materialref ref="Concrete"/> -->
+      <materialref ref="Iron"/>
       <solidref ref="midlBlock_solid"/>
     </volume>
 
     <volume name="leftBlock_logic">
       <!-- <materialref ref="Shield"/> -->
-      <materialref ref="Concrete"/>
+      <!-- <materialref ref="Concrete"/> -->
+      <materialref ref="Iron"/>
       <solidref ref="leftBlock_solid"/>
     </volume>
 
     <volume name="righBlock_logic">
       <!-- <materialref ref="Shield"/> -->
-      <materialref ref="Concrete"/>
+      <!-- <materialref ref="Concrete"/> -->
+      <materialref ref="Iron"/>
       <solidref ref="righBlock_solid"/>
     </volume>
 
