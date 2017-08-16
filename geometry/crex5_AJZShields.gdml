@@ -2996,8 +2996,12 @@
 
       <physvol>
         <file name="geometry/subDumpShield.gdml"/>
-        <position name="dumpShield_posRel" unit="cm" x="0" y="-115" z="2400"/>
+        <position name="dumpShield_posRel" unit="cm" x="0" y="-115" z="2350"/>
       </physvol>
+      <!-- <physvol> -->
+      <!--   <file name="geometry/subDumpShield_donut.gdml"/> -->
+      <!--   <position name="dumpShield_posRel" unit="cm" x="0" y="0" z="2420"/> -->
+      <!-- </physvol> -->
 
     </volume>
   </structure>
