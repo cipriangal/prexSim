@@ -17,6 +17,8 @@
     <position name="gateValve_cylinder_box_posRel" unit="cm" x="0" y="-8" z="0"/>
     <position name="gateValve_posRel" unit="cm" x="0" y="0" z="163.784"/>
     <position name="dumpDoor_posRel" unit="cm" x="0" y="42" z="0"/>
+    <position name="usDet_dumpShield_pos" unit="cm" x="0" y="0" z="2150"/>
+    <position name="dsDet_dumpShield_pos" unit="cm" x="0" y="0" z="2280"/>
     <rotation name="x90" unit="deg" x="90" y="0" z="0"/>
 
     <!-- Stuff from generateBeamPipe.py -->
@@ -221,6 +223,20 @@
       <positionref ref="center_posRel"/>
     </subtraction>
 
+    <!-- FIXME temp vacuum dets to look at radiation. if you don't know what this is about it means you can probably just delete it -->
+    <box lunit="cm" name="usDet_dumpShield_solid0" x="1000" y="500" z="0.1"/>
+    <subtraction name ="usDet_dumpShield_solid1">
+      <first ref="usDet_dumpShield_solid0"/>
+      <second ref="beamPipe_solid2"/>
+      <positionref ref="usDet_dumpShield_pos"/>
+    </subtraction>
+    <box lunit="cm" name="dsDet_dumpShield_solid0" x="1000" y="500" z="0.1"/>
+    <subtraction name ="dsDet_dumpShield_solid1">
+      <first ref="dsDet_dumpShield_solid0"/>
+      <second ref="beamPipe_solid2"/>
+      <positionref ref="dsDet_dumpShield_pos"/>
+    </subtraction>
+
     <!-- Union of all objects so that there is a space to physically add them -->
     <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="bP2worldUnion0"
           rmin="0"
@@ -324,6 +340,17 @@
       <positionref ref="dumpIC_beamR_pos"/>
       <rotationref ref="x90"/>
     </union>
+    <!-- FIXME -->
+    <union name ="bP2worldUnion20">
+      <first ref="bP2worldUnion19"/>
+      <second ref="usDet_dumpShield_solid1"/>
+      <positionref ref="usDet_dumpShield_pos"/>
+    </union>
+    <union name ="bP2worldUnion21">
+      <first ref="bP2worldUnion20"/>
+      <second ref="dsDet_dumpShield_solid1"/>
+      <positionref ref="dsDet_dumpShield_pos"/>
+    </union>
 
   </solids>
 
@@ -424,9 +451,21 @@
       <auxiliary auxtype="SensDet" auxvalue="volumeN11001"/>
     </volume>
 
+    <!-- FIXME -->
+    <volume name="usDet_dumpShield_logic">
+      <materialref ref="Vacuum"/>
+      <solidref ref="usDet_dumpShield_solid1"/>
+      <auxiliary auxtype="SensDet" auxvalue="volumeN9001"/>
+    </volume>
+    <volume name="dsDet_dumpShield_logic">
+      <materialref ref="Vacuum"/>
+      <solidref ref="dsDet_dumpShield_solid1"/>
+      <auxiliary auxtype="SensDet" auxvalue="volumeN9002"/>
+    </volume>
+
     <volume name="beamPipeP2">
       <materialref ref="Vacuum"/>
-      <solidref ref="bP2worldUnion19"/>
+      <solidref ref="bP2worldUnion21"/>
 
       <physvol name="det01_phys">
         <volumeref ref="det01_logic"/>
@@ -528,6 +567,16 @@
         <volumeref ref="dumpIonChamber_beamL_logic"/>
         <positionref ref="dumpIC_beamL_pos"/>
         <rotationref ref="x90"/>
+      </physvol>
+
+      <!-- FIXME -->
+      <physvol name="usDet_dumpShield_phys">
+        <volumeref ref="usDet_dumpShield_logic"/>
+        <positionref ref="usDet_dumpShield_pos"/>
+      </physvol>
+      <physvol name="dsDet_dumpShield_phys">
+        <volumeref ref="dsDet_dumpShield_logic"/>
+        <positionref ref="dsDet_dumpShield_pos"/>
       </physvol>
 
       <!-- ~~~For side by side comparisons only~~~ -->
