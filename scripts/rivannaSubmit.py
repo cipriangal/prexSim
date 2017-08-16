@@ -24,16 +24,16 @@ def main():
     print('Running ' + str(nrEv*(nrStop - nrStart)) + ' events...')
 
     jobName=configuration+'_%03dkEv'%(nrEv/1000)
-    
+
     for nr in range(nrStart,nrStop): # repeat for nr jobs
         print("Starting job setup for jobID: " + str(nr))
-        
+
         jobFullName = jobName + '_%04d'%nr + '_' + identifier
         createMacFiles(configuration, outputDir+"/"+jobFullName, sourceDir, nrEv, nr, identifier)
 
         ###copy executable
         call(["cp",sourceDir+"/build/prexsim",
-              outputDir+"/"+jobFullName+"/prexsim"])              
+              outputDir+"/"+jobFullName+"/prexsim"])
 
         createBashScript(outputDir+"/"+jobFullName, email)
 
@@ -46,7 +46,7 @@ def main():
 
     print "All done"
 
-    
+
 def createMacFiles(config,outDir,sourceDir,nrEv,jobNr,identifier):
 
     if not os.path.exists(outDir+"/geometry"):
@@ -55,12 +55,12 @@ def createMacFiles(config,outDir,sourceDir,nrEv,jobNr,identifier):
     call(["cp",sourceDir+"/geometry/materials.xml",outDir+"/geometry/"])
     call(["cp",sourceDir+"/geometry/kriptoniteDetectors.gdml",outDir+"/geometry/"])
     call(["cp",sourceDir+"/geometry/plasticDetectors.gdml",outDir+"/geometry/"])
-    call(["cp","-r",sourceDir+"/geometry/schema",outDir+"/geometry"])    
+    call(["cp","-r",sourceDir+"/geometry/schema",outDir+"/geometry"])
     if config=="crex5":
         call(["cp",sourceDir+"/geometry/crex5deg" + '_' + identifier + ".gdml",outDir+"/geometry"])
     elif config == 'prexII':
     	call(['cp',sourceDir + "/geometry/prex5deg" + '_' + identifier + ".gdml",outDir+"/geometry"])
-    
+
     f=open(outDir+"/"+"/myRun.mac",'w')
     f.write("/moller/ana/rootfilename ./o_prexSim\n")
     f.write("/run/beamOn "+str(nrEv)+"\n")
@@ -82,7 +82,7 @@ def createMacFiles(config,outDir,sourceDir,nrEv,jobNr,identifier):
     	f.write("/gun/energy 1.05 GeV\n")
         f.write("/moller/field/setConfiguration prex2\n")
         f.write("/moller/det/setDetectorFileName geometry/prex5deg_" + identifier + ".gdml\n")
-    
+
     f.write("/moller/field/useQ1fringeField true\n")
     f.write("/moller/det/setShieldMaterial polyethylene\n")
     f.write("/testhadr/CutsAll 0.7 mm\n")
@@ -90,8 +90,8 @@ def createMacFiles(config,outDir,sourceDir,nrEv,jobNr,identifier):
     f.close()
 
     return 0
-    
-def createBashScript(outDir, email):    
+
+def createBashScript(outDir, email):
     f=open(outDir+"/"+"/myScript.sh",'w')
     f.write("#!/bin/bash\n")
     f.write("#SBATCH --ntasks=1\n")
@@ -105,8 +105,8 @@ def createBashScript(outDir, email):
     f.write("cd " + outDir + "\n")
     f.write("./prexsim preRun.mac myRun.mac\n")
     f.close()
-    return 0  
+    return 0
 
 if __name__ == '__main__':
     main()
-                  
+
