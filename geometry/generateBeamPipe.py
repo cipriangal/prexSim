@@ -129,7 +129,7 @@ def beamPREX2():
     ## pipe thickens in cm
     p2Thickness=[  6.96 ,   0.318,   0.318,   0.318,   0.318,    0.318]
     ## length in cm
-    p2bLen=[       1.905,  94.456,  30.48 , 106.200, 551.180, 1478.780]
+    p2bLen=[       1.905,  94.456,  30.48 , 106.200, 551.180, 1578.780]
     ## center position in cm
     ##p2bCen=[     172.69 , 220.871, 283.34 , 351.680, 680.370, 1745.350]
     f1.write("\t\t<polycone aunit=\"deg\" startphi=\"0\" deltaphi=\"360\" lunit=\"cm\" name=\"beamPipe_solid2\">\n")
