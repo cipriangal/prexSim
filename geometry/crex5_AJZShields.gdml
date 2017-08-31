@@ -2963,7 +2963,7 @@
       </physvol>
 
       <physvol>
-        <file name="geometry/kriptoniteDetectors.gdml"/>
+        <file name="geometry/kriptoniteDetectors_withHRS.gdml"/>
         <positionref ref="pos_global_SEPT_elec"/>
         <rotationref ref="identity"/>
       </physvol>
