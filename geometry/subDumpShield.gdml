@@ -7,8 +7,8 @@
   <define>
     <!--Positions are relative to the center block -->
     <position name="midlBlock_posRel" unit="cm" x="0" y="0" z="0"/>
-    <position name="leftBlock_posRel" unit="cm" x="-129" y="54.5" z="0"/>
-    <position name="righBlock_posRel" unit="cm" x="129" y="54.5" z="0"/>
+    <position name="leftBlock_posRel" unit="cm" x="-127" y="54.5" z="0"/>
+    <position name="righBlock_posRel" unit="cm" x="127" y="54.5" z="0"/>
   </define>
 
   <materials>
@@ -40,9 +40,9 @@
 
   <solids>
 
-    <box lunit="cm" name="midlBlock_solid" x="135" y="137" z="75"/>
-    <box lunit="cm" name="leftBlock_solid" x="122" y="244" z="75"/>
-    <box lunit="cm" name="righBlock_solid" x="122" y="244" z="75"/>
+    <box lunit="cm" name="midlBlock_solid" x="134" y="137" z="75"/>
+    <box lunit="cm" name="leftBlock_solid" x="120" y="244" z="75"/>
+    <box lunit="cm" name="righBlock_solid" x="120" y="244" z="75"/>
 
     <!-- Union of all objects so that there is a space to physically add them -->
     <box lunit="cm" name="worldUnion0" x="134" y="137" z="75"/>
