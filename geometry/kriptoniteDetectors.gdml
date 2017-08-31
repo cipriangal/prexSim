@@ -8,19 +8,18 @@
 
     <!-- This position is works for the first detector(SEPT_elec)(-125,100,150). The rest need relative postions and rotations -->
     <position unit="cm" name="pos_center" x="0" y="0" z="0" />
-    <position unit="cm" name="pos_rel_HRS_elec" x="550" y="-100" z="1750" />    
-    <position unit="cm" name="pos_rel_upstreamRight_elec" x="-725" y="-290" z="-1225" />    
+    <position unit="cm" name="pos_rel_upstreamRight_elec" x="-725" y="-290" z="-1225" />
     <position unit="cm" name="pos_rel_HRS_side_elec" x="1175" y="-340" z="1950" />
     <position unit="cm" name="pos_rel_HRS_underDipole_elec" x="450" y="-300" z="1250" />
 
     <position unit="cm" name="pos_rel_usRightIron_shield2_wrt_shield1" x="450" y="0" z="37.5" />
     <position unit="cm" name="pos_rel_usRightIron_shield" x="-625" y="-245" z="-925" />
 
-    <position unit="cm" name="pos_rel_Hall_Lid" x="125" y="1230" z="-150" />    
+    <position unit="cm" name="pos_rel_Hall_Lid" x="125" y="1230" z="-150" />
 
     <position unit="cm" name="pos_rel_W10mDet" x="1125" y="-100" z="-150" />
     <position unit="cm" name="pos_rel_NW10mDet" x="832" y="-100" z="557" />
-    
+
     <rotation name="rot_HRS_elec" unit="deg" x="0" y="-12.5" z="0"/>
     <rotation name="rot_NW10mDet" unit="deg" x="0" y="-45" z="0"/>
     <rotation name="rot_Hall_Lid" unit="deg" x="90" y="0" z="0"/>
@@ -36,7 +35,7 @@
       <D unit="mg/cm3" value="0.00000001"/>
       <atom unit="g/mole" value="39.948"/>
     </material>
-    
+
     <material Z="1" name="Vacuum" state="gas">
       <T unit="K" value="2.73"/>
       <P unit="pascal" value="3e-18"/>
@@ -50,83 +49,71 @@
       <atom unit="g/mole" value="26.982"/>
     </material>
   </materials>
-  
-  <solids>
 
-    <!-- Electronic hut at HRS represnted by this box -->
-    <box lunit="cm" name="solid_HRS_elec"
-	 x="200"
-	 y="200"
-	 z="400"/>
+  <solids>
 
     <!-- Electronic hut at septum magnet represnted by this box -->
     <box lunit="cm" name="solid_SEPT_elec"
-	 x="100"
-	 y="100"
-	 z="100"/>
+         x="100"
+         y="100"
+         z="100"/>
 
     <!-- Electronics upstream of the target behind iron wall -->
     <box lunit="cm" name="solid_upstreamRight_elec"
-	 x="200"
-	 y="200"
-	 z="100"/>
-    
+         x="200"
+         y="200"
+         z="100"/>
+
     <!-- Electronics to the side of the HRS beam left -->
     <box lunit="cm" name="solid_HRS_side_elec"
-	 x="200"
-	 y="100"
-	 z="100"/>
+         x="200"
+         y="100"
+         z="100"/>
 
     <!-- Electronics under the dipole iron -->
     <box lunit="cm" name="solid_HRS_underDipole_elec"
-	 x="100"
-	 y="150"
-	 z="50"/>
+         x="100"
+         y="150"
+         z="50"/>
 
     <!-- Iron shielding for the HRS power supply (upstream Right detector) -->
     <box lunit="cm" name="solid_usRightIron_shield1"
-	 x="600"
-	 y="300"
-	 z="150"/>
+         x="600"
+         y="300"
+         z="150"/>
     <box lunit="cm" name="solid_usRightIron_shield2"
-	 x="300"
-	 y="300"
-	 z="75"/>
+         x="300"
+         y="300"
+         z="75"/>
     <union name ="solid_usRightIron_shield">
       <first ref="solid_usRightIron_shield1"/>
       <second ref="solid_usRightIron_shield2"/>
       <positionref ref="pos_rel_usRightIron_shield2_wrt_shield1"/>
     </union>
-    
+
     <tube aunit="deg" startphi="0" deltaphi="360"
-	  lunit="cm" name="solid_Hall_Lid"
-	  rmin="0"
-	  rmax="2490."
-	  z="0.2" />
+          lunit="cm" name="solid_Hall_Lid"
+          rmin="0"
+          rmax="2490."
+          z="0.2" />
 
     <box lunit="cm" name="solid_W10mDet"
-	 x="100"
-	 y="100"
-	 z="100"/>
+         x="100"
+         y="100"
+         z="100"/>
     <box lunit="cm" name="solid_NW10mDet"
-	 x="100"
-	 y="100"
-	 z="100"/>
+         x="100"
+         y="100"
+         z="100"/>
 
     <!-- Union of all detectors so that there is a space to physically add them -->
     <box lunit="cm" name="detUnion0"
-	 x="100"
-	 y="100"
-	 z="100"/>    
+         x="100"
+         y="100"
+         z="100"/>
 
-    <union name ="detUnion1">
-      <first ref="detUnion0"/>
-      <second ref="solid_HRS_elec"/>
-      <positionref ref="pos_rel_HRS_elec"/>
-      <rotationref ref="rot_m_HRS_elec"/>
-    </union>
     <union name ="detUnion2">
-      <first ref="detUnion1"/>
+      <first ref="detUnion0"/>
       <second ref="solid_upstreamRight_elec"/>
       <positionref ref="pos_rel_upstreamRight_elec"/>
     </union>
@@ -168,16 +155,10 @@
 
   <structure>
 
-    <volume name="logic_HRS_elec">
-      <materialref ref="matKryptonite"/>
-      <solidref ref="solid_HRS_elec"/>
-      <auxiliary auxtype="SensDet" auxvalue="volumeN1001"/> 
-    </volume>
-
     <volume name="logic_SEPT_elec">
       <materialref ref="matKryptonite"/>
       <solidref ref="solid_SEPT_elec"/>
-      <auxiliary auxtype="SensDet" auxvalue="volumeN1002"/> 
+      <auxiliary auxtype="SensDet" auxvalue="volumeN1002"/>
     </volume>
 
     <volume name="logic_upstreamRight_elec">
@@ -219,57 +200,51 @@
       <solidref ref="solid_NW10mDet"/>
       <auxiliary auxtype="SensDet" auxvalue="volumeN1102"/>
     </volume>
-	
+
     <volume name="logicKripDetectors">
       <materialref ref="Vacuum"/>
       <solidref ref="detUnion8"/>
-      
+
       <physvol name="phys_SEPT_elec">
-	<volumeref ref="logic_SEPT_elec"/>
-	<positionref ref="pos_center"/>
+        <volumeref ref="logic_SEPT_elec"/>
+        <positionref ref="pos_center"/>
       </physvol>
 
-      <physvol name="phys_HRS_elec">
-	<volumeref ref="logic_HRS_elec"/>
-	<positionref ref="pos_rel_HRS_elec"/>
-	<rotationref ref="rot_HRS_elec"/>
-      </physvol>      
-
       <physvol name="phys_upstreamRight_elec">
-	<volumeref ref="logic_upstreamRight_elec"/>
-	<positionref ref="pos_rel_upstreamRight_elec"/>
+        <volumeref ref="logic_upstreamRight_elec"/>
+        <positionref ref="pos_rel_upstreamRight_elec"/>
       </physvol>
 
       <physvol name="phys_HRS_side_elec">
-	<volumeref ref="logic_HRS_side_elec"/>
-	<positionref ref="pos_rel_HRS_side_elec"/>
+        <volumeref ref="logic_HRS_side_elec"/>
+        <positionref ref="pos_rel_HRS_side_elec"/>
       </physvol>
 
       <physvol name="phys_HRS_underDipole_elec">
-	<volumeref ref="logic_HRS_underDipole_elec"/>
-	<positionref ref="pos_rel_HRS_underDipole_elec"/>
-	<rotationref ref="rot_HRS_elec"/>
+        <volumeref ref="logic_HRS_underDipole_elec"/>
+        <positionref ref="pos_rel_HRS_underDipole_elec"/>
+        <rotationref ref="rot_HRS_elec"/>
       </physvol>
 
       <physvol name="phys_usRightIron_shield">
-	<volumeref ref="logic_usRightIron_shield"/>
-	<positionref ref="pos_rel_usRightIron_shield"/>
+        <volumeref ref="logic_usRightIron_shield"/>
+        <positionref ref="pos_rel_usRightIron_shield"/>
       </physvol>
 
       <physvol name="phys_Hall_Lid">
-      	<volumeref ref="logic_Hall_Lid"/>
-      	<positionref ref="pos_rel_Hall_Lid"/>
-      	<rotationref ref="rot_Hall_Lid"/>
+        <volumeref ref="logic_Hall_Lid"/>
+        <positionref ref="pos_rel_Hall_Lid"/>
+        <rotationref ref="rot_Hall_Lid"/>
       </physvol>
 
       <physvol name="phys_W10mDet">
-      	<volumeref ref="logic_W10mDet"/>
-      	<positionref ref="pos_rel_W10mDet"/>
+        <volumeref ref="logic_W10mDet"/>
+        <positionref ref="pos_rel_W10mDet"/>
       </physvol>
       <physvol name="phys_NW10mDet">
-      	<volumeref ref="logic_NW10mDet"/>
-      	<positionref ref="pos_rel_NW10mDet"/>
-	<rotationref ref="rot_NW10mDet"/>
+        <volumeref ref="logic_NW10mDet"/>
+        <positionref ref="pos_rel_NW10mDet"/>
+        <rotationref ref="rot_NW10mDet"/>
       </physvol>
 
 
