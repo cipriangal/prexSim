@@ -36,7 +36,10 @@ result*
 *~
 .DS_Store
 y_*
+z_*
 #*
+.#*
+scripts/jobs
 
 #build directory
 build*
