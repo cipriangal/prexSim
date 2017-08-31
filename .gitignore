@@ -37,6 +37,7 @@ result*
 .DS_Store
 y_*
 #*
+*.table
 
 #build directory
 build*
