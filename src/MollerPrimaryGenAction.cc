@@ -127,11 +127,12 @@ void MollerPrimaryGenAction::GeneratePrimaries_g4Realraster(G4Event* anEvent)
   unitX = vertex_x/R;
   unitY = vertex_y/R;
   unitZ = z_0/R;
+  G4ThreeVector unit(unitX,unitY,unitZ);
+  //unit.rotateY(1.06e-3); //rotate to get on the face of the donut
 
-  //G4cout<<"x0 : y0 : z0 "<<vertex_x/cm<<" : "<<vertex_y/cm<<" : "<<vertex_z/cm<<G4endl;
-
-  particleGun->SetParticlePosition(G4ThreeVector(0,0,vertex_z));
-  particleGun->SetParticleMomentumDirection(G4ThreeVector(unitX,unitY,unitZ));
+  particleGun->SetParticlePosition(G4ThreeVector(1*cm,0,vertex_z));
+  particleGun->SetParticleMomentumDirection(unit);
+  //particleGun->SetParticleMomentumDirection(G4ThreeVector(unitX,unitY,unitZ));
   //particleGun->SetParticleMomentumDirection(G4ThreeVector(0,0,1.));
 
   particleGun->GeneratePrimaryVertex(anEvent);
