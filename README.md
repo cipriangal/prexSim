@@ -2,9 +2,13 @@
 
 ## Getting the code
 If you just want to run the code:
- `git clone https://github.com/cipriangal/prexSim`
+ ```
+ git clone https://github.com/cipriangal/prexSim
+ ```
 If you want to commit changes directly to this repository (and have permissions to do so):
- `git clone git@github.com:cipriangal/prexSim`
+ ```
+ git clone git@github.com:cipriangal/prexSim
+ ```
 
 ### Workflow
 If you intend to make changes to the code and contribute it is suggested that you fork this repository into your own github account. (There is a button for that on the top right of the page). You will then have a backup for your local repository on github. To get your own repository run the same line as above but change "cipriangal" to your username.
