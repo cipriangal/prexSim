@@ -1,5 +1,0 @@
-      <physvol>	
-      <file name="geometry/scatteringChamberDaughter.gdml"/>
-      <positionref ref="scattChamberCenter"/>
-      <rotationref ref="scattChamberRotate"/>
-      </physvol>  

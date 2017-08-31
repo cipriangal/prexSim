@@ -1,0 +1,32 @@
+############
+### CREX 5degrees configurations
+############
+/control/macroPath macros
+/control/verbose 2
+/run/verbose 0
+/tracking/verbose 0
+/moller/gun/setConstSeed true ##FIXME later
+/moller/det/readGeometryFromFile true
+/gun/particle e-
+/moller/gun/gen 7
+/random/setSeeds 123515 9816459
+
+############
+#CREX:
+#E=2 GeV, T = calcium (0.6cm) target
+#Septum, “cut” septum fringe (only at larger |z| values), fringe scale = 1.
+#PREX-II collimator.  Latest shielding.
+############
+#### beam energy
+/gun/energy 2.0 GeV ##CREX
+#### Set B field configuration (prex1, prex2, crex)
+/moller/field/setConfiguration crex_2PipeSeptumShield_allOn
+/moller/field/useQ1fringeField true
+#### Geometry files
+#/moller/det/setDetectorFileName geometry/crex5_current.gdml
+/moller/det/setDetectorFileName geometry/crex5_newHRS.gdml
+
+
+/moller/det/setShieldMaterial polyethylene
+/testhadr/CutsAll          0.7 mm
+/run/initialize

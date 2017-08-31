@@ -1,0 +1,32 @@
+############
+### PREX I configurations
+############
+
+/control/macroPath macros
+/control/verbose 2
+/run/verbose 0
+/tracking/verbose 0
+/moller/gun/setConstSeed true ##FIXME later
+/moller/det/readGeometryFromFile true
+/gun/particle e-
+/moller/gun/gen 7
+/random/setSeeds 123515 9816459
+
+
+############
+#PREX-I:
+#E=1 GeV
+#Target= Lead target
+#Septum, full septum fringe, fringe scale = 1. PREX-I collimator. No shielding.
+############
+#### beam energy
+/gun/energy 1.05 GeV
+#### Set B field configuration (prex1, prex2, crex)
+/moller/field/setConfiguration prex1
+/moller/field/useQ1fringeField false
+#### Geometry files
+/moller/det/setDetectorFileName geometry/prexI.xml
+
+/moller/det/setShieldMaterial polyethylene
+/testhadr/CutsAll          0.7 mm
+/run/initialize

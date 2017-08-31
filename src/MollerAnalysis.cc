@@ -1,4 +1,4 @@
- 
+
 #include "MollerAnalysis.hh"
 #include "MollerDetectorHit.hh"
 #include "RootAnalysis.hh"
@@ -45,7 +45,7 @@ using namespace std;
 MollerAnalysis::MollerAnalysis()
 {
   if (gSystem) gSystem->ProcessEvents();
-  
+
   ev_num=0;
   partType=-1;
   splitProcess=-1;
@@ -72,11 +72,11 @@ MollerAnalysis::MollerAnalysis()
   //G4cout << "Root file name is "<<rootfileName << G4endl;
 }
 MollerAnalysis::MollerAnalysis(MollerDetectorConstruction* detector)
-:myDetector(detector)
+  :myDetector(detector)
 {
   if (gSystem) gSystem->ProcessEvents();
 
-  
+
 
   ev_num=0;
   partType=-1;
@@ -108,42 +108,42 @@ MollerAnalysis::MollerAnalysis(const MollerAnalysis &right)
   : RootAnalysis()
 {
   if (gSystem) gSystem->ProcessEvents();
-  
+
   ev_num=right.ev_num;
   partType=right.partType;
   splitProcess=right.splitProcess;
   creatorProcess=right.creatorProcess;
   index=right.index;
-  
+
 
   //  for (int i=0; i<NUM_DETS; i++) {
   //    hitsCollID[i]=right.hitsCollID[i];
   //  }
-  
+
   verboseLevel=right.verboseLevel;
 
-  kineE0=right.kineE0;  
-  kineE1=right.kineE1;  
+  kineE0=right.kineE0;
+  kineE1=right.kineE1;
   kineE2=right.kineE2;
- 
-  px0=right.px0;  
-  py0=right.py0;  
+
+  px0=right.px0;
+  py0=right.py0;
   pz0=right.pz0;
-  
-  px1=right.px1;  
-  py1=right.py1;  
+
+  px1=right.px1;
+  py1=right.py1;
   pz1=right.pz1;
 
-  px2=right.px2;  
-  py2=right.py2;  
+  px2=right.px2;
+  py2=right.py2;
   pz2=right.pz2;
 
-  theta0=right.theta0;  
-  theta1=right.theta1;  
+  theta0=right.theta0;
+  theta1=right.theta1;
   theta2=right.theta2;
 
-  x0=right.x0;  
-  y0=right.y0;  
+  x0=right.x0;
+  y0=right.y0;
   z0=right.z0;
 
 }
@@ -151,41 +151,41 @@ MollerAnalysis::MollerAnalysis(const MollerAnalysis &right)
 const MollerAnalysis& MollerAnalysis::operator=(const MollerAnalysis &right)
 {
   if (gSystem) gSystem->ProcessEvents();
-  
+
   ev_num=right.ev_num;
   partType=right.partType;
   splitProcess=right.splitProcess;
   creatorProcess=right.creatorProcess;
   index=right.index;
-  
+
   //  for (int i=0; i<NUM_DETS; i++) {
   //    hitsCollID[i]=right.hitsCollID[i];
   //  }
-  
+
   verboseLevel=right.verboseLevel;
 
-  kineE0=right.kineE0;  
-  kineE1=right.kineE1;  
+  kineE0=right.kineE0;
+  kineE1=right.kineE1;
   kineE2=right.kineE2;
-  
-  px0=right.px0;  
-  py0=right.py0;  
+
+  px0=right.px0;
+  py0=right.py0;
   pz0=right.pz0;
-  
-  px1=right.px1;  
-  py1=right.py1;  
+
+  px1=right.px1;
+  py1=right.py1;
   pz1=right.pz1;
 
-  px2=right.px2;  
-  py2=right.py2;  
+  px2=right.px2;
+  py2=right.py2;
   pz2=right.pz2;
 
-  theta0=right.theta0;  
-  theta1=right.theta1;  
+  theta0=right.theta0;
+  theta1=right.theta1;
   theta2=right.theta2;
 
-  x0=right.x0;  
-  y0=right.y0;  
+  x0=right.x0;
+  y0=right.y0;
   z0=right.z0;
 
   return *this;
@@ -196,22 +196,22 @@ MollerAnalysis::~MollerAnalysis()
 {
   delete analysisMessenger;
 }
-void MollerAnalysis::SetRootFileName(const G4String& nam) 
+void MollerAnalysis::SetRootFileName(const G4String& nam)
 {
   rootfileName = nam;
 }
 
-void MollerAnalysis::AddGDMLFileName(const G4String& nam) 
+void MollerAnalysis::AddGDMLFileName(const G4String& nam)
 {
   GDMLfileName = nam;
 }
 
-void MollerAnalysis::AddMacro_1(const G4String& nam) 
+void MollerAnalysis::AddMacro_1(const G4String& nam)
 {
   MacrofileName_1 = nam;
 }
 
-void MollerAnalysis::AddMacro_2(const G4String& nam) 
+void MollerAnalysis::AddMacro_2(const G4String& nam)
 {
   MacrofileName_2 = nam;
 }
@@ -242,7 +242,7 @@ void MollerAnalysis::UpdateSimInputs()
     list_mac_2->Add(new TObjString(line));
   }
   hfile->WriteObject(list_mac_2,"macro_2_List");
-  fclose (fp); 
+  fclose (fp);
 }
 
 void MollerAnalysis::BeginOfRunAction(const G4Run* /*aRun*/)
@@ -261,8 +261,8 @@ void MollerAnalysis::BeginOfRunAction(const G4Run* /*aRun*/)
 
   // This works:
   G4String filenamechar=(rootfileName+".root");
-    
-  G4cout << "Root file name is "<<filenamechar << G4endl;   
+
+  G4cout << "Root file name is "<<filenamechar << G4endl;
 
   hfile = new TFile(filenamechar,"RECREATE","Root/G4 analysis");
 
@@ -285,24 +285,21 @@ void MollerAnalysis::BeginOfEventAction(const G4Event */*anEvent*/)
 {
   ev_num++;
   if(ev_num%100000==1) G4cout<<"at event: "<<ev_num<<G4endl;
-  
+
   if (gSystem) gSystem->ProcessEvents();
 
   G4SDManager * SDman = G4SDManager::GetSDMpointer();
 
-  if((int) hitsCollID.size()==0)   
+  if((int) hitsCollID.size()==0)
     {
       //   G4cout<<G4endl<<G4endl<<"Setting hitsCollID"<<G4endl<<G4endl;
-     
+
       for (int i=0; i<NUM_DETS; i++) {
-	G4String colNam = "detector";
-	colNam+=G4UIcommand::ConvertToString(i+1);
-	colNam+="/hitsColl";
-	
-	G4cout << colNam << G4endl;
-	
-	hitsCollID.push_back (SDman->GetCollectionID(colNam));
-      }      
+        G4String colNam = "detector";
+        colNam+=G4UIcommand::ConvertToString(i+1);
+        colNam+="/hitsColl";
+        hitsCollID.push_back (SDman->GetCollectionID(colNam));
+      }
     }
 
 
@@ -317,9 +314,9 @@ void MollerAnalysis::UserSteppingAction(const G4Step *aStep)
   G4Track* fTrack = aStep->GetTrack();
 
 
-  if (fTrack->GetTrackStatus()!=fAlive) { 
- //   printf("track is not 'alive.'\n");
-    return; 
+  if (fTrack->GetTrackStatus()!=fAlive) {
+    //   printf("track is not 'alive.'\n");
+    return;
   }
 
   G4int tracking = 1;
@@ -355,7 +352,7 @@ void MollerAnalysis::UserSteppingAction(const G4Step *aStep)
 
   //G4bool ion = process=="eIoni";
 
-  // Added by Lorenzo in order to have the process at each step. Before split process was just recorded (see 
+  // Added by Lorenzo in order to have the process at each step. Before split process was just recorded (see
   // conditions below after particle== "e-"
   if (process1=="eIoni") splitProcess=0;
   else if (process1=="conv") splitProcess=1;
@@ -367,27 +364,27 @@ void MollerAnalysis::UserSteppingAction(const G4Step *aStep)
   else if (process1=="Transportation") splitProcess=7;
   else splitProcess=8;
   // finish addition
-  
-  if ((particle == "e-") 
-      && (fTrack->GetVertexKineticEnergy()==1*GeV) 
+
+  if ((particle == "e-")
+      && (fTrack->GetVertexKineticEnergy()==1*GeV)
       && ((thePrePoint->GetKineticEnergy()-
-	   thePostPoint->GetKineticEnergy())>0.100*GeV) 
+           thePostPoint->GetKineticEnergy())>0.100*GeV)
       && (process1=="eIoni"))
-    { 
+    {
       if (kineE0==0 || kineE1==0) {
-	kineE0 = thePrePoint->GetKineticEnergy();
-	kineE1 = thePostPoint->GetKineticEnergy();
-	px0 = thePrePoint->GetMomentumDirection().x();
-	py0 = thePrePoint->GetMomentumDirection().y();
-	pz0 = thePrePoint->GetMomentumDirection().z();
-	px1 = thePostPoint->GetMomentumDirection().x();
-	py1 = thePostPoint->GetMomentumDirection().y();
-	pz1 = thePostPoint->GetMomentumDirection().z();
-	theta0 = sqrt(px0*px0 + py0*py0);
-	theta1 = sqrt(px1*px1 + py1*py1);
-	x0 = thePostPoint->GetPosition().x();
-	y0 = thePostPoint->GetPosition().y();
-	z0 = thePostPoint->GetPosition().z();
+        kineE0 = thePrePoint->GetKineticEnergy();
+        kineE1 = thePostPoint->GetKineticEnergy();
+        px0 = thePrePoint->GetMomentumDirection().x();
+        py0 = thePrePoint->GetMomentumDirection().y();
+        pz0 = thePrePoint->GetMomentumDirection().z();
+        px1 = thePostPoint->GetMomentumDirection().x();
+        py1 = thePostPoint->GetMomentumDirection().y();
+        pz1 = thePostPoint->GetMomentumDirection().z();
+        theta0 = sqrt(px0*px0 + py0*py0);
+        theta1 = sqrt(px1*px1 + py1*py1);
+        x0 = thePostPoint->GetPosition().x();
+        y0 = thePostPoint->GetPosition().y();
+        z0 = thePostPoint->GetPosition().z();
       }
       /* The parameter splitProcess is added to ntuple( index-29, process). Rakitha on Fri May 10 14:44:02 EDT 2013 */
       if (process1=="eIoni") splitProcess=0;
@@ -400,7 +397,7 @@ void MollerAnalysis::UserSteppingAction(const G4Step *aStep)
       else if (process1=="Transportation") splitProcess=7;
       else splitProcess=8;
     }
-  
+
   if (tracking==1) { /*parameter ``tracking'' may be a flag. Rakitha on Fri May 10 14:44:02 EDT 2013*/
 
     G4ThreeVector worldPos = fTrack->GetPosition();
@@ -413,14 +410,14 @@ void MollerAnalysis::UserSteppingAction(const G4Step *aStep)
     G4int trackstatusID = (int)fTrack->GetTrackStatus();
 
 
-    G4double scat_ang = sqrt(vertexMomentum.x()*vertexMomentum.x() + 
-			     vertexMomentum.y()*vertexMomentum.y());
-    
+    G4double scat_ang = sqrt(vertexMomentum.x()*vertexMomentum.x() +
+                             vertexMomentum.y()*vertexMomentum.y());
+
     G4double kineE = fTrack->GetKineticEnergy();
     G4double kineE0 = fTrack->GetVertexKineticEnergy();
-    
+
     G4bool ion = (process=="eIoni");
-  
+
     if (particle=="e-") partType=0;
     else if (particle=="e+") partType=1;
     else if (particle=="proton") partType=2;
@@ -434,16 +431,16 @@ void MollerAnalysis::UserSteppingAction(const G4Step *aStep)
 
 void MollerAnalysis::EndOfEventAction(const G4Event *anEvent)
 {
-  
+
   if (gSystem) gSystem->ProcessEvents();
-  
+
   G4HCofThisEvent * HCE = anEvent->GetHCofThisEvent();
-  
+
   event = anEvent->GetEventID();
-  
+
   std::vector<MollerDetectorHitsCollection*> THC;
-  
-  
+
+
   if(HCE) {
     for (int i=0; i<NUM_DETS; i++) {
       THC.push_back ((MollerDetectorHitsCollection*)(HCE->GetHC(hitsCollID[i])));
@@ -456,27 +453,27 @@ void MollerAnalysis::EndOfEventAction(const G4Event *anEvent)
       int n_hit = THC[i]->entries();
 
       if (n_hit>0) {
-	
-	for(int i1=0;i1<n_hit;i1++){
-	  MollerDetectorHit* aHit = (*THC[i])[i1];
-	  AddData(aHit);
-	}
+
+        for(int i1=0;i1<n_hit;i1++){
+          MollerDetectorHit* aHit = (*THC[i])[i1];
+          AddData(aHit);
+        }
       }
     }
   }
-  
+
   gRootAnalysis->SetMomentum0(0,0,0,0);
   gRootAnalysis->SetMomentum1(0,0,0,0);
   gRootAnalysis->SetMomentum2(0,0,0,0);
   gRootAnalysis->SetProcess(0);
-  
+
 }
 
 
 void MollerAnalysis::EndOfRunAction(const G4Run */*aRun*/)
 {
   if (gSystem) gSystem->ProcessEvents();
-  
+
   if (myDetector->GetReadgeo()){
     G4String detfileName = myDetector->GetDetectorGeomFile();
     TMacro addgdml(detfileName.data());
@@ -488,10 +485,8 @@ void MollerAnalysis::EndOfRunAction(const G4Run */*aRun*/)
   pGlobalMagnetField->SetLowLimSeptumField(mg_field_low);
   pGlobalMagnetField->SetHighLimSeptumField(mg_field_high);
   pGlobalMagnetField->SetScaleFactor(mgFieldScaleFactor);
-  pGlobalMagnetField->WriteMagField();
- 
+  //pGlobalMagnetField->WriteMagField();
+
   hfile->Close();
-  
+
 }
-
-

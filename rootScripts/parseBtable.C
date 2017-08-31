@@ -1,5 +1,7 @@
+
 void parseBtable(){
   TGraph *g=new TGraph();
+
   double x,y,z,bx,by,bz;
   //ifstream fin("../Q1FieldMap-Beamline.table");
   //ifstream fin("../PREX_grid.table");

@@ -156,6 +156,9 @@ void MollerGlobalMagnetField::SetConfiguration(const G4String val){
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 void MollerGlobalMagnetField::GetFieldValue(const G4double Point[4], G4double *Bfield ) const
 {
+  Bfield[0]=0;
+  Bfield[1]=0;
+  Bfield[2]=0;
   if( configuration == "prex1" ){
     GetFieldValuePREX2(Point,Bfield);
   }else if( configuration == "prex2" ){
