@@ -1,3 +1,6 @@
+############
+### CREX 5degrees configurations
+############
 /control/macroPath macros
 /control/verbose 2
 /run/verbose 0
@@ -8,98 +11,22 @@
 /moller/gun/gen 7
 /random/setSeeds 123515 9816459
 
-
 ############
-### PREX II configurations
+#CREX:
+#E=2 GeV, T = calcium (0.6cm) target
+#Septum, “cut” septum fringe (only at larger |z| values), fringe scale = 1.
+#PREX-II collimator.  Latest shielding.
 ############
-   #PREX-II:
-   #E=1 GeV, T = lead target
-   #Septum, “cut” septum fringe (only at larger |z| values), fringe scale = 1.
-   #PREX-II collimator.  Latest shielding.
-   ############
-   #### beam energy
-   #/gun/energy 1.0 GeV ##PREX
-   /gun/energy 2.0 GeV ##CREX
-   #### Set B field configuration (prex1, prex2, crex)
-   /moller/field/setConfiguration crex_2PipeSeptumShield_allOn
-   /moller/field/useQ1fringeField true
-   #### Geometry files
-   #/moller/det/setDetectorFileName geometry/crex5deg_concrete2blocksPlusW.gdml
-   /moller/det/setDetectorFileName geometry/crex5_AJZShields.gdml
-
-
-############
-### PREX I configurations
-############
-   #PREX-I:
-   #E=1 GeV
-   #Target= Lead target
-   #Septum, full septum fringe, fringe scale = 1. PREX-I collimator. No shielding.
-   ############
-   #### beam energy
-   #/gun/energy 1.05 GeV
-   #### Set B field configuration (prex1, prex2, crex)
-   #/moller/field/setConfiguration prex1
-   #/moller/field/useQ1fringeField false
-   #### Geometry files
-   #/moller/det/setDetectorFileName geometry/prexIMother_pedestal_noshield.xml
-
-############
-### PVDIS configurations
-############
-   #PV-DIS: PREX-I configuration base with
-   #E = 6 GeV
-   #Target = 20cm liquid Deuterium
-   #No septum, no septum fringe, no shielding, no collimator.
-   ############
-   #### beam energy
-   #/gun/energy 6. GeV
-   #### Scale factor for fringe mag field
-   #/moller/field/setFieldScaleFactor 0. ##Should give out 0 Bfield
-   ####Limits for Fringe field ##These don't matter with scaleFactor 0
-   #/moller/field/setLowLim -74 cm
-   #/moller/field/setHighLim 74 cm
-   #### Geometry files
-   #/moller/det/setDetectorFileName geometry/pvdis.xml
-
-############
-### Happex configurations
-############
-   ########
-   #HAPPEX-2:
-   #E=3 GeV, Target = 20cm liquid Hydrogen target
-   #Septum, full septum fringe, fringe scale = 3. 
-   #PREX-I collimator. No shielding.
-   ########
-   #### beam energy
-   #/gun/energy 3. GeV
-   #### Scale factor for fringe mag field
-   #/moller/field/setFieldScaleFactor 3.
-   ####Limits for Fringe field
-   #/moller/field/setLowLim -44 cm
-   #/moller/field/setHighLim 44 cm
-   ### Geometry files
-   #/moller/det/setDetectorFileName geometry/happex2.xml
-   
-   
-   ########
-   #HAPPEX-3:
-   #E=3 GeV, Target = 20cm liquid Hydrogen target
-   #No Septum, no septum fringe, fringe scale = 0. 
-   #No collimator. No shielding.
-   ########
-   #### beam energy
-   #/gun/energy 3. GeV
-   #### Scale factor for fringe mag field
-   #/moller/field/setFieldScaleFactor 0.
-   ####Limits for Fringe field ##These don't matter with scaleFactor 0
-   #/moller/field/setLowLim -74 cm
-   #/moller/field/setHighLim 74 cm
-   #### Geometry files
-   #/moller/det/setDetectorFileName geometry/happex3.xml
+#### beam energy
+/gun/energy 2.0 GeV ##CREX
+#### Set B field configuration (prex1, prex2, crex)
+/moller/field/setConfiguration crex_2PipeSeptumShield_allOn
+/moller/field/useQ1fringeField true
+#### Geometry files
+#/moller/det/setDetectorFileName geometry/crex5_current.gdml
+/moller/det/setDetectorFileName geometry/crex5_newHRS.gdml
 
 
 /moller/det/setShieldMaterial polyethylene
 /testhadr/CutsAll          0.7 mm
 /run/initialize
-

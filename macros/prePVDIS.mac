@@ -1,0 +1,33 @@
+############
+### PVDIS configurations
+############
+
+/control/macroPath macros
+/control/verbose 2
+/run/verbose 0
+/tracking/verbose 0
+/moller/gun/setConstSeed true ##FIXME later
+/moller/det/readGeometryFromFile true
+/gun/particle e-
+/moller/gun/gen 7
+/random/setSeeds 123515 9816459
+
+############
+#PV-DIS: PREX-I configuration base with
+#E = 6 GeV
+#Target = 20cm liquid Deuterium
+#No septum, no septum fringe, no shielding, no collimator.
+############
+#### beam energy
+/gun/energy 6. GeV
+#### Scale factor for fringe mag field
+/moller/field/setFieldScaleFactor 0. ##Should give out 0 Bfield
+####Limits for Fringe field ##These don't matter with scaleFactor 0
+/moller/field/setLowLim -74 cm
+/moller/field/setHighLim 74 cm
+#### Geometry files
+/moller/det/setDetectorFileName geometry/pvdis.xml
+
+/moller/det/setShieldMaterial polyethylene
+/testhadr/CutsAll          0.7 mm
+/run/initialize
