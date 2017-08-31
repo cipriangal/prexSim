@@ -966,6 +966,11 @@
           rmin="inner_rad_targ"
           rmax="outer_rad_targ"
           z="length_targ" />
+    <tube aunit="deg" startphi="0" deltaphi="360"
+          lunit="cm" name="target_20cm"
+          rmin="0"
+          rmax="9"
+          z="20" />
 
     <!-- Ca Target - Ricky -->
     <tube aunit="deg" startphi="0" deltaphi="360"
@@ -2544,8 +2549,10 @@
     </volume>
 
     <volume name="target_logic">
-      <materialref ref="PureLead"/>
-      <solidref ref="tubeTarget"/>
+      <materialref ref="H2Liquid"/>
+      <solidref ref="target_20cm"/>
+      <!-- <materialref ref="PureLead"/> -->
+      <!-- <solidref ref="tubeTarget"/> -->
     </volume>
 
     <!-- New dual Scattering Chamber -->
@@ -2847,20 +2854,20 @@
         <positionref ref="pos_global_beamKill"/>
       </physvol>
 
-      <physvol name="collimator">
-        <volumeref ref="W_coll_logic"/>
-        <positionref ref="pos_global_coll_cw70"/>
-      </physvol>
+      <!-- <physvol name="collimator"> -->
+      <!--   <volumeref ref="W_coll_logic"/> -->
+      <!--   <positionref ref="pos_global_coll_cw70"/> -->
+      <!-- </physvol> -->
 
-      <physvol name="Cu_tube">
-        <volumeref ref="Cu_tube_logic"/>
-        <positionref ref="pos_global_coll_cw70"/>
-      </physvol>
+      <!-- <physvol name="Cu_tube"> -->
+      <!--   <volumeref ref="Cu_tube_logic"/> -->
+      <!--   <positionref ref="pos_global_coll_cw70"/> -->
+      <!-- </physvol> -->
 
-      <physvol name="collimator_jacket">
-        <volumeref ref="coll_jacket_W_logic"/>
-        <positionref ref="pos_global_coll_jacket"/>
-      </physvol>
+      <!-- <physvol name="collimator_jacket"> -->
+      <!--   <volumeref ref="coll_jacket_W_logic"/> -->
+      <!--   <positionref ref="pos_global_coll_jacket"/> -->
+      <!-- </physvol> -->
 
       <physvol name="target">
         <volumeref ref="target_logic"/>
@@ -2868,10 +2875,10 @@
       </physvol>
 
 
-      <physvol name="sc_attachment">
-        <volumeref ref="sc_attach_logic"/>
-        <positionref ref="sc_attach_center"/>
-      </physvol>
+      <!-- <physvol name="sc_attachment"> -->
+      <!--   <volumeref ref="sc_attach_logic"/> -->
+      <!--   <positionref ref="sc_attach_center"/> -->
+      <!-- </physvol> -->
 
 
       <physvol name="dsk_dDet_us">
@@ -2905,6 +2912,12 @@
       <!-- </physvol> -->
 
       <physvol>
+        <file name="geometry/subDumpShield.gdml"/>
+        <position name="dumpShield_posRel" unit="cm" x="0" y="-115" z="2268"/>
+      </physvol>
+
+      <physvol>
+        <!-- <file name="geometry/prex1BeampipeV2.gdml"/> -->
         <file name="geometry/prex2Beampipe.gdml"/>
         <positionref ref="dDet_beamline_pos_1"/>
       </physvol>
