@@ -16,17 +16,21 @@
    #PREX-II collimator.  Latest shielding.
    ############
    #### beam energy
-   /gun/energy 1.05 GeV ##PREX
-   #/gun/energy 2.2 GeV ##CREX
+   #/gun/energy 1.05 GeV ##PREX
+   #/gun/energy 2.0 GeV ##CREX
+   /gun/energy 10.0 GeV ##DVCS
+   /moller/field/setFieldScaleFactor 0.
    #### Scale factor for fringe mag field
    ##PREX
    #/moller/field/setFieldScaleFactor 1.
    ##CREX
-   /moller/field/setFieldScaleFactor 2.35
+   #/moller/field/setFieldScaleFactor 2.35
    ####Limits for Fringe field
    /moller/field/setLowLim -74 cm
    /moller/field/setHighLim 74 cm
    #### Geometry files
+   #/moller/det/setDetectorFileName geometry/subDumpShield.gdml
+   #/moller/det/setDetectorFileName geometry/prex2Beampipe.gdml
    /moller/det/setDetectorFileName geometry/prexDumpStudy.gdml
 
 /moller/det/setShieldMaterial polyethylene
