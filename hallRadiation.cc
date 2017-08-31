@@ -15,7 +15,7 @@
 
 using namespace std;
 
-//log axis histograms
+//log X axis histograms
 void niceLogBins(TH1*);
 //energy/neil/mrem
 //photons/electron/neutrons
@@ -138,19 +138,27 @@ void ProcessOne(string fnm){
     if(z0== -17720) continue;
 
     double energy(-1);
-    if( (volume >=10008 && volume <= 10013) || volume==10101 || volume==10102 ) //Kryptonite detectors
+    if( volume <2000 && volume>1000 ) //Kryptonite detectors
       energy = Edeposit;
     else //vacuum detectors
       energy = kinE;
 
+    //logX(Energy)
     hTotal[nHist][nPart][0]->Fill(energy);
     valAvg[nHist][nPart][0]->Fill(energy);
+    //linX(Energy)
+    hTotal[nHist][nPart][3]->Fill(energy);
+    valAvg[nHist][nPart][3]->Fill(energy);
 
     double val(-1);
     val = radDmg.getNEIL(pdgID,energy,0);
     if(val!=-999){
+      //logX(Energy)
       hTotal[nHist][nPart][1]->Fill(energy,val);
       valAvg[nHist][nPart][1]->Fill(energy,val);
+      //linX(Energy)
+      hTotal[nHist][nPart][4]->Fill(energy,val);
+      valAvg[nHist][nPart][4]->Fill(energy,val);
     }
 
     val = radDmg.getMREM(pdgID,energy,0);
@@ -170,7 +178,7 @@ void UpdateMeans(){
   int nDet=detNr.size();
   for(int id=0;id<nDet;id++){
     for(int ip=0;ip<3;ip++){
-      for(int idmg=0;idmg<3;idmg++){
+      for(int idmg=0;idmg<5;idmg++){
         int nbins= hAvg[id][ip][idmg]->GetXaxis()->GetNbins();
         for(int ib=1;ib<=nbins;ib++){
           double val = valAvg[id][ip][idmg]->GetBinContent(ib)/nAvg;
@@ -196,35 +204,51 @@ void UpdateMeans(){
 
 void Initialize(){
   string hPnm[3]={"g","e","n"};
-  string type[3]={"ener","neil","mRem"};
+  string type[5]={"enerLogX","neilLogX","mRemLogX","enerLinX","neilLinX"};
 
   int nDet=detNr.size();
   for(int id=0;id<nDet;id++){
     vector<vector<TH1D*> > dt1,da1,dv1;
-    intAvg.push_back(vector<vector<vector<int> > >(3, vector<vector<int> >(3, vector<int>(nBins))));
+    intAvg.push_back(vector<vector<vector<int> > >(3, vector<vector<int> >(5, vector<int>(nBins))));
     for(int ip=0;ip<3;ip++){
       int nrBins=nBins;
       if(ip==2)
         nrBins/=10;
       vector<TH1D*> dt2,da2,dv2;
-      for(int idmg=0;idmg<3;idmg++){
-        TH1D *h=new TH1D(Form("ht_%d_%s_%s",detNr[id],hPnm[ip].c_str(),type[idmg].c_str()),
-                         Form("Total hits for det %d| part: %s| %s; energy [MeV]",detNr[id],hPnm[ip].c_str(),type[idmg].c_str()),
-                         nrBins,-4,4);
-        niceLogBins(h);
+      for(int idmg=0;idmg<5;idmg++){
+	if(idmg>=3) nrBins=100;
+	TH1D *h=new TH1D(Form("ht_%d_%s_%s",detNr[id],hPnm[ip].c_str(),type[idmg].c_str()),
+			 Form("Total hits for det %d| part: %s| %s; energy [MeV]",detNr[id],hPnm[ip].c_str(),type[idmg].c_str()),
+			 nrBins,-4,4);
+
+	TH1D *a=new TH1D(Form("ha_%d_%s_%s",detNr[id],hPnm[ip].c_str(),type[idmg].c_str()),
+			 Form("Hits/(%d ev) hits for det %d| part: %s| %s; energy [MeV]",nAvg,detNr[id],hPnm[ip].c_str(),type[idmg].c_str()),
+			 nrBins,-4,4);
+
+	//dummy histograms
+	TH1D *v=new TH1D(Form("hv_%d_%s_%s",detNr[id],hPnm[ip].c_str(),type[idmg].c_str()),
+			 Form("Hits/(%d ev) hits for det %d| part: %s| %s; energy [MeV]",nAvg,detNr[id],hPnm[ip].c_str(),type[idmg].c_str()),
+			 nrBins,-4,4);
+
+        if(idmg>=3){
+	  double xBins[101];
+	  for(int i=0;i<=40;i++){
+	    xBins[i]    = i*(0.1)/40;
+	    xBins[40+i] = 0.1 + i*(10-0.1)/40;
+	    if(i<=20)
+	      xBins[80+i] = 10  + i*(2000 - 10)/20;
+	  }
+	  h -> GetXaxis() -> Set(100,xBins);
+	  a -> GetXaxis() -> Set(100,xBins);
+	  v -> GetXaxis() -> Set(100,xBins);
+	}else{
+	  niceLogBins(h);
+	  niceLogBins(a);
+	  niceLogBins(v);
+	}
+
         dt2.push_back(h);
-
-        TH1D *a=new TH1D(Form("ha_%d_%s_%s",detNr[id],hPnm[ip].c_str(),type[idmg].c_str()),
-                         Form("Hits/(%d ev) hits for det %d| part: %s| %s; energy [MeV]",nAvg,detNr[id],hPnm[ip].c_str(),type[idmg].c_str()),
-                         nrBins,-4,4);
-        niceLogBins(a);
         da2.push_back(a);
-
-        //dummy histograms
-        TH1D *v=new TH1D(Form("hv_%d_%s_%s",detNr[id],hPnm[ip].c_str(),type[idmg].c_str()),
-                         Form("Hits/(%d ev) hits for det %d| part: %s| %s; energy [MeV]",nAvg,detNr[id],hPnm[ip].c_str(),type[idmg].c_str()),
-                         nrBins,-4,4);
-        niceLogBins(v);
         dv2.push_back(v);
       }
       dt1.push_back(dt2);
@@ -268,7 +292,7 @@ void FinalizeAvg(){
   int nDet=detNr.size();
   for(int id=0;id<nDet;id++){
     for(int ip=0;ip<3;ip++){
-      for(int idmg=0;idmg<3;idmg++){
+      for(int idmg=0;idmg<5;idmg++){
         int nbins = hAvg[id][ip][idmg]->GetXaxis()->GetNbins();
         for(int ib=1;ib<=nbins;ib++){
           double d(0);
@@ -280,8 +304,8 @@ void FinalizeAvg(){
             hAvg[id][ip][idmg]->SetBinContent(ib,0);
           }
           else{
-	    hAvg[id][ip][idmg]->SetBinError(ib, d);
-	  }
+            hAvg[id][ip][idmg]->SetBinError(ib, d);
+          }
         }
       }
     }
@@ -298,7 +322,7 @@ void WriteOutput(){
     fout->mkdir(Form("Det_%d",detNr[id]));
     fout->cd(Form("Det_%d",detNr[id]));
     for(int ip=0;ip<3;ip++){
-      for(int idmg=0;idmg<3;idmg++){
+      for(int idmg=0;idmg<5;idmg++){
         hTotal[id][ip][idmg]->Write();
         hAvg[id][ip][idmg]->Write();
       }

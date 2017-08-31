@@ -1,0 +1,50 @@
+############
+### Happex configurations
+############
+
+/control/macroPath macros
+/control/verbose 2
+/run/verbose 0
+/tracking/verbose 0
+/moller/gun/setConstSeed true ##FIXME later
+/moller/det/readGeometryFromFile true
+/gun/particle e-
+/moller/gun/gen 7
+/random/setSeeds 123515 9816459
+
+########
+#HAPPEX-2:
+#E=3 GeV, Target = 20cm liquid Hydrogen target
+#Septum, full septum fringe, fringe scale = 3.
+#PREX-I collimator. No shielding.
+########
+#### beam energy
+/gun/energy 3. GeV
+#### Scale factor for fringe mag field
+/moller/field/setFieldScaleFactor 3.
+####Limits for Fringe field
+/moller/field/setLowLim -44 cm
+/moller/field/setHighLim 44 cm
+### Geometry files
+/moller/det/setDetectorFileName geometry/happex2.xml
+
+
+########
+#HAPPEX-3:
+#E=3 GeV, Target = 20cm liquid Hydrogen target
+#No Septum, no septum fringe, fringe scale = 0.
+#No collimator. No shielding.
+########
+#### beam energy
+#/gun/energy 3. GeV
+#### Scale factor for fringe mag field
+#/moller/field/setFieldScaleFactor 0.
+####Limits for Fringe field ##These don't matter with scaleFactor 0
+#/moller/field/setLowLim -74 cm
+#/moller/field/setHighLim 74 cm
+#### Geometry files
+#/moller/det/setDetectorFileName geometry/happex3.xml
+
+/moller/det/setShieldMaterial polyethylene
+/testhadr/CutsAll          0.7 mm
+/run/initialize

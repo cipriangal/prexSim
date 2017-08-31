@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+
+<gdml xmlns:gdml="http://cern.ch/2001/Schemas/GDML"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="./schema/gdml.xsd">
+
+  <define>
+    <!--Positions are relative to the center block -->
+    <position name="midlBlock_posRel" unit="cm" x="0" y="0" z="0"/>
+    <position name="leftBlock_posRel" unit="cm" x="-127" y="54.5" z="0"/>
+    <position name="righBlock_posRel" unit="cm" x="127" y="54.5" z="0"/>
+  </define>
+
+  <materials>
+    <material Z="1" name="Vacuum" state="gas">
+      <T unit="K" value="2.73"/>
+      <P unit="pascal" value="3e-18"/>
+      <D unit="g/cm3" value="1e-25"/>
+      <atom unit="g/mole" value="1.01"/>
+    </material>
+
+    <material Z="13" name="Shield" state="solid">
+      <T unit="K" value="298"/>
+      <D unit="g/cm3" value="2.699"/>
+      <atom unit="g/mole" value="26.982"/>
+    </material>
+
+    <material Z="13" name="Concrete" state="solid">
+      <T unit="K" value="298"/>
+      <D unit="g/cm3" value="2.699"/>
+      <atom unit="g/mole" value="26.982"/>
+    </material>
+
+    <material Z="13" name="Iron" state="solid">
+      <T unit="K" value="298"/>
+      <D unit="g/cm3" value="2.699"/>
+      <atom unit="g/mole" value="26.982"/>
+    </material>
+  </materials>
+
+  <solids>
+
+    <box lunit="cm" name="midlBlock_solid" x="134" y="137" z="75"/>
+    <box lunit="cm" name="leftBlock_solid" x="120" y="244" z="75"/>
+    <box lunit="cm" name="righBlock_solid" x="120" y="244" z="75"/>
+
+    <!-- Union of all objects so that there is a space to physically add them -->
+    <box lunit="cm" name="worldUnion0" x="134" y="137" z="75"/>
+
+    <union name ="worldUnion1">
+      <first ref="worldUnion0"/>
+      <second ref="leftBlock_solid"/>
+      <positionref ref="leftBlock_posRel"/>
+    </union>
+    <union name ="worldUnion2">
+      <first ref="worldUnion1"/>
+      <second ref="righBlock_solid"/>
+      <positionref ref="righBlock_posRel"/>
+    </union>
+
+  </solids>
+
+  <structure>
+
+    <volume name="midlBlock_logic">
+      <!-- <materialref ref="Shield"/> -->
+      <!-- <materialref ref="Concrete"/> -->
+      <materialref ref="Iron"/>
+      <solidref ref="midlBlock_solid"/>
+    </volume>
+
+    <volume name="leftBlock_logic">
+      <!-- <materialref ref="Shield"/> -->
+      <!-- <materialref ref="Concrete"/> -->
+      <materialref ref="Iron"/>
+      <solidref ref="leftBlock_solid"/>
+    </volume>
+
+    <volume name="righBlock_logic">
+      <!-- <materialref ref="Shield"/> -->
+      <!-- <materialref ref="Concrete"/> -->
+      <materialref ref="Iron"/>
+      <solidref ref="righBlock_solid"/>
+    </volume>
+
+    <volume name="dumpShield">
+      <materialref ref="Vacuum"/>
+      <solidref ref="worldUnion2"/>
+
+      <physvol name="leftBlock_phys">
+        <volumeref ref="leftBlock_logic"/>
+        <positionref ref="leftBlock_posRel"/>
+      </physvol>
+
+      <physvol name="righBlock_phys">
+        <volumeref ref="righBlock_logic"/>
+        <positionref ref="righBlock_posRel"/>
+      </physvol>
+
+      <physvol name="midlBlock_phys">
+        <volumeref ref="midlBlock_logic"/>
+        <positionref ref="midlBlock_posRel"/>
+      </physvol>
+
+    </volume>
+  </structure>
+
+  <setup name="subDumpShield" version="1.0">
+    <world ref="dumpShield"/>
+  </setup>
+
+</gdml>

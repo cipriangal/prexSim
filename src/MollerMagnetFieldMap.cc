@@ -5,6 +5,8 @@
 // root includes
 #include "TMath.h"
 
+using namespace CLHEP;
+
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 MollerMagnetFieldMap::MollerMagnetFieldMap() 
 	:invertX(false),invertY(false),invertZ(false)

@@ -1,0 +1,34 @@
+/control/macroPath macros
+/control/verbose 2
+/run/verbose 0
+/tracking/verbose 0
+/moller/gun/setConstSeed true ##FIXME later
+/moller/det/readGeometryFromFile true
+/gun/particle e-
+/moller/gun/gen 7
+/random/setSeeds 123515 9816459
+
+############
+### PREX II configurations
+############
+	#### beam energy
+	/gun/energy 1.05 GeV ##PREX
+	#/gun/energy 2.2 GeV ##CREX
+	#### Set B field configuration (prex1, prex2, crex)
+	/moller/field/setConfiguration prex2
+	/moller/field/useQ1fringeField true
+	#### Geometry files
+	#/moller/det/setDetectorFileName geometry/kriptoniteDetectors.gdml
+	#/moller/det/setDetectorFileName geometry/q1Hoses.gdml
+	#/moller/det/setDetectorFileName geometry/subCoilHoses.gdml
+	#/moller/det/setDetectorFileName geometry/subQ1HosesCyl.gdml
+	/moller/det/setDetectorFileName geometry/prexII_AJZShields.gdml
+	#/moller/det/setDetectorFileName geometry/subAJZTests.gdml
+	#/moller/det/setDetectorFileName geometry/subTargetChamber.gdml
+	#/moller/det/setDetectorFileName geometry/subCollShields.gdml
+	#/moller/det/setDetectorFileName geometry/subBeamPipe.gdml
+
+/moller/det/setShieldMaterial polyethylene
+/testhadr/CutsAll          0.7 mm
+/run/initialize
+

@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+
+<gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="./schema/gdml.xsd">
+	<define>
+		<constant name="q1_box_x_thick" value="10.16"/>
+		<constant name="q1_box_y_thick" value="15.22"/>
+		<constant name="q1_box_large_z_thick" value="18.42"/>
+		<constant name="q1_box_small_z_thick" value="13.26"/>
+		<constant name="q1_hose_z_center" value="228.782"/>
+		
+		<position unit="cm" name="pos_q1_fl_hose" x="17" y="3.86" z="223.1 - q1_hose_z_center"/>
+		<position unit="cm" name="pos_q1_bl_hose" x="20.431" y="-3.86" z="238.64 - q1_hose_z_center"/>
+		<position unit="cm" name="pos_q1_fr_hose" x="-17" y="-3.86" z="223.1 - q1_hose_z_center"/>
+		<position unit="cm" name="pos_q1_br_hose" x="-20.431" y="3.86" z="238.64 - q1_hose_z_center"/>
+
+		<rotation unit="deg" name="rot_q1_fl_hose" x="0" y="-12.5" z="-45"/>
+		<rotation unit="deg" name="rot_q1_bl_hose" x="0" y="-12.5" z="45"/>
+		<rotation unit="deg" name="rot_q1_fr_hose" x="0" y="12.5" z="-45"/>
+		<rotation unit="deg" name="rot_q1_br_hose" x="0" y="12.5" z="45"/>
+	</define>
+
+	<materials>
+		<element Z="6" formula="C" name="Carbon">
+ 			<atom value="12" />
+		</element>
+		<element Z="1" formula="H" name="Hydrogen">
+			<atom value="1"/>
+		</element>
+
+		<material Z="16" name="HDPE" state="solid">
+			<T unit="K" value="298"/>
+			<D unit="g/cm3" value="0.97"/>
+			<composite n="2" ref="Carbon"/>
+			<composite n="4" ref="Hydrogen"/>
+    	</material>
+		<material Z="1" name="Vacuum" state="gas">
+      		<T unit="K" value="2.73"/>
+      		<P unit="pascal" value="3e-18"/>
+      		<D unit="g/cm3" value="1e-25"/>
+      		<atom unit="g/mole" value="1.01"/>
+    	</material>
+	</materials>
+
+	<solids>		
+		<box lunit="cm" name="solid_large_q1_hose" x="q1_box_x_thick" y="q1_box_y_thick" z="q1_box_large_z_thick"/>
+		<box lunit="cm" name="solid_small_q1_hose" x="q1_box_x_thick" y="q1_box_y_thick" z="q1_box_small_z_thick"/>		
+		
+		<box lunit="cm" name="solid_q1_hose_volume" x="47.54" y="25.658" z="34.806"/>
+	</solids>
+
+	<structure>
+		<volume name="logic_q1_fl_hose">
+			<materialref ref="HDPE"/>
+			<solidref ref="solid_large_q1_hose"/>
+			<auxiliary auxtype="SensDet" auxvalue="volumeN3211"/>
+		</volume>
+		<volume name="logic_q1_bl_hose">
+			<materialref ref="HDPE"/>
+			<solidref ref="solid_small_q1_hose"/>
+			<auxiliary auxtype="SensDet" auxvalue="volumeN3212"/>
+		</volume>
+		<volume name="logic_q1_fr_hose">
+			<materialref ref="HDPE"/>
+			<solidref ref="solid_large_q1_hose"/>
+			<auxiliary auxtype="SensDet" auxvalue="volumeN3213"/>
+		</volume>
+		<volume name="logic_q1_br_hose">
+			<materialref ref="HDPE"/>
+			<solidref ref="solid_small_q1_hose"/>
+			<auxiliary auxtype="SensDet" auxvalue="volumeN3214"/>
+		</volume>
+		
+		<volume name="logic_q1_hoses">
+			<materialref ref="Vacuum"/>
+			<solidref ref="solid_q1_hose_volume"/>
+			
+			<physvol name="q1_fl_hose">
+				<volumeref ref="logic_q1_fl_hose"/>
+				<positionref ref="pos_q1_fl_hose"/>
+				<rotationref ref="rot_q1_fl_hose"/>
+			</physvol>
+			<physvol name="q1_bl_hose">
+				<volumeref ref="logic_q1_bl_hose"/>
+				<positionref ref="pos_q1_bl_hose"/>
+				<rotationref ref="rot_q1_bl_hose"/>
+			</physvol>
+			<physvol name="q1_fr_hose">
+				<volumeref ref="logic_q1_fr_hose"/>
+				<positionref ref="pos_q1_fr_hose"/>
+				<rotationref ref="rot_q1_fr_hose"/>
+			</physvol>
+			<physvol name="q1_br_hose">
+				<volumeref ref="logic_q1_br_hose"/>
+				<positionref ref="pos_q1_br_hose"/>
+				<rotationref ref="rot_q1_br_hose"/>
+			</physvol>
+		</volume>		
+
+	</structure>
+
+	<setup name="Q1_Hose_Detectors" version="1.0">
+		<world ref="logic_q1_hoses"/>
+	</setup>
+
+</gdml>

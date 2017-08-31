@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+
+<gdml xmlns:gdml="http://cern.ch/2001/Schemas/GDML"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="./schema/gdml.xsd">
+
+  <define>
+    <!--Positions are relative to the center block -->
+    <position name="topBlock_pos" unit="cm" x="0" y="198" z="0"/>
+    <position name="backBlockLeft_pos" unit="cm" x="-287" y="-98" z="318"/>
+    <position name="backBlockRight_pos" unit="cm" x="287" y="-98" z="318"/>
+    <position name="backLowerBlock_pos" unit="cm" x="0" y="-251" z="318"/>
+    <position name="frontBlockLeft_pos" unit="cm" x="-245" y="4" z="-314"/>
+    <position name="frontBlockRight_pos" unit="cm" x="245" y="4" z="-314"/>
+  </define>
+
+  <materials>
+    <material Z="1" name="Vacuum" state="gas">
+      <T unit="K" value="2.73"/>
+      <P unit="pascal" value="3e-18"/>
+      <D unit="g/cm3" value="1e-25"/>
+      <atom unit="g/mole" value="1.01"/>
+    </material>
+
+    <material Z="13" name="Iron" state="solid">
+      <T unit="K" value="298"/>
+      <D unit="g/cm3" value="2.699"/>
+      <atom unit="g/mole" value="26.982"/>
+    </material>
+
+    <material Z="13" name="Air" state="solid">
+      <T unit="K" value="298"/>
+      <D unit="g/cm3" value="2.699"/>
+      <atom unit="g/mole" value="26.982"/>
+    </material>
+
+    <material Z="18" name="matKryptonite" state="solid">
+      <T unit="K" value="298"/>
+      <D unit="mg/cm3" value="0.00000001"/>
+      <atom unit="g/mole" value="39.948"/>
+    </material>
+
+  </materials>
+
+  <solids>
+
+    <!-- FIXME for now the air volumes are shrunck by ~5cm in each direction so that we can include plates inside the legs -->
+    <!--           Ideally we would implement something similar to what Maduka has -->
+    <box lunit="cm" name="topBlock_solid0" x="676" y="185" z="813"/>
+    <box lunit="cm" name="topBlock_solid1" x="305" y="186" z="281"/>
+    <subtraction name ="topBlock_solid">
+      <first ref="topBlock_solid0"/>
+      <second ref="topBlock_solid1"/>
+      <position name="topBlock_subtraction_posRel" unit="cm" x="0" y="0" z="-267"/>
+    </subtraction>
+
+    <box lunit="cm" name="topBlockAir_solid0" x="663" y="175" z="802"/>
+    <box lunit="cm" name="topBlockAir_solid1" x="312" y="176" z="280"/>
+    <subtraction name ="topBlockAir_solid">
+      <first ref="topBlockAir_solid0"/>
+      <second ref="topBlockAir_solid1"/>
+      <position name="topBlockAir_subtraction_posRel" unit="cm" x="0" y="0" z="-262"/>
+    </subtraction>
+
+    <box lunit="cm" name="backBlock_solid" x="102" y="396" z="178"/>
+    <box lunit="cm" name="backBlockAir_solid" x="92" y="384" z="167"/>
+
+    <box lunit="cm" name="frontBlock_solid" x="185" y="203" z="185"/>
+    <box lunit="cm" name="frontBlockAir_solid" x="175" y="191" z="175"/>
+
+    <box lunit="cm" name="backLowerBlock_solid" x="472" y="81" z="172"/>
+    <box lunit="cm" name="backLowerBlockAir_solid" x="472" y="71" z="162"/>
+
+    <box lunit="cm" name="HRSdet_solid" x="200" y="200" z="200"/>
+
+    <!-- Union of all objects so that there is a space to physically add them -->
+    <box lunit="cm" name="hrsWorldUnion0" x="200" y="200" z="200"/>
+
+    <union name ="hrsWorldUnion1">
+      <first ref="hrsWorldUnion0"/>
+      <second ref="topBlock_solid0"/>
+      <positionref ref="topBlock_pos"/>
+    </union>
+    <union name ="hrsWorldUnion2">
+      <first ref="hrsWorldUnion1"/>
+      <second ref="backBlock_solid"/>
+      <positionref ref="backBlockLeft_pos"/>
+    </union>
+    <union name ="hrsWorldUnion3">
+      <first ref="hrsWorldUnion2"/>
+      <second ref="backBlock_solid"/>
+      <positionref ref="backBlockRight_pos"/>
+    </union>
+    <union name ="hrsWorldUnion4">
+      <first ref="hrsWorldUnion3"/>
+      <second ref="backLowerBlock_solid"/>
+      <positionref ref="backLowerBlock_pos"/>
+    </union>
+    <union name ="hrsWorldUnion5">
+      <first ref="hrsWorldUnion4"/>
+      <second ref="frontBlock_solid"/>
+      <positionref ref="frontBlockLeft_pos"/>
+    </union>
+    <union name ="hrsWorldUnion6">
+      <first ref="hrsWorldUnion5"/>
+      <second ref="frontBlock_solid"/>
+      <positionref ref="frontBlockRight_pos"/>
+    </union>
+
+  </solids>
+
+  <structure>
+
+    <volume name="HRSdet_logic">
+      <materialref ref="matKryptonite"/>
+      <solidref ref="HRSdet_solid"/>
+      <auxiliary auxtype="SensDet" auxvalue="volumeN1001"/>
+    </volume>
+
+    <volume name="topBlockAir_logic">
+      <materialref ref="Air"/>
+      <solidref ref="topBlockAir_solid"/>
+    </volume>
+    <volume name="topBlock_logic">
+      <materialref ref="Iron"/>
+      <solidref ref="topBlock_solid"/>
+
+      <physvol name="topBlockAir_phys">
+        <volumeref ref="topBlockAir_logic"/>
+        <position name="topBlockAir_pos" unit="cm" x="0" y="0" z="0"/>
+      </physvol>
+    </volume>
+
+    <volume name="backLowerBlockAir_logic">
+      <materialref ref="Air"/>
+      <solidref ref="backLowerBlockAir_solid"/>
+    </volume>
+    <volume name="backLowerBlock_logic">
+      <materialref ref="Iron"/>
+      <solidref ref="backLowerBlock_solid"/>
+
+      <physvol name="backLowerBlockAir_phys">
+        <volumeref ref="backLowerBlockAir_logic"/>
+        <position name="backLowerBlockAir_pos" unit="cm" x="0" y="0" z="0"/>
+      </physvol>
+    </volume>
+
+    <volume name="backBlockLeftAir_logic">
+      <materialref ref="Air"/>
+      <solidref ref="backBlockAir_solid"/>
+    </volume>
+    <volume name="backBlockLeft_logic">
+      <materialref ref="Iron"/>
+      <solidref ref="backBlock_solid"/>
+
+      <physvol name="backBlockLeftAir_phys">
+        <volumeref ref="backBlockLeftAir_logic"/>
+        <position name="backBlockLeftAir_pos" unit="cm" x="0" y="0" z="0"/>
+      </physvol>
+    </volume>
+
+    <volume name="backBlockRightAir_logic">
+      <materialref ref="Air"/>
+      <solidref ref="backBlockAir_solid"/>
+    </volume>
+    <volume name="backBlockRight_logic">
+      <materialref ref="Iron"/>
+      <solidref ref="backBlock_solid"/>
+
+      <physvol name="backBlockRightAir_phys">
+        <volumeref ref="backBlockRightAir_logic"/>
+        <position name="backBlockRightAir_pos" unit="cm" x="0" y="0" z="0"/>
+      </physvol>
+    </volume>
+
+    <volume name="frontBlockLeftAir_logic">
+      <materialref ref="Air"/>
+      <solidref ref="frontBlockAir_solid"/>
+    </volume>
+    <volume name="frontBlockLeft_logic">
+      <materialref ref="Iron"/>
+      <solidref ref="frontBlock_solid"/>
+
+      <physvol name="frontBlockLeftAir_phys">
+        <volumeref ref="frontBlockLeftAir_logic"/>
+        <position name="frontBlockLeftAir_pos" unit="cm" x="0" y="0" z="0"/>
+      </physvol>
+    </volume>
+
+    <volume name="frontBlockRightAir_logic">
+      <materialref ref="Air"/>
+      <solidref ref="frontBlockAir_solid"/>
+    </volume>
+    <volume name="frontBlockRight_logic">
+      <materialref ref="Iron"/>
+      <solidref ref="frontBlock_solid"/>
+
+      <physvol name="frontBlockRightAir_phys">
+        <volumeref ref="frontBlockRightAir_logic"/>
+        <position name="frontBlockRightAir_pos" unit="cm" x="0" y="0" z="0"/>
+      </physvol>
+    </volume>
+
+    <volume name="leftHRSplatform">
+      <materialref ref="Vacuum"/>
+      <solidref ref="hrsWorldUnion6"/>
+
+      <physvol name="HRSdet_phys">
+        <volumeref ref="HRSdet_logic"/>
+        <position name="HRSdet_pos" unit="cm" x="0" y="0" z="0"/>
+      </physvol>
+
+      <physvol name="topBlock_phys">
+        <volumeref ref="topBlock_logic"/>
+        <positionref ref="topBlock_pos"/>
+      </physvol>
+
+      <physvol name="backLowerBlock_phys">
+        <volumeref ref="backLowerBlock_logic"/>
+        <positionref ref="backLowerBlock_pos"/>
+      </physvol>
+
+      <physvol name="backBlockLeft_phys">
+        <volumeref ref="backBlockLeft_logic"/>
+        <positionref ref="backBlockLeft_pos"/>
+      </physvol>
+
+      <physvol name="backBlockRight_phys">
+        <volumeref ref="backBlockRight_logic"/>
+        <positionref ref="backBlockRight_pos"/>
+      </physvol>
+
+      <physvol name="frontBlockLeft_phys">
+        <volumeref ref="frontBlockLeft_logic"/>
+        <positionref ref="frontBlockLeft_pos"/>
+      </physvol>
+
+      <physvol name="frontBlockRight_phys">
+        <volumeref ref="frontBlockRight_logic"/>
+        <positionref ref="frontBlockRight_pos"/>
+      </physvol>
+
+    </volume>
+  </structure>
+
+  <setup name="subHRSplatform" version="1.0">
+    <world ref="leftHRSplatform"/>
+  </setup>
+
+</gdml>
