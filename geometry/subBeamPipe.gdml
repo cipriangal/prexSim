@@ -17,21 +17,20 @@
     <position name="gateValve_cylinder_box_posRel" unit="cm" x="0" y="-8" z="0"/>
     <position name="gateValve_posRel" unit="cm" x="0" y="0" z="163.784"/>
     <position name="dumpDoor_posRel" unit="cm" x="0" y="42" z="0"/>
-    <position name="usDet_dumpShield_pos" unit="cm" x="0" y="0" z="2150"/>
-    <position name="dsDet_dumpShield_pos" unit="cm" x="0" y="0" z="2280"/>
+    <position name="usDet_dumpShield_pos" unit="cm" x="0" y="0" z="2250"/>
+    <position name="dsDet_dumpShield_pos" unit="cm" x="0" y="0" z="2380"/>
     <rotation name="x90" unit="deg" x="90" y="0" z="0"/>
 
     <!-- Stuff from generateBeamPipe.py -->
-    <position name="dumpICS1_beamL_pos" unit="cm" x="68" y="-110" z="2685.185"/>
-    <position name="dumpICS2_beamL_pos" unit="cm" x="68" y="-152" z="2751.185"/>
-    <position name="dumpICS3_beamL_pos" unit="cm" x="68" y="-110" z="2812.185"/>
-    <position name="dumpICS1_beamR_pos" unit="cm" x="-68" y="-110" z="2685.185"/>
-    <position name="dumpICS2_beamR_pos" unit="cm" x="-68" y="-152" z="2751.185"/>
-    <position name="dumpICS3_beamR_pos" unit="cm" x="-68" y="-110" z="2812.185"/>
-    <position name="dumpDoor_pos" unit="cm" x="0" y="-42" z="3009.685"/>
-    <position name="dumpIC_beamR_pos" unit="cm" x="-68" y="-80" z="2751.185"/>
-    <position name="dumpIC_beamL_pos" unit="cm" x="68" y="-80" z="2751.185"/>
-
+    <position name="dumpICS1_beamL_pos" unit="cm" x="68" y="-110" z="2785.185"/>
+    <position name="dumpICS2_beamL_pos" unit="cm" x="68" y="-152" z="2851.185"/>
+    <position name="dumpICS3_beamL_pos" unit="cm" x="68" y="-110" z="2912.185"/>
+    <position name="dumpICS1_beamR_pos" unit="cm" x="-68" y="-110" z="2785.185"/>
+    <position name="dumpICS2_beamR_pos" unit="cm" x="-68" y="-152" z="2851.185"/>
+    <position name="dumpICS3_beamR_pos" unit="cm" x="-68" y="-110" z="2912.185"/>
+    <position name="dumpDoor_pos" unit="cm" x="0" y="-42" z="3109.685"/>
+    <position name="dumpIC_beamR_pos" unit="cm" x="-68" y="-80" z="2851.185"/>
+    <position name="dumpIC_beamL_pos" unit="cm" x="68" y="-80" z="2851.185"/>
   </define>
 
   <materials>
@@ -162,17 +161,17 @@
       <zplane rmin="30.162" rmax="45.72" z="951.005"/>
       <zplane rmin="30.162" rmax="45.72" z="952.005"/>
       <zplane rmin="45.402" rmax="45.72" z="952.005"/>
-      <zplane rmin="45.402" rmax="45.72" z="2430.785"/>
-      <zplane rmin="45.402" rmax="48.15" z="2430.785"/>
-      <zplane rmin="47.67" rmax="48.15" z="2430.795"/>
-      <zplane rmin="29.89" rmax="30.37" z="2456.085"/>
-      <zplane rmin="29.89" rmax="30.37" z="2689.685"/>
-      <zplane rmin="4.13" rmax="30.37" z="2689.685"/>
-      <zplane rmin="4.13" rmax="30.37" z="2691.685"/>
-      <zplane rmin="29.89" rmax="30.37" z="2691.685"/>
-      <zplane rmin="29.89" rmax="30.37" z="2908.485"/>
-      <zplane rmin="15.23" rmax="15.70" z="2924.085"/>
-      <zplane rmin="15.23" rmax="15.70" z="2928.885"/>
+      <zplane rmin="45.402" rmax="45.72" z="2530.785"/>
+      <zplane rmin="45.402" rmax="48.15" z="2530.785"/>
+      <zplane rmin="47.67" rmax="48.15" z="2530.795"/>
+      <zplane rmin="29.89" rmax="30.37" z="2556.085"/>
+      <zplane rmin="29.89" rmax="30.37" z="2789.685"/>
+      <zplane rmin="4.13" rmax="30.37" z="2789.685"/>
+      <zplane rmin="4.13" rmax="30.37" z="2791.685"/>
+      <zplane rmin="29.89" rmax="30.37" z="2791.685"/>
+      <zplane rmin="29.89" rmax="30.37" z="3008.485"/>
+      <zplane rmin="15.23" rmax="15.70" z="3024.085"/>
+      <zplane rmin="15.23" rmax="15.70" z="3028.885"/>
     </polycone>
 
     <!-- Ion Chamber shielding -->
@@ -224,13 +223,13 @@
     </subtraction>
 
     <!-- FIXME temp vacuum dets to look at radiation. if you don't know what this is about it means you can probably just delete it -->
-    <box lunit="cm" name="usDet_dumpShield_solid0" x="1000" y="500" z="0.1"/>
+    <box lunit="cm" name="usDet_dumpShield_solid0" x="370" y="500" z="0.1"/>
     <subtraction name ="usDet_dumpShield_solid1">
       <first ref="usDet_dumpShield_solid0"/>
       <second ref="beamPipe_solid2"/>
       <positionref ref="usDet_dumpShield_pos"/>
     </subtraction>
-    <box lunit="cm" name="dsDet_dumpShield_solid0" x="1000" y="500" z="0.1"/>
+    <box lunit="cm" name="dsDet_dumpShield_solid0" x="378" y="500" z="0.1"/>
     <subtraction name ="dsDet_dumpShield_solid1">
       <first ref="dsDet_dumpShield_solid0"/>
       <second ref="beamPipe_solid2"/>
