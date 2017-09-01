@@ -5,7 +5,6 @@
 #include "MollerRunAction.hh"
 #include "MollerEventAction.hh"
 
-#include "MollerSteppingVerbose.hh"
 #include "MollerSteppingAction.hh"
 
 #include "G4Version.hh"
@@ -45,12 +44,7 @@
 int main(int argc, char** argv)
 {
 
-  clock_t tStart=clock();	
-
-  // Verbose output class
-  //
-  G4VSteppingVerbose* verbosity = new MollerSteppingVerbose();
-  G4VSteppingVerbose::SetInstance(verbosity);
+  clock_t tStart=clock();
 
   // Construct the default Run Manager
   //
@@ -66,20 +60,20 @@ int main(int argc, char** argv)
   PhysicsListMessenger* mess = 0;
   G4String physName = "QGSP_BERT_HP";
   G4int verbose=0;
-  
+
   if(factory.IsReferencePhysList(physName)) {
     phys = factory.GetReferencePhysList(physName);
     phys->SetVerboseLevel(verbose);
-    
+
 #if G4VERSION_NUMBER < 1000
     phys->RegisterPhysics(new G4StepLimiterBuilder(verbose));
 #else
     phys->RegisterPhysics(new G4StepLimiterPhysics());
 #endif
-  
+
     mess = new PhysicsListMessenger();
   }
-    
+
   // define physics
   runManager->SetUserInitialization(phys);
 
@@ -99,14 +93,14 @@ int main(int argc, char** argv)
     {
       G4cout << "==========================================================="<< G4endl;
       G4cout << "Batch  mode"<< G4endl;
-      G4cout << "==========================================================="<< G4endl;  
+      G4cout << "==========================================================="<< G4endl;
 
       G4String command = "/control/execute ";
       G4String fileName = argv[1];
       G4String fileName2 = argv[2];
 
       UImanager->ApplyCommand(command+fileName);
-       // Start analysis
+      // Start analysis
       //
       MollerAnalysis* analysis = new MollerAnalysis(detector);
       //pass the GDML and macro files here
@@ -116,14 +110,14 @@ int main(int argc, char** argv)
 
       analysis->SetLowLimMagneticShield(detector->GetLowLimMagneticShield());
       analysis->SetHighLimMagneticShield(detector->GetHighLimMagneticShield());
-      analysis->SetMagFieldScaleFactor(detector->GetMagFieldScaleFactor());      
+      analysis->SetMagFieldScaleFactor(detector->GetMagFieldScaleFactor());
       // Initialize G4 kernel
       //
       runManager->Initialize();
       // Get condition of run from second macro
       //
       UImanager->ApplyCommand(command+fileName2);
-       // End analysis
+      // End analysis
       //
       analysis->End();
       delete analysis;
@@ -132,7 +126,7 @@ int main(int argc, char** argv)
     {  // interactive mode : define UI session
       G4cout << "==========================================================="<< G4endl;
       G4cout << "Interactive mode"<< G4endl;
-      G4cout << "==========================================================="<< G4endl;   
+      G4cout << "==========================================================="<< G4endl;
       G4String command = "/control/execute ";
       G4String fileName = argv[1];
       UImanager->ApplyCommand(command+fileName);
@@ -141,12 +135,12 @@ int main(int argc, char** argv)
 #ifdef G4VIS_USE
       G4VisManager* visManager = new G4VisExecutive;
       visManager->Initialize();
-      UImanager->ApplyCommand("/control/macroPath macros"); 
+      UImanager->ApplyCommand("/control/macroPath macros");
       UImanager->ApplyCommand("/control/execute vis/vis.mac");
 #endif
       if (ui->IsGUI()){
-	UImanager->ApplyCommand("/control/macroPath macros"); 
-	UImanager->ApplyCommand("/control/execute gui.mac");
+        UImanager->ApplyCommand("/control/macroPath macros");
+        UImanager->ApplyCommand("/control/execute gui.mac");
       }
       ui->SessionStart();
       delete ui;
@@ -161,7 +155,7 @@ int main(int argc, char** argv)
     G4cout << "==========================================================="<< G4endl;
     G4cout << G4endl<< G4endl;
   }
- 
+
   // Job termination
   // Free the store: user actions, physics_list and detector_description are
   //                 owned and deleted by the run manager, so they should not
