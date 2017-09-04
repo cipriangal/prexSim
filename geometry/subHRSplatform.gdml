@@ -12,6 +12,7 @@
     <position name="backLowerBlock_pos" unit="cm" x="0" y="-251" z="318"/>
     <position name="frontBlockLeft_pos" unit="cm" x="-245" y="4" z="-314"/>
     <position name="frontBlockRight_pos" unit="cm" x="245" y="4" z="-314"/>
+    <position name="HRSdet_pos" unit="cm" x="0" y="0" z="35"/>
   </define>
 
   <materials>
@@ -71,10 +72,16 @@
     <box lunit="cm" name="backLowerBlock_solid" x="472" y="81" z="172"/>
     <box lunit="cm" name="backLowerBlockAir_solid" x="472" y="71" z="162"/>
 
-    <box lunit="cm" name="HRSdet_solid" x="200" y="200" z="200"/>
+    <box lunit="cm" name="HRSdet_solid1" x="506" y="200" z="386"/>
+    <box lunit="cm" name="HRSdet_solid2" x="470" y="200" z="179"/>
+    <union name ="HRSdet_solid">
+      <first ref="HRSdet_solid1"/>
+      <second ref="HRSdet_solid2"/>
+      <position name="HRSdet_posRel" unit="cm" x="0" y="0" z="282"/>
+    </union>
 
     <!-- Union of all objects so that there is a space to physically add them -->
-    <box lunit="cm" name="hrsWorldUnion0" x="200" y="200" z="200"/>
+    <box lunit="cm" name="hrsWorldUnion0" x="1" y="1" z="1"/>
 
     <union name ="hrsWorldUnion1">
       <first ref="hrsWorldUnion0"/>
@@ -105,6 +112,11 @@
       <first ref="hrsWorldUnion5"/>
       <second ref="frontBlock_solid"/>
       <positionref ref="frontBlockRight_pos"/>
+    </union>
+    <union name ="hrsWorldUnion7">
+      <first ref="hrsWorldUnion6"/>
+      <second ref="HRSdet_solid"/>
+      <positionref ref="HRSdet_pos"/>
     </union>
 
   </solids>
@@ -203,11 +215,11 @@
 
     <volume name="leftHRSplatform">
       <materialref ref="Vacuum"/>
-      <solidref ref="hrsWorldUnion6"/>
+      <solidref ref="hrsWorldUnion7"/>
 
       <physvol name="HRSdet_phys">
         <volumeref ref="HRSdet_logic"/>
-        <position name="HRSdet_pos" unit="cm" x="0" y="0" z="0"/>
+        <positionref ref="HRSdet_pos"/>
       </physvol>
 
       <physvol name="topBlock_phys">
