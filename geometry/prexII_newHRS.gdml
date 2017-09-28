@@ -2973,9 +2973,6 @@
       <!--   <position name="dumpShieldD_posRel" unit="cm" x="0" y="0" z="2540"/> -->
       <!-- </physvol> -->
 
-      <!-- FIXME: our initial hall was 2546cm. Maduka has 2652.76cm -->
-      <!--        position for R= 2546 (442.2,42.45,1994.6)-->
-      <!--                 for R= 2652.76 (467.3,42.5,2107.8) -->
       <physvol>
         <file name="geometry/subHRSplatform.gdml"/>
         <position name="HRSplatform_pos" unit="cm" x="467.3" y="42.5" z="2107.8"/>
