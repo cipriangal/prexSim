@@ -184,8 +184,8 @@ G4bool MollerDetectorSD::ProcessHits(G4Step* aStep, G4TouchableHistory*)
     
     G4cout<<G4endl;
     */
-
-  hitsCollection->insert( newHit );
+	if (!(volume == 1006 && edep < 30)){
+  	hitsCollection->insert( newHit );}
   
   return true;
 }

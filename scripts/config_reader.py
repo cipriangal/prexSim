@@ -15,3 +15,7 @@ def end_run(): return int(read_file()['end_run'])
 def nr_events(): return int(read_file()['n_events'])
 def uva_id(): return read_file()['uva_id']
 def e_cut(): return int(read_file()['e_cut'])
+
+def subassems():
+	assem_string = read_file()['subassemblies']
+	return assem_string.split(',')

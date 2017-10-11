@@ -40,7 +40,7 @@ def main():
         ###submit job
         if submit==1:
             print "submitting ",jobFullName
-            call(["sbatch",outputDir+"/"+jobFullName+"/myScript.sh"])
+            call(["sbatch",outputDir+"/"+jobFullName+"/"+cr.config()+"_"+cr.identifier()+"_"+str(cr.nr_events()/1000)+"k.sh"])
         else:
             print "Not submitting",jobFullName
 
@@ -48,7 +48,6 @@ def main():
 
 
 def createMacFiles(config,outDir,sourceDir,nrEv,jobNr,identifier):
-
     if not os.path.exists(outDir+"/geometry"):
         os.makedirs(outDir+"/geometry")
 
@@ -56,10 +55,13 @@ def createMacFiles(config,outDir,sourceDir,nrEv,jobNr,identifier):
     call(["cp",sourceDir+"/geometry/kriptoniteDetectors.gdml",outDir+"/geometry/"])
     call(["cp",sourceDir+"/geometry/plasticDetectors.gdml",outDir+"/geometry/"])
     call(["cp","-r",sourceDir+"/geometry/schema",outDir+"/geometry"])
+    for sub in cr.subassems():
+    	call(["cp",sourceDir+"/geometry/sub" + sub + ".gdml",outDir+"/geometry/"])
+    
     if config=="crex5":
-        call(["cp",sourceDir+"/geometry/crex5deg" + '_' + identifier + ".gdml",outDir+"/geometry"])
+        call(["cp",sourceDir+"/geometry/crex5" + '_' + identifier + ".gdml",outDir+"/geometry"])
     elif config == 'prexII':
-    	call(['cp',sourceDir + "/geometry/prex5deg" + '_' + identifier + ".gdml",outDir+"/geometry"])
+    	call(['cp',sourceDir + "/geometry/prexII" + '_' + identifier + ".gdml",outDir+"/geometry"])
 
     f=open(outDir+"/"+"/myRun.mac",'w')
     f.write("/moller/ana/rootfilename ./o_prexSim\n")
@@ -77,11 +79,12 @@ def createMacFiles(config,outDir,sourceDir,nrEv,jobNr,identifier):
     if config=="crex5":
         f.write("/gun/energy 2. GeV\n")
         f.write("/moller/field/setConfiguration crex\n")
-        f.write("/moller/det/setDetectorFileName geometry/crex5deg_" + identifier + ".gdml\n")
+        f.write("/moller/det/setDetectorFileName geometry/crex5_" + identifier + ".gdml\n")
     elif config=="prexII":
-    	f.write("/gun/energy 1.05 GeV\n")
+    	f.write("/gun/energy 1.0 GeV\n")
         f.write("/moller/field/setConfiguration prex2\n")
-        f.write("/moller/det/setDetectorFileName geometry/prex5deg_" + identifier + ".gdml\n")
+        f.write("/moller/field/useQ1fringeField false\n")
+        f.write("/moller/det/setDetectorFileName geometry/prexII_" + identifier + ".gdml\n")
 
     f.write("/moller/field/useQ1fringeField true\n")
     f.write("/moller/det/setShieldMaterial polyethylene\n")
@@ -92,11 +95,11 @@ def createMacFiles(config,outDir,sourceDir,nrEv,jobNr,identifier):
     return 0
 
 def createBashScript(outDir, email):
-    f=open(outDir+"/"+"/myScript.sh",'w')
+    f=open(outDir+"/"+cr.config()+"_"+cr.identifier()+"_"+str(cr.nr_events()/1000)+"k.sh",'w')
     f.write("#!/bin/bash\n")
     f.write("#SBATCH --ntasks=1\n")
     f.write("#SBATCH --ntasks-per-node=1\n")
-    f.write("#SBATCH --time=02:00:00\n")
+    f.write("#SBATCH --time=03:00:00\n")
     f.write("#SBATCH --output=" + outDir + "/log.out\n")
     f.write("#SBATCH --error=" + outDir + "/log.err\n")
     #f.write("#SBATCH --mail-type=ALL\n")

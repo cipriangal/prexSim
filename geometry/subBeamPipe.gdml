@@ -461,6 +461,7 @@
       <solidref ref="dsDet_dumpShield_solid1"/>
       <auxiliary auxtype="SensDet" auxvalue="volumeN9002"/>
     </volume>
+    
 
     <volume name="beamPipeP2">
       <materialref ref="Vacuum"/>
@@ -569,6 +570,7 @@
       </physvol>
 
       <!-- FIXME -->
+      <!--
       <physvol name="usDet_dumpShield_phys">
         <volumeref ref="usDet_dumpShield_logic"/>
         <positionref ref="usDet_dumpShield_pos"/>
@@ -577,6 +579,7 @@
         <volumeref ref="dsDet_dumpShield_logic"/>
         <positionref ref="dsDet_dumpShield_pos"/>
       </physvol>
+      -->
 
       <!-- ~~~For side by side comparisons only~~~ -->
       <!-- <physvol> -->

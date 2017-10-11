@@ -10,13 +10,21 @@ config=prexII
 #ident=concrete2blocks28thick125WidePlusW
 #ident=concrete2blocks40thick247WideMove7cmZPlusW
 #ident=concrete2blocksPlusWPlusQ1fringe
-ident=concWShields_septumHoses
+#ident=concWShields_septumHoses
+#ident=newHRS2ftIronDumpShield
+#ident=newHRS2ftConcDumpShield
+#ident=newHRS2layerDumpShield
+#ident=newHRSnoDumpShield
+#ident=collERR
+ident=smallCollBore
 
 start_run=0
-end_run=10
+end_run=20
 
-n_events=100000
+n_events=500000
 
 e_cut=30
 
 uva_id=ajz3ee
+
+subassemblies=TargetChamber,CollShields,BeamPipe,DumpShield,HRSplatform,CollimatorSmallBore
