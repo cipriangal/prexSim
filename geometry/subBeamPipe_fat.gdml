@@ -162,10 +162,9 @@
       <zplane rmin="30.162" rmax="45.72" z="952.005"/>
       <zplane rmin="45.402" rmax="45.72" z="952.005"/>
       <zplane rmin="45.402" rmax="45.72" z="3022"/>
-      <zplane rmin="5.08" rmax="45.72" z="3022"/>
-      <zplane rmin="5.08" rmax="45.72" z="3023.2"/>
-      <zplane rmin="5.08" rmax="8.73" z="3023.2"/>
-      <zplane rmin="5.08" rmax="8.73" z="3029.1"/>
+      <zplane rmin="15.23" rmax="15.70" z="3024.085"/>
+      <zplane rmin="15.23" rmax="15.70" z="3024.085"/>
+      <zplane rmin="15.23" rmax="15.70" z="3028.885"/>
     </polycone>
 
     <!-- Ion Chamber shielding -->
