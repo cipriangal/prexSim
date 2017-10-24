@@ -1,0 +1,358 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+
+<!DOCTYPE gdml [
+<!ENTITY materials SYSTEM "materials.xml">
+]>
+
+<gdml xmlns:gdml="http://cern.ch/2001/Schemas/GDML"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="./schema/gdml.xsd">
+
+	<define>
+		<!--Constants first, then positions.-->
+		<constant name="cm_factor" value="2.54"/>
+		
+		<constant name="outer_conc_width" value="84*cm_factor"/>
+		<constant name="wall_thickness" value="12*cm_factor"/>
+		<constant name="inner_conc_width" value="outer_conc_width - 2*wall_thickness"/>
+
+		<constant name="foot_length" value="132*cm_factor"/>
+		<constant name="foot_height" value="12*cm_factor"/>
+		<constant name="entrance_length" value="12*cm_factor"/>
+		<constant name="entrance_height" value="174*cm_factor"/>
+		<constant name="main_length" value="720*cm_factor"/>
+		<constant name="main_height" value="144*cm_factor"/>
+		<constant name="rear_length" value="480*cm_factor"/>
+		<constant name="rear_height" value="108*cm_factor"/>
+
+		<constant name="bump1_height" value="10*cm_factor"/>
+		<constant name="bump1_length" value="6*cm_factor"/>
+		<constant name="bump2_height" value="3*cm_factor"/>
+		<constant name="bump2_length" value="8*cm_factor"/>
+		<constant name="bump3_width" value="16.5*cm_factor"/>
+		<constant name="bump3_height" value="8*cm_factor"/>
+		<constant name="bump3_length" value="6*cm_factor"/>
+		<constant name="bump4_width" value="37*cm_factor"/>
+		<constant name="bump4_height" value="bump3_height"/>
+		<constant name="bump4_length" value="bump3_length"/>
+
+		<constant name="main_y"	value="-(main_height - rear_height)/2"/>
+		<constant name="main_z" value="-(main_length + rear_length)/2"/>
+		<constant name="entrance_y" value="main_y - (entrance_height - main_height)/2"/>
+		<constant name="entrance_z" value="main_z - (entrance_length + main_length)/2"/>
+		<constant name="foot_y" value="entrance_y - (entrance_height - foot_height)/2"/>
+		<constant name="foot_z" value="entrance_z - (foot_length + entrance_length)/2"/>
+		
+		<constant name="entrance_cut_height" value="main_height - 2*wall_thickness"/>
+		<constant name="entrance_cut_length" value="entrance_length + 0.02"/>
+		<constant name="main_cut1_height" value="entrance_cut_height"/>
+		<constant name="main_cut1_length" value="main_length - wall_thickness + 0.15"/>
+		<constant name="main_cut2_height" value="rear_height - 2*wall_thickness"/>
+		<constant name="main_cut2_length" value="wall_thickness + 0.02"/>
+		<constant name="rear_cut_height" value="rear_height - 2*wall_thickness"/>
+		<constant name="rear_cut_length" value="rear_length - wall_thickness + 0.1"/>
+
+		<constant name="entrance_cut_y" value="entrance_y + (entrance_height - main_height)/2"/>
+		<constant name="entrance_cut_z" value="entrance_z"/>
+		<constant name="main_cut1_y" value="main_y"/>
+		<constant name="main_cut1_z" value="main_z - wall_thickness/2"/>
+		<constant name="main_cut2_y" value="0"/>
+		<constant name="main_cut2_z" value="main_z + main_length/2 - wall_thickness/2"/>
+		<constant name="rear_cut_y" value="0"/>
+		<constant name="rear_cut_z" value="-wall_thickness/2"/>
+
+		<constant name="bump1_y" value="-main_cut1_height/2 + bump1_height/2 - 0.1"/>
+		<constant name="bump1_z" value="-wall_thickness - (496 + 88 + bump2_length)*cm_factor - bump1_length/2 + main_length/2"/>
+		<constant name="bump2_y" value="-main_cut1_height/2 + bump2_height/2 - 0.1"/>
+		<constant name="bump2_z" value="-wall_thickness - 496*cm_factor - bump2_length/2 + main_length/2"/>
+		<constant name="bump3plus_x" value="bump4_width/2 + 7*cm_factor + bump3_width/2"/>
+		<constant name="bump3minus_x" value="-bump4_width/2 - 7*cm_factor - bump3_width/2"/>
+		<constant name="bump3_y" value="-main_cut1_height/2 + 44*cm_factor - bump3_height/2 - 0.1"/>
+		<constant name="bump3_z" value="(main_length - wall_thickness - bump3_length)/2"/>
+		<constant name="bump4_y" value="bump3_y"/>
+		<constant name="bump4_z" value="bump3_z"/>
+
+		<constant name="sec1_rmin" value="12*cm_factor"/>
+		<constant name="sec1_rmax" value="16*cm_factor"/>
+		<constant name="sec1_length" value="5.4*cm_factor"/>
+		<constant name="sec2_rmin" value="11.685*cm_factor"/>
+		<constant name="sec2_rmax" value="13.0625*cm_factor"/>
+		<constant name="sec2_length" value="5.5*cm_factor"/>
+		<constant name="sec3_rmin" value="13.0625*cm_factor"/>
+		<constant name="sec3_rmax" value="17.75*cm_factor"/>
+		<constant name="sec3_length" value="4*cm_factor"/>
+		<constant name="sec4_rmin1" value="12.0625*cm_factor"/>
+		<constant name="sec4_rmax1" value="12.5*cm_factor"/>
+		<constant name="sec4_rmin2" value="21*cm_factor"/>
+		<constant name="sec4_rmax2" value="21.625*cm_factor"/>
+		<constant name="sec4_length" value="7.14*cm_factor"/>
+		<constant name="sec5_rmin" value="21*cm_factor"/>
+		<constant name="sec5_rmax" value="21.625*cm_factor"/>
+		<constant name="sec5_length" value="(120 + 10.4)*cm_factor"/>
+		<constant name="sec6_rmin" value="0"/>
+		<constant name="sec6_rmax" value="sec5_rmax"/>
+		<constant name="sec6_length" value="0.625*cm_factor"/>
+
+		<constant name="sec5_z" value="(32.5881 + 5.2)*cm_factor"/>
+		<constant name="sec1_z" value="-sec1_length/2 - sec2_length - sec3_length - sec4_length - sec5_length/2"/>
+		<constant name="sec2_z" value="-sec2_length/2 - sec3_length - sec4_length - sec5_length/2"/>
+		<constant name="sec3_z" value="-sec3_length/2 - sec4_length - sec5_length/2"/>
+		<constant name="sec4_z" value="-sec4_length/2 - sec5_length/2"/>
+		<constant name="sec6_z" value="sec5_length/2 + sec6_length/2"/>
+
+		<!--Positions-->
+
+		<position name="rear_block_pos" unit="cm" x="0" y="0" z="0"/>
+		<position name="main_block_pos" unit="cm" x="0" y="main_y" z="main_z"/>
+		<position name="entrance_block_pos" unit="cm" x="0" y="entrance_y" z="entrance_z"/>
+		<position name="foot_block_pos" unit="cm" x="0" y="foot_y" z="foot_z"/>
+
+		<position name="rear_block_cut_pos_rel" unit="cm" x="0" y="rear_cut_y" z="rear_cut_z"/>
+		<position name="main_block_cut1_pos_rel" unit="cm" x="0" y="main_cut1_y - main_y" z="main_cut1_z - main_z"/>
+		<position name="main_block_cut2_pos_rel" unit="cm" x="0" y="main_cut2_y - main_y" z="main_cut2_z - main_z"/>
+		<position name="entrance_block_cut_pos_rel" unit="cm" x="0" y="entrance_cut_y - entrance_y" z="entrance_cut_z - entrance_z"/>
+
+		<position name="bump1_pos_rel" unit="cm" x="0" y="bump1_y" z="bump1_z"/>
+		<position name="bump2_pos_rel" unit="cm" x="0" y="bump2_y" z="bump2_z"/>
+		<position name="bump3_plus_pos_rel" unit="cm" x="bump3plus_x" y="bump3_y" z="bump3_z"/>
+		<position name="bump3_minus_pos_rel" unit="cm" x="bump3minus_x" y="bump3_y" z="bump3_z"/>
+		<position name="bump4_pos_rel" unit="cm" x="0" y="bump4_y" z="bump4_z"/>
+
+		<position name="sec1_pos_rel" unit="cm" x="0" y="0" z="sec1_z"/>
+		<position name="sec2_pos_rel" unit="cm" x="0" y="0" z="sec2_z"/>
+		<position name="sec3_pos_rel" unit="cm" x="0" y="0" z="sec3_z"/>
+		<position name="sec4_pos_rel" unit="cm" x="0" y="0" z="sec4_z"/>
+		<position name="sec5_pos_rel" unit="cm" x="0" y="0" z="sec5_z"/>
+		<position name="sec6_pos_rel" unit="cm" x="0" y="0" z="sec6_z"/>
+		
+	</define>
+
+	<materials>
+		<material Z="1" name="Vacuum" state="gas">
+			<T unit="K" value="2.73"/>
+			<P unit="pascal" value="3e-18"/>
+			<D unit="g/cm3" value="1e-25"/>
+			<atom unit="g/mole" value="1.01"/>
+		</material>
+
+		<material Z="13" name="Shield" state="solid">
+			<T unit="K" value="298"/>
+			<D unit="g/cm3" value="2.699"/>
+			<atom unit="g/mole" value="26.982"/>
+		</material>
+
+		<material Z="13" name="Concrete" state="solid">
+			<T unit="K" value="298"/>
+			<D unit="g/cm3" value="2.699"/>
+			<atom unit="g/mole" value="26.982"/>
+    	</material>
+
+		<material Z="13" name="Aluminum" state="solid">
+			<T unit="K" value="298"/>
+			<D unit="g/cm3" value="2.699"/>
+			<atom unit="g/mole" value="26.982"/>
+		</material>
+		
+		<element Z="8" formula="O" name="Oxygen" >
+ 			<atom value="16" />
+ 		</element> 
+		<element Z="1" formula="H" name="Hydrogen">
+			<atom value="1"/>
+		</element>
+		<material name="Water" formula="H2O">
+ 			<D value="1.0" />
+ 			<composite n="2" ref="Hydrogen" />
+ 			<composite n="1" ref="Oxygen" />
+ 		</material> 
+	</materials>
+
+	<solids>
+		<!--Solid parts first, subtractions later, total unions after that-->
+		<box lunit="cm" name="foot_block_solid" x="outer_conc_width" y="foot_height" z="foot_length"/>
+		<box lunit="cm" name="entrance_block_solid" x="outer_conc_width" y="entrance_height" z="entrance_length"/>
+		<box lunit="cm" name="main_block_solid" x="outer_conc_width" y="main_height" z="main_length"/>
+		<box lunit="cm" name="rear_block_solid" x="outer_conc_width" y="rear_height" z="rear_length"/>
+
+		<box lunit="cm" name="entrance_block_cut_solid" x="inner_conc_width" y="entrance_cut_height" z="entrance_cut_length"/>
+		<box lunit="cm" name="main_block_cut1_solid" x="inner_conc_width" y="main_cut1_height" z="main_cut1_length"/>
+		<box lunit="cm" name="main_block_cut2_solid" x="inner_conc_width" y="main_cut2_height" z="main_cut2_length"/>
+		<box lunit="cm" name="rear_block_cut_solid" x="inner_conc_width" y="rear_cut_height" z="rear_cut_length"/>
+
+		<box lunit="cm" name="bump1_solid" x="inner_conc_width" y="bump1_height" z="bump1_length"/>
+		<box lunit="cm" name="bump2_solid" x="inner_conc_width" y="bump2_height" z="bump2_length"/>
+		<box lunit="cm" name="bump3_solid" x="bump3_width" y="bump3_height" z="bump3_length"/>
+		<box lunit="cm" name="bump4_solid" x="bump4_width" y="bump4_height" z="bump4_length"/>
+
+		<tube lunit="cm" aunit="deg" name="sec1_solid" rmin="sec1_rmin" rmax="sec1_rmax" z="sec1_length" startphi="0" deltaphi="360"/>
+		<tube lunit="cm" aunit="deg" name="sec2_solid" rmin="sec2_rmin" rmax="sec2_rmax" z="sec2_length" startphi="0" deltaphi="360"/>
+		<tube lunit="cm" aunit="deg" name="sec3_solid" rmin="sec3_rmin" rmax="sec3_rmax" z="sec3_length" startphi="0" deltaphi="360"/>
+		<cone lunit="cm" aunit="deg" name="sec4_solid" rmin1="sec4_rmin1" rmax1="sec4_rmax1"
+						rmin2="sec4_rmin2" rmax2="sec4_rmax2" z="sec4_length" startphi="0" deltaphi="360"/>
+		<tube lunit="cm" aunit="deg" name="sec5_solid" rmin="sec5_rmin" rmax="sec5_rmax" z="sec5_length" startphi="0" deltaphi="360"/>
+		<tube lunit="cm" aunit="deg" name="sec6_solid" rmin="sec6_rmin" rmax="sec6_rmax" z="sec6_length" startphi="0" deltaphi="360"/>
+		<tube lunit="cm" aunit="deg" name="water" rmin="0" rmax="sec5_rmin" z="sec5_length" startphi="0" deltaphi="360"/>
+
+		<subtraction name="entrance_block_total_solid">
+			<first ref="entrance_block_solid"/>
+			<second ref="entrance_block_cut_solid"/>
+			<positionref ref="entrance_block_cut_pos_rel"/>
+		</subtraction>
+		<subtraction name="main_block_part1_solid">
+			<first ref="main_block_solid"/>
+			<second ref="main_block_cut1_solid"/>
+			<positionref ref="main_block_cut1_pos_rel"/>
+		</subtraction>
+		<subtraction name="main_block_total_solid">
+			<first ref="main_block_part1_solid"/>
+			<second ref="main_block_cut2_solid"/>
+			<positionref ref="main_block_cut2_pos_rel"/>
+		</subtraction>
+		<subtraction name="rear_block_total_solid">
+			<first ref="rear_block_solid"/>
+			<second ref="rear_block_cut_solid"/>
+			<positionref ref="rear_block_cut_pos_rel"/>
+		</subtraction>
+
+		<!--DISREGARD THE BUMPS-->
+		<union name="main_block_part2_solid">
+			<first ref="main_block_total_solid"/>
+			<second ref="bump1_solid"/>
+			<positionref ref="bump1_pos_rel"/>
+		</union>
+		<union name="main_block_part3_solid">
+			<first ref="main_block_part2_solid"/>
+			<second ref="bump2_solid"/>
+			<positionref ref="bump2_pos_rel"/>
+		</union>
+		<union name="main_block_part4_solid">
+			<first ref="main_block_part3_solid"/>
+			<second ref="bump3_solid"/>
+			<positionref ref="bump3_plus_pos_rel"/>
+		</union>
+		<union name="main_block_part5_solid">
+			<first ref="main_block_part4_solid"/>
+			<second ref="bump3_solid"/>
+			<positionref ref="bump3_minus_pos_rel"/>
+		</union>
+		<union name="main_block_part6_solid">
+			<first ref="main_block_part5_solid"/>
+			<second ref="bump4_solid"/>
+			<positionref ref="bump4_pos_rel"/>
+		</union>
+
+		<union name="water_tank1">
+			<first ref="sec5_solid"/>
+			<second ref="sec6_solid"/>
+			<positionref ref="sec6_pos_rel"/>
+		</union>
+		<union name="water_tank2">
+			<first ref="water_tank1"/>
+			<second ref="sec4_solid"/>
+			<positionref ref="sec4_pos_rel"/>
+		</union>
+		<union name="water_tank3">
+			<first ref="water_tank2"/>
+			<second ref="sec3_solid"/>
+			<positionref ref="sec3_pos_rel"/>
+		</union>
+		<union name="water_tank4">
+			<first ref="water_tank3"/>
+			<second ref="sec2_solid"/>
+			<positionref ref="sec2_pos_rel"/>
+		</union>
+		<union name="water_tank_solid">
+			<first ref="water_tank4"/>
+			<second ref="sec1_solid"/>
+			<positionref ref="sec1_pos_rel"/>
+		</union>
+
+		<union name ="worldUnion1">
+      		<first ref="rear_block_total_solid"/>
+      		<second ref="main_block_total_solid"/>
+      		<positionref ref="main_block_pos"/>
+    	</union>
+		<union name="worldUnion2">
+			<first ref="worldUnion1"/>
+			<second ref="entrance_block_total_solid"/>
+			<positionref ref="entrance_block_pos"/>
+		</union>
+		<union name="worldUnion3">
+			<first ref="worldUnion2"/>
+			<second ref="foot_block_solid"/>
+			<positionref ref="foot_block_pos"/>
+		</union>
+		<union name="worldUnion4">
+			<first ref="worldUnion3"/>
+			<second ref="water_tank_solid"/>
+			<positionref ref="rear_block_pos"/>
+		</union>
+		<union name="worldUnion">
+			<first ref="worldUnion4"/>
+			<second ref="water"/>
+			<positionref ref="rear_block_pos"/>
+		</union>
+
+		<union name="dump_wall1">
+			<first ref="rear_block_total_solid"/>
+			<second ref="main_block_total_solid"/>
+			<positionref ref="main_block_pos"/>
+		</union>
+		<union name="dump_wall2">
+			<first ref="dump_wall1"/>
+			<second ref="entrance_block_total_solid"/>
+			<positionref ref="entrance_block_pos"/>
+		</union>
+		<union name="dump_wall">
+			<first ref="dump_wall2"/>
+			<second ref="foot_block_solid"/>
+			<positionref ref="foot_block_pos"/>
+		</union>
+
+	</solids>
+
+	<structure>
+		<!--Volumes here-->
+		<volume name="concrete_walls_vol">
+			<materialref ref="Concrete"/>
+			<solidref ref="dump_wall"/>
+		</volume>
+	
+		<volume name="water_tank_vol">
+      		<materialref ref="Aluminum"/>
+      		<solidref ref="water_tank_solid"/>
+    	</volume>
+
+		<volume name="water_vol">
+			<materialref ref="Water"/>
+			<solidref ref="water"/>
+		</volume>
+
+		<volume name="extendedDump">
+			<materialref ref="Vacuum"/>
+			<solidref ref="worldUnion"/>
+
+			<!--Physvols-->
+			<physvol name="concrete_walls">
+				<volumeref ref="concrete_walls_vol"/>
+				<positionref ref="rear_block_pos"/>
+			</physvol>
+
+			<physvol name="water_tank_phys">
+				<volumeref ref="water_tank_vol"/>
+				<positionref ref="rear_block_pos"/>
+			</physvol>
+			
+			<physvol name="water_phys">
+				<volumeref ref="water_vol"/>
+				<positionref ref="rear_block_pos"/>
+			</physvol>
+
+		</volume>
+
+	</structure>
+
+	<setup name="subExtendedDump" version="1.0">
+		<world ref="extendedDump"/>
+	</setup>
+
+</gdml>
