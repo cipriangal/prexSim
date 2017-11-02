@@ -1,19 +1,20 @@
 #!/usr/bin/python
 from subprocess import call
 import sys, os, time, tarfile
+import config_reader as cr
 
 def main():
 
-    email = "ciprian@jlab.org"
+    email = cr.jlab_id() + "@jlab.org"
     ##only crex5, prexII defined for now
     #configuration = "crex5"
-    configuration = "prexII"
-    sourceDir = "/lustre/expphy/work/halla/parity/ciprian/ajzPrexSim/prexSim"
-    outputDir = "/lustre/expphy/volatile/halla/parity/ciprian/farmOut"
-    nrEv   = 900000
-    nrStart= 0
-    nrStop = 120
-    identifier = "smallerCollMidDonut"
+    configuration = cr.config()
+    sourceDir = "/lustre/expphy/work/halla/parity/" + cr.jlab_id() + "/prexSim"
+    outputDir = "/lustre/expphy/volatile/halla/parity/" + cr.jlab_id() + "/farmOut"
+    nrEv   = cr.nr_events()
+    nrStart= cr.start_run()
+    nrStop = cr.end_run()
+    identifier = cr.identifier()
 
     print('Running ' + str(nrEv*(nrStop - nrStart)) + ' events...')
 
@@ -26,13 +27,13 @@ def main():
         print("Starting job setup for jobID: " + str(nr))
 
         jobFullName = jobName + '_%05d'%nr
-        createMacFiles(configuration, outputDir+"/"+jobFullName, sourceDir, nrEv, nr, identifier)
+        createMacFiles(configuration, outputDir+"/"+jobName+"/"+jobFullName, sourceDir, nrEv, nr, identifier)
 
         ###copy tarfile
         call(["cp",sourceDir+"/scripts/z_config.tar.gz",
-              outputDir+"/"+jobFullName+"/z_config.tar.gz"])
+              outputDir+"/"+jobName+"/"+jobFullName+"/z_config.tar.gz"])
 
-    createXMLfile(sourceDir,outputDir,jobName,nrStart,nrStop,email)
+    createXMLfile(sourceDir,outputDir+"/"+jobName,jobName,nrStart,nrStop,email)
 
     print "All done"
 
@@ -120,15 +121,10 @@ def make_tarfile(sourceDir,config):
     tar.add(sourceDir+"/geometry/"+config+".gdml" ,arcname="geometry/"+config+".gdml")
     tar.add(sourceDir+"/geometry/kriptoniteDetectors.gdml",arcname="geometry/kriptoniteDetectors.gdml")
     tar.add(sourceDir+"/geometry/kriptoniteDetectors_withHRS.gdml",arcname="geometry/kriptoniteDetectors_withHRS.gdml")
-    tar.add(sourceDir+"/geometry/subQ1HosesCylRedesign.gdml",arcname="geometry/subQ1HosesCylRedesign.gdml")
-    tar.add(sourceDir+"/geometry/subTargetChamber.gdml",arcname="geometry/subTargetChamber.gdml")
-    tar.add(sourceDir+"/geometry/subCollShields.gdml",arcname="geometry/subCollShields.gdml")
-    tar.add(sourceDir+"/geometry/subBeamPipe.gdml",arcname="geometry/subBeamPipe.gdml")
-    tar.add(sourceDir+"/geometry/subBeamPipe_noDonut.gdml",arcname="geometry/subBeamPipe_noDonut.gdml")
-    tar.add(sourceDir+"/geometry/subBeamPipe_MidVacuum.gdml",arcname="geometry/subBeamPipe_MidVacuum.gdml")
-    tar.add(sourceDir+"/geometry/subDumpShield.gdml",arcname="geometry/subDumpShield.gdml")
+    for subassem in cr.subassems():
+        tar.add(sourceDir + "/geometry/sub" + subassem + ".gdml",arcname="geometry/sub" + subassem + ".gdml")
+	print('Adding file: ' + subassem + '...')
     tar.add(sourceDir+"/geometry/materials.xml",arcname="geometry/materials.xml")
-    tar.add(sourceDir+"/geometry/subHRSplatform.gdml",arcname="geometry/subHRSplatform.gdml")
     tar.close()
 
 if __name__ == '__main__':
