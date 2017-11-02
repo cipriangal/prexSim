@@ -8,12 +8,12 @@ def main():
     ##only crex5, prexII defined for now
     #configuration = "crex5"
     configuration = "prexII"
-    sourceDir = "/lustre/expphy/work/halla/parity/ciprian/ajzPrexSim/prexSim"
-    outputDir = "/lustre/expphy/volatile/halla/parity/ciprian/farmOut"
+    sourceDir = "/lustre/expphy/work/halla/parity/ciprian/prexSim"
+    outputDir = "/lustre/expphy/volatile/halla/parity/ciprian/farmOut/DSlargeUwater_z45cm"
     nrEv   = 900000
     nrStart= 0
-    nrStop = 120
-    identifier = "smallerCollMidDonut"
+    nrStop = 60
+    identifier = "DSlargeU_4inDonut"
 
     print('Running ' + str(nrEv*(nrStop - nrStart)) + ' events...')
 
@@ -113,7 +113,9 @@ def createXMLfile(source,writeDir,idRoot,nStart,nStop,email):
     return 0
 
 def make_tarfile(sourceDir,config):
-    os.remove(sourceDir+"/scripts/z_config.tar.gz")
+    print "making geometry tarball"
+    if os.path.isfile(sourceDir+"/scripts/z_config.tar.gz"):
+        os.remove(sourceDir+"/scripts/z_config.tar.gz")
     tar = tarfile.open(sourceDir+"/scripts/z_config.tar.gz","w:gz")
     tar.add(sourceDir+"/build/prexsim",arcname="prexsim")
     tar.add(sourceDir+"/geometry/schema",arcname="geometry/schema")
@@ -124,11 +126,16 @@ def make_tarfile(sourceDir,config):
     tar.add(sourceDir+"/geometry/subTargetChamber.gdml",arcname="geometry/subTargetChamber.gdml")
     tar.add(sourceDir+"/geometry/subCollShields.gdml",arcname="geometry/subCollShields.gdml")
     tar.add(sourceDir+"/geometry/subBeamPipe.gdml",arcname="geometry/subBeamPipe.gdml")
+    tar.add(sourceDir+"/geometry/subBeamPipe_fat.gdml",arcname="geometry/subBeamPipe_fat.gdml")
+    tar.add(sourceDir+"/geometry/subBeamPipe_4inDonut.gdml",arcname="geometry/subBeamPipe_4inDonut.gdml")
     tar.add(sourceDir+"/geometry/subBeamPipe_noDonut.gdml",arcname="geometry/subBeamPipe_noDonut.gdml")
     tar.add(sourceDir+"/geometry/subBeamPipe_MidVacuum.gdml",arcname="geometry/subBeamPipe_MidVacuum.gdml")
     tar.add(sourceDir+"/geometry/subDumpShield.gdml",arcname="geometry/subDumpShield.gdml")
+    tar.add(sourceDir+"/geometry/subDumpShield_cover.gdml",arcname="geometry/subDumpShield_cover.gdml")
+    tar.add(sourceDir+"/geometry/subDumpShield_2layer.gdml",arcname="geometry/subDumpShield_2layer.gdml")
     tar.add(sourceDir+"/geometry/materials.xml",arcname="geometry/materials.xml")
     tar.add(sourceDir+"/geometry/subHRSplatform.gdml",arcname="geometry/subHRSplatform.gdml")
+    tar.add(sourceDir+"/geometry/subHRSplatform_withShield.gdml",arcname="geometry/subHRSplatform_withShield.gdml")
     tar.close()
 
 if __name__ == '__main__':

@@ -64,6 +64,36 @@ The last line will give you instructions on what is needed as input for the exec
 
 This analysis executable will run over sensitive detectors and will calculate a 1MeV neutron equivalent and a radiation dose rate measured in mili-rem. A series of detectors are hardcoded as being kryptonite ( [10008,100013], 10101, 10102 ) while the rest are assumed to be vacuum. This is important because the energy being used in the routine to estimate the radiation damage/dose will be either the deposited energy (kryptonite) or the kinetic energy (vacuum).
 
+### Running jobs on the JLab ifarm
+The nodes used to submit jobs (currectly) should be ifarm1401 and ifarm1402. These are Centos7.2 nodes with relatively recent packages (G4, ROOT and so on). The Common Environment Version used at the time of writing is 2.0 (from Oct 2016).
+
+The simulation package "should" compile and run fine on these nodes. 
+
+#### Location
+PREX code should reside in the parity work directory (/lustre/expphy/work/halla/parity). The output code should sit o nthe volatile disk (/lustre/expphy/volatile/halla/parity). You will need to be in the hall A and parity groups at JLab in order to have write access to these areas.
+
+#### Job management
+Jobs should be managed through the JLab swif system (https://scicomp.jlab.org/docs/swif). In order to help with job submission a script is provided in this package (scripts/jlabSubmit.py -- note that the job name cannot be longer than 150 characters so you should have relatively short names for your configurations). 
+
+This script will create the folder structure, tarball and copy the necesary files that are needed for one simulation to be run. It also creates a .xml file with the information needed for swif to manage all the jobs. 
+
+Before starting to submit jobs one needs to create a workflow for swif. For example:
+```
+swif create -workflow prexSim
+```
+
+Basic example after editing the jlabSubmit file to point to the correct locations and to use the correct configuration:
+```
+./jlabSubmit.py
+cd jobs
+swif add-jsub -workflow prexSim -script ConfigName.xml
+swif run -workflow prexSim
+swif status -workflow prexSim
+```
+Jobs will get submitted to the farm and will report back with error messages. Swif has the capability to resubmit jobs in bulk once you addressed the issue (sometimes happens that the system had a problem and you can just retry).
+
+After jobs are completed analysis can proceed as normal.
+
 ## Package contents
 This folder contains:
 
