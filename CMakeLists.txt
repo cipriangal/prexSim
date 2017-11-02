@@ -56,15 +56,15 @@ set(LINK_LIBRARIES ${Geant4_LIBRARIES} ${ROOT_LIBRARIES} )
 add_executable(prexsim prex_sim.cc ${sources} ${headers})
 target_link_libraries(prexsim ${LINK_LIBRARIES})
 
-#add_executable(anaRad anaHallRadiation.cc ${sources} ${headers})
-#target_link_libraries(anaRad ${LINK_LIBRARIES})
-
 add_executable(drawBfield drawBfield.cc ${sources} ${headers})
 target_link_libraries(drawBfield ${LINK_LIBRARIES})
-
-add_executable(calcRadDamage calc1MeVneutronEquivalent.cc)
-target_link_libraries(calcRadDamage ${LINK_LIBRARIES})
 
 add_definitions(-std=c++11)
 add_executable(hallRad hallRadiation.cc ${sources} ${headers})
 target_link_libraries(hallRad ${LINK_LIBRARIES})
+
+add_executable(redTree reduceTree.cc ${sources} ${headers})
+target_link_libraries(redTree ${LINK_LIBRARIES})
+
+add_executable(drawSource drawSource.cc ${sources} ${headers})
+target_link_libraries(drawSource ${LINK_LIBRARIES})

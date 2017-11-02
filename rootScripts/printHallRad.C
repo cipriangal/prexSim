@@ -5,7 +5,9 @@ map <int,int> detArea;//cm2
 
 int printHallRad(string fnm,string simType){
 
-  detArea[1001] = 400000;
+  //detArea[1001] = 240000;//Maduka HRS detector 6x200x200 cm2
+  //detArea[1001] = 400000;//Old PREX area (designed by Rakitha)
+  detArea[1001] = 987292;//Current maximal area detector
   detArea[1002] =  60000;
   detArea[1003] = 160000;
   detArea[1004] = 100000;
@@ -37,7 +39,7 @@ int printHallRad(string fnm,string simType){
   TH1D *h1=(TH1D*)fin->Get("hSummary_neilLogX");
   TH1D *h2=(TH1D*)fin->Get("hSummary_mRemLogX");
   doOne(h1,runFactor[simType]);
-  doOne(h2,runFactor[simType]);
+  //doOne(h2,runFactor[simType]);
   fin->Close();
 }
 
@@ -49,7 +51,7 @@ void doOne(TH1D *h, double runV){
   for(int i=2;i<=nb;i+=2){
     title=h->GetXaxis()->GetBinLabel(i);
     int det = atoi( title.substr( 0, title.find(" ")).c_str());
-    if(det>1102) continue;
+    if(det>1102 || det==1006) continue;
     //if(det==10013 || (det>8000 && det<9000)) continue;
     double totFactor = ev2uA/detArea[det]*runV;
     cout<<title<<"\t"<<h->GetBinContent(i)<<"\t"<<h->GetBinError(i)

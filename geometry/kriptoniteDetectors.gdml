@@ -241,6 +241,7 @@
         <volumeref ref="logic_W10mDet"/>
         <positionref ref="pos_rel_W10mDet"/>
       </physvol>
+
       <physvol name="phys_NW10mDet">
         <volumeref ref="logic_NW10mDet"/>
         <positionref ref="pos_rel_NW10mDet"/>

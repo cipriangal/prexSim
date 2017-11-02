@@ -15,7 +15,7 @@
 #include "G4VProcess.hh"
 
 MollerDetectorSD::MollerDetectorSD(G4String name)
-:G4VSensitiveDetector(name)
+  :G4VSensitiveDetector(name)
 {
   G4String HCname;
   collectionName.insert(HCname="hitsColl");
@@ -28,9 +28,9 @@ MollerDetectorSD::~MollerDetectorSD(){;}
 void MollerDetectorSD::Initialize(G4HCofThisEvent* HCE)
 {
   hitsCollection = new MollerDetectorHitsCollection
-                      (SensitiveDetectorName,collectionName[0]); 
+    (SensitiveDetectorName,collectionName[0]);
   if(HCID<0)
-  { HCID = G4SDManager::GetSDMpointer()->GetCollectionID(hitsCollection); }
+    { HCID = G4SDManager::GetSDMpointer()->GetCollectionID(hitsCollection); }
   HCE->AddHitsCollection(HCID,hitsCollection);
 
 }
@@ -58,10 +58,10 @@ G4bool MollerDetectorSD::ProcessHits(G4Step* aStep, G4TouchableHistory*)
   G4double edep = aStep->GetTotalEnergyDeposit();
   if(edep<=0.) return false;
   if(CellID[copyID]==-1){
-    ExN05CalorimeterHit* calHit = new ExN05CalorimeterHit(physVol->GetLogicalVolume());
-    calHit->SetEdep( edep );  
+  ExN05CalorimeterHit* calHit = new ExN05CalorimeterHit(physVol->GetLogicalVolume());
+  calHit->SetEdep( edep );
   } else {
-    (*CalCollection)[CellID[copyID]]->AddEdep( edep );
+  (*CalCollection)[CellID[copyID]]->AddEdep( edep );
   }
   */
 
@@ -88,7 +88,7 @@ G4bool MollerDetectorSD::ProcessHits(G4Step* aStep, G4TouchableHistory*)
   G4int offset =100; /*changed from 0 to 100+i. Rakitha on Wed May 15 15:28:26 EDT 2013 */
   G4int alt0offset = 0;
   G4int alt1offset =1000;
-  G4int alt2offset =2000; 
+  G4int alt2offset =2000;
   G4int alt3offset =3000;
   G4int volume=-1000;
   //G4int vol; //not in use
@@ -96,35 +96,35 @@ G4bool MollerDetectorSD::ProcessHits(G4Step* aStep, G4TouchableHistory*)
   if (volume_extra!=0) volume = volume_extra; /* if the aux detector name is defined at the geometry file for a sensitive detector.  Rakitha on Wed May 15 15:28:26 EDT 2013 */
   else if ( vol_string.BeginsWith(volumeName) ) { /* sphere_det_  */
     vol_string.Remove(0,11);/* remove 11 starting from 0*/
-    volume = offset + vol_string.Atoi(); 
+    volume = offset + vol_string.Atoi();
   }
   else if ( vol_string.BeginsWith(volumeNameAlt0) ) { /* plane_det_  */
     vol_string.Remove(0,10);/* remove 10 starting from 0*/
-    volume = alt0offset + vol_string.Atoi(); 
+    volume = alt0offset + vol_string.Atoi();
     //   G4cout << "volume =" << volume << G4endl;
   }
   else if ( vol_string.BeginsWith(volumeNameAlt1) ) {  /* target  */
     vol_string.Remove(0,6);
-    volume = alt1offset + vol_string.Atoi(); 
+    volume = alt1offset + vol_string.Atoi();
   }
   else if ( vol_string.BeginsWith(volumeNameAlt2) ) {  /* other_ */
     vol_string.Remove(0,6);
-    volume = alt2offset + vol_string.Atoi(); 
+    volume = alt2offset + vol_string.Atoi();
     //   G4cout << "volume =" << volume << G4endl;
   }
   else if ( vol_string.BeginsWith(volumeNameAlt3) ) {  /* cyl_det_ */
     vol_string.Remove(0,8);
-    volume = alt3offset + vol_string.Atoi(); 
+    volume = alt3offset + vol_string.Atoi();
     //   G4cout << "volume =" << volume << G4endl;
   }
   else if ( vol_string.EqualTo(volumeNameAlt4) ) {  /* septum */
-    volume = 4001; 
+    volume = 4001;
     //   G4cout << "volume =" << volume << G4endl;
   }
   else
     volume=-1000; /* Undefined sensitive detector with different kind of volume name.  Rakitha on Wed May 15 15:28:26 EDT 2013 */
 
- 
+
   G4int trackID = fTrack->GetTrackID();
   G4int parentID = fTrack->GetParentID();
   G4int pdgID = fTrack->GetDefinition()->GetPDGEncoding();
@@ -143,40 +143,42 @@ G4bool MollerDetectorSD::ProcessHits(G4Step* aStep, G4TouchableHistory*)
   G4double kineE = fTrack->GetKineticEnergy();
   G4double kineE0 = fTrack->GetVertexKineticEnergy();
 
-  
-  //G4double rad_dist = sqrt(worldPos.x()*worldPos.x() + 
+
+  //G4double rad_dist = sqrt(worldPos.x()*worldPos.x() +
   //worldPos.y()*worldPos.y());
 
-  G4double scat_ang = sqrt(vertexMomentum.x()*vertexMomentum.x() + 
-			   vertexMomentum.y()*vertexMomentum.y());
+  G4double scat_ang = sqrt(vertexMomentum.x()*vertexMomentum.x() +
+                           vertexMomentum.y()*vertexMomentum.y());
 
   MollerDetectorHit* newHit = new MollerDetectorHit(copyNo);
-    
-    
+
+
   newHit->SetWorldPos(worldPos);
   newHit->SetVertexPos(vertexPos);
   newHit->SetMomentum(momentum);
-  newHit->SetKineticEnergy(kineE);  
+  newHit->SetKineticEnergy(kineE);
   newHit->SetMomentum2(vertexMomentum);
   newHit->SetKineticEnergy2(kineE0);
   newHit->SetScatAngle(scat_ang);
   newHit->SetCreatorProcess(process);
-  newHit->SetParticleName(particle);  
-  newHit->SetEdep( edep ); ;   
+  newHit->SetParticleName(particle);
+  newHit->SetEdep( edep ); ;
   newHit->SetIon(ion);
-  newHit->SetType(partType);  
+  newHit->SetType(partType);
   newHit->SetVolume(volume);
   //G4cout << "volume =" << volume << G4endl;
   newHit->SetTrackID(trackID);
   newHit->SetParentID(parentID);
   newHit->SetPDG(pdgID);
   newHit->SetTrackStatus(trackstatusID);
-  /* 
-    G4cout<<"Hit values in ProcessHits:"<<G4endl;
+  /*
+     G4cout<<"Hit values in ProcessHits:"<<G4endl;
 
-    G4cout<<"particle, volume, trackID, edep"<<G4endl;
-    G4cout<<particle<<", "<<volume<<", "<<trackID<<", "<<edep<<G4endl;
+     G4cout<<"particle, volume, trackID, edep"<<G4endl;
+     G4cout<<particle<<", "<<volume<<", "<<trackID<<", "<<edep<<G4endl;
 
+
+<<<<<<< HEAD
     
     //G4cout<<"worldPos, vertexPos, momentum, kineE, vertexMomentum, kineE0, scat_ang, process, particle, ion, partType, volume, trackID, edep"<<G4endl;
     //G4cout<<worldPos<<", "<<vertexPos<<", "<<momentum<<", "<<kineE<<", "<<vertexMomentum<<", "<<kineE0<<", "<<scat_ang<<", "<<process<<", "<<particle<<", "<<ion<<", "<<partType<<", "<<volume<<", "<<trackID<<", "<<edep<<G4endl;
@@ -187,11 +189,20 @@ G4bool MollerDetectorSD::ProcessHits(G4Step* aStep, G4TouchableHistory*)
 	if (!(volume == 1006 && edep < 30)){
   	hitsCollection->insert( newHit );}
   
+=======
+     //G4cout<<"worldPos, vertexPos, momentum, kineE, vertexMomentum, kineE0, scat_ang, process, particle, ion, partType, volume, trackID, edep"<<G4endl;
+     //G4cout<<worldPos<<", "<<vertexPos<<", "<<momentum<<", "<<kineE<<", "<<vertexMomentum<<", "<<kineE0<<", "<<scat_ang<<", "<<process<<", "<<particle<<", "<<ion<<", "<<partType<<", "<<volume<<", "<<trackID<<", "<<edep<<G4endl;
+     //G4cout<<worldPos[0]<<", "<<worldPos[1]<<", "<<worldPos[2]<<", "<<vertexPos[0]<<", "<<vertexPos[1]<<", "<<vertexPos[2]<<", "<<momentum[0]<<", "<<momentum[1]<<", "<<momentum[2]<<", "<<kineE<<", "<<vertexMomentum[0]<<", "<<vertexMomentum[1]<<", "<<vertexMomentum[2]<<", "<<kineE0<<", "<<scat_ang<<", "<<process<<", "<<particle<<", "<<ion<<", "<<partType<<", "<<volume<<", "<<trackID<<G4endl;
+
+     G4cout<<G4endl;
+  */
+
+  hitsCollection->insert( newHit );
+
+>>>>>>> 36b1b41667d34f8624d580d25a90b36d5f94bcd6
   return true;
 }
 
 void MollerDetectorSD::EndOfEvent(G4HCofThisEvent*)
 {
 }
-
-

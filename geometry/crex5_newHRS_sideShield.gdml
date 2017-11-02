@@ -987,8 +987,8 @@
           lunit="cm" name="tubeTarget"
           rmin="inner_rad_targ"
           rmax="outer_rad_targ"
-          z="0.05" />
-    <!-- z="0.6" /> -->
+	  z="0.6" />
+    <!-- z="0.05" /> -->
 
     <!-- Target shielding -->
     <box lunit="cm" name="giantShield_solid0"
@@ -2522,8 +2522,8 @@
     </volume>
 
     <volume name="target_logic">
-      <!-- <materialref ref="Calcium48"/> -->
-      <materialref ref="PureLead"/>
+      <materialref ref="Calcium48"/>
+      <!-- <materialref ref="PureLead"/> -->
       <solidref ref="tubeTarget"/>
     </volume>
 
@@ -2974,7 +2974,7 @@
       <!-- </physvol> -->
 
       <physvol>
-        <file name="geometry/subHRSplatform.gdml"/>
+        <file name="geometry/subHRSplatform_withShield.gdml"/>
         <position name="HRSplatform_pos" unit="cm" x="467.3" y="42.5" z="2107.8"/>
         <rotation name="HRSplatform_rot" unit="deg" x="0" y="-12.5" z="0"/>
       </physvol>

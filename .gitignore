@@ -38,6 +38,7 @@ result*
 y_*
 z_*
 #*
+*.table
 .#*
 scripts/jobs
 

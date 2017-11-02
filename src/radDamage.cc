@@ -14,7 +14,7 @@ double radDamage::getNEIL(int partType,double energy, double theta){
     nDmg=0;
   }else if(partType == 2212){
     nDmg=1;
-  }else if(partType == 211 || partType == -211 || partType == 111){
+  }else if(partType == 211 || partType == -211){
     nDmg=2;
   }else{
     return -999;
@@ -73,7 +73,7 @@ double radDamage::getMREM(int partType, double energy, double theta){
 }
 
 double radDamage::interpolate(vector<double> xV, vector<double> yV,double energy){
-  if( energy <= xV.front() ) return yV.front();
+  if( energy <= xV.front() ) return 0;
   else if( energy >= xV.back() ) return yV.back();
 
   int lowIndex  = int(lower_bound(xV.begin(),xV.end(),energy) - xV.begin() ) - 1;
