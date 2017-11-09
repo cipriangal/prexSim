@@ -66,5 +66,3 @@ target_link_libraries(hallRad ${LINK_LIBRARIES})
 add_executable(redTree reduceTree.cc ${sources} ${headers})
 target_link_libraries(redTree ${LINK_LIBRARIES})
 
-add_executable(drawSource drawSource.cc ${sources} ${headers})
-target_link_libraries(drawSource ${LINK_LIBRARIES})
