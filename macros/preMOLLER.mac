@@ -1,0 +1,31 @@
+############
+### MOLLER configuration
+############
+
+/control/macroPath macros
+/control/verbose 2
+/run/verbose 0
+/tracking/verbose 0
+/moller/det/readGeometryFromFile true
+/gun/particle e-
+/moller/gun/gen 7
+/random/setSeeds 123515 9816459
+
+############
+#MOLLER:
+#E=11. GeV, T = liquid H2 150cm
+#Septum setting to 0
+#No shielding, no collimator
+############
+#### beam energy
+/gun/energy 11.0 GeV
+#### Set B field configuration (prex1, prex2, crex, moller==pvdis)
+/moller/field/setConfiguration moller
+/moller/field/useQ1fringeField false
+#### Geometry files
+/moller/det/setDetectorFileName geometry/moller.gdml
+
+
+/moller/det/setShieldMaterial polyethylene
+/testhadr/CutsAll          0.7 mm
+/run/initialize

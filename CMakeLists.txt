@@ -62,3 +62,7 @@ target_link_libraries(drawBfield ${LINK_LIBRARIES})
 add_definitions(-std=c++11)
 add_executable(hallRad hallRadiation.cc ${sources} ${headers})
 target_link_libraries(hallRad ${LINK_LIBRARIES})
+
+add_executable(redTree reduceTree.cc ${sources} ${headers})
+target_link_libraries(redTree ${LINK_LIBRARIES})
+
