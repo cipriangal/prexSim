@@ -22,8 +22,8 @@
     <constant name="dump_hole_z_center" value="center_dump-1.001*(length_dump-length_dump_hole)/2"/>
     <constant name="dump_hole_y_center" value="-43.531"/>
 
-    <constant name="radius_topwall_out" value="5472.78"/>
-    <constant name="radius_topwall_in" value="5402.78"/>
+    <constant name="radius_topwall_out" value="5572.78"/>
+    <constant name="radius_topwall_in" value="5502.78"/>
 
     <constant name="center_topwall" value="-3435.26"/>
     <constant name="bottom_cylwall" value="-447."/>
@@ -49,7 +49,7 @@
 
   <solids>
     <!-- Mother Volume -->
-    <box lunit="cm" name="boxWorld" x="10000." y="10000." z="10000."/>
+    <box lunit="cm" name="boxWorld" x="7000." y="10000." z="10000."/>
 
 
     <!-- Target  -->
@@ -58,6 +58,12 @@
           rmin="0"
           rmax="4"
           z="150" />
+
+    <tube aunit="deg" startphi="0" deltaphi="360"
+          lunit="cm" name="strayKiller_solid"
+          rmin="5"
+          rmax="5.1"
+          z="170" />
 
     <!-- Hall and Dump -->
     <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="out_cylwall" rmin="0.0" rmax="radius_of_cylwall+1.*thick_cylwall" z="height_cylwall" />
@@ -100,6 +106,11 @@
       <solidref ref="tubeTarget"/>
     </volume>
 
+    <volume name="strayKiller_logic">
+      <materialref ref="matKryptonite"/>
+      <solidref ref="strayKiller_solid"/>
+    </volume>
+
     <volume name="cylwall_logic">
       <materialref ref="Concrete"/>
       <solidref ref="cylwall_hole"/>
@@ -121,6 +132,11 @@
 
       <physvol name="target">
         <volumeref ref="target_logic"/>
+        <position unit="cm" name="targ_center" x="0" y="0" z="0"/>
+      </physvol>
+
+      <physvol name="strayKiller">
+        <volumeref ref="strayKiller_logic"/>
         <position unit="cm" name="targ_center" x="0" y="0" z="0"/>
       </physvol>
 
