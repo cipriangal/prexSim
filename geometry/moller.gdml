@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+
+<!DOCTYPE gdml [
+<!ENTITY materials SYSTEM "materials.xml">
+]>
+
+<gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="./schema/gdml.xsd">
+
+
+  <define>
+    <constant name="height_cylwall" value="1777.0"/>
+    <constant name="radius_of_cylwall" value="2653."/>
+    <constant name="thick_cylwall" value="148.7"/>
+
+    <constant name="width_dump" value="600.0"/>
+    <constant name="height_dump" value="720"/>
+    <constant name="length_dump" value="600."/>
+    <constant name="length_dump_hole" value="length_dump+1."/>
+    <constant name="width_dump_hole" value="212.816"/>
+    <constant name="height_dump_hole" value="299.876"/>
+    <constant name="center_dump" value="radius_of_cylwall+length_dump/2+thick_cylwall"/>
+    <constant name="dump_hole_z_center" value="center_dump-1.001*(length_dump-length_dump_hole)/2"/>
+    <constant name="dump_hole_y_center" value="-43.531"/>
+
+    <constant name="radius_topwall_out" value="5472.78"/>
+    <constant name="radius_topwall_in" value="5402.78"/>
+
+    <constant name="center_topwall" value="-3435.26"/>
+    <constant name="bottom_cylwall" value="-447."/>
+    <constant name="center_cylwall" value="height_cylwall/2+bottom_cylwall"/>
+    <constant name="trans_topwall" value="radius_topwall_out-(-center_topwall+bottom_cylwall+height_cylwall)"/>
+
+    <position unit="cm" name="cylwallTrans_1"    x="0" y="0"     z="thick_cylwall/2"/>
+    <position unit="cm" name="cylwallTrans_2"    x="0" y="-1.0*radius_of_cylwall-0.5*thick_cylwall" z="+dump_hole_y_center-center_cylwall"/>
+
+    <position unit="cm" name="topwallTrans_1" x="0" y="0" z="-trans_topwall"/>
+
+    <position unit="cm" name="dumpTrans_1" x="0" y="dump_hole_y_center" z="dump_hole_z_center - center_dump"/>
+
+    <position unit="cm" name="cylwall_center"    x="0" y="1.*center_cylwall" z="0"/>
+    <position unit="cm" name="topwall_center"    x="0" y="1.*center_topwall" z="0"/>
+    <position unit="cm" name="dump_center"       x="0" y="0" z="center_dump"/>
+
+    <rotation name="x90" unit="deg" x="90" y="0" z="0"/>
+
+  </define>
+
+  &materials;
+
+  <solids>
+    <!-- Mother Volume -->
+    <box lunit="cm" name="boxWorld" x="10000." y="10000." z="10000."/>
+
+
+    <!-- Target  -->
+    <tube aunit="deg" startphi="0" deltaphi="360"
+          lunit="cm" name="tubeTarget"
+          rmin="0"
+          rmax="4"
+          z="150" />
+
+    <!-- Hall and Dump -->
+    <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="out_cylwall" rmin="0.0" rmax="radius_of_cylwall+1.*thick_cylwall" z="height_cylwall" />
+    <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="in_cylwall" rmin="0.0" rmax="radius_of_cylwall" z="1*height_cylwall-1*thick_cylwall" />
+    <box lunit="cm" name="wall_cylhole" x="width_dump_hole" y="height_dump_hole" z="3.0*thick_cylwall"/>
+    <subtraction name ="cylwall_full">
+      <first ref="out_cylwall"/>
+      <second ref="in_cylwall"/>
+      <positionref ref="cylwallTrans_1"/>
+    </subtraction>
+    <subtraction name ="cylwall_hole">
+      <first ref="cylwall_full"/>
+      <second ref="wall_cylhole"/>
+      <positionref ref="cylwallTrans_2"/>
+      <rotationref ref="x90"/>
+    </subtraction>
+
+    <sphere aunit="deg" startphi="0" deltaphi="360" starttheta="0" deltatheta="180" lunit="cm" name="hall_top_shell"  rmin="radius_topwall_in" rmax="radius_topwall_out"/>
+    <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="hall_top_sub" rmin="0.0" rmax="radius_topwall_out+1" z="2*radius_topwall_out" />
+    <subtraction name ="topwall_solid">
+      <first ref="hall_top_shell"/>
+      <second ref="hall_top_sub"/>
+      <positionref ref="topwallTrans_1"/>
+    </subtraction>
+
+    <box lunit="cm" name="dump_0_solid" x="width_dump" y="height_dump" z="length_dump"/>
+    <box lunit="cm" name="dump_hole" x="width_dump_hole" y="height_dump_hole" z="1.2*length_dump_hole"/>
+    <subtraction name ="dump_solid">
+      <first ref="dump_0_solid"/>
+      <second ref="dump_hole"/>
+      <positionref ref="dumpTrans_1"/>
+    </subtraction>
+
+  </solids>
+
+  <structure>
+
+    <volume name="target_logic">
+      <materialref ref="LiquidHydrogen"/>
+      <solidref ref="tubeTarget"/>
+    </volume>
+
+    <volume name="cylwall_logic">
+      <materialref ref="Concrete"/>
+      <solidref ref="cylwall_hole"/>
+    </volume>
+
+    <volume name="topwall_logic">
+      <materialref ref="Concrete"/>
+      <solidref ref="topwall_solid"/>
+    </volume>
+
+    <volume name="dump_logic">
+      <materialref ref="Concrete"/>
+      <solidref ref="dump_solid"/>
+    </volume>
+
+    <volume name="logicMOLLER">
+      <materialref ref="Vacuum"/>
+      <solidref ref="boxWorld"/>
+
+      <physvol name="target">
+        <volumeref ref="target_logic"/>
+        <position unit="cm" name="targ_center" x="0" y="0" z="0"/>
+      </physvol>
+
+      <physvol name="cylwall">
+        <volumeref ref="cylwall_logic"/>
+        <positionref ref="cylwall_center"/>
+        <rotationref ref="x90"/>
+      </physvol>
+
+      <physvol name="topwall">
+        <volumeref ref="topwall_logic"/>
+        <positionref ref="topwall_center"/>
+        <rotationref ref="x90"/>
+      </physvol>
+
+      <physvol name="dump">
+        <volumeref ref="dump_logic"/>
+        <positionref ref="dump_center"/>
+      </physvol>
+
+      <physvol>
+        <file name="geometry/subBeamPipe.gdml"/>
+        <position name="subBeamPipe_pos" unit="cm" x="0." y="0." z="132.3"/>
+      </physvol>
+
+    </volume>
+  </structure>
+
+  <setup name="Default" version="1.0">
+    <world ref="logicMOLLER"/>
+  </setup>
+
+</gdml>
