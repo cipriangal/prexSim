@@ -17,6 +17,7 @@
     <position name="gateValve_cylinder_box_posRel" unit="cm" x="0" y="-8" z="0"/>
     <position name="gateValve_posRel" unit="cm" x="0" y="0" z="163.784"/>
     <position name="dumpDoor_posRel" unit="cm" x="0" y="42" z="0"/>
+    <position name="dumpDet_pos" unit="cm" x="0" y="0" z="2490"/>
     <position name="usDet_dumpShield_pos" unit="cm" x="0" y="0" z="2250"/>
     <position name="dsDet_dumpShield_pos" unit="cm" x="0" y="0" z="2380"/>
     <rotation name="x90" unit="deg" x="90" y="0" z="0"/>
@@ -236,6 +237,13 @@
       <positionref ref="dsDet_dumpShield_pos"/>
     </subtraction>
 
+    <box lunit="cm" name="dumpDet_solid0" x="350" y="500" z="0.1"/>
+    <subtraction name ="dumpDet_solid1">
+      <first ref="dumpDet_solid0"/>
+      <second ref="beamPipe_solid2"/>
+      <positionref ref="dumpDet_pos"/>
+    </subtraction>
+
     <!-- Union of all objects so that there is a space to physically add them -->
     <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="bP2worldUnion0"
           rmin="0"
@@ -350,6 +358,11 @@
       <second ref="dsDet_dumpShield_solid1"/>
       <positionref ref="dsDet_dumpShield_pos"/>
     </union>
+    <union name ="bP2worldUnion22">
+      <first ref="bP2worldUnion21"/>
+      <second ref="dumpDet_solid1"/>
+      <positionref ref="dumpDet_pos"/>
+    </union>
 
   </solids>
 
@@ -460,6 +473,12 @@
       <materialref ref="Vacuum"/>
       <solidref ref="dsDet_dumpShield_solid1"/>
       <auxiliary auxtype="SensDet" auxvalue="volumeN9002"/>
+    </volume>
+
+    <volume name="dumpDet_logic">
+      <materialref ref="Vacuum"/>
+      <solidref ref="dumpDet_solid1"/>
+      <auxiliary auxtype="SensDet" auxvalue="volumeN9003"/>
     </volume>
 
     <volume name="beamPipeP2">
@@ -576,6 +595,11 @@
       <physvol name="dsDet_dumpShield_phys">
         <volumeref ref="dsDet_dumpShield_logic"/>
         <positionref ref="dsDet_dumpShield_pos"/>
+      </physvol>
+
+      <physvol name="dumpDet_phys">
+        <volumeref ref="dumpDet_logic"/>
+        <positionref ref="dumpDet_pos"/>
       </physvol>
 
       <!-- ~~~For side by side comparisons only~~~ -->
