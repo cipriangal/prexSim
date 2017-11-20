@@ -12,6 +12,9 @@
 
 using namespace std;
 
+//######################
+//# FOR USE ON RIVANNA #
+//######################
 void sumRootFiles(string config,string ident, int nfiles, int n_events_k){
   string fnms[nfiles];
   
@@ -25,8 +28,8 @@ void sumRootFiles(string config,string ident, int nfiles, int n_events_k){
   TChain ch("geant");
   
   for(int i = 0; i < nfiles; i++){
-  	printf(fnms[i].c_str()); printf("\n");
-  	ch.Add(fnms[i].c_str());
+    cout<<fnms[i].c_str()<<endl;
+    ch.Add(fnms[i].c_str());
   }
   
   ch.Merge((config + "_" + ident + ".root").c_str());
@@ -164,16 +167,16 @@ void oneD_histo(string fname, string meas, string cuts){
 }
 
 void compare_pos0(string fname1, string fname2, string comp_type, Int_t vol, Int_t lower_limit, Int_t upper_limit){
-	TH1F* histo1 = new TH1F("z01","Iron",100,lower_limit,upper_limit);
-	histo1->SetLineColor(kBlue);
-	TH1F* histo2 = new TH1F("z02","No Shield",100,lower_limit,upper_limit);
-	histo2->SetLineColor(kRed);
-	char title[100]; sprintf(title,"hits in volume %d",vol);
-	THStack *hs = new THStack("hs",title);
-	TCanvas *c1 = new TCanvas("c1",title,1000,800);
-	gStyle->SetOptStat("eMRiou");
+  TH1F* histo1 = new TH1F("z01","Iron",100,lower_limit,upper_limit);
+  histo1->SetLineColor(kBlue);
+  TH1F* histo2 = new TH1F("z02","No Shield",100,lower_limit,upper_limit);
+  histo2->SetLineColor(kRed);
+  char title[100]; sprintf(title,"hits in volume %d",vol);
+  THStack *hs = new THStack("hs",title);
+  TCanvas *c1 = new TCanvas("c1",title,1000,800);
+  gStyle->SetOptStat("eMRiou");
 	
-	Float_t type1, volume1, event1, edep1, type2, volume2, event2, edep2;
+  Float_t type1, volume1, event1, edep1, type2, volume2, event2, edep2;
   Float_t x_01, x_02, z_01, z_02;
   
   cout<<"Analyzing file "<<fname1.c_str()<<endl;
@@ -230,4 +233,216 @@ void compare_pos0(string fname1, string fname2, string comp_type, Int_t vol, Int
 	
 	c1->Modified();
   gPad->BuildLegend(0.75,0.75,0.95,0.95,"");
+}
+
+//####################
+//# FOR USE ON IFARM #
+//####################
+void sum_root_files_ifarm(string config, string ident, int nfiles, int n_events_k){
+  TChain ch("geant");
+  for(int i = 0; i<nfiles; i++){
+    string fnum = "";
+    if(i < 10){fnum = "0000" + to_string(i);}
+    else if(i < 100){fnum = "000" + to_string(i);}
+    else{fnum = "00" + to_string(i);}
+
+    string full_fname = "~/farmOut/" + config + "_" + ident + "_" + to_string(n_events_k) + "kEv_" + fnum + "/o_prexSim.root";
+    ch.Add(full_fname.c_str());
+  }
+  ch.Merge( (config + "_" + ident + ".root").c_str() );
+}
+
+void one_d_histo(string sim, string conf, int n_events_k, string meas, string cuts, Int_t nbinsx, Double_t xlo, Double_t xhi){
+  string fname = "~/farmOut/" + sim + "_" + conf + "_" + to_string(n_events_k) + "kEv/" + sim + "_" + conf + "_redTree.root";
+  TFile *f = new TFile(fname.c_str());
+  TTree* t = (TTree*)f->Get("t");
+
+  TCanvas *c1 = new TCanvas("c1", "c1", 800, 600);
+  TH1F *h1 = new TH1F("h1", (conf + ": " + meas + ", " + cuts).c_str(), nbinsx, xlo, xhi);
+  t->Project("h1", meas.c_str(), cuts.c_str());
+
+  gStyle->SetOptStat("eMRiou");
+
+  h1->Draw();
+}
+
+void particle_histo_stack(string sim, string conf, int n_events_k, string meas, string cuts, Int_t nbinsx, Double_t xlo, Double_t xhi){
+  TFile *f = new TFile(("~/farmOut/" + sim + "_" + conf + "_" + to_string(n_events_k) + "kEv/" + sim + "_" + conf + "_redTree.root").c_str());
+  TTree *t = (TTree*)f->Get("t");
+
+  TH1F *h  = new TH1F("h", "all PDGs", nbinsx, xlo, xhi);
+  h->SetLineColor(kBlack);
+  TH1F* h1 = new TH1F("h1", "pdgID==11", nbinsx, xlo, xhi);
+  h1->SetLineColor(kBlue);
+  TH1F* h2 = new TH1F("h2", "pdgID==22", nbinsx, xlo, xhi);
+  h2->SetLineColor(kRed);
+  TH1F* h3 = new TH1F("h3", "pdgID==2112", nbinsx, xlo, xhi);
+  h3->SetLineColor(kGreen);
+
+  THStack *hs = new THStack("hs", (conf + ": " + meas + ", " + cuts).c_str());
+  TCanvas *c1 = new TCanvas("c1", "c1", 1000, 800);  
+  gStyle->SetOptStat("eMRiou");
+  
+  t->Project("h",  meas.c_str(), cuts.c_str());
+  t->Project("h1", meas.c_str(), ("(" + cuts + ") && abs(pdgID)==11").c_str());
+  t->Project("h2", meas.c_str(), ("(" + cuts + ") && abs(pdgID)==22").c_str());
+  t->Project("h3", meas.c_str(), ("(" + cuts + ") && abs(pdgID)==2112").c_str());
+
+  hs->Add(h);
+  hs->Add(h1);
+  hs->Add(h2);
+  hs->Add(h3);
+  hs->Draw("nostack");
+
+  hs->GetXaxis()->SetTitle(meas.c_str());
+  c1->Modified();
+  gPad->BuildLegend(0.75,0.75,0.95,0.95,"");
+}
+
+void two_d_histo(const char* fname, string dim1, string dim2, string conditions){
+  TFile *f = new TFile(fname);
+  TTree* geant = (TTree*)f->Get("t");
+
+  geant->Draw((dim1 + ":" + dim2).c_str(),conditions.c_str(),"colz");
+}
+
+void neil_weighted_hit_map(const char* fname, string dim1, string dim2, int vol){
+  TFile *f = new TFile(fname);
+  TTree *geant = (TTree*)f->Get("t");
+
+  string conditions = "neil*(neil!=-999 && volID==" + to_string(vol) + ")";
+  
+  TH2F *h1 = new TH2F("neil_weighted_hit_map", conditions.c_str(), 500, 25000, 53000, 100, -2000, 2000);
+  geant->Project("neil_weighted_hit_map", (dim1 + ":" + dim2).c_str(), conditions.c_str());
+  h1->Draw("colz");
+}
+
+void side_by_side_comp_h1(string sim, string conf1, string conf2, int n_events_k, string meas, string cuts, Int_t nbinsx, Double_t xlo, Double_t xhi){
+  string f1name = "~/farmOut/" + sim + "_" + conf1 + "_" + to_string(n_events_k) + "kEv/" + sim + "_" + conf1 + "_redTree.root";
+  string f2name = "~/farmOut/" + sim + "_" + conf2 + "_" + to_string(n_events_k) + "kEv/" + sim + "_" + conf2 + "_redTree.root";
+
+  cout<<"File 1: "<<f1name<<"; File 2: "<<f2name<<endl;
+
+  TCanvas *c1=new TCanvas("c1","c1",1600,600);
+  c1->Divide(2);
+  TFile *f1 = new TFile(f1name.c_str());
+  TTree *t1 = (TTree*)f1->Get("t");
+  TFile *f2 = new TFile(f2name.c_str());
+  TTree *t2 = (TTree*)f2->Get("t");
+  TH1F *h1 = new TH1F("h1", (conf1 + ": " + meas + ", " + cuts).c_str(), nbinsx, xlo, xhi);
+  TH1F *h2 = new TH1F("h2", (conf2 + ": " + meas + ", " + cuts).c_str(), nbinsx, xlo, xhi);
+
+  t1->Project("h1", meas.c_str(), cuts.c_str());
+  t2->Project("h2", meas.c_str(), cuts.c_str());
+
+  c1->cd(1);
+  h1->Draw();
+  c1->cd(2);
+  h2->Draw();
+}
+
+void side_by_side_comp_h2(string sim, string conf1, string conf2, int n_events_k, string meas, string cuts, Int_t nbinsx, Double_t xlow, Double_t xhi, Int_t nbinsy, Double_t ylow, Double_t yhi){
+  string f1name = "~/farmOut/" + sim + "_" + conf1 + "_" + to_string(n_events_k) + "kEv/" + sim + "_" + conf1 + ".root";
+  string f2name = "~/farmOut/" + sim + "_" + conf2 + "_" + to_string(n_events_k) + "kEv/" + sim + "_" + conf2 + ".root";
+
+  cout<<"File 1: "<<f1name<<"; File 2: "<<f2name<<endl;
+
+  TCanvas *c1=new TCanvas("c1","c1",2400,900);
+  c1->Divide(2);
+  TFile *f1 = new TFile(f1name.c_str());
+  TTree *t1 = (TTree*)f1->Get("t");
+  TFile *f2 = new TFile(f2name.c_str());
+  TTree *t2 = (TTree*)f2->Get("t");
+  TH2F *h1 = new TH2F("h1", (conf1 + ": " + meas + ", " + cuts).c_str(), nbinsx, xlow, xhi, nbinsy, ylow, yhi);
+  TH2F *h2 = new TH2F("h2", (conf2 + ": " + meas + ", " + cuts).c_str(), nbinsx, xlow, xhi, nbinsy, ylow, yhi);
+  //h1->SetStats(kFALSE);
+  //h2->SetStats(kFALSE);
+
+  t1->Project("h1", meas.c_str(), cuts.c_str());
+  t2->Project("h2", meas.c_str(), cuts.c_str());
+
+  c1->cd(1);
+  h1->Draw("colz");
+  c1->cd(2);
+  h2->Draw("colz");
+}
+
+void particle_histo_quad(string sim, string conf, int n_events_k, string meas, string cuts, Int_t nbinsx, Double_t xlo, Double_t xhi){
+  TFile *f = new TFile(("~/farmOut/" + sim + "_" + conf + "_" + to_string(n_events_k) + "kEv/" + sim + "_" + conf + "_redTree.root").c_str());
+  TTree *t = (TTree*)f->Get("t");
+
+  TH1F *h1 = new TH1F("h1", (conf + ": " + cuts + ", all PDGs").c_str(),  nbinsx, xlo, xhi);
+  TH1F* h2 = new TH1F("h2", (conf + ": " + cuts + ", electrons").c_str(), nbinsx, xlo, xhi);
+  TH1F* h3 = new TH1F("h3", (conf + ": " + cuts + ", gammas").c_str(),    nbinsx, xlo, xhi);
+  TH1F* h4 = new TH1F("h4", (conf + ": " + cuts + ", neutrons").c_str(),  nbinsx, xlo, xhi);
+
+  TCanvas *c1 = new TCanvas("c1", "c1", 2000, 1400);
+  c1->Divide(2, 2);
+  gStyle->SetOptStat("eMRiou");
+  
+  t->Project("h1", meas.c_str(), cuts.c_str());
+  t->Project("h2", meas.c_str(), ("(" + cuts + ") && abs(pdgID)==11").c_str());
+  t->Project("h3", meas.c_str(), ("(" + cuts + ") && abs(pdgID)==22").c_str());
+  t->Project("h4", meas.c_str(), ("(" + cuts + ") && abs(pdgID)==2112").c_str());
+
+  h1->GetXaxis()->SetTitle(meas.c_str());
+  h2->GetXaxis()->SetTitle(meas.c_str());
+  h3->GetXaxis()->SetTitle(meas.c_str());
+  h4->GetXaxis()->SetTitle(meas.c_str());
+
+  c1->cd(1); h1->Draw();
+  c1->cd(2); h2->Draw();
+  c1->cd(3); h3->Draw();
+  c1->cd(4); h4->Draw();
+}
+
+void two_by_two_hit_map(string sim, string conf1, string conf2, int n_events_k, string meas1, string meas2, string cuts, Int_t nbinsx, Double_t xlow, Double_t xhi, Int_t nbinsy, Double_t ylow, Double_t yhi){
+  string f1name = "~/farmOut/" + sim + "_" + conf1 + "_" + to_string(n_events_k) + "kEv/" + sim + "_" + conf1 + ".root";
+  string f2name = "~/farmOut/" + sim + "_" + conf2 + "_" + to_string(n_events_k) + "kEv/" + sim + "_" + conf2 + ".root";
+
+  TCanvas *c1 = new TCanvas("c1", "c1", 1200, 900);
+  c1->Divide(2, 2);
+
+  TFile *f1 = new TFile(f1name.c_str());
+  TTree *t1 = (TTree*)f1->Get("t");
+  TFile *f2 = new TFile(f2name.c_str());
+  TTree *t2 = (TTree*)f2->Get("t");
+  TH2F *h1 = new TH2F("h1", (conf1 + ": " + meas1 + ", " + cuts).c_str(), nbinsx, xlow, xhi, nbinsy, ylow, yhi);
+  TH2F *h2 = new TH2F("h2", (conf2 + ": " + meas1 + ", " + cuts).c_str(), nbinsx, xlow, xhi, nbinsy, ylow, yhi);
+  TH2F *h3 = new TH2F("h2", (conf1 + ": " + meas2 + ", " + cuts).c_str(), nbinsx, xlow, xhi, nbinsy, ylow, yhi);
+  TH2F *h4 = new TH2F("h2", (conf2 + ": " + meas2 + ", " + cuts).c_str(), nbinsx, xlow, xhi, nbinsy, ylow, yhi);
+
+  h1->SetStats(kFALSE);
+  h2->SetStats(kFALSE);
+  h3->SetStats(kFALSE);
+  h4->SetStats(kFALSE);
+
+  t1->Project("h1", meas1.c_str(), cuts.c_str());
+  t2->Project("h2", meas1.c_str(), cuts.c_str());
+  t1->Project("h3", meas2.c_str(), cuts.c_str());
+  t2->Project("h4", meas2.c_str(), cuts.c_str());
+
+  c1->cd(1);
+  h1->Draw("colz");
+  c1->cd(2);
+  h2->Draw("colz");
+  c1->cd(3);
+  h3->Draw("colz");
+  c1->cd(4);
+  h4->Draw("colz");
+}
+
+void check_volIDs(const char* fname){
+  TFile *f = new TFile(fname);
+  TTree *t = (TTree*)f->Get("t");
+  
+  Int_t volume;
+
+  long nEntries = t->GetEntries();
+  for(int i = 0; i < nEntries; i+=1000){
+    t->GetEntry(i);
+    t->SetBranchAddress("volID",&volume);
+
+    cout<<"Volume ID for event "<<i<<": "<<volume<<endl;
+  }
 }

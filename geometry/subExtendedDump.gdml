@@ -12,7 +12,7 @@
 		<!--Constants first, then positions.-->
 		<constant name="cm_factor" value="2.54"/>
 		
-		<constant name="outer_conc_width" value="84*cm_factor"/>
+		<constant name="outer_conc_width" value="108*cm_factor"/>
 		<constant name="wall_thickness" value="12*cm_factor"/>
 		<constant name="inner_conc_width" value="outer_conc_width - 2*wall_thickness"/>
 
@@ -267,27 +267,27 @@
 		</union>
 
 		<union name ="worldUnion1">
-      		<first ref="rear_block_total_solid"/>
-      		<second ref="main_block_total_solid"/>
-      		<positionref ref="main_block_pos"/>
-    	</union>
+      		        <first ref="rear_block_total_solid"/>
+      		        <second ref="main_block_total_solid"/>
+      		        <positionref ref="main_block_pos"/>
+    		</union>
 		<union name="worldUnion2">
 			<first ref="worldUnion1"/>
 			<second ref="entrance_block_total_solid"/>
 			<positionref ref="entrance_block_pos"/>
 		</union>
-		<union name="worldUnion3">
+		<union name="worldUnionExtra">
 			<first ref="worldUnion2"/>
 			<second ref="foot_block_solid"/>
 			<positionref ref="foot_block_pos"/>
 		</union>
-		<union name="worldUnion4">
-			<first ref="worldUnion3"/>
+		<union name="worldUnion3">
+			<first ref="worldUnion2"/>
 			<second ref="water_tank_solid"/>
 			<positionref ref="rear_block_pos"/>
 		</union>
 		<union name="worldUnion">
-			<first ref="worldUnion4"/>
+			<first ref="worldUnion3"/>
 			<second ref="water"/>
 			<positionref ref="rear_block_pos"/>
 		</union>
@@ -297,13 +297,13 @@
 			<second ref="main_block_total_solid"/>
 			<positionref ref="main_block_pos"/>
 		</union>
-		<union name="dump_wall2">
+		<union name="dump_wall">
 			<first ref="dump_wall1"/>
 			<second ref="entrance_block_total_solid"/>
 			<positionref ref="entrance_block_pos"/>
 		</union>
-		<union name="dump_wall">
-			<first ref="dump_wall2"/>
+		<union name="dump_wall_extra">
+			<first ref="dump_wall"/>
 			<second ref="foot_block_solid"/>
 			<positionref ref="foot_block_pos"/>
 		</union>
@@ -318,9 +318,9 @@
 		</volume>
 	
 		<volume name="water_tank_vol">
-      		<materialref ref="Aluminum"/>
-      		<solidref ref="water_tank_solid"/>
-    	</volume>
+      		        <materialref ref="Aluminum"/>
+      		        <solidref ref="water_tank_solid"/>
+    	        </volume>
 
 		<volume name="water_vol">
 			<materialref ref="Water"/>

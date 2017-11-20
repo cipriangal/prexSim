@@ -22,59 +22,54 @@ float x,y,z, px,py,pz;
 float xO,yO,zO;
 float E, neil, mrem;
 TTree *tout;
-int nTotal(0);
+int nTotalPerFile(0);
 vector<int> detNr;
 
 void Initialize();
 void WriteOutput();
 
-long currentEv(0),prevEv(0),processedEv(0);
-void ProcessOne(string);
+long currentEv(0), prevEv(0), processedEv(0);
+void ProcessOne(string, long);
 radDamage radDmg;
 
 int main(int argc, char **argv){
-  if(argc<4){
-    cout<<"Usage: build/redTree <inputFile name: either rootfile or list of rootfiles>  <limit number of events; 0==all> <list of detector IDs>\n"
-        <<"\tfor example: build/redTree o_SimName.root 1001 1002 1003\n";
+  if(argc < 6){
+    cout<<"Usage: build/redTree_AJZ <folder for event rootfiles> <outfile name> <num files to process> <num events per file to process>  <list of detector IDs>\n"
+        <<"\tfor example: build/redTree_AJZ ~/farmOut/prexII_current_900kEv/ prexII_current 50 100000 1001 1002 1003\n";
     return 1;
   }
-
-  //int nfiles = (int)count(s.begin(), s.end(), ',') + 1;
-  //string* files = splitString(str(argv[1]));
   
-  string finNm=argv[1];
-  nTotal=atoi(argv[2]);
-  cout<<"looking at file: "<<finNm<<" for "<<nTotal<<" events "
-      <<"\n\tand for detectors:"<<endl;
-  for(int i=3;i<argc;i++){
+  nTotalPerFile = atoi(argv[4]);
+  for(int i = 5; i < argc; i++){
     detNr.push_back(atoi(argv[i]));
-    cout<<"\t\t"<<detNr[i-3]<<endl;
+    cout<<"\t\t"<<detNr[i-5]<<endl;
   }
-
-  string foutNm = Form("%s_redTree.root",finNm.substr(0,finNm.find(".")).c_str());
-  fout=new TFile(foutNm.c_str(),"RECREATE");
-  tout=new TTree("t","PREX sim reduced tree");
+  
+  string dir    = argv[1];
+  int nfiles    = atoi(argv[3]);
+  string foutNm = Form("%s/%s.root", argv[1], argv[2]);
+  fout          = new TFile(foutNm.c_str(),"RECREATE");
+  tout          = new TTree("t","PREX sim reduced tree");
 
   Initialize();
-  if ( finNm.find(".root") < finNm.size() ){
-    if(processedEv<nTotal && nTotal>0)
-      ProcessOne(finNm);
-  }else{
-    ifstream ifile(finNm.c_str());
-    string data;
-    while(ifile>>data){
-      cout<<" processing: "<<data<<endl;
-      if(processedEv<nTotal && nTotal>0)
-	ProcessOne(data);
-    }
+  for(int i = 0; i < nfiles; i++){
+    string infile_num = "";
+    if(i < 10){infile_num = "0000" + to_string(i);}
+    else if(i < 100){infile_num = "000" + to_string(i);}
+    else{infile_num = "00" + to_string(i);}
+
+    string infile_name = dir + "/" + infile_num + "/o_prexSim.root";
+    cout<<"Processing file: "<<dir<<"/"<<infile_num<<endl;
+    ProcessOne(infile_name, nTotalPerFile);
   }
+
   cout<<"Processed a total of "<<processedEv<<endl;
   WriteOutput();
   cout<<"written"<<endl;
   return 0;
 }
 
-void ProcessOne(string fnm){
+void ProcessOne(string fnm, long ntpf){
   TFile *fin=new TFile(fnm.c_str(),"READ");
   if(!fin->IsOpen()){
     cout<<"Problem: can't find file: "<<fnm<<endl;
@@ -108,16 +103,19 @@ void ProcessOne(string fnm){
   t->SetBranchAddress("track",&track);
   t->SetBranchAddress("parent",&parent);
 
-  long nEntries= t->GetEntries();
-  float currentProc=1,procStep=10;
+  long nEntries = t->GetEntries();
+  long nComp    = 0;
+  if(nEntries <= ntpf || ntpf == 0){nComp = nEntries;}
+  else{nComp = ntpf;}
+
+  float currentProc = 1, procStep = 10;
   //int tst=0;
-  for(long i=0;i<nEntries;i++){
+  for(long i = 0; i < nComp; i++){
     //if( float(i+1)/nEntries*100 > 51) continue;
-    if(currentEv>nTotal && nTotal>0) continue;
     t->GetEntry(i);
-    if( float(i+1)/nEntries*100 > currentProc){
+    if( float(i+1)/nComp*100 >= currentProc){
       cout<<"at tree entry\t"<<i<<"\t"<< float(i+1)/nEntries*100<<" %"<<endl;
-      currentProc+=procStep;
+      currentProc += procStep;
     }
 
     currentEv += evNr - prevEv;
@@ -134,23 +132,26 @@ void ProcessOne(string fnm){
     // std::cin.ignore();
 
     if(trackstatus==0)
-      E=kinE;
+      E = kinE;
     else
-      E=Edeposit;
+      E = Edeposit;
 
     if( E < 0.1 ) continue;
 
-    nEv = processedEv + evNr;
-    tID = track;
-    pID = parent;
+    nEv   = processedEv + evNr;
+    tID   = track;
+    pID   = parent;
     pdgID = pdg;
-    vID = volume;
-    x = xd;
-    y = yd;
-    z = zd;
-    xO = xd0;
-    yO = yd0;
-    zO = zd0;
+    vID   = volume;
+    x     = xd;
+    y     = yd;
+    z     = zd;
+    xO    = xd0;
+    yO    = yd0;
+    zO    = zd0;
+    px    = pxd;
+    py    = pyd;
+    pz    = pzd;
 
     neil = radDmg.getNEIL(pdgID,E,0);
     mrem = radDmg.getMREM(pdgID,E,0);

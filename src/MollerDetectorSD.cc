@@ -171,35 +171,11 @@ G4bool MollerDetectorSD::ProcessHits(G4Step* aStep, G4TouchableHistory*)
   newHit->SetParentID(parentID);
   newHit->SetPDG(pdgID);
   newHit->SetTrackStatus(trackstatusID);
-  /*
-     G4cout<<"Hit values in ProcessHits:"<<G4endl;
 
-     G4cout<<"particle, volume, trackID, edep"<<G4endl;
-     G4cout<<particle<<", "<<volume<<", "<<trackID<<", "<<edep<<G4endl;
-
-
-<<<<<<< HEAD
-    
-    //G4cout<<"worldPos, vertexPos, momentum, kineE, vertexMomentum, kineE0, scat_ang, process, particle, ion, partType, volume, trackID, edep"<<G4endl;
-    //G4cout<<worldPos<<", "<<vertexPos<<", "<<momentum<<", "<<kineE<<", "<<vertexMomentum<<", "<<kineE0<<", "<<scat_ang<<", "<<process<<", "<<particle<<", "<<ion<<", "<<partType<<", "<<volume<<", "<<trackID<<", "<<edep<<G4endl;
-    //G4cout<<worldPos[0]<<", "<<worldPos[1]<<", "<<worldPos[2]<<", "<<vertexPos[0]<<", "<<vertexPos[1]<<", "<<vertexPos[2]<<", "<<momentum[0]<<", "<<momentum[1]<<", "<<momentum[2]<<", "<<kineE<<", "<<vertexMomentum[0]<<", "<<vertexMomentum[1]<<", "<<vertexMomentum[2]<<", "<<kineE0<<", "<<scat_ang<<", "<<process<<", "<<particle<<", "<<ion<<", "<<partType<<", "<<volume<<", "<<trackID<<G4endl;
-    
-    G4cout<<G4endl;
-    */
-	if (!(volume == 1006 && edep < 30)){
-  	hitsCollection->insert( newHit );}
+  if (!(volume == 1006 && edep < 30)){
+    hitsCollection->insert( newHit );
+  }
   
-=======
-     //G4cout<<"worldPos, vertexPos, momentum, kineE, vertexMomentum, kineE0, scat_ang, process, particle, ion, partType, volume, trackID, edep"<<G4endl;
-     //G4cout<<worldPos<<", "<<vertexPos<<", "<<momentum<<", "<<kineE<<", "<<vertexMomentum<<", "<<kineE0<<", "<<scat_ang<<", "<<process<<", "<<particle<<", "<<ion<<", "<<partType<<", "<<volume<<", "<<trackID<<", "<<edep<<G4endl;
-     //G4cout<<worldPos[0]<<", "<<worldPos[1]<<", "<<worldPos[2]<<", "<<vertexPos[0]<<", "<<vertexPos[1]<<", "<<vertexPos[2]<<", "<<momentum[0]<<", "<<momentum[1]<<", "<<momentum[2]<<", "<<kineE<<", "<<vertexMomentum[0]<<", "<<vertexMomentum[1]<<", "<<vertexMomentum[2]<<", "<<kineE0<<", "<<scat_ang<<", "<<process<<", "<<particle<<", "<<ion<<", "<<partType<<", "<<volume<<", "<<trackID<<G4endl;
-
-     G4cout<<G4endl;
-  */
-
-  hitsCollection->insert( newHit );
-
->>>>>>> 36b1b41667d34f8624d580d25a90b36d5f94bcd6
   return true;
 }
 

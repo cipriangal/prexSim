@@ -41,9 +41,9 @@
     <constant name="PI" value="1.*pi"/>
 
     <!-- World Volume -->
-    <constant name="width_mother" value="10000.0"/>
-    <constant name="height_mother" value="10000.0"/>
-    <constant name="length_mother" value="10000.0"/>
+    <constant name="width_mother" value="20000.0"/>
+    <constant name="height_mother" value="20000.0"/>
+    <constant name="length_mother" value="20000.0"/>
 
     <!-- reference everything to this -->
     <constant name="prex_target_center" value="-105.3"/>
@@ -52,8 +52,8 @@
 
     <!-- Detector dimensions  -->
     <constant name="det_thick" value="1"/>
-    <constant name="det_inner_r" value="length_mother/2+prex_target_center-det_thick"/>  <!-- as large as it can be... -->
-    <constant name="det_outer_r" value="length_mother/2+prex_target_center"/>
+    <constant name="det_inner_r" value="length_mother/2-det_thick"/>
+    <constant name="det_outer_r" value="length_mother/2"/>
 
     <!-- Beam-line Cylindical Detector dimensions  -->
     <constant name="beam_cyl_det_thick" value="0.1"/>
@@ -408,10 +408,10 @@
     <constant name="center_cyldump" value="radius_of_cylwall+length_dump/2+thick_cylwall"/>
 
     <constant name="length_dump_hole" value="length_dump"/>
-    <constant name="width_dump_hole" value="212.816"/>
-    <constant name="height_dump_hole" value="299.876"/>
+    <constant name="width_dump_hole" value="274.32"/>
+    <constant name="height_dump_hole" value="442"/>
     <constant name="dump_hole_z_center" value="center_dump-1.001*(length_dump-length_dump_hole)/2"/>
-    <constant name="dump_hole_y_center" value="-43.531"/>
+    <constant name="dump_hole_y_center" value="-83.82"/>
 
     <constant name="thick_dump_ss_enc" value="11.46"/>
     <constant name="dump_ss_enc_center" value="center_dump-length_dump/2-thick_wall+5."/>
@@ -2892,6 +2892,7 @@
         <rotationref ref="scRot_8"/>
       </physvol>
 
+      <!--
       <physvol name="sphere_det_1">
         <volumeref ref="sDet_1_logic"/>
         <positionref ref="sDet_1_pos"/>
@@ -2902,17 +2903,18 @@
         <positionref ref="cDet_1_pos"/>
         <rotationref ref="scRot_1"/>
       </physvol>
-      <!-- <physvol name="cyl_det_2"> -->
-      <!--   <volumeref ref="cDet_2_logic"/> -->
-      <!--   <positionref ref="cDet_1_pos"/> -->
-      <!--   <rotationref ref="scRot_1"/> -->
-      <!-- </physvol> -->
+      <physvol name="cyl_det_2">
+         <volumeref ref="cDet_2_logic"/>
+         <positionref ref="cDet_1_pos"/>
+         <rotationref ref="scRot_1"/>
+      </physvol>
 
       <physvol name="cyl_det_3">
         <volumeref ref="cDet_3_logic"/>
         <positionref ref="cDet_1_pos"/>
         <rotationref ref="scRot_1"/>
       </physvol>
+      -->
 
       <physvol name="dsk_dDet_us">
         <volumeref ref="dDet_us_logic"/>
@@ -2968,11 +2970,16 @@
         <positionref ref="dDet_beamline_pos_1"/>
       </physvol>
 	
-		<physvol>
-			<file name="geometry/subCollimator.gdml"/>
-			<position name="collimator_region" unit="cm" x="0" y="height_w_coll_jacket_topExtension/2" 
-				z="center_cw70_coll+length_w_coll_jacket/2-length_cw70_coll/2"/>
-		</physvol>
+      <physvol>
+	<file name="geometry/subCollimator.gdml"/>
+	<position name="collimator_region" unit="cm" x="0" y="height_w_coll_jacket_topExtension/2" 
+		z="center_cw70_coll+length_w_coll_jacket/2-length_cw70_coll/2"/>
+      </physvol>
+
+		<!-- <physvol>
+			<file name="geometry/subSkyshineV2.gdml"/>
+			<position name="skyshine_loc" unit="cm" x="0" y="127.995" z="-77.4"/>
+		</physvol> -->
 
 		<!--
       <physvol>
@@ -3000,10 +3007,10 @@
         <rotation name="HRSplatform_rot" unit="deg" x="0" y="-12.5" z="0"/>
       </physvol>
 	
-		<physvol>
-			<file name="geometry/subExtendedDump.gdml"/>
-			<position name="extendedDump_pos" unit="cm" x="0" y="0" z="5099.36"/>
-		</physvol>
+      <physvol>
+	<file name="geometry/subExtendedDump.gdml"/>
+	<position name="extendedDump_pos" unit="cm" x="0" y="0" z="5099.36"/>
+      </physvol>
 
     </volume>
   </structure>

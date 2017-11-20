@@ -16,15 +16,23 @@ config=prexII
 #ident=newHRS2layerDumpShield
 #ident=newHRSnoDumpShield
 #ident=collERR
-ident=smallCollBore
+#ident=concSS
+#ident=concSSDumpTunnel
+#ident=ironSS
+#ident=ironSSDumpTunnel
+#ident=shortDumpNoShield
+ident=extDumpNoShield
 
 start_run=0
-end_run=20
+end_run=50
 
-n_events=500000
+n_events=200000
 
 e_cut=30
 
 uva_id=ajz3ee
 
-subassemblies=TargetChamber,CollShields,BeamPipe,DumpShield,HRSplatform,CollimatorSmallBore
+jlab_id=ajzec
+
+#comma separated, no spaces, correct capitalization is important
+subassemblies=TargetChamber,Collimator,CollShields,BeamPipe,DumpShield,HRSplatform,ExtendedDump,BeamPipe_noDonut,SkyshineV2

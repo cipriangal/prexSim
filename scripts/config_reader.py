@@ -14,6 +14,7 @@ def start_run(): return int(read_file()['start_run'])
 def end_run(): return int(read_file()['end_run'])
 def nr_events(): return int(read_file()['n_events'])
 def uva_id(): return read_file()['uva_id']
+def jlab_id(): return read_file()['jlab_id']
 def e_cut(): return int(read_file()['e_cut'])
 
 def subassems():

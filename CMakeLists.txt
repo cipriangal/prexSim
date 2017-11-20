@@ -63,8 +63,11 @@ add_definitions(-std=c++11)
 add_executable(hallRad hallRadiation.cc ${sources} ${headers})
 target_link_libraries(hallRad ${LINK_LIBRARIES})
 
+add_executable(hallRad_AJZ hallRadiation_AJZ.cc ${sources} ${headers})
+target_link_libraries(hallRad_AJZ ${LINK_LIBRARIES})
+
 add_executable(redTree reduceTree.cc ${sources} ${headers})
 target_link_libraries(redTree ${LINK_LIBRARIES})
 
-add_executable(drawSource drawSource.cc ${sources} ${headers})
-target_link_libraries(drawSource ${LINK_LIBRARIES})
+add_executable(redTree_AJZ reduceTree_AJZ.cc ${sources} ${headers})
+target_link_libraries(redTree_AJZ ${LINK_LIBRARIES})
