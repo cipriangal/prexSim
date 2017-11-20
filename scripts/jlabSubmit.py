@@ -5,22 +5,26 @@ import sys, os, time, tarfile
 def main():
 
     email = "ciprian@jlab.org"
-    ##only crex5, prexII defined for now
+    ##only crex5, prexII, prexI, moller defined for now
+    #configuration = "prexI"
     #configuration = "crex5"
-    configuration = "prexII"
+    #configuration = "prexII"
+    configuration = "moller"
     sourceDir = "/lustre/expphy/work/halla/parity/ciprian/prexSim"
-    outputDir = "/lustre/expphy/volatile/halla/parity/ciprian/farmOut/DSlargeUwater_z45cm"
-    nrEv   = 900000
-    nrStart= 0
-    nrStop = 60
-    identifier = "DSlargeU_4inDonut"
+    outputDir = "/lustre/expphy/volatile/halla/parity/ciprian/farmOut/dump/nakedMoller"
+    nrEv   = 500000
+    nrStart= 20
+    nrStop = 40
+
+    ###format should be _Name
+    identifier = "_fatPipe"
 
     print('Running ' + str(nrEv*(nrStop - nrStart)) + ' events...')
 
-    jobName=configuration + '_' + identifier + '_%03dkEv'%(nrEv/1000)
+    jobName=configuration + identifier + '_%03dkEv'%(nrEv/1000)
 
     ###tar exec+geometry
-    make_tarfile(sourceDir,configuration+"_"+identifier)
+    make_tarfile(sourceDir,configuration+identifier)
 
     for nr in range(nrStart,nrStop): # repeat for nr jobs
         print("Starting job setup for jobID: " + str(nr))
@@ -58,11 +62,19 @@ def createMacFiles(config,outDir,sourceDir,nrEv,jobNr,identifier):
     if config=="crex5":
         f.write("/gun/energy 2. GeV\n")
         f.write("/moller/field/setConfiguration crex\n")
-        f.write("/moller/det/setDetectorFileName geometry/crex5_"+identifier+".gdml\n")
+        f.write("/moller/det/setDetectorFileName geometry/crex5"+identifier+".gdml\n")
     elif config=="prexII":
     	f.write("/gun/energy 1. GeV\n")
         f.write("/moller/field/setConfiguration prex2\n")
-        f.write("/moller/det/setDetectorFileName geometry/prexII_"+identifier+".gdml\n")
+        f.write("/moller/det/setDetectorFileName geometry/prexII"+identifier+".gdml\n")
+    elif config=="prexI":
+    	f.write("/gun/energy 1. GeV\n")
+        f.write("/moller/field/setConfiguration prex1\n")
+        f.write("/moller/det/setDetectorFileName geometry/prexI"+identifier+".gdml\n")
+    elif config=="moller":
+    	f.write("/gun/energy 11. GeV\n")
+        f.write("/moller/field/setConfiguration moller\n")
+        f.write("/moller/det/setDetectorFileName geometry/moller"+identifier+".gdml\n")
 
     f.write("/moller/field/useQ1fringeField false\n")
 
@@ -125,7 +137,9 @@ def make_tarfile(sourceDir,config):
     tar.add(sourceDir+"/geometry/subQ1HosesCylRedesign.gdml",arcname="geometry/subQ1HosesCylRedesign.gdml")
     tar.add(sourceDir+"/geometry/subTargetChamber.gdml",arcname="geometry/subTargetChamber.gdml")
     tar.add(sourceDir+"/geometry/subCollShields.gdml",arcname="geometry/subCollShields.gdml")
+    tar.add(sourceDir+"/geometry/prex1BeampipeV2.gdml",arcname="geometry/prex1BeampipeV2.gdml")
     tar.add(sourceDir+"/geometry/subBeamPipe.gdml",arcname="geometry/subBeamPipe.gdml")
+    tar.add(sourceDir+"/geometry/subBeamPipe_steelTelePipe.gdml",arcname="geometry/subBeamPipe_steelTelePipe.gdml")
     tar.add(sourceDir+"/geometry/subBeamPipe_fat.gdml",arcname="geometry/subBeamPipe_fat.gdml")
     tar.add(sourceDir+"/geometry/subBeamPipe_4inDonut.gdml",arcname="geometry/subBeamPipe_4inDonut.gdml")
     tar.add(sourceDir+"/geometry/subBeamPipe_noDonut.gdml",arcname="geometry/subBeamPipe_noDonut.gdml")
