@@ -2957,13 +2957,8 @@
       </physvol>
 
       <physvol>
-        <file name="geometry/subBeamPipe.gdml"/>
+        <file name="geometry/subBeamPipe_4inDonut.gdml"/>
         <positionref ref="dDet_beamline_pos_1"/>
-      </physvol>
-
-      <physvol>
-        <file name="geometry/subDumpShield_cover.gdml"/>
-        <position name="dumpShield_posRel" unit="cm" x="0" y="-115" z="2450"/>
       </physvol>
 
       <!-- <physvol> -->
