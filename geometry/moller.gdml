@@ -132,12 +132,12 @@
 
       <physvol name="target">
         <volumeref ref="target_logic"/>
-        <position unit="cm" name="targ_center" x="0" y="0" z="0"/>
+        <position unit="cm" name="targ_center" x="0" y="0" z="-300"/>
       </physvol>
 
       <physvol name="strayKiller">
         <volumeref ref="strayKiller_logic"/>
-        <position unit="cm" name="targ_center" x="0" y="0" z="0"/>
+        <position unit="cm" name="targ_center" x="0" y="0" z="-300"/>
       </physvol>
 
       <physvol name="cylwall">
