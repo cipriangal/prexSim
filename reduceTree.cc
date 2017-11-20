@@ -35,7 +35,7 @@ radDamage radDmg;
 int main(int argc, char **argv){
   if(argc<4){
     cout<<"Usage: build/redTree <inputFile name: either rootfile or list of rootfiles>  <limit number of events; 0==all> <list of detector IDs>\n"
-        <<"\tfor example: build/redTree o_SimName.root 1001 1002 1003\n";
+        <<"\tfor example: build/redTree o_SimName.root 1000000 1001 1002 1003\n";
     return 1;
   }
 
@@ -54,14 +54,14 @@ int main(int argc, char **argv){
 
   Initialize();
   if ( finNm.find(".root") < finNm.size() ){
-    if(processedEv<nTotal && nTotal>0)
+    if(nTotal==0 || (processedEv<nTotal && nTotal>0))
       ProcessOne(finNm);
   }else{
     ifstream ifile(finNm.c_str());
     string data;
     while(ifile>>data){
       cout<<" processing: "<<data<<endl;
-      if(processedEv<nTotal && nTotal>0)
+      if(nTotal==0 || (processedEv<nTotal && nTotal>0))
 	ProcessOne(data);
     }
   }
@@ -119,7 +119,6 @@ void ProcessOne(string fnm){
 
     currentEv += evNr - prevEv;
     prevEv = evNr;
-
     //electrons directly from the gun
     //if(zO== -17720) continue;
     //if(zO>26000) continue;
@@ -156,8 +155,7 @@ void ProcessOne(string fnm){
     // std::cin.ignore();
     tout->Fill();
   }
-
-  processedEv += ceil(prevEv/1000.)*1000;
+  processedEv += ceil((prevEv-1)/1000.)*1000;
   prevEv = 0;
   fin->Close();
   delete fin;
