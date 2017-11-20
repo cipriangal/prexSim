@@ -87,27 +87,27 @@
 
     <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="det04_solid"
           rmin="0"
-          rmax="45.62"
+          rmax="45.3"
           z="0.1"/>
 
     <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="det05_solid"
           rmin="0"
-          rmax="29.8"
+          rmax="45.3"
           z="0.1"/>
 
     <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="det06_solid"
           rmin="0"
-          rmax="29.8"
+          rmax="45.3"
           z="0.1"/>
 
     <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="det07_solid"
           rmin="0"
-          rmax="29.8"
+          rmax="45.3"
           z="0.1"/>
 
     <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="det08_solid"
           rmin="0"
-          rmax="29.8"
+          rmax="45.3"
           z="0.1"/>
 
     <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="det09_solid"
