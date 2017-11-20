@@ -10,13 +10,16 @@
     <position name="det02_posRel" unit="cm" x="0" y="0" z="111.004"/>
     <position name="det03_posRel" unit="cm" x="0" y="0" z="350.740"/>
     <position name="det04_posRel" unit="cm" x="0" y="0" z="2400"/>
-    <position name="det05_posRel" unit="cm" x="0" y="0" z="2967"/>
-    <position name="det06_posRel" unit="cm" x="0" y="0" z="2689.385"/>
-    <position name="det07_posRel" unit="cm" x="0" y="0" z="2691.985"/>
-    <position name="det08_posRel" unit="cm" x="0" y="0" z="2912"/>
+    <position name="det05_posRel" unit="cm" x="0" y="0" z="2789.385"/>
+    <position name="det06_posRel" unit="cm" x="0" y="0" z="2791.985"/>
+    <position name="det07_posRel" unit="cm" x="0" y="0" z="2912"/>
+    <position name="det08_posRel" unit="cm" x="0" y="0" z="3007"/>
+    <position name="det09_posRel" unit="cm" x="0" y="0" z="3030"/>
+    <position name="det10_posRel" unit="cm" x="0" y="-42" z="3108"/>
     <position name="gateValve_cylinder_box_posRel" unit="cm" x="0" y="-8" z="0"/>
     <position name="gateValve_posRel" unit="cm" x="0" y="0" z="163.784"/>
     <position name="dumpDoor_posRel" unit="cm" x="0" y="42" z="0"/>
+    <position name="dumpDet_pos" unit="cm" x="0" y="0" z="2490"/>
     <position name="usDet_dumpShield_pos" unit="cm" x="0" y="0" z="2250"/>
     <position name="dsDet_dumpShield_pos" unit="cm" x="0" y="0" z="2380"/>
     <rotation name="x90" unit="deg" x="90" y="0" z="0"/>
@@ -84,28 +87,35 @@
 
     <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="det04_solid"
           rmin="0"
-          rmax="45.62"
+          rmax="45.3"
           z="0.1"/>
 
     <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="det05_solid"
           rmin="0"
-          rmax="45.62"
+          rmax="45.3"
           z="0.1"/>
 
     <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="det06_solid"
           rmin="0"
-          rmax="29.8"
+          rmax="45.3"
           z="0.1"/>
 
     <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="det07_solid"
           rmin="0"
-          rmax="29.8"
+          rmax="45.3"
           z="0.1"/>
 
     <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="det08_solid"
           rmin="0"
-          rmax="29.8"
+          rmax="45.3"
           z="0.1"/>
+
+    <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="det09_solid"
+          rmin="0"
+          rmax="45.62"
+          z="0.1"/>
+
+    <box lunit="cm" name="det10_solid" x="208" y="292" z="0.1"/>
 
     <polycone aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="beamPipe_solid1">
       <zplane rmin="4.102" rmax="4.1275" z="-1"/>
@@ -215,7 +225,6 @@
       <positionref ref="center_posRel"/>
     </subtraction>
 
-    <!-- FIXME temp vacuum dets to look at radiation. if you don't know what this is about it means you can probably just delete it -->
     <box lunit="cm" name="usDet_dumpShield_solid0" x="370" y="500" z="0.1"/>
     <subtraction name ="usDet_dumpShield_solid1">
       <first ref="usDet_dumpShield_solid0"/>
@@ -227,6 +236,13 @@
       <first ref="dsDet_dumpShield_solid0"/>
       <second ref="beamPipe_solid2"/>
       <positionref ref="dsDet_dumpShield_pos"/>
+    </subtraction>
+
+    <box lunit="cm" name="dumpDet_solid0" x="350" y="500" z="0.1"/>
+    <subtraction name ="dumpDet_solid1">
+      <first ref="dumpDet_solid0"/>
+      <second ref="beamPipe_solid2"/>
+      <positionref ref="dumpDet_pos"/>
     </subtraction>
 
     <!-- Union of all objects so that there is a space to physically add them -->
@@ -332,7 +348,6 @@
       <positionref ref="dumpIC_beamR_pos"/>
       <rotationref ref="x90"/>
     </union>
-    <!-- FIXME -->
     <union name ="bP2worldUnion20">
       <first ref="bP2worldUnion19"/>
       <second ref="usDet_dumpShield_solid1"/>
@@ -342,6 +357,21 @@
       <first ref="bP2worldUnion20"/>
       <second ref="dsDet_dumpShield_solid1"/>
       <positionref ref="dsDet_dumpShield_pos"/>
+    </union>
+    <union name ="bP2worldUnion22">
+      <first ref="bP2worldUnion21"/>
+      <second ref="dumpDet_solid1"/>
+      <positionref ref="dumpDet_pos"/>
+    </union>
+    <union name ="bP2worldUnion23">
+      <first ref="bP2worldUnion22"/>
+      <second ref="det09_solid"/>
+      <positionref ref="det09_posRel"/>
+    </union>
+    <union name ="bP2worldUnion24">
+      <first ref="bP2worldUnion23"/>
+      <second ref="det10_solid"/>
+      <positionref ref="det10_posRel"/>
     </union>
 
   </solids>
@@ -396,6 +426,18 @@
       <auxiliary auxtype="SensDet" auxvalue="volumeN2208"/>
     </volume>
 
+    <volume name="det09_logic">
+      <materialref ref="Vacuum"/>
+      <solidref ref="det09_solid"/>
+      <auxiliary auxtype="SensDet" auxvalue="volumeN2209"/>
+    </volume>
+
+    <volume name="det10_logic">
+      <materialref ref="Vacuum"/>
+      <solidref ref="det10_solid"/>
+      <auxiliary auxtype="SensDet" auxvalue="volumeN2210"/>
+    </volume>
+
     <volume name="beamPipe_logic1">
       <materialref ref="Aluminum"/>
       <solidref ref="beamPipe_solid1"/>
@@ -443,21 +485,27 @@
       <auxiliary auxtype="SensDet" auxvalue="volumeN11001"/>
     </volume>
 
-    <!-- FIXME -->
     <volume name="usDet_dumpShield_logic">
       <materialref ref="Vacuum"/>
       <solidref ref="usDet_dumpShield_solid1"/>
       <auxiliary auxtype="SensDet" auxvalue="volumeN9001"/>
     </volume>
+
     <volume name="dsDet_dumpShield_logic">
       <materialref ref="Vacuum"/>
       <solidref ref="dsDet_dumpShield_solid1"/>
       <auxiliary auxtype="SensDet" auxvalue="volumeN9002"/>
     </volume>
 
-    <volume name="beamPipeP2fat">
+    <volume name="dumpDet_logic">
       <materialref ref="Vacuum"/>
-      <solidref ref="bP2worldUnion21"/>
+      <solidref ref="dumpDet_solid1"/>
+      <auxiliary auxtype="SensDet" auxvalue="volumeN9003"/>
+    </volume>
+
+    <volume name="beamPipeP2_fatP2end">
+      <materialref ref="Vacuum"/>
+      <solidref ref="bP2worldUnion24"/>
 
       <physvol name="det01_phys">
         <volumeref ref="det01_logic"/>
@@ -497,6 +545,16 @@
       <physvol name="det08_phys">
         <volumeref ref="det08_logic"/>
         <positionref ref="det08_posRel"/>
+      </physvol>
+
+      <physvol name="det09_phys">
+        <volumeref ref="det09_logic"/>
+        <positionref ref="det09_posRel"/>
+      </physvol>
+
+      <physvol name="det10_phys">
+        <volumeref ref="det10_logic"/>
+        <positionref ref="det10_posRel"/>
       </physvol>
 
       <physvol name="beamPipe_phys1">
@@ -571,6 +629,11 @@
         <positionref ref="dsDet_dumpShield_pos"/>
       </physvol>
 
+      <physvol name="dumpDet_phys">
+        <volumeref ref="dumpDet_logic"/>
+        <positionref ref="dumpDet_pos"/>
+      </physvol>
+
       <!-- ~~~For side by side comparisons only~~~ -->
       <!-- <physvol> -->
       <!--   <file name="geometry/prex1BeampipeV2.gdml"/> -->
@@ -580,8 +643,8 @@
     </volume>
   </structure>
 
-  <setup name="beamPipe_prex2fat" version="1.0">
-    <world ref="beamPipeP2fat"/>
+  <setup name="beamPipe_P2_fatP2end" version="1.0">
+    <world ref="beamPipeP2_fatP2end"/>
   </setup>
 
 </gdml>

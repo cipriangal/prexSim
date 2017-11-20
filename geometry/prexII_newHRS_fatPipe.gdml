@@ -2959,7 +2959,7 @@
       </physvol>
 
       <physvol>
-        <file name="geometry/subBeamPipe_fat.gdml"/>
+        <file name="geometry/subBeamPipe_fatP2end.gdml"/>
         <positionref ref="dDet_beamline_pos_1"/>
       </physvol>
 

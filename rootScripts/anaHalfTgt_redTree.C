@@ -1,9 +1,10 @@
 void anaHalfTgt_redTree(){
 
-  anaHalfTgt_redTreeOne("../output/dump_crex5_newHRS_newDet/file_redTree.root");
-  anaHalfTgt_redTreeOne("../output/dump_prexII_fullLead_4inDonut/file_redTree.root");
-  anaHalfTgt_redTreeOne("../output/dump_prexII_halfLead/file_redTree.root");
-  anaHalfTgt_redTreeOne("../output/dump_prexII_newHRS_newDet/file_redTree.root");
+  // anaHalfTgt_redTreeOne("../output/dump_crex5_newHRS_newDet/file_redTree.root");
+  // anaHalfTgt_redTreeOne("../output/dump_prexII_fullLead_4inDonut/file_redTree.root");
+  // anaHalfTgt_redTreeOne("../output/dump_prexII_halfLead/file_redTree.root");
+  //anaHalfTgt_redTreeOne("../output/dump_prexII_newHRS_newDet/file_redTree.root");
+  anaHalfTgt_redTreeOne("../output/dump_prexII_0p75Tgt/file1_redTree.root");
 }
 void anaHalfTgt_redTreeOne(string fnm){
   cout<<"opening "<<fnm<<endl;
@@ -38,8 +39,8 @@ void anaHalfTgt_redTreeOne(string fnm){
 
   TH1D *h4[8];
   for(int i=0;i<8;i++){
-    h4[i]=new TH1D(Form("h4_%d",i),Form("E weighted radial distribution for det %d; r[cm]",2201+i),600,0,300);
-    t->Project(Form("h4_%d",i),"sqrt(x*x+y*y)",Form("E*(volID==%d && trackID==1 && parentID==0 && pdgID==11)",2201+i));
+    h4[i]=new TH1D(Form("h4_%d",i),Form("radial distribution for e^#pm and #gamma det %d (E>100MeV); r[cm]",2201+i),600,0,300);
+    t->Project(Form("h4_%d",i),"sqrt(x*x+y*y)",Form("E>100 && volID==%d && trackID==1 && parentID==0 && (abs(pdgID)==11 || abs(pdgID)==22)",2201+i));
   }
 
   fout->cd();
