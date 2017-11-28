@@ -144,6 +144,9 @@ void ProcessOne(string fnm){
     x = xd;
     y = yd;
     z = zd;
+    px = pxd;
+    py = pyd;
+    pz = pzd;
     xO = xd0;
     yO = yd0;
     zO = zd0;
