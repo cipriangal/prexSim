@@ -158,9 +158,24 @@
       </physvol>
 
       <physvol>
-        <file name="geometry/subBeamPipe.gdml"/>
+        <file name="geometry/subBeamPipeMoller_noDonut.gdml"/>
         <position name="subBeamPipe_pos" unit="cm" x="0." y="0." z="132.3"/>
       </physvol>
+
+      <physvol>
+        <file name="geometry/mollerUScollAndCoils.gdml"/>
+        <position name="mollerUS_pos" unit="cm" x="0." y="0." z="400"/>
+      </physvol>
+
+      <physvol>
+        <file name="geometry/mollerDScollAndCoils.gdml"/>
+        <position name="mollerDS_pos" unit="cm" x="0." y="0." z="1036.657"/>
+      </physvol>
+
+      <!-- <physvol> -->
+      <!--   <file name="geometry/mollerDet.gdml"/> -->
+      <!--   <position name="mollerDet_pos" unit="cm" x="0." y="0." z="2550"/> -->
+      <!-- </physvol> -->
 
     </volume>
   </structure>
