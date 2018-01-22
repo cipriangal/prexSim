@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+
+<!DOCTYPE gdml [
+<!ENTITY materials SYSTEM "materials.xml">
+]>
+
+<gdml xmlns:gdml="http://cern.ch/2001/Schemas/GDML"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="./schema/gdml.xsd">
+
+	<define>
+		<constant name="mid_shield_width" value="45.811"/>
+		<constant name="mid_shield_height" value="30"/>
+		<constant name="bot_z" value="45"/>
+		<constant name="top_z" value="34.837"/>
+		<constant name="W_y" value="6"/>
+		<constant name="W_z" value="30.2"/>
+		<constant name="back_x" value="45"/>
+		<constant name="back_y" value="17"/>
+		<constant name="back_z" value="10"/>
+		<constant name="side_width" value="30"/>
+		<constant name="side_height" value="70"/>
+		<constant name="left_z" value="60.339"/>
+		<constant name="right_z" value="75.832"/>
+
+		<constant name="bot_z_pos" value="-21.883"/>
+		<constant name="front_abs_y_pos" value="30.007"/>
+		<constant name="top_z_pos" value="-14.875"/>
+		<constant name="W_y_pos" value="18.007"/>
+		<constant name="W_z_pos" value="-12.556"/>
+		<constant name="back_y_pos" value="23.507"/>
+		<constant name="back_z_pos" value="39.383"/>
+		<constant name="side_abs_x_pos" value="40.446"/>
+		<constant name="side_abs_y_pos" value="1.795"/>
+		<constant name="left_z_pos" value="2.601"/>
+		<constant name="right_z_pos" value="-5.146"/>
+
+		<constant name="W_cut_x" value="mid_shield_width+0.01"/>
+		<constant name="W_cut_y" value="W_y+0.01"/>
+		<constant name="W_cut_z" value="W_z+0.01"/>
+
+		<position name="pos_center" unit="cm" x="0" y="0" z="0"/>
+		<position name="bot_pos" unit="cm" x="0" y="-front_abs_y_pos" z="bot_z_pos"/>
+		<position name="top_pos" unit="cm" x="0" y="front_abs_y_pos" z="top_z_pos"/>
+		<position name="W_pos" unit="cm" x="0" y="W_y_pos" z="W_z_pos"/>
+		<position name="back_pos" unit="cm" x="0" y="back_y_pos" z="back_z_pos"/>
+		<position name="left_pos" unit="cm" x="side_abs_x_pos" y="side_abs_y_pos" z="left_z_pos"/>
+		<position name="right_pos" unit="cm" x="-side_abs_x_pos" y="side_abs_y_pos" z="right_z_pos"/>
+		
+		<position name="W_wrt_top" unit="cm" x="0" y="-front_abs_y_pos+W_y_pos" z="-top_z_pos+W_z_pos"/>
+
+		<position name="top_wrt_bot" unit="cm" x="0" y="2*front_abs_y_pos" z="top_z_pos - bot_z_pos"/>
+		<position name="W_wrt_bot" unit="cm" x="0" y="W_y_pos+front_abs_y_pos" z="W_z_pos - bot_z_pos"/>
+		<position name="back_wrt_bot" unit="cm" x="0" y="back_y_pos+front_abs_y_pos" z="back_z_pos - bot_z_pos"/>
+		<position name="left_wrt_bot" unit="cm" x="-side_abs_x_pos" y="side_abs_y_pos+front_abs_y_pos" z="left_z_pos - bot_z_pos"/>
+		<position name="right_wrt_bot" unit="cm" x="side_abs_x_pos" y="side_abs_y_pos+front_abs_y_pos" z="right_z_pos - bot_z_pos"/>
+		
+		<constant name="cen_tb_z_pos" value="0.5*(bot_z_pos-0.5*bot_z+top_z_pos+0.5*top_z)"/>
+		<position name="cen_tb" unit="cm" x="0" y="0" z="cen_tb_z_pos"/>
+		<position name="W_wrt_cen_tb" unit="cm" x="0" y="W_y_pos" z="W_z_pos - cen_tb_z_pos"/>
+		<position name="back_wrt_cen_tb" unit="cm" x="0" y="back_y_pos+front_abs_y_pos" z="back_z_pos+cen_tb_z_pos"/>
+		<constant name="cen_tbWb_z_pos" value="0.5*(back_z_pos+0.5*back_z+bot_z_pos-0.5*bot_z)"/>
+		<position name="cen_tbWb" unit="cm" x="0" y="0" z="cen_tbWb_z_pos"/>
+		
+		<position name="right_wrt_left" unit="cm" x="2*side_abs_x_pos" y="0" z="right_z_pos - left_z_pos"/>
+		<position name="curtains_wrt_bot" unit="cm" x="-side_abs_x_pos" y="side_abs_y_pos+front_abs_y_pos" z="left_z_pos - bot_z_pos"/>
+	</define>
+
+	&materials;
+
+	<solids>
+    	<box lunit="cm" name="bot_solid" x="mid_shield_width" y="mid_shield_height" z="bot_z"/>
+		<box lunit="cm" name="top_solid_no_cut" x="mid_shield_width" y="mid_shield_height" z="top_z"/>
+		<box lunit="cm" name="W_cut" x="W_cut_x" y="W_cut_y" z="W_cut_z"/>
+		<subtraction name="top_solid">
+			<first ref="top_solid_no_cut"/>
+			<second ref="W_cut"/>
+			<positionref ref="W_wrt_top"/>
+		</subtraction>
+		<box lunit="cm" name="back_solid" x="back_x" y="back_y" z="back_z"/>
+		<box lunit="cm" name="left_solid" x="side_width" y="side_height" z="left_z"/>
+		<box lunit="cm" name="right_solid" x="side_width" y="side_height" z="right_z"/>
+
+
+		<union name="top_and_bottom">
+			<first ref="bot_solid"/>
+			<second ref="top_solid"/>
+			<positionref ref="top_wrt_bot"/>
+		</union>
+		<union name="middle_shields">
+			<first ref="top_and_bottom"/>
+			<second ref="back_solid"/>
+			<positionref ref="back_wrt_bot"/>
+		</union>
+		<union name="curtains">
+			<first ref="left_solid"/>
+			<second ref="right_solid"/>
+			<positionref ref="right_wrt_left"/>
+		</union>
+		<union name="all_shields">
+			<first ref="middle_shields"/>
+			<second ref="curtains"/>
+			<positionref ref="curtains_wrt_bot"/>
+		</union>
+	</solids>
+
+	<structure>
+		<volume name="bot_logic">
+			<materialref ref="Shield"/>
+			<solidref ref="bot_solid"/>
+		</volume>
+		<volume name="top_logic">
+			<materialref ref="Shield"/>
+			<solidref ref="top_solid"/>
+		</volume>
+		<volume name="back_logic">
+			<materialref ref="Shield"/>
+			<solidref ref="back_solid"/>
+		</volume>
+		<volume name="left_logic">
+			<materialref ref="Shield"/>
+			<solidref ref="left_solid"/>
+		</volume>
+		<volume name="right_logic">
+			<materialref ref="Shield"/>
+			<solidref ref="right_solid"/>
+		</volume>
+
+		<volume name="logicCollShields">
+			<materialref ref="Vacuum"/>
+			<solidref ref="all_shields"/>
+			
+			<physvol name="bot_phys">
+				<volumeref ref="bot_logic"/>
+				<positionref ref="pos_center"/>
+			</physvol>
+			<physvol name="top_phys">
+				<volumeref ref="top_logic"/>
+				<positionref ref="top_wrt_bot"/>
+			</physvol>
+			<physvol name="back_phys">
+				<volumeref ref="back_logic"/>
+				<positionref ref="back_wrt_bot"/>
+			</physvol>
+			<physvol name="left_phys">
+				<volumeref ref="left_logic"/>
+				<positionref ref="left_wrt_bot"/>
+			</physvol>
+			<physvol name="right_phys">
+				<volumeref ref="right_logic"/>
+				<positionref ref="right_wrt_bot"/>
+			</physvol>
+		</volume>
+	</structure>
+
+	<setup name="Coll_Shields" version="1.0">
+		<world ref="logicCollShields"/>
+	</setup>
+
+</gdml>

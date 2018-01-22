@@ -17,6 +17,7 @@ def main():
     nrStop = cr.end_run()
     identifier = cr.identifier()
 
+    print('Starting setup for ' + configuration + ' simulation with geometry ' + identifier + '...')
     print('Running ' + str(nrEv*(nrStop - nrStart)) + ' events...')
 
     jobName=configuration + '_' + identifier + '_%03dkEv'%(nrEv/1000)
