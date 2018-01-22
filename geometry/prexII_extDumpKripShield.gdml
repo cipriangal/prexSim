@@ -408,7 +408,7 @@
     <constant name="center_cyldump" value="radius_of_cylwall+length_dump/2+thick_cylwall"/>
 
     <constant name="length_dump_hole" value="length_dump"/>
-    <constant name="width_dump_hole" value="213.5"/>
+    <constant name="width_dump_hole" value="274.32"/>
     <constant name="height_dump_hole" value="442"/>
     <constant name="dump_hole_z_center" value="center_dump-1.001*(length_dump-length_dump_hole)/2"/>
     <constant name="dump_hole_y_center" value="-83.82"/>
@@ -2892,6 +2892,7 @@
         <rotationref ref="scRot_8"/>
       </physvol>
 
+      <!--
       <physvol name="sphere_det_1">
         <volumeref ref="sDet_1_logic"/>
         <positionref ref="sDet_1_pos"/>
@@ -2902,17 +2903,18 @@
         <positionref ref="cDet_1_pos"/>
         <rotationref ref="scRot_1"/>
       </physvol>
-      <!-- <physvol name="cyl_det_2"> -->
-      <!--   <volumeref ref="cDet_2_logic"/> -->
-      <!--   <positionref ref="cDet_1_pos"/> -->
-      <!--   <rotationref ref="scRot_1"/> -->
-      <!-- </physvol> -->
+      <physvol name="cyl_det_2">
+         <volumeref ref="cDet_2_logic"/>
+         <positionref ref="cDet_1_pos"/>
+         <rotationref ref="scRot_1"/>
+      </physvol>
 
       <physvol name="cyl_det_3">
         <volumeref ref="cDet_3_logic"/>
         <positionref ref="cDet_1_pos"/>
         <rotationref ref="scRot_1"/>
       </physvol>
+      -->
 
       <physvol name="dsk_dDet_us">
         <volumeref ref="dDet_us_logic"/>

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+
+<gdml xmlns:gdml="http://cern.ch/2001/Schemas/GDML"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="./schema/gdml.xsd">
+
+  <define>
+	<!-- Positions are relative to upstr sheild -->
+	<constant name="cm_factor" value="2.54"/>
+	<constant name="length" value="52*cm_factor"/>
+	<constant name="width" value="52*cm_factor"/>
+	<constant name="height" value="26*cm_factor"/>
+	<constant name="spacing" value="12*cm_factor"/>
+
+	<position name="pos_center" unit="cm" x="0" y="0" z="0"/>
+	<position name="pos_dwn_rel" unit="cm" x="0" y="0" z="spacing + length"/>
+  </define>
+
+  <materials>
+    <material Z="1" name="Vacuum" state="gas">
+      <T unit="K" value="2.73"/>
+      <P unit="pascal" value="3e-18"/>
+      <D unit="g/cm3" value="1e-25"/>
+      <atom unit="g/mole" value="1.01"/>
+    </material>
+
+    <material Z="13" name="Shield" state="solid">
+      <T unit="K" value="298"/>
+      <D unit="g/cm3" value="2.699"/>
+      <atom unit="g/mole" value="26.982"/>
+    </material>
+
+    <material Z="13" name="Concrete" state="solid">
+      <T unit="K" value="298"/>
+      <D unit="g/cm3" value="2.699"/>
+      <atom unit="g/mole" value="26.982"/>
+    </material>
+
+    <material Z="13" name="Iron" state="solid">
+      <T unit="K" value="298"/>
+      <D unit="g/cm3" value="2.699"/>
+      <atom unit="g/mole" value="26.982"/>
+    </material>
+  </materials>
+
+  <solids>
+
+	<box lunit="cm" name="shield_ups_solid" x="width" y="height" z="length"/>
+	<box lunit="cm" name="shield_dwn_solid" x="width" y="height" z="length"/>
+	<box lunit="cm" name="world_union0" x="width" y="height" z="length"/>
+	<union name="world_union">
+	  <first ref="world_union0"/>
+	  <second ref="shield_dwn_solid"/>
+	  <positionref ref="pos_dwn_rel"/>
+	</union>
+
+  </solids>
+
+  <structure>
+
+    <volume name="shield_ups_logic">
+      <materialref ref="Iron"/>
+      <solidref ref="shield_ups_solid"/>
+    </volume>
+    <volume name="shield_dwn_logic">
+      <materialref ref="Iron"/>
+      <solidref ref="shield_dwn_solid"/>
+    </volume>
+
+    <volume name="skyshineShield">
+      <materialref ref="Vacuum"/>
+      <solidref ref="world_union"/>
+
+      <physvol name="shield_ups_phys">
+        <volumeref ref="shield_ups_logic"/>
+        <positionref ref="pos_center"/>
+      </physvol>
+      <physvol name="shield_dwn_phys">
+	<volumeref ref="shield_dwn_logic"/>
+	<positionref ref="pos_dwn_rel"/>
+      </physvol>
+
+    </volume>
+  </structure>
+
+  <setup name="subSkyshine" version="1.0">
+    <world ref="skyshineShield"/>
+  </setup>
+
+</gdml>
