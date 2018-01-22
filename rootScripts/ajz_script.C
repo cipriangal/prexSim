@@ -317,9 +317,9 @@ void neil_weighted_hit_map(const char* fname, string dim1, string dim2, int vol)
   h1->Draw("colz");
 }
 
-void side_by_side_comp_h1(string sim, string conf1, string conf2, int n_events_k, string meas, string cuts, Int_t nbinsx, Double_t xlo, Double_t xhi){
-  string f1name = "~/farmOut/" + sim + "_" + conf1 + "_" + to_string(n_events_k) + "kEv/" + sim + "_" + conf1 + "_redTree.root";
-  string f2name = "~/farmOut/" + sim + "_" + conf2 + "_" + to_string(n_events_k) + "kEv/" + sim + "_" + conf2 + "_redTree.root";
+void side_by_side_comp_h1(string sim, string conf1, string conf2, int n_events_k1, int n_events_k2, string meas, string cuts, Int_t nbinsx, Double_t xlo, Double_t xhi){
+  string f1name = "~/farmOut/" + sim + "_" + conf1 + "_" + to_string(n_events_k1) + "kEv/" + sim + "_" + conf1 + ".root";
+  string f2name = "~/farmOut/" + sim + "_" + conf2 + "_" + to_string(n_events_k2) + "kEv/" + sim + "_" + conf2 + ".root";
 
   cout<<"File 1: "<<f1name<<"; File 2: "<<f2name<<endl;
 
@@ -341,9 +341,9 @@ void side_by_side_comp_h1(string sim, string conf1, string conf2, int n_events_k
   h2->Draw();
 }
 
-void side_by_side_comp_h2(string sim, string conf1, string conf2, int n_events_k, string meas, string cuts, Int_t nbinsx, Double_t xlow, Double_t xhi, Int_t nbinsy, Double_t ylow, Double_t yhi){
-  string f1name = "~/farmOut/" + sim + "_" + conf1 + "_" + to_string(n_events_k) + "kEv/" + sim + "_" + conf1 + ".root";
-  string f2name = "~/farmOut/" + sim + "_" + conf2 + "_" + to_string(n_events_k) + "kEv/" + sim + "_" + conf2 + ".root";
+void side_by_side_comp_h2(string sim, string conf1, string conf2, int n_events_k1, int n_events_k2, string meas, string cuts, Int_t nbinsx, Double_t xlow, Double_t xhi, Int_t nbinsy, Double_t ylow, Double_t yhi){
+  string f1name = "~/farmOut/" + sim + "_" + conf1 + "_" + to_string(n_events_k1) + "kEv/" + sim + "_" + conf1 + ".root";
+  string f2name = "~/farmOut/" + sim + "_" + conf2 + "_" + to_string(n_events_k2) + "kEv/" + sim + "_" + conf2 + ".root";
 
   cout<<"File 1: "<<f1name<<"; File 2: "<<f2name<<endl;
 
@@ -368,32 +368,40 @@ void side_by_side_comp_h2(string sim, string conf1, string conf2, int n_events_k
 }
 
 void particle_histo_quad(string sim, string conf, int n_events_k, string meas, string cuts, Int_t nbinsx, Double_t xlo, Double_t xhi){
-  TFile *f = new TFile(("~/farmOut/" + sim + "_" + conf + "_" + to_string(n_events_k) + "kEv/" + sim + "_" + conf + "_redTree.root").c_str());
+  TFile *f = new TFile(("~/farmOut/" + sim + "_" + conf + "_" + to_string(n_events_k) + "kEv/" + sim + "_" + conf + ".root").c_str());
   TTree *t = (TTree*)f->Get("t");
 
-  TH1F *h1 = new TH1F("h1", (conf + ": " + cuts + ", all PDGs").c_str(),  nbinsx, xlo, xhi);
-  TH1F* h2 = new TH1F("h2", (conf + ": " + cuts + ", electrons").c_str(), nbinsx, xlo, xhi);
-  TH1F* h3 = new TH1F("h3", (conf + ": " + cuts + ", gammas").c_str(),    nbinsx, xlo, xhi);
-  TH1F* h4 = new TH1F("h4", (conf + ": " + cuts + ", neutrons").c_str(),  nbinsx, xlo, xhi);
+  TH1F *h1 = new TH1F("h1", (conf + ": " + cuts + ", all PDGs").c_str(),      nbinsx, xlo, xhi);
+  TH1F* h2 = new TH1F("h2", (conf + ": " + cuts + ", electrons").c_str(),     nbinsx, xlo, xhi);
+  TH1F* h3 = new TH1F("h3", (conf + ": " + cuts + ", gammas").c_str(),        nbinsx, xlo, xhi);
+  TH1F* h4 = new TH1F("h4", (conf + ": " + cuts + ", neutrons").c_str(),      nbinsx, xlo, xhi);
+  TH1F* h5 = new TH1F("h5", (conf + ": " + cuts + ", targ neutrons").c_str(), nbinsx, xlo, xhi);
+  TH1F* h6 = new TH1F("h6", (conf + ": " + cuts + ", coll neutrons").c_str(), nbinsx, xlo, xhi);
 
   TCanvas *c1 = new TCanvas("c1", "c1", 2000, 1400);
-  c1->Divide(2, 2);
+  c1->Divide(2, 3);
   gStyle->SetOptStat("eMRiou");
   
   t->Project("h1", meas.c_str(), cuts.c_str());
   t->Project("h2", meas.c_str(), ("(" + cuts + ") && abs(pdgID)==11").c_str());
   t->Project("h3", meas.c_str(), ("(" + cuts + ") && abs(pdgID)==22").c_str());
   t->Project("h4", meas.c_str(), ("(" + cuts + ") && abs(pdgID)==2112").c_str());
+  t->Project("h5", meas.c_str(), ("(" + cuts + ") && abs(pdgID)==2112 && z0>-1225.24 && z0<-895.04").c_str());
+  t->Project("h6", meas.c_str(), ("(" + cuts + ") && abs(pdgID)==2112 && z0>-250 && z0<-85").c_str());
 
   h1->GetXaxis()->SetTitle(meas.c_str());
   h2->GetXaxis()->SetTitle(meas.c_str());
   h3->GetXaxis()->SetTitle(meas.c_str());
   h4->GetXaxis()->SetTitle(meas.c_str());
+  h5->GetXaxis()->SetTitle(meas.c_str());
+  h6->GetXaxis()->SetTitle(meas.c_str());
 
   c1->cd(1); h1->Draw();
   c1->cd(2); h2->Draw();
   c1->cd(3); h3->Draw();
   c1->cd(4); h4->Draw();
+  c1->cd(5); h5->Draw();
+  c1->cd(6); h6->Draw();
 }
 
 void two_by_two_hit_map(string sim, string conf1, string conf2, int n_events_k, string meas1, string meas2, string cuts, Int_t nbinsx, Double_t xlow, Double_t xhi, Int_t nbinsy, Double_t ylow, Double_t yhi){

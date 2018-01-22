@@ -11,22 +11,32 @@
 ############
 ### PREX II configurations
 ############
-	#### beam energy
-	/gun/energy 1.05 GeV ##PREX
-	#/gun/energy 2.2 GeV ##CREX
-	#### Set B field configuration (prex1, prex2, crex)
-	/moller/field/setConfiguration prex2
-	/moller/field/useQ1fringeField true
-	#### Geometry files
-	#/moller/det/setDetectorFileName geometry/kriptoniteDetectors.gdml
-	#/moller/det/setDetectorFileName geometry/q1Hoses.gdml
-	#/moller/det/setDetectorFileName geometry/subCoilHoses.gdml
-	#/moller/det/setDetectorFileName geometry/subQ1HosesCyl.gdml
-	/moller/det/setDetectorFileName geometry/prexII_AJZShields.gdml
-	#/moller/det/setDetectorFileName geometry/subAJZTests.gdml
-	#/moller/det/setDetectorFileName geometry/subTargetChamber.gdml
-	#/moller/det/setDetectorFileName geometry/subCollShields.gdml
-	#/moller/det/setDetectorFileName geometry/subBeamPipe.gdml
+#### beam energy
+/gun/energy 1.05 GeV ##PREX
+#/gun/energy 2.2 GeV ##CREX
+#### Set B field configuration (prex1, prex2, crex)
+/moller/field/setConfiguration prex2
+/moller/field/useQ1fringeField true
+#### Geometry files
+#/moller/det/setDetectorFileName geometry/kriptoniteDetectors.gdml
+#/moller/det/setDetectorFileName geometry/subTargetChamber.gdml
+#/moller/det/setDetectorFileName geometry/subCollShields.gdml
+#/moller/det/setDetectorFileName geometry/subBeamPipe.gdml
+#/moller/det/setDetectorFileName geometry/subExtendedDump.gdml
+#/moller/det/setDetectorFileName geometry/subSkyshineIronV3.gdml
+#/moller/det/setDetectorFileName geometry/subHallLid.gdml
+#/moller/det/setDetectorFileName geometry/crex5_concrete2blocksPlusW.gdml
+#/moller/det/setDetectorFileName geometry/prexII_noSkyshine.gdml
+#/moller/det/setDetectorFileName geometry/crex5_noSkyshine.gdml
+#/moller/det/setDetectorFileName geometry/prexII_concrete2blocksPlusW_v1geom.gdml
+#/moller/det/setDetectorFileName geometry/crex5_concrete2blocksPlusW_v1geom.gdml
+#/moller/det/setDetectorFileName geometry/prexII_concrete2blocksPlusW_v2geom.gdml
+#/moller/det/setDetectorFileName geometry/crex5_concrete2blocksPlusW_v2geom.gdml
+#/moller/det/setDetectorFileName geometry/prexII_iron2blocks.gdml
+#/moller/det/setDetectorFileName geometry/crex5_iron2blocks.gdml
+/moller/det/setDetectorFileName geometry/prexII_concrete2blocksPlusW_v1geomNoCollJacket.gdml
+
+#/moller/det/setDetectorFileName geometry/subCollimatorV2.gdml
 
 /moller/det/setShieldMaterial polyethylene
 /testhadr/CutsAll          0.7 mm
