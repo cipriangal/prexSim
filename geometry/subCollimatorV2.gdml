@@ -12,43 +12,45 @@
     <!-- Collimator dimensions  -->
     <constant name="radius_cw70_coll_1" value="5.00"/>
     <constant name="length_cw70_coll" value="10.54"/> <!-- total collimator length -->
-    
+
     <constant name="delta_coll_us_face" value="83.2822"/>
-    
+
     <!-- Collimator bore dimentions-->
     <!-- 1.168 at the face of it and an angle of 0.78 deg: see https://ace.phys.virginia.edu:80/HAPPEX/2928 -->
     <constant name="coll_bore_inner_r1" value="1.133"/>
     <constant name="coll_bore_inner_r2" value="1.345"/>
-    
+
     <!-- Collimator surface grooves-->
     <constant name="cw70_groove_inner_r" value="3.905"/>
     <constant name="cw70_groove_outer_r" value="5"/>
     <constant name="cw70_groove_length" value="0.96"/>
-    
+
     <!--Dimensions of the Copper tube between the CW70 and W box -->
     <constant name="Cu_tube_inner_r" value="radius_cw70_coll_1+0.001"/>
     <constant name="cw70_cooling_length" value="0.24"/>
     <constant name="Cu_tube_outer_r" value="radius_cw70_coll_1+cw70_cooling_length-0.001"/>
-    
+
     <constant name="length_w_coll_jacket" value="15.5575"/>
     <constant name="width_w_coll_jacket" value="11.4"/>
     <constant name="height_w_coll_jacket" value="22.7"/>
-    
+
     <constant name="deltaY_pt4_sc_attach" value="1.8536"/>
     <constant name="innerR_sc_attach_pig" value="25/2."/>
     <constant name="height_sc_attach_old" value="25.9264"/>
     <constant name="height_sc_attach" value="height_sc_attach_old+deltaY_pt4_sc_attach"/>
     <constant name="height_sc_attach_pig" value="42 - height_sc_attach/2"/>
     <constant name="height_w_coll_jacket_topExtension" value="6."/>
-    
+
     <constant name="center_cw70_coll" value="-(length_w_coll_jacket - length_cw70_coll)/2"/>
-    
+
     <position unit="cm" name="center" x="0" y="0" z="0"/>
     <position unit="cm" name="pos_local_coll_cw70" x="0" y="0" z="length_cw70_coll/2"/>
-    <position unit="cm" name="pos_global_coll_cw70" x="0" y="0" z="0"/>
-    
-    <position unit="cm" name="pos_global_coll_jacket" x="0" y="0" 
-	      z="length_w_coll_jacket/2 - length_cw70_coll/2"/>
+
+    <position unit="cm" name="pos_global_coll_cw70" x="0" y="0"
+	      z="-length_w_coll_jacket/2 + length_cw70_coll/2"/>
+
+    <position unit="cm" name="pos_global_coll_jacket" x="0" y="0"
+              z="0"/>
     <position unit="cm" name="pos_rel_coll_jacket" x="0" y="0" z="  length_w_coll_jacket/2 - length_cw70_coll/2"/>
     <position unit="cm" name="pos_rel_jacket_coll" x="0" y="0" z="- length_w_coll_jacket/2 + length_cw70_coll/2"/>
     <position unit="cm" name="pos_rel_topExtension_wrt_jacket" x="0" y="(height_w_coll_jacket + height_w_coll_jacket_topExtension)/2."
@@ -56,9 +58,9 @@
 
     <position unit="cm" name="pos_rel_collHole_pig1" x="0" y="0" z="-height_sc_attach_pig/3"/>
     <position unit="cm" name="pos_rel_collHole_pig2" x="0" y="0" z="height_sc_attach_pig/3"/>
-    <position unit="cm" name="pos_global_pig_shield" x="0" 
-	      y="height_w_coll_jacket/2 + height_sc_attach_pig/2 + height_w_coll_jacket_topExtension"
-              z="length_w_coll_jacket/2 - length_cw70_coll/2"/>
+    <position unit="cm" name="pos_global_pig_shield" x="0"
+              y="height_w_coll_jacket/2 + height_sc_attach_pig/2 + height_w_coll_jacket_topExtension"
+              z="0"/>
 
     <position unit="cm" name="pos_rel_coll_g1" x="0" y="0" z="(-length_cw70_coll+ 3*cw70_groove_length)/2"/>
     <position unit="cm" name="pos_rel_coll_g2" x="0" y="0" z="(-length_cw70_coll+ 7*cw70_groove_length)/2"/>
@@ -69,44 +71,47 @@
 
     <position unit="cm" name="pos_rel_coll_to_jacket" x="0" y="0" z="(length_w_coll_jacket - length_cw70_coll)/2"/>
     <position unit="cm" name="pos_rel_coll_to_topExtension" x="0" y="(height_w_coll_jacket + height_w_coll_jacket_topExtension)/2." z="(length_w_coll_jacket - length_cw70_coll)/2"/>
-    <position unit="cm" name="pos_rel_coll_to_shield" x="0" 
-	      y="height_w_coll_jacket/2 + height_sc_attach_pig/2 + height_w_coll_jacket_topExtension" z="(length_w_coll_jacket - length_cw70_coll)/2"/>
-    
+    <position unit="cm" name="pos_rel_coll_to_shield" x="0"
+              y="height_w_coll_jacket/2 + height_sc_attach_pig/2 + height_w_coll_jacket_topExtension" z="(length_w_coll_jacket - length_cw70_coll)/2"/>
+
+    <position unit="cm" name="pos_rel_pig_to_jacket" x="0"
+	      y="height_w_coll_jacket/2 + height_sc_attach_pig/2 + height_w_coll_jacket_topExtension"
+	      z="0"/>
     <rotation name="identity"/>
     <rotation name="scRot_1"  unit="deg" x="90"  y="0"   z="0"/>
   </define>
-  
+
   &materials;
-  
+
   <solids>
     <!-- Cylindrical CW70 Collimator-->
     <tube aunit="deg" startphi="0" deltaphi="360"
-	  lunit="cm" name="coll_cw70_cyln"
-	  rmin="0.0"
-	  rmax="radius_cw70_coll_1"
-	  z="length_cw70_coll"/>
-    
+          lunit="cm" name="coll_cw70_cyln"
+          rmin="0.0"
+          rmax="radius_cw70_coll_1"
+          z="length_cw70_coll"/>
+
     <!-- Conic bore going through the whole collimator -->
     <cone aunit="deg" startphi="0" deltaphi="360"
-	  lunit="cm" name="coll_bore_cone"
-	  rmin1="0.0" rmax1="coll_bore_inner_r1"
-	  rmin2="0.0" rmax2="coll_bore_inner_r2"
-	  z="length_w_coll_jacket+0.001"/>
-    
+          lunit="cm" name="coll_bore_cone"
+          rmin1="0.0" rmax1="coll_bore_inner_r1"
+          rmin2="0.0" rmax2="coll_bore_inner_r2"
+          z="length_w_coll_jacket+0.001"/>
+
     <subtraction name ="coll_cw70_cyln_1">
       <first ref="coll_cw70_cyln"/>
       <second ref="coll_bore_cone"/>
       <positionref ref="pos_rel_coll_jacket"/>
       <rotationref ref="identity"/>
     </subtraction>
-    
+
     <!-- Solid used to generate the CW70 surface grooves-->
     <tube aunit="deg" startphi="0" deltaphi="360"
-	  lunit="cm" name="cw70_groove_solid"
-	  rmin="cw70_groove_inner_r"
-	  rmax="cw70_groove_outer_r*1.001"
-	  z="cw70_groove_length"/>
-    
+          lunit="cm" name="cw70_groove_solid"
+          rmin="cw70_groove_inner_r"
+          rmax="cw70_groove_outer_r*1.001"
+          z="cw70_groove_length"/>
+
     <!-- groove 1 -->
     <subtraction name ="coll_cw70_cyln_2">
       <first ref="coll_cw70_cyln_1"/>
@@ -142,26 +147,26 @@
       <positionref ref="pos_rel_coll_g5"/>
       <rotationref ref="identity"/>
     </subtraction>
-    
+
     <tube aunit="deg" startphi="0" deltaphi="360"
-	  lunit="cm" name="front_coll_hole"
-	  rmin="0"
-	  rmax="2"
-	  z="2.51"/>
+          lunit="cm" name="front_coll_hole"
+          rmin="0"
+          rmax="2"
+          z="2.51"/>
     <subtraction name ="coll_cw70_cyln_7">
       <first ref="coll_cw70_cyln_6"/>
       <second ref="front_coll_hole"/>
       <positionref ref="pos_rel_coll_frontHole"/>
       <rotationref ref="identity"/>
     </subtraction>
-    
+
     <!-- Copper Cylinder for water cooling CW70 Collimator-->
     <tube aunit="deg" startphi="0" deltaphi="360"
           lunit="cm" name="Cu_tube_solid"
           rmin="Cu_tube_inner_r"
           rmax="Cu_tube_outer_r"
           z="length_cw70_coll"/>
-    
+
     <!-- W Box Collimator Jacket-->
     <box lunit="cm" name="coll_jacket_W" x="width_w_coll_jacket" y="height_w_coll_jacket" z="length_w_coll_jacket"/>
     <subtraction name ="coll_jacket_w_solid_1">
@@ -194,13 +199,13 @@
       <positionref ref="pos_rel_topExtension_wrt_jacket"/>
       <rotationref ref="identity"/>
     </union>
-    
+
     <!-- Add Shielding inside the Pig -->
     <tube aunit="deg" startphi="0" deltaphi="360"
-	  lunit="cm" name="pig_shield_0"
-	  rmin="0."
-	  rmax="innerR_sc_attach_pig"
-	  z="height_sc_attach_pig"/>
+          lunit="cm" name="pig_shield_0"
+          rmin="0."
+          rmax="innerR_sc_attach_pig"
+          z="height_sc_attach_pig"/>
     <subtraction name="pig_shield_1">
       <first ref="pig_shield_0"/>
       <second ref="coll_jacket_W"/>
@@ -213,78 +218,71 @@
       <positionref ref="pos_rel_collHole_pig2"/>
       <rotationref ref="scRot_1"/>
     </subtraction>
-    
-    <!--<box lunit="cm" name="coll_jacket_outline" x="width_w_coll_jacket" 
-	 y="height_w_coll_jacket + height_w_coll_jacket_topExtension" z="length_w_coll_jacket"/> -->
-    <union name="coll_and_jacket">
-      <first ref="coll_cw70_cyln"/>
-      <second ref="coll_jacket_W"/>
-      <positionref ref="pos_rel_coll_to_jacket"/>
-    </union>
+
     <union name="coll_jacket_outline">
-      <first ref="coll_and_jacket"/>
+      <first ref="coll_jacket_W"/>
       <second ref="coll_jacket_topExtension"/>
-      <positionref ref="pos_rel_coll_to_topExtension"/>
+      <positionref ref="pos_rel_topExtension_wrt_jacket"/>
       <rotationref ref="identity"/>
     </union>
     <union name="collimatorRegion">
       <first ref="coll_jacket_outline"/>
       <second ref="pig_shield_0"/>
-      <positionref ref="pos_rel_coll_to_shield"/>
+      <positionref ref="pos_rel_pig_to_jacket"/>
       <rotationref ref="scRot_1"/>
     </union>
   </solids>
-  
+
   <structure>
     <volume name="W_coll_logic">
       <materialref ref="matCW70"/>
       <solidref ref="coll_cw70_cyln_7"/>
     </volume>
-    
+
     <volume name="coll_jacket_W_logic">
       <materialref ref="Tungsten"/>
       <solidref ref="coll_jacket_w_solid_4"/>
     </volume>
-    
+
     <volume name="Cu_tube_logic">
       <materialref ref="Copper"/>
       <solidref ref="Cu_tube_solid"/>
     </volume>
-    
+
     <volume name="coll_pig_shield">
       <materialref ref="PureLead"/>
       <solidref ref="pig_shield"/>
     </volume>
-    
+
     <volume name="logicCollimator">
       <materialref ref="Vacuum"/>
       <solidref ref="collimatorRegion"/>
-      
+
       <physvol name="collimator">
-	<volumeref ref="W_coll_logic"/>
-	<positionref ref="pos_global_coll_cw70"/>
+        <volumeref ref="W_coll_logic"/>
+        <positionref ref="pos_global_coll_cw70"/>
       </physvol>
-      
+
       <physvol name="Cu_tube">
-	<volumeref ref="Cu_tube_logic"/>
-	<positionref ref="pos_global_coll_cw70"/>
+        <volumeref ref="Cu_tube_logic"/>
+        <positionref ref="pos_global_coll_cw70"/>
       </physvol>
-      
+
       <physvol name="collimator_jacket">
-	<volumeref ref="coll_jacket_W_logic"/>
-	<positionref ref="pos_global_coll_jacket"/>
+        <volumeref ref="coll_jacket_W_logic"/>
+        <positionref ref="pos_global_coll_jacket"/>
       </physvol>
-      
+
       <physvol name="collimator_pig_shield">
-	<volumeref ref="coll_pig_shield"/>
-	<positionref ref="pos_global_pig_shield"/>
-	<rotationref ref="scRot_1"/>
+        <volumeref ref="coll_pig_shield"/>
+        <positionref ref="pos_global_pig_shield"/>
+        <rotationref ref="scRot_1"/>
       </physvol>
     </volume>
   </structure>
 
   <setup name="Collimator" version="1.0">
     <world ref="logicCollimator"/>
-  </setup>	
+  </setup>
 
 </gdml>

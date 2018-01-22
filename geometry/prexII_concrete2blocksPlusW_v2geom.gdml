@@ -987,8 +987,8 @@
           lunit="cm" name="tubeTarget"
           rmin="inner_rad_targ"
           rmax="outer_rad_targ"
-    	  z="0.05" /> 
-     <!-- z="0.6" /> -->
+          z="0.05" />
+    <!-- z="0.6" /> -->
 
     <!-- Target shielding -->
     <box lunit="cm" name="giantShield_solid0"
@@ -2375,15 +2375,12 @@
     <tube aunit="deg" startphi="0" deltaphi="360"
           lunit="cm" name="crex_det_solid"
           rmin="0" rmax="scat_det_r" z="0.1"/>
-	
+
     <box  lunit="cm" name="dDet_us"
           x="width_w_coll_jacket"
           y="height_w_coll_jacket"
           z="0.1" />
-	<!--
-	<tube name="dDet_us" aunit="deg" startphi="0" deltaphi="360"
-			lunit="cm" rmin="0" rmax="radius_cw70_coll_1*1.0001" z="0.1"/>
-	-->
+
     <tube name="dDet_ds" aunit="deg" startphi="0" deltaphi="360"
           lunit="cm" rmin="0" rmax="(coll_bore_inner_r2)*1.0001" z="0.1" />
 
@@ -2784,29 +2781,6 @@
       <materialref ref="Vacuum"/>
       <solidref ref="boxMother"/>
 
-	<!--
-      <physvol name="collimator">
-        <volumeref ref="W_coll_logic"/>
-        <positionref ref="pos_global_coll_cw70"/>
-      </physvol>
-
-      <physvol name="Cu_tube">
-        <volumeref ref="Cu_tube_logic"/>
-        <positionref ref="pos_global_coll_cw70"/>
-      </physvol>
-
-      <physvol name="collimator_jacket">
-        <volumeref ref="coll_jacket_W_logic"/>
-        <positionref ref="pos_global_coll_jacket"/>
-      </physvol>
-
-      <physvol name="collimator_pig_shield">
-        <volumeref ref="coll_pig_shield"/>
-        <positionref ref="pos_global_pig_shield"/>
-        <rotationref ref="scRot_1"/>
-      </physvol>
-	-->
-
       <physvol name="target">
         <volumeref ref="target_logic"/>
         <positionref ref="targ_center"/>
@@ -2858,18 +2832,12 @@
         <positionref ref="topwall_center"/>
         <rotationref ref="scRot_1"/>
       </physvol>
-	
+
       <physvol name="dump">
         <volumeref ref="dump_logic"/>
         <positionref ref="dump_center"/>
       </physvol>
 
-      <!--
-          <physvol name="ssenc">
-          <volumeref ref="ssenc_logic"/>
-          <positionref ref="ssenc_cylcenter"/>
-          </physvol>
-      -->
 
       <physvol name="ped_union">
         <volumeref ref="ped_union_logic"/>
@@ -2890,11 +2858,6 @@
         <positionref ref="arm_under_ped_pos_3"/>
         <rotationref ref="scRot_8"/>
       </physvol>
-
-      <!--<physvol name="sphere_det_1">
-        <volumeref ref="sDet_1_logic"/>
-        <positionref ref="sDet_1_pos"/>
-      </physvol> -->
 
       <physvol name="cyl_det_1">
         <volumeref ref="cDet_1_logic"/>
@@ -2940,18 +2903,6 @@
         <rotationref ref="identity"/>
       </physvol>
 
-      <!-- <physvol>
-      <file name="geometry/subCoilHoses.gdml"/>
-      <position name="coil_hose_pos" unit="cm" x="0" y="0" z="center_septum - 0.5*length_septum - 0.5*29.11"/>
-      <rotationref ref="identity"/>
-      </physvol> -->
-
-		<!--
-      <physvol>
-        <file name="geometry/subQ1HosesCylRedesign.gdml"/>
-        <position name="q1_hose_cyl_pos" unit="cm" x="0" y="0" z="210"/>
-      </physvol>
-		-->
       <physvol>
         <file name="geometry/subTargetChamber.gdml"/>
         <position name="target_chamber_center" unit="cm" x="0" y="0" z="prex_target_center"/>
@@ -2966,35 +2917,12 @@
         <file name="geometry/subBeamPipe.gdml"/>
         <positionref ref="dDet_beamline_pos_1"/>
       </physvol>
-	
+
       <physvol>
-	<file name="geometry/subCollimatorV2.gdml"/>
-	<positionref ref="pos_global_coll_cw70"/>
+        <file name="geometry/subCollimatorV2.gdml"/>
+        <positionref ref="pos_global_coll_jacket"/>
       </physvol>
 
-      <!--<physvol>
-	<file name="geometry/subSkyshineV2.gdml"/>
-	<position name="skyshine_loc" unit="cm" x="0" y="127.995" z="-77.4"/>
-      </physvol> -->
-
-      <!--<physvol>
-        <file name="geometry/subDumpShield.gdml"/>
-        <position name="dumpShield_posRel" unit="cm" x="0" y="-115" z="2450"/>
-      </physvol>-->
-		
-      <!--<physvol>
-        <file name="geometry/subDumpShield2layer.gdml"/>
-        <position name="dumpShield_posRel" unit="cm" x="0" y="-115" z="2450"/>
-      </physvol> -->
-
-      <!--<physvol> 
-        <file name="geometry/subDumpShield_donut.gdml"/>
-        <position name="dumpShieldD_posRel" unit="cm" x="0" y="0" z="2540"/>
-      </physvol> -->
-
-      <!-- FIXME: our initial hall was 2546cm. Maduka has 2652.76cm
-             position for R= 2546 (442.2,42.45,1994.6)
-                       for R= 2652.76 (467.3,42.5,2107.8) -->
       <physvol>
         <file name="geometry/subHRSplatform.gdml"/>
         <position name="HRSplatform_pos" unit="cm" x="467.3" y="42.5" z="2107.8"/>
@@ -3002,9 +2930,9 @@
       </physvol>
 
       <!--<physvol>
-	<file name="geometry/subExtendedDump.gdml"/>
-	<position name="extendedDump_pos" unit="cm" x="0" y="0" z="5099.36"/>
-      </physvol> -->
+          <file name="geometry/subExtendedDump.gdml"/>
+          <position name="extendedDump_pos" unit="cm" x="0" y="0" z="5099.36"/>
+          </physvol> -->
 
     </volume>
   </structure>
