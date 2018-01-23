@@ -2968,8 +2968,8 @@
       </physvol>
 	
       <physvol>
-	<file name="geometry/subCollimatorV2.gdml"/>
-	<positionref ref="pos_global_coll_cw70"/>
+	<file name="geometry/subCollimator.gdml"/>
+	<position name="pos_coll_subassem" unit="cm" x="0" y="3" z="center_cw70_coll +(length_w_coll_jacket - length_cw70_coll)/2."/>
       </physvol>
 
       <!--<physvol>
