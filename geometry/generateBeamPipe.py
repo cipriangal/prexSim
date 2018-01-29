@@ -46,8 +46,8 @@ def beamPREX1v2():
     ### everything is in cm
     rMin=[ 4.128,  4.445,  4.763,  5.080,  6.350,   7.620,   10.160,  10.478,  12.700,  15.240,  30.480,   45.720 ]
     rMax=[ 4.432,  4.750,  5.067,  5.385,  6.655,   7.925,   10.478,  10.795,  13.018,  15.558,  30.798,   46.038 ]
-    bLen=[28.018, 19.010, 15.240, 37.028, 23.416,  27.622,   22.368,  94.456,  30.480, 106.204, 551.180, 1459.843 ]
-    bCen=[14.009, 37.523, 54.648, 80.782, 111.004, 136.523, 161.518, 219.930, 282.398, 350.740, 679.432, 1789.4435]
+    bLen=[28.018, 19.010, 15.240, 37.028, 23.416,  27.622,   22.368,  94.456,  30.480, 106.204, 551.180, 1564.343 ]
+    bCen=[14.009, 37.523, 54.648, 80.782, 111.004, 136.523, 161.518, 219.930, 282.398, 350.740, 679.432, 1737.1935]
     septumRmax=4.102
     f1.write("\t\t<polycone aunit=\"deg\" startphi=\"0\" deltaphi=\"360\" lunit=\"cm\" name=\"beamPipe_solid\">\n")
     f1.write("\t\t\t<zplane rmin=\""+str(septumRmax)+"\" rmax=\""+str(rMax[0])+"\" z=\""+str(-1)+"\"/>\n")
@@ -65,7 +65,7 @@ def beamPREX1v2():
             f1.write("\t\t\t<zplane rmin=\""+str(rMin[i])+"\" rmax=\""+str(rMax[i+1])+"\" z=\""+str(bCen[i]+bLen[i]/2 -1)+"\"/>\n")
             f1.write("\t\t\t<zplane rmin=\""+str(rMin[i])+"\" rmax=\""+str(rMax[i+1])+"\" z=\""+str(bCen[i]+bLen[i]/2)+"\"/>\n")
 
-    zPos=bCen[-1]+bLen[-1]/2 + 330.2 ### (10 ft 7'' to front face of diffuser)
+    zPos=bCen[-1]+bLen[-1]/2 + 322.6 ### (10 ft 7'' to front face of diffuser)
     f1.write("\t\t\t<zplane rmin=\""+str(rMin[-1])+"\" rmax=\""+str(rMax[-1])+"\" z=\""+str(zPos)+"\"/>\n")
     f1.write("\t\t\t<zplane rmin=\"5.08\" rmax=\""+str(rMax[-1])+"\" z=\""+str(zPos)+"\"/>\n")
     zPos += 2.54 ## 1'' Al flange
@@ -75,11 +75,14 @@ def beamPREX1v2():
     f1.write("<position name=\"beamPipe_pos_rel\" unit=\"cm\" x=\"0\" y=\"0\" z=\"0\"/>\n")
 
     f1.write("\n\n")
-    f1.write("<position name=\"berylliumWindow_pos\" unit=\"cm\" x=\"0\" y=\"0\" z=\"2850.835\"/>\n")
-    f1.write("<position name=\"orifice_pos\" unit=\"cm\" x=\"0\" y=\"0\" z=\"2845.265\"/>\n")
-    f1.write("<position name=\"orificeSupport_pos\" unit=\"cm\" x=\"0\" y=\"-37.5\" z=\"2846.54\"/>\n")
+    zPos -= 2.54/2
+    f1.write("<position name=\"berylliumWindow_pos\" unit=\"cm\" x=\"0\" y=\"0\" z=\""+str(zPos)+"\"/>\n")
+    zPos += 2.55 ## position of orifice
+    f1.write("<position name=\"orifice_pos\" unit=\"cm\" x=\"0\" y=\"0\" z=\""+str(zPos)+"\"/>\n")
+    zPos += 2.55 ## position of orificeSupport (half length from orifice, half from support)
+    f1.write("<position name=\"orificeSupport_pos\" unit=\"cm\" x=\"0\" y=\"-15.16\" z=\""+str(zPos)+"\"/>\n")
     f1.write("<box lunit=\"cm\" name=\"orifice_solid1\" x=\"40.64\" y=\"40.64\" z=\"2.54\"/>\n")
-    f1.write("<box lunit=\"cm\" name=\"orificeSupport_solid1\" x=\"40.64\" y=\"15.64\" z=\"2.54\"/>\n")
+    f1.write("<box lunit=\"cm\" name=\"orificeSupport_solid1\" x=\"40.64\" y=\"10.32\" z=\"2.54\"/>\n")
     f1.write("\n")
     f1.close()
 
