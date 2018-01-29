@@ -1800,11 +1800,11 @@
         <positionref ref="cDet_1_pos"/>
         <rotationref ref="scRot_1"/>
       </physvol>
-      <physvol name="cyl_det_2">
-        <volumeref ref="cDet_2_logic"/>
-        <positionref ref="cDet_1_pos"/>
-        <rotationref ref="scRot_1"/>
-      </physvol>
+      <!-- <physvol name="cyl_det_2"> -->
+      <!--   <volumeref ref="cDet_2_logic"/> -->
+      <!--   <positionref ref="cDet_1_pos"/> -->
+      <!--   <rotationref ref="scRot_1"/> -->
+      <!-- </physvol> -->
       <physvol name="cyl_det_3">
         <volumeref ref="cDet_3_logic"/>
         <positionref ref="cDet_1_pos"/>
