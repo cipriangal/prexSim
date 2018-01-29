@@ -6,16 +6,20 @@
 
   <define>
     <!--Positions are relative to the end of the septum beamPipe-->
-    <position name="det01_posRel" unit="cm" x="0" y="0" z="0"/>
-    <position name="det02_posRel" unit="cm" x="0" y="0" z="111.004"/>
-    <position name="det03_posRel" unit="cm" x="0" y="0" z="350.740"/>
-    <position name="det04_posRel" unit="cm" x="0" y="0" z="2400"/>
-    <position name="det05_posRel" unit="cm" x="0" y="0" z="2967"/>
-    <position name="det06_posRel" unit="cm" x="0" y="0" z="2779"/>
-    <position name="det07_posRel" unit="cm" x="0" y="0" z="2787"/>
+    <position name="det01_pos" unit="cm" x="0" y="0" z="0"/>
+    <position name="det02_pos" unit="cm" x="0" y="0" z="111.004"/>
+    <position name="det03_pos" unit="cm" x="0" y="0" z="350.740"/>
+    <position name="det04_pos" unit="cm" x="0" y="0" z="2400"/>
+    <position name="det05_pos" unit="cm" x="0" y="0" z="2967"/>
+    <position name="det06_pos" unit="cm" x="0" y="0" z="2841"/>
+    <position name="det07_pos" unit="cm" x="0" y="0" z="2851"/>
 
     <position name="dumpDoor_posRel" unit="cm" x="0" y="42" z="0"/>
     <position name="dumpDoor_pos" unit="cm" x="0" y="-42" z="2977"/>
+
+    <position name="berylliumWindow_pos" unit="cm" x="0" y="0" z="2843.235"/>
+    <position name="orifice_pos" unit="cm" x="0" y="0" z="2845.785"/>
+    <position name="orificeSupport_pos" unit="cm" x="0" y="-15.16" z="2848.335"/>
   </define>
 
   <materials>
@@ -65,7 +69,7 @@
           rmax="45.62"
           z="0.1"/>
 
-   <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="det07_solid"
+    <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="det07_solid"
           rmin="0"
           rmax="45.62"
           z="0.1"/>
@@ -118,14 +122,29 @@
       <zplane rmin="30.48" rmax="46.038" z="954.022"/>
       <zplane rmin="30.48" rmax="46.038" z="955.022"/>
       <zplane rmin="45.72" rmax="46.038" z="955.022"/>
-      <zplane rmin="45.72" rmax="46.038" z="2518.664"/>
-      <zplane rmin="45.72" rmax="46.038" z="2519.664"/>
-      <zplane rmin="45.72" rmax="46.038" z="2779.419"/>
-      <zplane rmin="5.08" rmax="46.038" z="2779.419"/>
-      <zplane rmin="5.08" rmax="46.038" z="2780.63566667"/>
-      <zplane rmin="5.08" rmax="8.73" z="2780.63566667"/>
-      <zplane rmin="5.08" rmax="8.73" z="2786.719"/>
+      <zplane rmin="45.72" rmax="46.038" z="2519.365"/>
+      <zplane rmin="45.72" rmax="46.038" z="2841.965"/>
+      <zplane rmin="5.08" rmax="46.038" z="2841.965"/>
+      <zplane rmin="5.08" rmax="46.038" z="2844.505"/>
     </polycone>
+
+    <box lunit="cm" name="orificeSupport_solid" x="40.64" y="10.32" z="2.54"/>
+
+    <box lunit="cm" name="orifice_solid1" x="40.64" y="40.64" z="2.54"/>
+    <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="orifice_solid2"
+          rmin="0"
+          rmax="4.445"
+          z="2.55"/>
+    <subtraction name ="orifice_solid3">
+      <first ref="orifice_solid1"/>
+      <second ref="orifice_solid2"/>
+      <positionref ref="det01_pos"/>
+    </subtraction>
+
+    <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="berylliumWindow_solid"
+          rmin="0"
+          rmax="5.07"
+          z="1.02"/>
 
     <box lunit="cm" name="dumpDoor_0" x="208" y="292" z="5"/>
     <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="dumpDoor_1"
@@ -147,42 +166,57 @@
     <union name ="worldUnion1">
       <first ref="worldUnion0"/>
       <second ref="beamPipe_solid"/>
-      <positionref ref="det01_posRel"/>
+      <positionref ref="det01_pos"/>
     </union>
     <union name ="worldUnion2">
       <first ref="worldUnion1"/>
       <second ref="det02_solid"/>
-      <positionref ref="det02_posRel"/>
+      <positionref ref="det02_pos"/>
     </union>
     <union name ="worldUnion3">
       <first ref="worldUnion2"/>
       <second ref="det03_solid"/>
-      <positionref ref="det03_posRel"/>
+      <positionref ref="det03_pos"/>
     </union>
     <union name ="worldUnion4">
       <first ref="worldUnion3"/>
       <second ref="det04_solid"/>
-      <positionref ref="det04_posRel"/>
+      <positionref ref="det04_pos"/>
     </union>
     <union name ="worldUnion5">
       <first ref="worldUnion4"/>
       <second ref="det05_solid"/>
-      <positionref ref="det05_posRel"/>
+      <positionref ref="det05_pos"/>
     </union>
     <union name ="worldUnion6">
       <first ref="worldUnion5"/>
       <second ref="det06_solid"/>
-      <positionref ref="det06_posRel"/>
+      <positionref ref="det06_pos"/>
     </union>
     <union name ="worldUnion7">
       <first ref="worldUnion6"/>
       <second ref="det07_solid"/>
-      <positionref ref="det07_posRel"/>
+      <positionref ref="det07_pos"/>
     </union>
     <union name ="worldUnion8">
       <first ref="worldUnion7"/>
       <second ref="dumpDoor_solid"/>
       <positionref ref="dumpDoor_pos"/>
+    </union>
+    <union name ="worldUnion9">
+      <first ref="worldUnion8"/>
+      <second ref="berylliumWindow_solid"/>
+      <positionref ref="berylliumWindow_pos"/>
+    </union>
+    <union name ="worldUnion10">
+      <first ref="worldUnion9"/>
+      <second ref="orifice_solid3"/>
+      <positionref ref="orifice_pos"/>
+    </union>
+    <union name ="worldUnion11">
+      <first ref="worldUnion10"/>
+      <second ref="orificeSupport_solid"/>
+      <positionref ref="orificeSupport_pos"/>
     </union>
 
   </solids>
@@ -241,43 +275,58 @@
       <solidref ref="dumpDoor_solid"/>
     </volume>
 
+    <volume name="orifice_logic">
+      <materialref ref="Aluminum"/>
+      <solidref ref="orifice_solid3"/>
+    </volume>
+
+    <volume name="orificeSupport_logic">
+      <materialref ref="Aluminum"/>
+      <solidref ref="orificeSupport_solid"/>
+    </volume>
+
+    <volume name="berylliumWindow_logic">
+      <materialref ref="G4_Be"/>
+      <solidref ref="berylliumWindow_solid"/>
+    </volume>
+
     <volume name="beamPipeP1">
       <materialref ref="Vacuum"/>
-      <solidref ref="worldUnion8"/>
+      <solidref ref="worldUnion11"/>
 
       <physvol name="det01_phys">
         <volumeref ref="det01_logic"/>
-        <positionref ref="det01_posRel"/>
+        <positionref ref="det01_pos"/>
       </physvol>
 
       <physvol name="det02_phys">
         <volumeref ref="det02_logic"/>
-        <positionref ref="det02_posRel"/>
+        <positionref ref="det02_pos"/>
       </physvol>
 
       <physvol name="det03_phys">
         <volumeref ref="det03_logic"/>
-        <positionref ref="det03_posRel"/>
+        <positionref ref="det03_pos"/>
       </physvol>
 
       <physvol name="det04_phys">
         <volumeref ref="det04_logic"/>
-        <positionref ref="det04_posRel"/>
+        <positionref ref="det04_pos"/>
       </physvol>
 
       <physvol name="det05_phys">
         <volumeref ref="det05_logic"/>
-        <positionref ref="det05_posRel"/>
+        <positionref ref="det05_pos"/>
       </physvol>
 
       <physvol name="det06_phys">
         <volumeref ref="det06_logic"/>
-        <positionref ref="det06_posRel"/>
+        <positionref ref="det06_pos"/>
       </physvol>
 
       <physvol name="det07_phys">
         <volumeref ref="det07_logic"/>
-        <positionref ref="det07_posRel"/>
+        <positionref ref="det07_pos"/>
       </physvol>
 
       <physvol name="dumpDoor_phys">
@@ -285,9 +334,24 @@
         <positionref ref="dumpDoor_pos"/>
       </physvol>
 
+      <physvol name="orificeSupport_phys">
+        <volumeref ref="orificeSupport_logic"/>
+        <positionref ref="orificeSupport_pos"/>
+      </physvol>
+
+      <physvol name="orifice_phys">
+        <volumeref ref="orifice_logic"/>
+        <positionref ref="orifice_pos"/>
+      </physvol>
+
+      <physvol name="berylliumWindow_phys">
+        <volumeref ref="berylliumWindow_logic"/>
+        <positionref ref="berylliumWindow_pos"/>
+      </physvol>
+
       <physvol name="beamPipe_phys">
         <volumeref ref="beamPipe_logic"/>
-        <positionref ref="det01_posRel"/>
+        <positionref ref="det01_pos"/>
       </physvol>
     </volume>
   </structure>
