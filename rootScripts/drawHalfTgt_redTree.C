@@ -1,8 +1,10 @@
 void drawHalfTgt_redTree(){
-  TFile *fin_half=TFile::Open("o_anaHalfTgt_c5_newHRS_newDet.root","READ");
-  TFile *fin_full=TFile::Open("o_anaHalfTgt_p2_newHRS_newDet.root","READ");
-  // TFile *fin_full=TFile::Open("o_anaHalfTgt_fullLead_4inDonut.root","READ");
-  // TFile *fin_half=TFile::Open("o_anaHalfTgt_halfLead_4inDonut.root","READ");
+  //TFile *fin_half=TFile::Open("../output/dump_prexII_halfLead/file_redTree_anaRedTTree.root","READ");
+  //TFile *fin_half=TFile::Open("../output/dump_prexII_0p75Tgt/file5_redTree_anaRedTTree.root","READ");
+  //TFile *fin_full=TFile::Open("/home/ciprian/hdd2/prexOutput/dump_prexII_newHRS_newDet/file_redTree_anaRedTTree.root","READ");
+
+  TFile *fin_full=TFile::Open("../output/dump_prexII_fatPipe_prex2End/file3_redTree_anaRedTTree.root","READ");
+  TFile *fin_half=TFile::Open("../output/dump_crex5_fatPipe_prex2End/file4_redTree_anaRedTTree.root","READ");
 
   gStyle->SetOptStat(0);
   TCanvas *c1=new TCanvas("c1","c1");
@@ -33,16 +35,26 @@ void drawHalfTgt_redTree(){
     c5->Update();
   }
 
-  // neil weighting doesn't show much more
-  // TCanvas *c4=new TCanvas("c4","c4");
-  // c4->Divide(3,2);
-  // for(int i=0;i<6;i++){
-  //   c4->cd(i+1);
-  //   string histNm=Form("h4_%d",nH[i]);
-  //   drawRdist((TH1D*)fin_full->Get(histNm.c_str()),(TH1D*)fin_half->Get(histNm.c_str()));
-  //   c4->Modified();
-  //   c4->Update();
-  // }
+  TCanvas *c4=new TCanvas("c4","c4");
+  c4->Divide(3,2);
+  for(int i=0;i<6;i++){
+    c4->cd(i+1);
+    string histNm=Form("h4_%d",nH[i]);
+    drawRdist((TH1D*)fin_full->Get(histNm.c_str()),(TH1D*)fin_half->Get(histNm.c_str()));
+    c4->Modified();
+    c4->Update();
+  }
+  
+  TCanvas *c6=new TCanvas("c6","c6");
+  c6->Divide(3,2);
+  for(int i=0;i<6;i++){
+    c6->cd(i+1);
+    string histNm=Form("h4_%d",nH[i]);
+    drawRdist(removeArea((TH1D*)fin_full->Get(histNm.c_str())),
+	      removeArea((TH1D*)fin_half->Get(histNm.c_str())));
+    c6->Modified();
+    c6->Update();
+  }
 }
 
 void drawRdist(TH1D *f1,TH1D *h1){
