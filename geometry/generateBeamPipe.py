@@ -65,17 +65,21 @@ def beamPREX1v2():
             f1.write("\t\t\t<zplane rmin=\""+str(rMin[i])+"\" rmax=\""+str(rMax[i+1])+"\" z=\""+str(bCen[i]+bLen[i]/2 -1)+"\"/>\n")
             f1.write("\t\t\t<zplane rmin=\""+str(rMin[i])+"\" rmax=\""+str(rMax[i+1])+"\" z=\""+str(bCen[i]+bLen[i]/2)+"\"/>\n")
 
-    zPos=bCen[-1]+bLen[-1]/2 + 325.755 ### (10 ft 8/25'' to front face of orif)
+    zPos=bCen[-1]+bLen[-1]/2 + 330.2 ### (10 ft 7'' to front face of diffuser)
     f1.write("\t\t\t<zplane rmin=\""+str(rMin[-1])+"\" rmax=\""+str(rMax[-1])+"\" z=\""+str(zPos)+"\"/>\n")
     f1.write("\t\t\t<zplane rmin=\"5.08\" rmax=\""+str(rMax[-1])+"\" z=\""+str(zPos)+"\"/>\n")
-    zPos += 3.65/3 ##(1 7/16)/3
+    zPos += 2.54 ## 1'' Al flange
     f1.write("\t\t\t<zplane rmin=\"5.08\" rmax=\""+str(rMax[-1])+"\" z=\""+str(zPos)+"\"/>\n")
-    f1.write("\t\t\t<zplane rmin=\"5.08\" rmax=\"8.73\" z=\""+str(zPos)+"\"/>\n")
-    zPos += 7.30 - 3.65/3
-    f1.write("\t\t\t<zplane rmin=\"5.08\" rmax=\"8.73\" z=\""+str(zPos)+"\"/>\n")
 
     f1.write("</polycone>\n")
     f1.write("<position name=\"beamPipe_pos_rel\" unit=\"cm\" x=\"0\" y=\"0\" z=\"0\"/>\n")
+
+    f1.write("\n\n")
+    f1.write("<position name=\"orifice_pos\" unit=\"cm\" x=\"0\" y=\"0\" z=\"2845.265\"/>\n")
+    f1.write("<position name=\"orificeSupport_pos\" unit=\"cm\" x=\"0\" y=\"-37.5\" z=\"2846.54\"/>\n")
+    f1.write("<box lunit=\"cm\" name=\"orifice_solid1\" x=\"40.64\" y=\"40.64\" z=\"2.54\"/>\n")
+    f1.write("<box lunit=\"cm\" name=\"orificeSupport\" x=\"40.64\" y=\"15.64\" z=\"2.54\"/>\n")
+    f1.write("\n")
     f1.close()
 
 def beamPREX2():
