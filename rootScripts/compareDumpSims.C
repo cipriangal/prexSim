@@ -2,7 +2,7 @@ void compareDumpSims(){
   gStyle->SetOptStat(0);
   // string config="beamPipeVacuum";
   //string config="noDonut";
-  string config="smallerCollMidDonut";
+  //string config="smallerCollMidDonut";
   //string config="smallerCollPipe2Donut";
   //string config="smallerCollNeck";
   //string config="largerHall";
@@ -12,6 +12,8 @@ void compareDumpSims(){
   //string config="newHRS_newDet_2ftIron";
   //string config="newHRS_newDet_2ftConc";
   //string config="newHRS_newDet_1ftConc1ftIron_4inDonut";
+  //string config="newHRS_fatPipe";
+  string config="newHRS_sideShield";
 
   TCanvas *c1=new TCanvas("c1","c1",1400,600);
   c1->Divide(2);
@@ -31,8 +33,8 @@ void compareDumpSims(){
 }
 
 void compareOne(string sim, string conf){
-  TFile *fc=TFile::Open(Form("../output/dump_%s_current/file_hallRad.root",sim.c_str()));
-  //TFile *fc=TFile::Open(Form("../output/dump_%s_newHRS_newDet/file_hallRad.root",sim.c_str()));
+  //TFile *fc=TFile::Open(Form("../output/dump_%s_current/file_hallRad.root",sim.c_str()));
+  TFile *fc=TFile::Open(Form("../output/dump_%s_newHRS_newDet/file_hallRad.root",sim.c_str()));
   TFile *f2=TFile::Open(Form("../output/dump_%s_%s/file_hallRad.root",sim.c_str(),conf.c_str()));
 
   TH1D *hc=(TH1D*)fc->Get("hSummary_neilLogX");
