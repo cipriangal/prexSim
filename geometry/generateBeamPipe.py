@@ -75,10 +75,11 @@ def beamPREX1v2():
     f1.write("<position name=\"beamPipe_pos_rel\" unit=\"cm\" x=\"0\" y=\"0\" z=\"0\"/>\n")
 
     f1.write("\n\n")
+    f1.write("<position name=\"berylliumWindows_pos\" unit=\"cm\" x=\"0\" y=\"0\" z=\"2850.835\"/>\n")
     f1.write("<position name=\"orifice_pos\" unit=\"cm\" x=\"0\" y=\"0\" z=\"2845.265\"/>\n")
     f1.write("<position name=\"orificeSupport_pos\" unit=\"cm\" x=\"0\" y=\"-37.5\" z=\"2846.54\"/>\n")
     f1.write("<box lunit=\"cm\" name=\"orifice_solid1\" x=\"40.64\" y=\"40.64\" z=\"2.54\"/>\n")
-    f1.write("<box lunit=\"cm\" name=\"orificeSupport\" x=\"40.64\" y=\"15.64\" z=\"2.54\"/>\n")
+    f1.write("<box lunit=\"cm\" name=\"orificeSupport_solid1\" x=\"40.64\" y=\"15.64\" z=\"2.54\"/>\n")
     f1.write("\n")
     f1.close()
 
