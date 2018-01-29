@@ -1,2 +1,2 @@
-/moller/ana/rootfilename ./prex2_hose_heat_study
-/run/beamOn 1000000
+/moller/ana/rootfilename ./o_deleteME
+/run/beamOn 10000
