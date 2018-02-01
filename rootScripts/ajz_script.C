@@ -347,6 +347,7 @@ void side_by_side_comp_h2(string sim, string conf1, string conf2, int n_events_k
 
   cout<<"File 1: "<<f1name<<"; File 2: "<<f2name<<endl;
 
+  gStyle->SetOptStat("eMR");
   TCanvas *c1=new TCanvas("c1","c1",2400,900);
   c1->Divide(2);
   TFile *f1 = new TFile(f1name.c_str());

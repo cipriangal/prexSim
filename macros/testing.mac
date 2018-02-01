@@ -25,18 +25,17 @@
 #/moller/det/setDetectorFileName geometry/subExtendedDump.gdml
 #/moller/det/setDetectorFileName geometry/subSkyshineIronV3.gdml
 #/moller/det/setDetectorFileName geometry/subHallLid.gdml
+#/moller/det/setDetectorFileName geometry/subCollimator.gdml
 #/moller/det/setDetectorFileName geometry/crex5_concrete2blocksPlusW.gdml
-#/moller/det/setDetectorFileName geometry/prexII_noSkyshine.gdml
-#/moller/det/setDetectorFileName geometry/crex5_noSkyshine.gdml
+#/moller/det/setDetectorFileName geometry/prexII_noSkyshine_v1geom.gdml
+#/moller/det/setDetectorFileName geometry/crex5_noSkyshine_v1geom.gdml
 #/moller/det/setDetectorFileName geometry/prexII_concrete2blocksPlusW_v1geom.gdml
 #/moller/det/setDetectorFileName geometry/crex5_concrete2blocksPlusW_v1geom.gdml
-#/moller/det/setDetectorFileName geometry/prexII_concrete2blocksPlusW_v2geom.gdml
+/moller/det/setDetectorFileName geometry/prexII_concrete2blocksPlusW_v2geom.gdml
 #/moller/det/setDetectorFileName geometry/crex5_concrete2blocksPlusW_v2geom.gdml
-#/moller/det/setDetectorFileName geometry/prexII_iron2blocks.gdml
-#/moller/det/setDetectorFileName geometry/crex5_iron2blocks.gdml
-/moller/det/setDetectorFileName geometry/prexII_concrete2blocksPlusW_v1geomNoCollJacket.gdml
-
-#/moller/det/setDetectorFileName geometry/subCollimatorV2.gdml
+#/moller/det/setDetectorFileName geometry/prexII_iron2blocks_v1geom.gdml
+#/moller/det/setDetectorFileName geometry/crex5_iron2blocks_v1geom.gdml
+#/moller/det/setDetectorFileName geometry/subPolyconeTest.gdml
 
 /moller/det/setShieldMaterial polyethylene
 /testhadr/CutsAll          0.7 mm

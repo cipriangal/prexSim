@@ -539,7 +539,7 @@
               y="0"
               z="height_sc_attach_pig/3"/>
     <position unit="cm" name="pos_global_pig_shield" x="0"
-              y="(height_sc_attach + height_sc_attach_pig)/2"
+              y="(height_sc_attach + height_sc_attach_pig)/2 + 5"
               z="center_cw70_coll + length_w_coll_jacket/2 - length_cw70_coll/2"/>
 
     <position unit="cm" name="scAttachTubeTrans_1"
@@ -955,16 +955,13 @@
       <rotationref ref="identity"/>
     </subtraction>
     <!-- Remove copper cylinder from jacket -->
+    <tube aunit="deg" startphi="0" deltaphi="360"
+	  lunit="cm" name="jacket_cut_hole"
+	  rmin="0.0" rmax="Cu_tube_outer_r + 0.01"
+	  z="length_cw70_coll + 0.01"/>
     <subtraction name ="coll_jacket_w_solid_2">
       <first ref="coll_jacket_w_solid_1"/>
-      <second ref="Cu_tube_solid"/>
-      <positionref ref="pos_rel_jacket_coll"/>
-      <rotationref ref="identity"/>
-    </subtraction>
-    <!-- Remove collimator from jacket -->
-    <subtraction name ="coll_jacket_w_solid_3">
-      <first ref="coll_jacket_w_solid_2"/>
-      <second ref="coll_cw70_cyln"/>
+      <second ref="jacket_cut_hole"/>
       <positionref ref="pos_rel_jacket_coll"/>
       <rotationref ref="identity"/>
     </subtraction>
@@ -974,7 +971,7 @@
          y="height_w_coll_jacket_topExtension"
          z="length_w_coll_jacket"/>
     <union name ="coll_jacket_w_solid_4">
-      <first ref="coll_jacket_w_solid_3"/>
+      <first ref="coll_jacket_w_solid_2"/>
       <second ref="coll_jacket_topExtension"/>
       <positionref ref="pos_rel_topExtension_wrt_jacket"/>
       <rotationref ref="identity"/>
@@ -2791,6 +2788,27 @@
         <positionref ref="pos_global_giantShield"/>
       </physvol>
 
+      <physvol name="coll_cw70">
+	<volumeref ref="W_coll_logic"/>
+	<positionref ref="pos_global_coll_cw70"/>
+      </physvol>
+
+      <physvol name="Cu_tube">
+	<volumeref ref="Cu_tube_logic"/>
+	<positionref ref="pos_global_coll_cw70"/>
+      </physvol>
+
+      <physvol name="W_coll_jacket">
+	<volumeref ref="coll_jacket_W_logic"/>
+	<positionref ref="pos_global_coll_jacket"/>
+      </physvol>
+
+      <physvol name="pig_shield_PV">
+	<volumeref ref="coll_pig_shield"/>
+	<positionref ref="pos_global_pig_shield"/>
+	<rotationref ref="scRot_1"/>
+      </physvol>
+
       <physvol name="septum">
         <volumeref ref="septum_logic"/>
         <positionref ref="septum_center"/>
@@ -2800,7 +2818,6 @@
         <volumeref ref="septShld_r_logic"/>
         <positionref ref="septShld_center_r"/>
       </physvol>
-
 
       <physvol name="septum_shield_l">
         <volumeref ref="septShld_l_logic"/>
@@ -2837,7 +2854,6 @@
         <volumeref ref="dump_logic"/>
         <positionref ref="dump_center"/>
       </physvol>
-
 
       <physvol name="ped_union">
         <volumeref ref="ped_union_logic"/>
@@ -2918,15 +2934,10 @@
         <positionref ref="dDet_beamline_pos_1"/>
       </physvol>
 
-      <physvol>
-<<<<<<< HEAD
+      <!-- <physvol>
 	<file name="geometry/subCollimator.gdml"/>
 	<position name="pos_coll_subassem" unit="cm" x="0" y="3" z="center_cw70_coll +(length_w_coll_jacket - length_cw70_coll)/2."/>
-=======
-        <file name="geometry/subCollimatorV2.gdml"/>
-        <positionref ref="pos_global_coll_jacket"/>
->>>>>>> f140a731af8f225305ef9b6cc34cb583ed4bc49b
-      </physvol>
+      </physvol> -->
 
       <physvol>
         <file name="geometry/subHRSplatform.gdml"/>

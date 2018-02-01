@@ -16,17 +16,29 @@ config=prexII
 #ident=newHRS2layerDumpShield
 #ident=newHRSnoDumpShield
 #ident=collERR
-#ident=concSS
-#ident=concSSDumpTunnel
-#ident=ironSS
-#ident=ironSSDumpTunnel
+#ident=concrete2blocksPlusW
 #ident=shortDumpNoShield
-ident=extDumpNoShield
+#ident=extDumpNoShield
+#ident=extDumpKripShield
+#ident=concrete2blocksPlusW_v1geom
+#ident=concrete2blocksPlusW_v1geomNoCollJacket
+ident=concrete2blocksPlusW_v2geom
+#ident=iron2blocks_v1geom
+#ident=noSkyshine_v1geom
+
+#TESTING FILES
+#ident=concrete2blocksPlusWPlusQ1fringe
+#ident=conc2blocksPlusCollShields
+#ident=conc2blocksPlusTargCham
+#ident=conc2blocksPlusCollimator
+#ident=conc2blocksPlusLargerHall
+#ident=concrete2blocksPlusW
+#ident=concrete2blocksPlusW
 
 start_run=0
 end_run=50
 
-n_events=200000
+n_events=800000
 
 e_cut=30
 
@@ -35,4 +47,4 @@ uva_id=ajz3ee
 jlab_id=ajzec
 
 #comma separated, no spaces, correct capitalization is important
-subassemblies=TargetChamber,Collimator,CollShields,BeamPipe,DumpShield,HRSplatform,ExtendedDump,BeamPipe_noDonut,SkyshineV2
+subassemblies=TargetChamber,Collimator,CollShields,BeamPipe,DumpShield,HRSplatform,ExtendedDump,BeamPipe_noDonut,SkyshineIronV3,HallLid,CollShieldsNoW

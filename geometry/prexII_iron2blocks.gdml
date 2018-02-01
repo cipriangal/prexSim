@@ -97,10 +97,10 @@
     <position unit="cm" name="pos_rel_coll_frontHole" x="0" y="0" z="(-length_cw70_coll + 2.5 )/2."/>
 
     <!-- Tungsten jacket volume dimentions-->
+    <constant name="height_w_coll_jacket_topExtension" value="6."/>
     <constant name="width_w_coll_jacket" value="11.4"/>
     <constant name="height_w_coll_jacket" value="22.7"/>
     <constant name="length_w_coll_jacket" value="15.5575"/>
-    <constant name="height_w_coll_jacket_topExtension" value="6."/>
 
     <constant name="delta_coll_ds_face" value="delta_coll_us_face+length_w_coll_jacket"/>
 
@@ -539,7 +539,7 @@
               y="0"
               z="height_sc_attach_pig/3"/>
     <position unit="cm" name="pos_global_pig_shield" x="0"
-              y="(height_sc_attach + height_sc_attach_pig)/2"
+              y="(height_sc_attach + height_sc_attach_pig)/2 + 5"
               z="center_cw70_coll + length_w_coll_jacket/2 - length_cw70_coll/2"/>
 
     <position unit="cm" name="scAttachTubeTrans_1"
@@ -955,16 +955,13 @@
       <rotationref ref="identity"/>
     </subtraction>
     <!-- Remove copper cylinder from jacket -->
+    <tube aunit="deg" startphi="0" deltaphi="360"
+	  lunit="cm" name="jacket_cut_hole"
+	  rmin="0.0" rmax="Cu_tube_outer_r + 0.01"
+	  z="length_cw70_coll + 0.01"/>
     <subtraction name ="coll_jacket_w_solid_2">
       <first ref="coll_jacket_w_solid_1"/>
-      <second ref="Cu_tube_solid"/>
-      <positionref ref="pos_rel_jacket_coll"/>
-      <rotationref ref="identity"/>
-    </subtraction>
-    <!-- Remove collimator from jacket -->
-    <subtraction name ="coll_jacket_w_solid_3">
-      <first ref="coll_jacket_w_solid_2"/>
-      <second ref="coll_cw70_cyln"/>
+      <second ref="jacket_cut_hole"/>
       <positionref ref="pos_rel_jacket_coll"/>
       <rotationref ref="identity"/>
     </subtraction>
@@ -974,7 +971,7 @@
          y="height_w_coll_jacket_topExtension"
          z="length_w_coll_jacket"/>
     <union name ="coll_jacket_w_solid_4">
-      <first ref="coll_jacket_w_solid_3"/>
+      <first ref="coll_jacket_w_solid_2"/>
       <second ref="coll_jacket_topExtension"/>
       <positionref ref="pos_rel_topExtension_wrt_jacket"/>
       <rotationref ref="identity"/>
@@ -2784,7 +2781,6 @@
       <materialref ref="Vacuum"/>
       <solidref ref="boxMother"/>
 
-	<!--
       <physvol name="collimator">
         <volumeref ref="W_coll_logic"/>
         <positionref ref="pos_global_coll_cw70"/>
@@ -2805,7 +2801,6 @@
         <positionref ref="pos_global_pig_shield"/>
         <rotationref ref="scRot_1"/>
       </physvol>
-	-->
 
       <physvol name="target">
         <volumeref ref="target_logic"/>
@@ -2970,11 +2965,6 @@
       <physvol>
         <file name="geometry/subBeamPipe.gdml"/>
         <positionref ref="dDet_beamline_pos_1"/>
-      </physvol>
-	
-      <physvol>
-	<file name="geometry/subCollimatorV2.gdml"/>
-	<positionref ref="pos_global_coll_cw70"/>
       </physvol>
       
       <physvol>
