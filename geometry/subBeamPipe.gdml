@@ -10,7 +10,7 @@
     <constant name="ring_cut_length" value="ring_length + 2.54"/>
     <constant name="ring_torus_r" value="54.53"/>
     <constant name="sam_can_outer_r" value="1.92"/>
-    <constant name="sam_can_wall_thickness" value="0.32"/>
+    <constant name="sam_can_wall_thickness" value="0.15"/>
     <constant name="sam_can_length" value="36."/>
     <constant name="sam_can_inner_r" value="sam_can_outer_r - sam_can_wall_thickness"/>
     <constant name="sam_cut_height" value="sam_can_length - 2*sam_can_wall_thickness"/>
