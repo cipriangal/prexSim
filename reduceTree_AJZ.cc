@@ -20,7 +20,7 @@ TFile *fout;
 int nEv(0), tID, pID, pdgID, vID;
 float x,y,z, px,py,pz;
 float xO,yO,zO;
-float E, neil, mrem;
+float kE, eD, neil, mrem;
 TTree *tout;
 int nTotalPerFile(0);
 vector<int> detNr;
@@ -131,12 +131,12 @@ void ProcessOne(string fnm, long ntpf){
     // cout<<volume<<"\tvol\t"<<zO<<"\t"<<trackstatus<<"\t"<<Edeposit<<"\t"<<kinE<<endl;
     // std::cin.ignore();
 
-    if(trackstatus==0)
-      E = kinE;
-    else
-      E = Edeposit;
+    //if(trackstatus==0)
+    //  E = kinE;
+    //else
+    //  E = Edeposit;
 
-    if( E < 0.1 ) continue;
+    if( kinE < 0.1 && Edeposit < 0.1) continue;
 
     nEv   = processedEv + evNr;
     tID   = track;
@@ -152,9 +152,11 @@ void ProcessOne(string fnm, long ntpf){
     px    = pxd;
     py    = pyd;
     pz    = pzd;
+    kE    = kinE;
+    eD    = Edeposit;
 
-    neil = radDmg.getNEIL(pdgID,E,0);
-    mrem = radDmg.getMREM(pdgID,E,0);
+    neil = radDmg.getNEIL(pdgID,kE,0);
+    mrem = radDmg.getMREM(pdgID,kE,0);
     // cout<<tst<<endl;
     // tst++;
     // std::cin.ignore();
@@ -183,7 +185,8 @@ void Initialize(){
   tout->Branch("px",&px,"px/F");
   tout->Branch("py",&py,"py/F");
   tout->Branch("pz",&pz,"pz/F");
-  tout->Branch("E",&E,"E/F");
+  tout->Branch("kineE",&kE,"kE/F");
+  tout->Branch("edep",&eD,"eD/F");
   tout->Branch("neil",&neil,"neil/F");
   tout->Branch("mrem",&mrem,"mrem/F");
 

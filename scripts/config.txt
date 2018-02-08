@@ -1,6 +1,6 @@
 #Config File
-config=prexII
-#config=crex5
+#config=prexII
+config=crex5
 
 #ident=shieldless
 #ident=concrete2blocks28thick
@@ -22,9 +22,10 @@ config=prexII
 #ident=extDumpKripShield
 #ident=concrete2blocksPlusW_v1geom
 #ident=concrete2blocksPlusW_v1geomNoCollJacket
-ident=concrete2blocksPlusW_v2geom
+#ident=concrete2blocksPlusW_v2geom
 #ident=iron2blocks_v1geom
 #ident=noSkyshine_v1geom
+ident=oRingBeamPipe
 
 #TESTING FILES
 #ident=concrete2blocksPlusWPlusQ1fringe

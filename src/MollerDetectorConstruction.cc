@@ -265,6 +265,10 @@ G4VPhysicalVolume* MollerDetectorConstruction::Construct()
             worldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->GetDaughter(j)->GetLogicalVolume()->SetVisAttributes(fpolyVisAtt);
             worldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->GetDaughter(j)->GetLogicalVolume()->SetMaterial(fluorpoly);}
 
+          if (worldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->GetDaughter(j)->GetLogicalVolume()->GetMaterial()->GetName().compare("Quartz")==0){
+            worldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->GetDaughter(j)->GetLogicalVolume()->SetVisAttributes(fpolyVisAtt);
+            worldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->GetDaughter(j)->GetLogicalVolume()->SetMaterial(quartz);}
+
           if (worldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->GetDaughter(j)->GetLogicalVolume()->GetMaterial()->GetName().compare("Water")==0){
             worldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->GetDaughter(j)->GetLogicalVolume()->SetVisAttributes(shieldVisAtt);
             worldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->GetDaughter(j)->GetLogicalVolume()->SetMaterial(H2O);}
@@ -341,6 +345,10 @@ G4VPhysicalVolume* MollerDetectorConstruction::Construct()
         if (worldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->GetMaterial()->GetName().compare("Fluoropolymer")==0){
           worldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->SetVisAttributes(fpolyVisAtt);
           worldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->SetMaterial(fluorpoly);}
+
+        if (worldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->GetMaterial()->GetName().compare("Quartz")==0){
+          worldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->SetVisAttributes(fpolyVisAtt);
+          worldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->SetMaterial(quartz);}
 
         if (worldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->GetMaterial()->GetName().compare("Water")==0){
           worldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->SetVisAttributes(shieldVisAtt);
@@ -554,6 +562,8 @@ void MollerDetectorConstruction::DefineMaterials()
   bormat = matman->FindOrBuildMaterial("G4_B");
   C  = matman->FindOrBuildMaterial("G4_C");
   F  = matman->FindOrBuildMaterial("G4_F");
+  Si = matman->FindOrBuildMaterial("G4_Si");
+  O  = matman->FindOrBuildMaterial("G4_O");
 
   borpoly = new G4Material("Borated_Polyethylene", density= 1.19*g/cm3, nComponents=2);
   borpoly->AddMaterial(bormat, fractionmass=30.*perCent);
@@ -571,6 +581,10 @@ void MollerDetectorConstruction::DefineMaterials()
   fluorpoly->AddMaterial(C, fractionmass=33.*perCent);
   fluorpoly->AddMaterial(F, fractionmass=67.*perCent);
 
+  quartz = new G4Material("Quartz", density= 2.648*g/cm3, nComponents=2);
+  quartz->AddMaterial(Si, fractionmass=33.*perCent);
+  quartz->AddMaterial(O, fractionmass=67.*perCent);
+
   //H =  matman->FindOrBuildMaterial("G4_H");
   Al = matman->FindOrBuildMaterial("G4_Al");
   Ar = matman->FindOrBuildMaterial("G4_Ar");
@@ -579,7 +593,6 @@ void MollerDetectorConstruction::DefineMaterials()
   Cr = matman->FindOrBuildMaterial("G4_Cr");
   Ni  = matman->FindOrBuildMaterial("G4_Ni");
   Fe  = matman->FindOrBuildMaterial("G4_Fe");
-  Si  = matman->FindOrBuildMaterial("G4_Si");
   P  = matman->FindOrBuildMaterial("G4_P");
   S  = matman->FindOrBuildMaterial("G4_S");
   W  = matman->FindOrBuildMaterial("G4_W");

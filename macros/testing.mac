@@ -21,7 +21,7 @@
 #/moller/det/setDetectorFileName geometry/kriptoniteDetectors.gdml
 #/moller/det/setDetectorFileName geometry/subTargetChamber.gdml
 #/moller/det/setDetectorFileName geometry/subCollShields.gdml
-#/moller/det/setDetectorFileName geometry/subBeamPipe.gdml
+/moller/det/setDetectorFileName geometry/subBeamPipe.gdml
 #/moller/det/setDetectorFileName geometry/subExtendedDump.gdml
 #/moller/det/setDetectorFileName geometry/subSkyshineIronV3.gdml
 #/moller/det/setDetectorFileName geometry/subHallLid.gdml
@@ -31,7 +31,7 @@
 #/moller/det/setDetectorFileName geometry/crex5_noSkyshine_v1geom.gdml
 #/moller/det/setDetectorFileName geometry/prexII_concrete2blocksPlusW_v1geom.gdml
 #/moller/det/setDetectorFileName geometry/crex5_concrete2blocksPlusW_v1geom.gdml
-/moller/det/setDetectorFileName geometry/prexII_concrete2blocksPlusW_v2geom.gdml
+#/moller/det/setDetectorFileName geometry/prexII_concrete2blocksPlusW_v2geom.gdml
 #/moller/det/setDetectorFileName geometry/crex5_concrete2blocksPlusW_v2geom.gdml
 #/moller/det/setDetectorFileName geometry/prexII_iron2blocks_v1geom.gdml
 #/moller/det/setDetectorFileName geometry/crex5_iron2blocks_v1geom.gdml

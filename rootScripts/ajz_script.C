@@ -253,7 +253,7 @@ void sum_root_files_ifarm(string config, string ident, int nfiles, int n_events_
 }
 
 void one_d_histo(string sim, string conf, int n_events_k, string meas, string cuts, Int_t nbinsx, Double_t xlo, Double_t xhi){
-  string fname = "~/farmOut/" + sim + "_" + conf + "_" + to_string(n_events_k) + "kEv/" + sim + "_" + conf + "_redTree.root";
+  string fname = "~/farmOut/" + sim + "_" + conf + "_" + to_string(n_events_k) + "kEv/" + sim + "_" + conf + ".root";
   TFile *f = new TFile(fname.c_str());
   TTree* t = (TTree*)f->Get("t");
 
@@ -266,55 +266,17 @@ void one_d_histo(string sim, string conf, int n_events_k, string meas, string cu
   h1->Draw();
 }
 
-void particle_histo_stack(string sim, string conf, int n_events_k, string meas, string cuts, Int_t nbinsx, Double_t xlo, Double_t xhi){
-  TFile *f = new TFile(("~/farmOut/" + sim + "_" + conf + "_" + to_string(n_events_k) + "kEv/" + sim + "_" + conf + "_redTree.root").c_str());
-  TTree *t = (TTree*)f->Get("t");
+void two_d_histo(string sim, string conf, int n_events_k, string meas, string cuts, Int_t nbinsx, Double_t xlow, Double_t xhi, Int_t nbinsy, Double_t ylow, Double_t yhi){
+  string fname = "~/farmOut/" + sim + "_" + conf + "_" + to_string(n_events_k) + "kEv/" + sim + "_" + conf + ".root";
 
-  TH1F *h  = new TH1F("h", "all PDGs", nbinsx, xlo, xhi);
-  h->SetLineColor(kBlack);
-  TH1F* h1 = new TH1F("h1", "pdgID==11", nbinsx, xlo, xhi);
-  h1->SetLineColor(kBlue);
-  TH1F* h2 = new TH1F("h2", "pdgID==22", nbinsx, xlo, xhi);
-  h2->SetLineColor(kRed);
-  TH1F* h3 = new TH1F("h3", "pdgID==2112", nbinsx, xlo, xhi);
-  h3->SetLineColor(kGreen);
-
-  THStack *hs = new THStack("hs", (conf + ": " + meas + ", " + cuts).c_str());
-  TCanvas *c1 = new TCanvas("c1", "c1", 1000, 800);  
-  gStyle->SetOptStat("eMRiou");
+  TCanvas *c1=new TCanvas("c1","c1",800,600);
   
-  t->Project("h",  meas.c_str(), cuts.c_str());
-  t->Project("h1", meas.c_str(), ("(" + cuts + ") && abs(pdgID)==11").c_str());
-  t->Project("h2", meas.c_str(), ("(" + cuts + ") && abs(pdgID)==22").c_str());
-  t->Project("h3", meas.c_str(), ("(" + cuts + ") && abs(pdgID)==2112").c_str());
-
-  hs->Add(h);
-  hs->Add(h1);
-  hs->Add(h2);
-  hs->Add(h3);
-  hs->Draw("nostack");
-
-  hs->GetXaxis()->SetTitle(meas.c_str());
-  c1->Modified();
-  gPad->BuildLegend(0.75,0.75,0.95,0.95,"");
-}
-
-void two_d_histo(const char* fname, string dim1, string dim2, string conditions){
-  TFile *f = new TFile(fname);
+  TFile *f = new TFile(fname.c_str());
   TTree* geant = (TTree*)f->Get("t");
+  TH2F *h = new TH2F("h1", (conf + ": " + meas + ", " + cuts).c_str(), nbinsx, xlow, xhi, nbinsy, ylow, yhi);
 
-  geant->Draw((dim1 + ":" + dim2).c_str(),conditions.c_str(),"colz");
-}
-
-void neil_weighted_hit_map(const char* fname, string dim1, string dim2, int vol){
-  TFile *f = new TFile(fname);
-  TTree *geant = (TTree*)f->Get("t");
-
-  string conditions = "neil*(neil!=-999 && volID==" + to_string(vol) + ")";
-  
-  TH2F *h1 = new TH2F("neil_weighted_hit_map", conditions.c_str(), 500, 25000, 53000, 100, -2000, 2000);
-  geant->Project("neil_weighted_hit_map", (dim1 + ":" + dim2).c_str(), conditions.c_str());
-  h1->Draw("colz");
+  geant->Project("h1", meas.c_str(), cuts.c_str());
+  h->Draw("colz");
 }
 
 void side_by_side_comp_h1(string sim, string conf1, string conf2, int n_events_k1, int n_events_k2, string meas, string cuts, Int_t nbinsx, Double_t xlo, Double_t xhi){
@@ -376,33 +338,87 @@ void particle_histo_quad(string sim, string conf, int n_events_k, string meas, s
   TH1F* h2 = new TH1F("h2", (conf + ": " + cuts + ", electrons").c_str(),     nbinsx, xlo, xhi);
   TH1F* h3 = new TH1F("h3", (conf + ": " + cuts + ", gammas").c_str(),        nbinsx, xlo, xhi);
   TH1F* h4 = new TH1F("h4", (conf + ": " + cuts + ", neutrons").c_str(),      nbinsx, xlo, xhi);
-  TH1F* h5 = new TH1F("h5", (conf + ": " + cuts + ", targ neutrons").c_str(), nbinsx, xlo, xhi);
-  TH1F* h6 = new TH1F("h6", (conf + ": " + cuts + ", coll neutrons").c_str(), nbinsx, xlo, xhi);
+  //TH1F* h5 = new TH1F("h5", (conf + ": " + cuts + ", targ neutrons").c_str(), nbinsx, xlo, xhi);
+  //TH1F* h6 = new TH1F("h6", (conf + ": " + cuts + ", coll neutrons").c_str(), nbinsx, xlo, xhi);
 
   TCanvas *c1 = new TCanvas("c1", "c1", 2000, 1400);
-  c1->Divide(2, 3);
+  //c1->Divide(2, 3);
+  c1->Divide(2, 2);
   gStyle->SetOptStat("eMRiou");
   
   t->Project("h1", meas.c_str(), cuts.c_str());
   t->Project("h2", meas.c_str(), ("(" + cuts + ") && abs(pdgID)==11").c_str());
   t->Project("h3", meas.c_str(), ("(" + cuts + ") && abs(pdgID)==22").c_str());
   t->Project("h4", meas.c_str(), ("(" + cuts + ") && abs(pdgID)==2112").c_str());
-  t->Project("h5", meas.c_str(), ("(" + cuts + ") && abs(pdgID)==2112 && z0>-1225.24 && z0<-895.04").c_str());
-  t->Project("h6", meas.c_str(), ("(" + cuts + ") && abs(pdgID)==2112 && z0>-250 && z0<-85").c_str());
+  //t->Project("h5", meas.c_str(), ("(" + cuts + ") && abs(pdgID)==2112 && z0>-1225.24 && z0<-895.04").c_str());
+  //t->Project("h6", meas.c_str(), ("(" + cuts + ") && abs(pdgID)==2112 && z0>-250 && z0<-85").c_str());
 
   h1->GetXaxis()->SetTitle(meas.c_str());
   h2->GetXaxis()->SetTitle(meas.c_str());
   h3->GetXaxis()->SetTitle(meas.c_str());
   h4->GetXaxis()->SetTitle(meas.c_str());
-  h5->GetXaxis()->SetTitle(meas.c_str());
-  h6->GetXaxis()->SetTitle(meas.c_str());
+  //h5->GetXaxis()->SetTitle(meas.c_str());
+  //h6->GetXaxis()->SetTitle(meas.c_str());
 
   c1->cd(1); h1->Draw();
   c1->cd(2); h2->Draw();
   c1->cd(3); h3->Draw();
   c1->cd(4); h4->Draw();
-  c1->cd(5); h5->Draw();
-  c1->cd(6); h6->Draw();
+  //c1->cd(5); h5->Draw();
+  //c1->cd(6); h6->Draw();
+}
+
+void particle_histo_quad_weighted(string sim, string conf, int n_events_k, string meas, string cuts, string weight, Int_t nbinsx, Double_t xlo, Double_t xhi){
+  TFile *f = new TFile(("~/farmOut/" + sim + "_" + conf + "_" + to_string(n_events_k) + "kEv/" + sim + "_" + conf + ".root").c_str());
+  TTree *t = (TTree*)f->Get("t");
+
+  TH1F *h1 = new TH1F("h1", (conf + ": " + weight + "*(" + cuts + "), all PDGs").c_str(),      nbinsx, xlo, xhi);
+  TH1F* h2 = new TH1F("h2", (conf + ": " + weight + "*(" + cuts + "), electrons").c_str(),     nbinsx, xlo, xhi);
+  TH1F* h3 = new TH1F("h3", (conf + ": " + weight + "*(" + cuts + "), gammas").c_str(),        nbinsx, xlo, xhi);
+  TH1F* h4 = new TH1F("h4", (conf + ": " + weight + "*(" + cuts + "), neutrons").c_str(),      nbinsx, xlo, xhi);
+
+  TCanvas *c1 = new TCanvas("c1", "c1", 2000, 1400);
+  c1->Divide(2, 2);
+  gStyle->SetOptStat("eMRiou");
+  
+  t->Project("h1", meas.c_str(), (weight + "*("  + cuts + ")").c_str());
+  t->Project("h2", meas.c_str(), (weight + "*((" + cuts + ") && abs(pdgID)==11)").c_str());
+  t->Project("h3", meas.c_str(), (weight + "*((" + cuts + ") && abs(pdgID)==22)").c_str());
+  t->Project("h4", meas.c_str(), (weight + "*((" + cuts + ") && abs(pdgID)==2112)").c_str());
+
+  h1->GetXaxis()->SetTitle(meas.c_str());
+  h2->GetXaxis()->SetTitle(meas.c_str());
+  h3->GetXaxis()->SetTitle(meas.c_str());
+  h4->GetXaxis()->SetTitle(meas.c_str());
+
+  c1->cd(1); h1->Draw();
+  c1->cd(2); h2->Draw();
+  c1->cd(3); h3->Draw();
+  c1->cd(4); h4->Draw();
+}
+
+void particle_histo_quad_h2(string sim, string conf, int n_events_k, string meas, string cuts, Int_t nbinsx, Double_t xlow, Double_t xhi, Int_t nbinsy, Double_t ylow, Double_t yhi){
+  string fname = "~/farmOut/" + sim + "_" + conf + "_" + to_string(n_events_k) + "kEv/" + sim + "_" + conf + ".root";
+
+  TCanvas *c1 = new TCanvas("c1", "c1", 2000, 1400);
+  c1->Divide(2, 2);
+
+  TFile *f1 = new TFile(fname.c_str());
+  TTree *t1 = (TTree*)f1->Get("t");
+  TH2F *h1 = new TH2F("h1", (conf + ": " + meas + ", " + cuts + ", all PDGs").c_str(), nbinsx, xlow, xhi, nbinsy, ylow, yhi);
+  TH2F *h2 = new TH2F("h2", (conf + ": " + meas + ", " + cuts + ", electrons").c_str(), nbinsx, xlow, xhi, nbinsy, ylow, yhi);
+  TH2F *h3 = new TH2F("h3", (conf + ": " + meas + ", " + cuts + ", gammas"   ).c_str(), nbinsx, xlow, xhi, nbinsy, ylow, yhi);
+  TH2F *h4 = new TH2F("h4", (conf + ": " + meas + ", " + cuts + ", neutrons" ).c_str(), nbinsx, xlow, xhi, nbinsy, ylow, yhi);
+
+  t1->Project("h1", meas.c_str(), cuts.c_str());
+  t1->Project("h2", meas.c_str(), ("(" + cuts + ") && abs(pdgID)==11").c_str());
+  t1->Project("h3", meas.c_str(), ("(" + cuts + ") && pdgID==22").c_str());
+  t1->Project("h4", meas.c_str(), ("(" + cuts + ") && pdgID==2112").c_str());
+
+  c1->cd(1); h1->Draw("colz");
+  c1->cd(2); h2->Draw("colz");
+  c1->cd(3); h3->Draw("colz");
+  c1->cd(4); h4->Draw("colz");
 }
 
 void two_by_two_hit_map(string sim, string conf1, string conf2, int n_events_k, string meas1, string meas2, string cuts, Int_t nbinsx, Double_t xlow, Double_t xhi, Int_t nbinsy, Double_t ylow, Double_t yhi){

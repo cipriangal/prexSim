@@ -240,6 +240,7 @@ private:
   G4Material* Cr;
   G4Material* F;
   G4Material* Ni;
+  G4Material* O;
   G4Material* Fe;
   G4Material* Si;
   G4Material* P;
@@ -249,6 +250,7 @@ private:
   G4Material* Kryptonite;
   G4Material* Air;
   G4Material* H;
+  G4Material* quartz;
   
 
 
