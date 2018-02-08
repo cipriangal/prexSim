@@ -732,7 +732,7 @@
     </volume>
 
     <volume name="sam_quartz_logic">
-      <materialref ref="Concrete"/>
+      <materialref ref="Quartz"/>
       <solidref ref="sam_quartz_solid"/>
     </volume>
 
