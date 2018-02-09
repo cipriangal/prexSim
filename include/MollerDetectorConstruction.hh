@@ -229,6 +229,7 @@ private:
   G4Material* borpoly;
   G4Material* borcrete;
   G4Material* polycrete;
+  G4Material* fluorpoly;
   G4Material* W;
   G4Material* CW70;
   G4Material* Al;
@@ -237,7 +238,9 @@ private:
   G4Material* C;
   G4Material* Cu;
   G4Material* Cr;
+  G4Material* F;
   G4Material* Ni;
+  G4Material* O;
   G4Material* Fe;
   G4Material* Si;
   G4Material* P;
@@ -247,6 +250,7 @@ private:
   G4Material* Kryptonite;
   G4Material* Air;
   G4Material* H;
+  G4Material* quartz;
   
 
 
