@@ -3,6 +3,7 @@
 
 map <int,int> detArea;//cm2
 void doOne(TH1D *h, double runV);
+void doLid(TH1D *h,double runV);
 
 int printHallRad(string fnm,string simType){
 
@@ -41,8 +42,27 @@ int printHallRad(string fnm,string simType){
   TH1D *h2=(TH1D*)fin->Get("hSummary_mRemLogX");
   doOne(h1,runFactor);
   //doOne(h2,runFactor);
+
+  TH1D *hL=(TH1D*)fin->Get("Det_1006/ha_1006_n_enerLinX");
+  if(hL)
+    doLid(hL,runFactor);
   fin->Close();
   return 0;
+}
+
+void doLid(TH1D *h,double runV){
+  int nb=h->GetXaxis()->GetNbins();
+  string title=h->GetTitle();
+  cout<<endl<<endl<<title<<endl;
+  double ev2uA=1e13/1.6;
+  double totFactor = ev2uA*runV;
+
+  double b10=h->GetXaxis()->FindBin(10);
+  double bEnd=h->GetXaxis()->GetNbins();
+  cout<<endl<<"For this histogram the edge of the 10MeV bin is "<<h->GetXaxis()->GetBinLowEdge(b10)<<endl;
+  double dx=-1;
+  cout<<"\tHall Lid:\t"<<h->IntegralAndError(b10,bEnd,dx)*totFactor;
+  cout<<"\t"<<dx*totFactor<<endl;
 }
 
 void doOne(TH1D *h, double runV){
