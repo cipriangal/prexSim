@@ -609,7 +609,7 @@
     </volume>
   </structure>
 
-  <setup name="beamPipe_prex1" version="1.0">
+  <setup name="beamPipe_prex1" version="3.0">
     <world ref="beamPipeP1"/>
   </setup>
 
