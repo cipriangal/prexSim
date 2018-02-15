@@ -9,6 +9,7 @@
     <position unit="cm" name="pos_rel_giantShield2" x="-105" y="-100" z="-110"/>
     <position unit="cm" name="pos_rel_giantShield3" x="0" y="0" z="71.4 + 74/2. - 4.9"/>
     <position unit="cm" name="pos_rel_giantShield4" x="0" y="45" z="-4.9 + 71.4 + 70"/>
+
     <rotation name="rot_z45"  unit="deg" x="0"   y="0"   z="45"/>
 
     <position unit="cm" name="pos_bottom_det_giantShield" x="0" y="-23" z="20"/>
@@ -44,7 +45,7 @@
     <box lunit="cm" name="giantShield_solid3" x="280" y="100" z="74"/>
     <box lunit="cm" name="giantShield_solid4" x="123.5" y="40" z="140"/>
 
-    <box lunit="cm" name="det_solid" x="150" y="0.1" z="400"/>
+    <box lunit="cm" name="det_solid" x="130" y="0.1" z="400"/>
 
     <subtraction name ="giantShield_solid_temp2">
       <first ref="giantShield_solid0"/>
@@ -63,13 +64,13 @@
       <positionref ref="pos_rel_giantShield4"/>
     </union>
 
-    <union name ="worldUnion0">
+    <union name ="skyUnion0">
       <first ref="giantShield_solid"/>
       <second ref="det_solid"/>
       <positionref ref="pos_bottom_det_giantShield"/>
     </union>
-    <union name ="worldUnion1">
-      <first ref="worldUnion0"/>
+    <union name ="skyUnion1">
+      <first ref="skyUnion0"/>
       <second ref="det_solid"/>
       <positionref ref="pos_top_det_giantShield"/>
     </union>
@@ -98,7 +99,7 @@
 
     <volume name="skyShineShield">
       <materialref ref="Vacuum"/>
-      <solidref ref="worldUnion1"/>
+      <solidref ref="skyUnion1"/>
 
       <physvol name="giantShield_phys">
         <volumeref ref="giantShield_logic"/>
