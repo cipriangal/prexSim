@@ -1860,7 +1860,7 @@
       </physvol>
 
       <physvol>
-        <file name="geometry/prex1BeampipeV2.gdml"/>
+        <file name="geometry/prex1Beampipe.gdml"/>
         <positionref ref="dDet_beamline_pos_1"/>
       </physvol>
 
