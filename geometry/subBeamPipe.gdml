@@ -307,7 +307,7 @@
       <positionref ref="center_posRel"/>
     </subtraction>
 
-    <box lunit="cm" name="usDet_dumpShield_solid0" x="370" y="500" z="0.1"/>
+    <box lunit="cm" name="usDet_dumpShield_solid0" x="350" y="500" z="0.1"/>
     <subtraction name ="usDet_dumpShield_solid1">
       <first ref="usDet_dumpShield_solid0"/>
       <second ref="beamPipe_solid2"/>
