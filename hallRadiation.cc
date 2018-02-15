@@ -137,6 +137,8 @@ void ProcessOne(string fnm){
     //electrons directly from the gun
     if(z0== -17720) continue;
 
+    //if(z0>= 26000) continue;
+
     double energy(-1);
     if( volume <2000 && volume>1000 ) //Kryptonite detectors
       energy = Edeposit;
