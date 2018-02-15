@@ -25,7 +25,7 @@
 /moller/field/setConfiguration prex1
 /moller/field/useQ1fringeField false
 #### Geometry files
-/moller/det/setDetectorFileName geometry/prexI.gdml
+/moller/det/setDetectorFileName geometry/prex1.gdml
 
 /moller/det/setShieldMaterial polyethylene
 /testhadr/CutsAll          0.7 mm
