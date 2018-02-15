@@ -2,6 +2,7 @@
 #include <string>
 
 map <int,int> detArea;//cm2
+void doOne(TH1D *h, double runV);
 
 int printHallRad(string fnm,string simType){
 
@@ -38,9 +39,10 @@ int printHallRad(string fnm,string simType){
   // TH1D *h2=(TH1D*)fin->Get("hSummary_mRem");
   TH1D *h1=(TH1D*)fin->Get("hSummary_neilLogX");
   TH1D *h2=(TH1D*)fin->Get("hSummary_mRemLogX");
-  doOne(h1,runFactor[simType]);
-  //doOne(h2,runFactor[simType]);
+  doOne(h1,runFactor);
+  //doOne(h2,runFactor);
   fin->Close();
+  return 0;
 }
 
 void doOne(TH1D *h, double runV){
