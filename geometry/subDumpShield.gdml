@@ -19,19 +19,7 @@
       <atom unit="g/mole" value="1.01"/>
     </material>
 
-    <material Z="13" name="Shield" state="solid">
-      <T unit="K" value="298"/>
-      <D unit="g/cm3" value="2.699"/>
-      <atom unit="g/mole" value="26.982"/>
-    </material>
-
     <material Z="13" name="Concrete" state="solid">
-      <T unit="K" value="298"/>
-      <D unit="g/cm3" value="2.699"/>
-      <atom unit="g/mole" value="26.982"/>
-    </material>
-
-    <material Z="13" name="Iron" state="solid">
       <T unit="K" value="298"/>
       <D unit="g/cm3" value="2.699"/>
       <atom unit="g/mole" value="26.982"/>
@@ -40,21 +28,20 @@
 
   <solids>
 
-    <box lunit="cm" name="midlBlock_solid" x="134" y="137" z="75"/>
-    <box lunit="cm" name="leftBlock_solid" x="120" y="344" z="75"/>
-    <box lunit="cm" name="righBlock_solid" x="120" y="344" z="75"/>
+    <box lunit="cm" name="midlBlock_solid" x="134" y="137" z="45"/>
+    <box lunit="cm" name="sideBlock_solid" x="120" y="344" z="45"/>
 
     <!-- Union of all objects so that there is a space to physically add them -->
-    <box lunit="cm" name="worldUnion0" x="134" y="137" z="75"/>
+    <box lunit="cm" name="dsWorldUnion0" x="134" y="137" z="45"/>
 
-    <union name ="worldUnion1">
-      <first ref="worldUnion0"/>
-      <second ref="leftBlock_solid"/>
+    <union name ="dsWorldUnion1">
+      <first ref="dsWorldUnion0"/>
+      <second ref="sideBlock_solid"/>
       <positionref ref="leftBlock_posRel"/>
     </union>
-    <union name ="worldUnion2">
-      <first ref="worldUnion1"/>
-      <second ref="righBlock_solid"/>
+    <union name ="dsWorldUnion2">
+      <first ref="dsWorldUnion1"/>
+      <second ref="sideBlock_solid"/>
       <positionref ref="righBlock_posRel"/>
     </union>
 
@@ -63,29 +50,23 @@
   <structure>
 
     <volume name="midlBlock_logic">
-      <!-- <materialref ref="Shield"/> -->
-      <!-- <materialref ref="Concrete"/> -->
-      <materialref ref="Iron"/>
+      <materialref ref="Concrete"/>
       <solidref ref="midlBlock_solid"/>
     </volume>
 
     <volume name="leftBlock_logic">
-      <!-- <materialref ref="Shield"/> -->
-      <!-- <materialref ref="Concrete"/> -->
-      <materialref ref="Iron"/>
-      <solidref ref="leftBlock_solid"/>
+      <materialref ref="Concrete"/>
+      <solidref ref="sideBlock_solid"/>
     </volume>
 
     <volume name="righBlock_logic">
-      <!-- <materialref ref="Shield"/> -->
-      <!-- <materialref ref="Concrete"/> -->
-      <materialref ref="Iron"/>
-      <solidref ref="righBlock_solid"/>
+      <materialref ref="Concrete"/>
+      <solidref ref="sideBlock_solid"/>
     </volume>
 
     <volume name="dumpShield">
       <materialref ref="Vacuum"/>
-      <solidref ref="worldUnion2"/>
+      <solidref ref="dsWorldUnion2"/>
 
       <physvol name="leftBlock_phys">
         <volumeref ref="leftBlock_logic"/>
