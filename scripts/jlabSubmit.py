@@ -10,27 +10,28 @@ def main():
     #configuration = "crex5"
 
     configuration = cr.config()
-    sourceDir = "/lustre/expphy/work/halla/parity/" + cr.jlab_id() + "/prexSim"
+    sourceDir = "/w/halla-scifs17exp/parity/disk1/" + cr.jlab_id() + "/prexSim"
     outputDir = "/lustre/expphy/volatile/halla/parity/" + cr.jlab_id() + "/farmOut"
     nrEv   = cr.nr_events()
     nrStart= cr.start_run()
     nrStop = cr.end_run()
-    identifier = cr.identifier()
+    ident_in = cr.identifier()
+    ident_out = cr.ident_output()
 
-    print('Starting setup for ' + configuration + ' simulation with geometry ' + identifier + '...')
+    print('Starting setup for ' + configuration + ' simulation with geometry ' + ident_in + '...')
     print('Running ' + str(nrEv*(nrStop - nrStart)) + ' events...')
 
-    jobName=configuration + '_' + identifier + '_%03dkEv'%(nrEv/1000)
+    jobName=configuration + '_' + ident_out + '_%03dkEv'%(nrEv/1000)
 
     ###tar exec+geometry
-    make_tarfile(sourceDir,configuration+"_"+identifier)
+    make_tarfile(sourceDir,configuration+"_"+ident_in)
 
     for nr in range(nrStart,nrStop): # repeat for nr jobs
         print("Starting job setup for jobID: " + str(nr))
 
         jobNumber   = '%05d'%nr
         jobFullName = jobName + '_%05d'%nr
-        createMacFiles(configuration, outputDir+"/"+jobName+"/"+jobNumber, sourceDir, nrEv, nr, identifier)
+        createMacFiles(configuration, outputDir+"/"+jobName+"/"+jobNumber, sourceDir, nrEv, nr, ident_in)
 
         ###copy tarfile
         call(["cp",sourceDir+"/scripts/z_config.tar.gz",

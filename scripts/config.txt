@@ -1,6 +1,6 @@
 #Config File
-#config=prexII
-config=crex5
+config=prexII
+#config=crex5
 
 #ident=shieldless
 #ident=concrete2blocks28thick
@@ -25,7 +25,10 @@ config=crex5
 #ident=concrete2blocksPlusW_v2geom
 #ident=iron2blocks_v1geom
 #ident=noSkyshine_v1geom
-ident=oRingBeamPipe
+#ident=oRingBeamPipe
+#ident=v2geom
+ident=v2SAMs
+#ident=v2Point6degSAMs
 
 #TESTING FILES
 #ident=concrete2blocksPlusWPlusQ1fringe
@@ -36,10 +39,14 @@ ident=oRingBeamPipe
 #ident=concrete2blocksPlusW
 #ident=concrete2blocksPlusW
 
-start_run=0
-end_run=50
+#output=v2NoSAMs
+output=v2SAMs
+#output=v2SAMsPoint6degSAMs
 
-n_events=800000
+start_run=0
+end_run=20
+
+n_events=200000
 
 e_cut=30
 
@@ -48,4 +55,4 @@ uva_id=ajz3ee
 jlab_id=ajzec
 
 #comma separated, no spaces, correct capitalization is important
-subassemblies=TargetChamber,Collimator,CollShields,BeamPipe,DumpShield,HRSplatform,ExtendedDump,BeamPipe_noDonut,SkyshineIronV3,HallLid,CollShieldsNoW
+subassemblies=TargetChamber,CollShields,BeamPipe,DumpShield,HRSplatform,ExtendedDump,SkyshineIronV3,BeamPipe_newSAMs,BeamPipe_SAMs

@@ -238,20 +238,6 @@ void compare_pos0(string fname1, string fname2, string comp_type, Int_t vol, Int
 //####################
 //# FOR USE ON IFARM #
 //####################
-void sum_root_files_ifarm(string config, string ident, int nfiles, int n_events_k){
-  TChain ch("geant");
-  for(int i = 0; i<nfiles; i++){
-    string fnum = "";
-    if(i < 10){fnum = "0000" + to_string(i);}
-    else if(i < 100){fnum = "000" + to_string(i);}
-    else{fnum = "00" + to_string(i);}
-
-    string full_fname = "~/farmOut/" + config + "_" + ident + "_" + to_string(n_events_k) + "kEv_" + fnum + "/o_prexSim.root";
-    ch.Add(full_fname.c_str());
-  }
-  ch.Merge( (config + "_" + ident + ".root").c_str() );
-}
-
 void one_d_histo(string sim, string conf, int n_events_k, string meas, string cuts, Int_t nbinsx, Double_t xlo, Double_t xhi){
   string fname = "~/farmOut/" + sim + "_" + conf + "_" + to_string(n_events_k) + "kEv/" + sim + "_" + conf + ".root";
   TFile *f = new TFile(fname.c_str());
@@ -262,6 +248,7 @@ void one_d_histo(string sim, string conf, int n_events_k, string meas, string cu
   t->Project("h1", meas.c_str(), cuts.c_str());
 
   gStyle->SetOptStat("eMRiou");
+  h1->GetXaxis()->SetTitle(meas.c_str());
 
   h1->Draw();
 }
@@ -297,10 +284,10 @@ void side_by_side_comp_h1(string sim, string conf1, string conf2, int n_events_k
   t1->Project("h1", meas.c_str(), cuts.c_str());
   t2->Project("h2", meas.c_str(), cuts.c_str());
 
-  c1->cd(1);
-  h1->Draw();
-  c1->cd(2);
-  h2->Draw();
+  h1->GetXaxis()->SetTitle(meas.c_str());
+  h2->GetXaxis()->SetTitle(meas.c_str());
+  c1->cd(1); h1->Draw();
+  c1->cd(2); h2->Draw();
 }
 
 void side_by_side_comp_h2(string sim, string conf1, string conf2, int n_events_k1, int n_events_k2, string meas, string cuts, Int_t nbinsx, Double_t xlow, Double_t xhi, Int_t nbinsy, Double_t ylow, Double_t yhi){
@@ -309,8 +296,8 @@ void side_by_side_comp_h2(string sim, string conf1, string conf2, int n_events_k
 
   cout<<"File 1: "<<f1name<<"; File 2: "<<f2name<<endl;
 
-  gStyle->SetOptStat("eMR");
-  TCanvas *c1=new TCanvas("c1","c1",2400,900);
+  gStyle->SetOptStat("e");
+  TCanvas *c1=new TCanvas("c1","c1",2400,1200);
   c1->Divide(2);
   TFile *f1 = new TFile(f1name.c_str());
   TTree *t1 = (TTree*)f1->Get("t");
@@ -329,6 +316,53 @@ void side_by_side_comp_h2(string sim, string conf1, string conf2, int n_events_k
   c1->cd(2);
   h2->Draw("colz");
 }
+
+void stack_comp_h1(string sim, string conf1, string conf2, int n_events_k1, int n_events_k2, string meas, string cuts, Int_t nbinsx, Double_t xlo, Double_t xhi){
+  string f1name = "~/farmOut/" + sim + "_" + conf1 + "_" + to_string(n_events_k1) + "kEv/" + sim + "_" + conf1 + ".root";
+  string f2name = "~/farmOut/" + sim + "_" + conf2 + "_" + to_string(n_events_k2) + "kEv/" + sim + "_" + conf2 + ".root";
+
+  cout<<"File 1: "<<f1name<<"; File 2: "<<f2name<<endl;
+
+  gStyle->SetOptStat("eMRiou");
+  TCanvas *c1=new TCanvas("c1","c1",1600,800);
+  TFile *f1 = new TFile(f1name.c_str());
+  TTree *t1 = (TTree*)f1->Get("t");
+  TFile *f2 = new TFile(f2name.c_str());
+  TTree *t2 = (TTree*)f2->Get("t");
+  TH1F *h1 = new TH1F("h1", (conf1 + " vs " + conf2 + ": " + meas + ", " + cuts).c_str(), nbinsx, xlo, xhi);
+  TH1F *h2 = new TH1F("h2", (conf2 + ": " + meas + ", " + cuts).c_str(), nbinsx, xlo, xhi);
+
+  t1->Project("h1", meas.c_str(), cuts.c_str());
+  t2->Project("h2", meas.c_str(), cuts.c_str());
+
+  h1->SetLineColor(kBlue); h2->SetLineColor(kRed);
+  h1->GetXaxis()->SetTitle(meas.c_str());
+  h1->Draw(); h2->Draw("same");
+}
+
+void stack_comp_h1_weighted(string sim, string conf1, string conf2, int n_events_k1, int n_events_k2, string meas, string cuts, string weight, Int_t nbinsx, Double_t xlo, Double_t xhi){
+  string f1name = "~/farmOut/" + sim + "_" + conf1 + "_" + to_string(n_events_k1) + "kEv/" + sim + "_" + conf1 + ".root";
+  string f2name = "~/farmOut/" + sim + "_" + conf2 + "_" + to_string(n_events_k2) + "kEv/" + sim + "_" + conf2 + ".root";
+
+  cout<<"File 1: "<<f1name<<"; File 2: "<<f2name<<endl;
+
+  gStyle->SetOptStat("eMRiou");
+  TCanvas *c1=new TCanvas("c1","c1",1600,1600);
+  TFile *f1 = new TFile(f1name.c_str());
+  TTree *t1 = (TTree*)f1->Get("t");
+  TFile *f2 = new TFile(f2name.c_str());
+  TTree *t2 = (TTree*)f2->Get("t");
+  TH1F *h1 = new TH1F("h1", (conf1 + " vs " + conf2 + ": " + meas + ", " + weight + "*(" + cuts + ")").c_str(), nbinsx, xlo, xhi);
+  TH1F *h2 = new TH1F("h2", (conf2 + ": " + meas + ", " + weight + "*(" + cuts + ")").c_str(), nbinsx, xlo, xhi);
+
+  t1->Project("h1", meas.c_str(), (weight + "*(" + cuts + ")").c_str());
+  t2->Project("h2", meas.c_str(), (weight + "*(" + cuts + ")").c_str());
+
+  h1->SetLineColor(kBlue); h2->SetLineColor(kRed);
+  h1->GetXaxis()->SetTitle(meas.c_str());
+  h1->Draw(); h2->Draw("same");
+}
+
 
 void particle_histo_quad(string sim, string conf, int n_events_k, string meas, string cuts, Int_t nbinsx, Double_t xlo, Double_t xhi){
   TFile *f = new TFile(("~/farmOut/" + sim + "_" + conf + "_" + to_string(n_events_k) + "kEv/" + sim + "_" + conf + ".root").c_str());
