@@ -317,20 +317,20 @@
     <subtraction name ="usDet_dumpShield_solid1">
       <first ref="usDet_dumpShield_solid0"/>
       <second ref="beamPipe_solid2"/>
-      <positionref ref="usDet_dumpShield_pos"/>
+      <position name="pipe2_usDet_dumpShield_posRel" unit="cm" x="0" y="0" z="-2250"/>
     </subtraction>
     <box lunit="cm" name="dsDet_dumpShield_solid0" x="378" y="500" z="0.1"/>
     <subtraction name ="dsDet_dumpShield_solid1">
       <first ref="dsDet_dumpShield_solid0"/>
       <second ref="beamPipe_solid2"/>
-      <positionref ref="dsDet_dumpShield_pos"/>
+      <position name="pipe2_dsDet_dumpShield_posRel" unit="cm" x="0" y="0" z="-2380"/>
     </subtraction>
 
     <box lunit="cm" name="dumpDet_solid0" x="350" y="500" z="0.1"/>
     <subtraction name ="dumpDet_solid1">
       <first ref="dumpDet_solid0"/>
       <second ref="beamPipe_solid2"/>
-      <positionref ref="dumpDet_pos"/>
+      <position name="pipe2_dumpDet_posRel" unit="cm" x="0" y="0" z="-2490"/>
     </subtraction>
 
     <!-- O-ring stuff -->
