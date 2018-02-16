@@ -823,36 +823,6 @@
               y="(height_sc_attach + thick_sc_attach_shield )/2. + height_sc_attach_pig + height_sc_attach_pigLid"
               z="center_cw70_coll + length_w_coll_jacket/2 - length_cw70_coll/2"/>
 
-    <position unit="cm" name="pos_global_giantShield"
-              x="0"
-              y="50+20"
-              z="prex_target_center + 4.9"
-              />
-
-    <position unit="cm" name="pos_rel_giantShield1"
-              x="0"
-              y="-20"
-              z="53"
-              />
-
-    <position unit="cm" name="pos_rel_giantShield2"
-              x="-105"
-              y="-100"
-              z="-110"
-              />
-
-    <position unit="cm" name="pos_rel_giantShield3"
-              x="0"
-              y="0"
-              z="71.4+74/2.-4.9"
-              />
-    <position unit="cm" name="pos_rel_giantShield4"
-              x="0"
-              y="45"
-              z="-4.9+71.4+70"
-              />
-
-
   </define>
 
   &materials;
@@ -990,18 +960,6 @@
 	  z="0.6" />
     <!-- z="0.05" /> -->
 
-    <!-- Target shielding -->
-    <box lunit="cm" name="giantShield_solid0"
-         x="123.5" y="40" z="247"/>
-    <box lunit="cm" name="giantShield_solid1"
-         x="123.5" y="50" z="36"/>
-    <box lunit="cm" name="giantShield_solid2"
-         x="247" y="247" z="247"/>
-    <box lunit="cm" name="giantShield_solid3"
-         x="280" y="100" z="74"/>
-    <box lunit="cm" name="giantShield_solid4"
-         x="123.5" y="40" z="140"/>
-
     <!-- Scattering Chamber -->
     <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="outScattChamber" rmin="0.0" rmax="outer_r_sc" z="height_sc" />
     <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="innScattChamber" rmin="0.0" rmax="inner_r_sc" z="1*height_sc-2*thick_sc" />
@@ -1103,24 +1061,6 @@
       <first ref="scatt_w_holes_p6"/>
       <second ref="real_hole_sc_p2"/>
       <positionref ref="real_hole_sc_trans1"/>
-      <rotationref ref="identity"/>
-    </union>
-    <subtraction name ="giantShield_solid_temp2">
-      <first ref="giantShield_solid0"/>
-      <second ref="giantShield_solid2"/>
-      <positionref ref="pos_rel_giantShield2"/>
-      <rotationref ref="scRot_3"/>
-    </subtraction>
-    <subtraction name ="giantShield_solid_temp3">
-      <first ref="giantShield_solid_temp2"/>
-      <second ref="giantShield_solid3"/>
-      <positionref ref="pos_rel_giantShield3"/>
-      <rotationref ref="identity"/>
-    </subtraction>
-    <union name ="giantShield_solid">
-      <first ref="giantShield_solid_temp3"/>
-      <second ref="giantShield_solid4"/>
-      <positionref ref="pos_rel_giantShield4"/>
       <rotationref ref="identity"/>
     </union>
 
@@ -2527,11 +2467,6 @@
       <solidref ref="tubeTarget"/>
     </volume>
 
-    <volume name="giantShield_logic">
-      <materialref ref="Concrete"/>
-      <solidref ref="giantShield_solid"/>
-    </volume>
-
     <!-- New dual Scattering Chamber -->
     <volume name="new_sc_beampipe_logic">
       <materialref ref="Aluminum"/>
@@ -2808,11 +2743,6 @@
         <positionref ref="targ_center"/>
       </physvol>
 
-      <physvol name="giantShield">
-        <volumeref ref="giantShield_logic"/>
-        <positionref ref="pos_global_giantShield"/>
-      </physvol>
-
       <physvol name="septum">
         <volumeref ref="septum_logic"/>
         <positionref ref="septum_center"/>
@@ -2959,7 +2889,12 @@
       </physvol>
 
       <physvol>
-        <file name="geometry/subBeamPipe.gdml"/>
+        <file name="geometry/subSkyShineShield.gdml"/>
+        <position name="pos_rel_skyShineShield" unit="cm" x="0" y="70" z="-100.4"/>
+      </physvol>
+
+      <physvol>
+        <file name="geometry/subBeamPipe_12GeV_SAMs.gdml"/>
         <positionref ref="dDet_beamline_pos_1"/>
       </physvol>
 
@@ -2968,14 +2903,6 @@
       <!--   <position name="dumpShield_posRel" unit="cm" x="0" y="-115" z="2450"/> -->
       <!-- </physvol> -->
 
-      <!-- <physvol> -->
-      <!--   <file name="geometry/subDumpShield_donut.gdml"/> -->
-      <!--   <position name="dumpShieldD_posRel" unit="cm" x="0" y="0" z="2540"/> -->
-      <!-- </physvol> -->
-
-      <!-- FIXME: our initial hall was 2546cm. Maduka has 2652.76cm -->
-      <!--        position for R= 2546 (442.2,42.45,1994.6)-->
-      <!--                 for R= 2652.76 (467.3,42.5,2107.8) -->
       <physvol>
         <file name="geometry/subHRSplatform.gdml"/>
         <position name="HRSplatform_pos" unit="cm" x="467.3" y="42.5" z="2107.8"/>
