@@ -124,6 +124,8 @@ G4VPhysicalVolume* MollerDetectorConstruction::Construct()
 
     MollerDetectorSD* collimatordetector[100];
 
+    std::vector<int> sensDet;
+
     G4int k=0;
     for(G4GDMLAuxMapType::const_iterator
           iter  = auxmap->begin();
@@ -159,6 +161,14 @@ G4VPhysicalVolume* MollerDetectorConstruction::Construct()
                       // G4cout << "volume " << vol_str.Data() << " number overwritten to " << n_vol << G4endl;
                       collimatordetector[k]->SetVolume(n_vol);
                       G4cout << "  volume number overwritten to " << n_vol <<" to be accessed in the TNtuple" << G4endl<< G4endl;
+		      sensDet.push_back(n_vol);
+		      for(int idet=0;idet<sensDet.size()-1;idet++){
+			//G4cout<<"\t"<<n_vol<<"\t<>\t"<<sensDet[idet]<<G4endl;
+			if(sensDet[idet]==n_vol){
+			  G4cout<<"You have two detectors with the same number. This last one and detector number "<<idet<<" added previously!\nFix it! Exiting!!\n\n\n";
+			  exit(99);
+			}
+		      }
                     }
                     SDman->AddNewDetector(collimatordetector[k]);
                     myvol->SetSensitiveDetector(collimatordetector[k]);
