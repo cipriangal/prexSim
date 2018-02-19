@@ -2253,13 +2253,7 @@
       <positionref ref="dumpTrans_2"/>
     </subtraction>
 
-
     <!-- Detectors -->
-    <sphere aunit="deg" startphi="0" deltaphi="360"
-            starttheta="0" deltatheta="360"
-            lunit="cm" name="sDet_1"
-            rmin="det_inner_r" rmax="det_outer_r"/>
-
     <box lunit="cm" name="pDet_1" x="width_mother" y="height_mother" z="0.5"/>
     <box lunit="cm" name="pDet_2" x="width_mother" y="height_mother" z="0.5"/>
     <box lunit="cm" name="pDet_3" x="width_mother" y="height_mother" z="0.5"/>
@@ -2633,12 +2627,6 @@
       <solidref ref="dump_ss_enc"/>
     </volume>
 
-    <volume name="sDet_1_logic">
-      <materialref ref="Vacuum"/>
-      <solidref ref="sDet_1"/>
-      <auxiliary auxtype="SensDet" auxvalue="volumeN2212"/>
-    </volume>
-
     <!-- hall detectors -->
     <volume name="cDet_1_logic">
       <materialref ref="Vacuum"/>
@@ -2674,26 +2662,6 @@
       <materialref ref="Vacuum"/>
       <solidref ref="sDet_2"/>
       <!-- <auxiliary auxtype="SensDet" auxvalue="volumeN8006"/> -->
-    </volume>
-
-
-    <volume name="crex_det_logic">
-      <materialref ref="Vacuum"/>
-      <solidref ref="crex_det_solid"/>
-      <auxiliary auxtype="SensDet" auxvalue="volumeN2301"/>
-    </volume>
-
-
-    <volume name="box_det_1_logic">
-      <materialref ref="Vacuum"/>
-      <solidref ref="box_det_1"/>
-      <auxiliary auxtype="SensDet" auxvalue="volumeN2103"/>
-    </volume>
-
-    <volume name="beam_cyl_det_logic">
-      <materialref ref="Vacuum"/>
-      <solidref ref="beam_cyl_det"/>
-      <auxiliary auxtype="SensDet" auxvalue="volumeN2211"/>
     </volume>
 
     <!-- Accept Logic - Ricky -->
@@ -2815,11 +2783,6 @@
         <volumeref ref="under_arm_logic_3"/>
         <positionref ref="arm_under_ped_pos_3"/>
         <rotationref ref="scRot_8"/>
-      </physvol>
-
-      <physvol name="sphere_det_1">
-        <volumeref ref="sDet_1_logic"/>
-        <positionref ref="sDet_1_pos"/>
       </physvol>
 
       <physvol name="cyl_det_1">
