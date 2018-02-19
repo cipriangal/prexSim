@@ -186,18 +186,21 @@ def beamPREX2():
     f1.write("\t\t\t<zplane rmin=\"15.23\" rmax=\"15.70\" z=\""+str(zPos)+"\"/>\n")
     f1.write("\t\t</polycone>\n")
 
-    f1.write("<position name=\"dumpICS1_beamL_pos\" unit=\"cm\" x=\"68\" y=\""+str(-27-83)+"\" z=\""+str(donutZpos-37+30.5)+"\"/>\n")
-    f1.write("<position name=\"dumpICS2_beamL_pos\" unit=\"cm\" x=\"68\" y=\""+str(-27-166+41)+"\" z=\""+str(donutZpos+90-30.5)+"\"/>\n")
-    f1.write("<position name=\"dumpICS3_beamL_pos\" unit=\"cm\" x=\"68\" y=\""+str(-27-83)+"\" z=\""+str(donutZpos+90+30.5)+"\"/>\n")
+    shieldPos1 = [68, -27 -83, donutZpos-37+30.5]
+    f1.write("<position name=\"dumpIonChShld_pos\" unit=\"cm\" x=\""+str(shieldPos1[0])+"\" y=\""+str(shieldPos1[1])+"\" z=\""+str(shieldPos1[2])+"\"/>\n")
 
-    f1.write("<position name=\"dumpICS1_beamR_pos\" unit=\"cm\" x=\"-68\" y=\""+str(-27-83)+"\" z=\""+str(donutZpos-37+30.5)+"\"/>\n")
-    f1.write("<position name=\"dumpICS2_beamR_pos\" unit=\"cm\" x=\"-68\" y=\""+str(-27-166+41)+"\" z=\""+str(donutZpos+90-30.5)+"\"/>\n")
-    f1.write("<position name=\"dumpICS3_beamR_pos\" unit=\"cm\" x=\"-68\" y=\""+str(-27-83)+"\" z=\""+str(donutZpos+90+30.5)+"\"/>\n")
+    f1.write("<position name=\"dumpICS1_beamL_posRel\" unit=\"cm\" x=\""+str(68 - shieldPos1[0])+"\" y=\""+str(-27-83    - shieldPos1[1] )+"\" z=\""+str(donutZpos - 37+30.5 - shieldPos1[2])+"\"/>\n")
+    f1.write("<position name=\"dumpICS2_beamL_posRel\" unit=\"cm\" x=\""+str(68 - shieldPos1[0])+"\" y=\""+str(-27-166+41- shieldPos1[1] )+"\" z=\""+str(donutZpos + 90-30.5 - shieldPos1[2])+"\"/>\n")
+    f1.write("<position name=\"dumpICS3_beamL_posRel\" unit=\"cm\" x=\""+str(68 - shieldPos1[0])+"\" y=\""+str(-27-83    - shieldPos1[1] )+"\" z=\""+str(donutZpos + 90+30.5 - shieldPos1[2])+"\"/>\n")
+
+    f1.write("<position name=\"dumpICS1_beamR_posRel\" unit=\"cm\" x=\""+str(-68 - shieldPos1[0])+"\" y=\""+str(-27-83    - shieldPos1[1])+"\" z=\""+str(donutZpos - 37+30.5 - shieldPos1[2])+"\"/>\n")
+    f1.write("<position name=\"dumpICS2_beamR_posRel\" unit=\"cm\" x=\""+str(-68 - shieldPos1[0])+"\" y=\""+str(-27-166+41- shieldPos1[1])+"\" z=\""+str(donutZpos + 90-30.5 - shieldPos1[2])+"\"/>\n")
+    f1.write("<position name=\"dumpICS3_beamR_posRel\" unit=\"cm\" x=\""+str(-68 - shieldPos1[0])+"\" y=\""+str(-27-83    - shieldPos1[1])+"\" z=\""+str(donutZpos + 90+30.5 - shieldPos1[2])+"\"/>\n")
+
+    f1.write("<position name=\"dumpIonChamber_beamR_pos\" unit=\"cm\" x=\"-68\" y=\""+str(-27-53)+"\" z=\""+str(donutZpos+90-30.5)+"\"/>\n")
+    f1.write("<position name=\"dumpIonChamber_beamL_pos\" unit=\"cm\" x=\"68\" y=\""+str(-27-53)+"\" z=\""+str(donutZpos+90-30.5)+"\"/>\n")
 
     f1.write("<position name=\"dumpDoor_pos\" unit=\"cm\" x=\"0\" y=\"-42\" z=\""+str(donutZpos+318)+"\"/>\n")
-    f1.write("<position name=\"dumpIC_beamR_pos\" unit=\"cm\" x=\"-68\" y=\""+str(-27-53)+"\" z=\""+str(donutZpos+90-30.5)+"\"/>\n")
-    f1.write("<position name=\"dumpIC_beamL_pos\" unit=\"cm\" x=\"68\" y=\""+str(-27-53)+"\" z=\""+str(donutZpos+90-30.5)+"\"/>\n")
-
     f1.close()
 
 
