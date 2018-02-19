@@ -8,16 +8,17 @@ def main():
     ##only crex5, prexII, prexI, moller defined for now
     #configuration = "prexI"
     #configuration = "crex5"
-    #configuration = "prexII"
-    configuration = "moller"
-    sourceDir = "/lustre/expphy/work/halla/parity/ciprian/prexSim"
-    outputDir = "/lustre/expphy/volatile/halla/parity/ciprian/farmOut/dump/nakedMoller"
-    nrEv   = 500000
-    nrStart= 20
-    nrStop = 40
+    configuration = "prexII"
+    #configuration = "moller"
+    sourceDir = "/work/halla/parity/disk1/ciprian/prexSim"
+    outputDir = "/lustre/expphy/volatile/halla/parity/ciprian/farmOut/dump/6inDonut_woSAMs"
+
+    nrEv   = 900000
+    nrStart= 0
+    nrStop = 60
 
     ###format should be _Name
-    identifier = "_fatPipe"
+    identifier = "_6inDonut_noSAMs"
 
     print('Running ' + str(nrEv*(nrStop - nrStart)) + ' events...')
 
@@ -137,19 +138,31 @@ def make_tarfile(sourceDir,config):
     tar.add(sourceDir+"/geometry/subQ1HosesCylRedesign.gdml",arcname="geometry/subQ1HosesCylRedesign.gdml")
     tar.add(sourceDir+"/geometry/subTargetChamber.gdml",arcname="geometry/subTargetChamber.gdml")
     tar.add(sourceDir+"/geometry/subCollShields.gdml",arcname="geometry/subCollShields.gdml")
-    tar.add(sourceDir+"/geometry/prex1BeampipeV2.gdml",arcname="geometry/prex1BeampipeV2.gdml")
+    tar.add(sourceDir+"/geometry/prex1Beampipe.gdml",arcname="geometry/prex1Beampipe.gdml")
     tar.add(sourceDir+"/geometry/subBeamPipe.gdml",arcname="geometry/subBeamPipe.gdml")
-    tar.add(sourceDir+"/geometry/subBeamPipe_steelTelePipe.gdml",arcname="geometry/subBeamPipe_steelTelePipe.gdml")
     tar.add(sourceDir+"/geometry/subBeamPipe_fatP2end.gdml",arcname="geometry/subBeamPipe_fatP2end.gdml")
     tar.add(sourceDir+"/geometry/subBeamPipe_4inDonut.gdml",arcname="geometry/subBeamPipe_4inDonut.gdml")
     tar.add(sourceDir+"/geometry/subBeamPipe_noDonut.gdml",arcname="geometry/subBeamPipe_noDonut.gdml")
+    tar.add(sourceDir+"/geometry/subBeamPipe_steelTelePipe.gdml",arcname="geometry/subBeamPipe_steelTelePipe.gdml")
+    tar.add(sourceDir+"/geometry/subBeamPipeMoller.gdml",arcname="geometry/subBeamPipeMoller.gdml")
+    tar.add(sourceDir+"/geometry/subBeamPipeMoller_fatP2end.gdml",arcname="geometry/subBeamPipeMoller_fatP2end.gdml")
+    tar.add(sourceDir+"/geometry/subBeamPipeMoller_4inDonut.gdml",arcname="geometry/subBeamPipeMoller_4inDonut.gdml")
+    tar.add(sourceDir+"/geometry/subBeamPipeMoller_noDonut.gdml",arcname="geometry/subBeamPipeMoller_noDonut.gdml")
     tar.add(sourceDir+"/geometry/subBeamPipe_MidVacuum.gdml",arcname="geometry/subBeamPipe_MidVacuum.gdml")
+    tar.add(sourceDir+"/geometry/subBeamPipe_12GeV_SAMs.gdml",arcname="geometry/subBeamPipe_12GeV_SAMs.gdml")
+    tar.add(sourceDir+"/geometry/subBeamPipe_6inDonut_SAMs.gdml",arcname="geometry/subBeamPipe_6inDonut_SAMs.gdml")
+    tar.add(sourceDir+"/geometry/subBeamPipe_6inDonut_noSAMs.gdml",arcname="geometry/subBeamPipe_6inDonut_noSAMs.gdml")
     tar.add(sourceDir+"/geometry/subDumpShield.gdml",arcname="geometry/subDumpShield.gdml")
+    tar.add(sourceDir+"/geometry/subSkyShineShield.gdml",arcname="geometry/subSkyShineShield.gdml")
     tar.add(sourceDir+"/geometry/subDumpShield_cover.gdml",arcname="geometry/subDumpShield_cover.gdml")
     tar.add(sourceDir+"/geometry/subDumpShield_2layer.gdml",arcname="geometry/subDumpShield_2layer.gdml")
     tar.add(sourceDir+"/geometry/materials.xml",arcname="geometry/materials.xml")
     tar.add(sourceDir+"/geometry/subHRSplatform.gdml",arcname="geometry/subHRSplatform.gdml")
     tar.add(sourceDir+"/geometry/subHRSplatform_withShield.gdml",arcname="geometry/subHRSplatform_withShield.gdml")
+    tar.add(sourceDir+"/geometry/mollerDScollAndCoils.gdml",arcname="geometry/mollerDScollAndCoils.gdml")
+    tar.add(sourceDir+"/geometry/mollerUScollAndCoils.gdml",arcname="geometry/mollerUScollAndCoils.gdml")
+    tar.add(sourceDir+"/geometry/mollerDet.gdml",arcname="geometry/mollerDet.gdml")
+
     tar.close()
 
 if __name__ == '__main__':
