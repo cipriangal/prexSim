@@ -583,7 +583,7 @@
 
     <!-- dump o-ring -->
     <volume name="flanges_logic">
-      <materialref ref="StainlessSteel"/>
+      <materialref ref="Aluminum"/>
       <solidref ref="flanges_hole_solid"/>
     </volume>
     <volume name="o_ring_logic">

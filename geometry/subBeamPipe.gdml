@@ -45,9 +45,9 @@
     <constant name="sam_can_length" value="36."/>
     <constant name="sam_can_inner_r" value="sam_can_outer_r - sam_can_wall_thickness"/>
     <constant name="sam_cut_height" value="sam_can_length - 2*sam_can_wall_thickness"/>
-    <constant name="sam_quartz_height" value="1."/>
+    <constant name="sam_quartz_height" value="1.3"/>
     <constant name="sam_quartz_width" value="2."/>
-    <constant name="sam_quartz_length" value="6."/>
+    <constant name="sam_quartz_length" value="3."/>
     <constant name="sam_bot_face_sep" value="4.85"/>
     <constant name="sam_mid_dist" value="sam_bot_face_sep + sam_can_length/2."/>
     <constant name="sam_quartz_bot_face" value="5.5"/>
@@ -802,7 +802,7 @@
 
     <!-- dump o-ring -->
     <volume name="flanges_logic">
-      <materialref ref="StainlessSteel"/>
+      <materialref ref="Aluminum"/>
       <solidref ref="flanges_hole_solid"/>
     </volume>
     <volume name="o_ring_logic">
