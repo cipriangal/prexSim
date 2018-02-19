@@ -202,8 +202,8 @@
       <zplane rmin="47.67" rmax="48.15" z="2530.795"/>
       <zplane rmin="29.89" rmax="30.37" z="2556.085"/>
       <zplane rmin="29.89" rmax="30.37" z="2789.685"/>
-      <zplane rmin="4.13" rmax="30.37" z="2789.685"/>
-      <zplane rmin="4.13" rmax="30.37" z="2791.685"/>
+      <zplane rmin="14.9" rmax="30.37" z="2789.685"/>
+      <zplane rmin="14.9" rmax="30.37" z="2791.685"/>
       <zplane rmin="29.89" rmax="30.37" z="2791.685"/>
       <zplane rmin="29.89" rmax="30.37" z="3008.485"/>
       <zplane rmin="15.23" rmax="15.70" z="3024.085"/>
@@ -280,7 +280,7 @@
 
     <!-- O-ring stuff -->
     <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="ring_cut"
-          rmin="0"
+          rmin="45.4"
           rmax="58.42"
           z="ring_cut_length"/>
 
@@ -411,17 +411,17 @@
     </union>
     <union name ="bP2worldUnion20">
       <first ref="bP2worldUnion19"/>
-      <second ref="usDet_dumpShield_solid1"/>
+      <second ref="usDet_dumpShield_solid0"/>
       <positionref ref="usDet_dumpShield_pos"/>
     </union>
     <union name ="bP2worldUnion21">
       <first ref="bP2worldUnion20"/>
-      <second ref="dsDet_dumpShield_solid1"/>
+      <second ref="dsDet_dumpShield_solid0"/>
       <positionref ref="dsDet_dumpShield_pos"/>
     </union>
     <union name ="bP2worldUnion22">
       <first ref="bP2worldUnion21"/>
-      <second ref="dumpDet_solid1"/>
+      <second ref="dumpDet_solid0"/>
       <positionref ref="dumpDet_pos"/>
     </union>
     <union name ="bP2worldUnion23">

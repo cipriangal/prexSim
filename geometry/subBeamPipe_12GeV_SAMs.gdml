@@ -553,7 +553,7 @@
     </union>
     <union name ="bP2worldUnion6">
       <first ref="bP2worldUnion5"/>
-      <second ref="beampipe2_solid"/>
+      <second ref="beamPipe_solid2"/>
       <positionref ref="center_posRel"/>
     </union>
     <union name ="bP2worldUnion7">
@@ -625,17 +625,17 @@
     </union>
     <union name ="bP2worldUnion20">
       <first ref="bP2worldUnion19"/>
-      <second ref="usDet_dumpShield_solid1"/>
+      <second ref="usDet_dumpShield_solid0"/>
       <positionref ref="usDet_dumpShield_pos"/>
     </union>
     <union name ="bP2worldUnion21">
       <first ref="bP2worldUnion20"/>
-      <second ref="dsDet_dumpShield_solid1"/>
+      <second ref="dsDet_dumpShield_solid0"/>
       <positionref ref="dsDet_dumpShield_pos"/>
     </union>
     <union name ="bP2worldUnion22">
       <first ref="bP2worldUnion21"/>
-      <second ref="dumpDet_solid1"/>
+      <second ref="dumpDet_solid0"/>
       <positionref ref="dumpDet_pos"/>
     </union>
     <union name ="bP2worldUnion23">
@@ -829,7 +829,7 @@
 
     <volume name="beamPipe_logic2">
       <materialref ref="Aluminum"/>
-      <solidref ref="beampipe2_solid"/>
+      <solidref ref="cut_pipe_solid_2"/>
     </volume>
 
 
