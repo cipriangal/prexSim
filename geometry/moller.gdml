@@ -158,7 +158,7 @@
       </physvol>
 
       <physvol>
-        <file name="geometry/subBeamPipeMoller_noDonut.gdml"/>
+        <file name="geometry/subBeamPipeMoller.gdml"/>
         <position name="subBeamPipe_pos" unit="cm" x="0." y="0." z="132.3"/>
       </physvol>
 
