@@ -5,11 +5,13 @@ import sys, os, time, tarfile
 def main():
 
     email = "ciprian@jlab.org"
-    ##only crex5, prexII, prexI, moller defined for now
+
     #configuration = "prexI"
     #configuration = "crex5"
     configuration = "prexII"
     #configuration = "moller"
+    #configuration = "happex2"
+
     sourceDir = "/work/halla/parity/disk1/ciprian/prexSim"
     outputDir = "/lustre/expphy/volatile/halla/parity/ciprian/farmOut/dump/6inDonut_woSAMs"
 
@@ -76,6 +78,10 @@ def createMacFiles(config,outDir,sourceDir,nrEv,jobNr,identifier):
     	f.write("/gun/energy 11. GeV\n")
         f.write("/moller/field/setConfiguration moller\n")
         f.write("/moller/det/setDetectorFileName geometry/moller"+identifier+".gdml\n")
+    elif config=="happex2":
+    	f.write("/gun/energy 3. GeV\n")
+        f.write("/moller/field/setConfiguration happex2\n")
+        f.write("/moller/det/setDetectorFileName geometry/happex2"+identifier+".gdml\n")
 
     f.write("/moller/field/useQ1fringeField false\n")
 
