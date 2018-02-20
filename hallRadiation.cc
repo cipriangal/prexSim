@@ -140,7 +140,7 @@ void ProcessOne(string fnm){
     //if(z0>= 26000) continue;
 
     double energy(-1);
-    if( volume <2000 && volume>1000 ) //Kryptonite detectors
+    if( (volume < 2000 && volume > 1000) || volume==3201 ) //Kryptonite detectors or the o-ring
       energy = Edeposit;
     else //vacuum detectors
       energy = kinE;
