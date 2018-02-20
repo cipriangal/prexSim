@@ -159,14 +159,12 @@ void MollerGlobalMagnetField::GetFieldValue(const G4double Point[4], G4double *B
   Bfield[0]=0;
   Bfield[1]=0;
   Bfield[2]=0;
-  if( configuration == "prex1" ){
-    GetFieldValuePREX2(Point,Bfield);
-  }else if( configuration == "prex2" ){
+  if( configuration == "prex1" || configuration == "prex2" ||
+      configuration == "pvdis" || configuration == "happex2" ||
+      configuration == "happex3"){
     GetFieldValuePREX2(Point,Bfield);
   }else if( configuration == "crex" ){
     GetFieldValueCREX(Point,Bfield);
-  }else if( configuration == "pvdis" ){
-    GetFieldValuePREX2(Point,Bfield);
   }else if( configuration == "prex2JayNoQ1shield" ||
 	    configuration == "crexJayNoQ1shield"  ||
 	    configuration == "test"){
@@ -189,7 +187,6 @@ void MollerGlobalMagnetField::GetFieldValue(const G4double Point[4], G4double *B
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 void MollerGlobalMagnetField::GetFieldValuePREX2(const G4double Point[4], G4double *Bfield ) const
 {
-
   G4double myLocalPointInMainMagnet[4];
 
   G4double dBxdy = 0.*gauss/cm;
