@@ -41,7 +41,7 @@ def main():
 
     createXMLfile(sourceDir,outputDir,jobName,nrStart,nrStop,email)
 
-    print "All done"
+    print "All done for configuration ", configuration+identifier," for #s between ",nrStart, " and ", nrStop
 
 
 def createMacFiles(config,outDir,sourceDir,nrEv,jobNr,identifier):
