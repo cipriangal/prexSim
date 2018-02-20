@@ -40,8 +40,13 @@ int printHallRad(string fnm,string simType){
   // TH1D *h2=(TH1D*)fin->Get("hSummary_mRem");
   TH1D *h1=(TH1D*)fin->Get("hSummary_neilLogX");
   TH1D *h2=(TH1D*)fin->Get("hSummary_mRemLogX");
+  TH1D *h3=(TH1D*)fin->Get("hSummary_enerLogX");
+  cout<<"NEIL results:\n";
   doOne(h1,runFactor);
-  //doOne(h2,runFactor);
+  cout<<"mRem results:\n";
+  doOne(h2,runFactor);
+  cout<<"Energy results:\n";
+  doOne(h3,runFactor);
 
   TH1D *hL=(TH1D*)fin->Get("Det_1006/ha_1006_n_enerLinX");
   if(hL)
@@ -73,11 +78,14 @@ void doOne(TH1D *h, double runV){
   for(int i=2;i<=nb;i+=2){
     title=h->GetXaxis()->GetBinLabel(i);
     int det = atoi( title.substr( 0, title.find(" ")).c_str());
-    if(det>1102 || det==1006) continue;
-    //if(det==10013 || (det>8000 && det<9000)) continue;
-    double totFactor = ev2uA/detArea[det]*runV;
-    cout<<title<<"\t"<<h->GetBinContent(i)<<"\t"<<h->GetBinError(i)
-	<<"\t"<<h->GetBinContent(i)*totFactor<<"\t"<<h->GetBinError(i)*totFactor<<endl;
+    if(det==1001 || det==1002 || det==1005 || det==1101 || det==1102){
+      double totFactor = ev2uA/detArea[det]*runV;
+      cout<<title<<"\t"<<h->GetBinContent(i)<<"\t"<<h->GetBinError(i)
+          <<"\t"<<h->GetBinContent(i)*totFactor<<"\t"<<h->GetBinError(i)*totFactor<<endl;
+    }else if(det==2101 || det==2102 || det==3201){
+      double totFactor = ev2uA*runV;
+      cout<<title<<"\t"<<h->GetBinContent(i)<<"\t"<<h->GetBinError(i)
+          <<"\t"<<h->GetBinContent(i)*totFactor<<"\t"<<h->GetBinError(i)*totFactor<<endl;
+    }
   }
 }
-
