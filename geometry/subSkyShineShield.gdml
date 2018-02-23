@@ -40,7 +40,6 @@
   <solids>
 
     <box lunit="cm" name="giantShield_solid0" x="123.5" y="40" z="247"/>
-    <box lunit="cm" name="giantShield_solid1" x="123.5" y="50" z="36"/>
     <box lunit="cm" name="giantShield_solid2" x="247" y="247" z="247"/>
     <box lunit="cm" name="giantShield_solid3" x="280" y="100" z="74"/>
     <box lunit="cm" name="giantShield_solid4" x="123.5" y="40" z="140"/>
