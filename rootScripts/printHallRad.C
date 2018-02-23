@@ -2,8 +2,9 @@
 #include <string>
 
 map <int,int> detArea;//cm2
-void doOne(TH1D *h, double runV);
+void doOneSummary(TH1D *h, double runV);
 void doLid(TH1D *h,double runV);
+void doOneDetector(TH1D *h, double runV, int Det, int areaToggle);
 
 int printHallRad(string fnm,string simType){
 
@@ -32,25 +33,39 @@ int printHallRad(string fnm,string simType){
     runFactor = 1.7e8;
   else if(simType=="crex")
     runFactor = 4.67e8;
+  else if(simType=="happex2")
+    runFactor = 8.71e7;
+  else if(simType=="pvdis")
+    runFactor = 1.50e8;
   else
     return 0;
 
   TFile *fin=TFile::Open(fnm.c_str(),"READ");
-  // TH1D *h1=(TH1D*)fin->Get("hSummary_neil");
-  // TH1D *h2=(TH1D*)fin->Get("hSummary_mRem");
   TH1D *h1=(TH1D*)fin->Get("hSummary_neilLogX");
   TH1D *h2=(TH1D*)fin->Get("hSummary_mRemLogX");
   TH1D *h3=(TH1D*)fin->Get("hSummary_enerLogX");
-  cout<<"NEIL results:\n";
-  doOne(h1,runFactor);
-  cout<<"mRem results:\n";
-  doOne(h2,runFactor);
-  cout<<"Energy results:\n";
-  doOne(h3,runFactor);
+
+  // cout<<"NEIL results:\n";
+  // doOneSummary(h1,runFactor);
+  // cout<<"mRem results:\n";
+  // doOneSummary(h2,runFactor);
+  // cout<<"Energy results:\n";
+  // doOneSummary(h3,runFactor);
+
+  cout<<"NEIL:\t";  doOneDetector(h1, runFactor, 1001, 1);
+  cout<<"NEIL:\t";  doOneDetector(h1, runFactor, 1005, 1);
 
   TH1D *hL=(TH1D*)fin->Get("Det_1006/ha_1006_n_enerLinX");
   if(hL)
     doLid(hL,runFactor);
+
+  cout<<"Total E/cm2:\t"; doOneDetector(h3, runFactor, 1002, 1);
+  cout<<"Total E/cm2:\t"; doOneDetector(h3, runFactor, 1101, 1);
+  cout<<"Total E/cm2:\t"; doOneDetector(h3, runFactor, 1102, 1);
+  cout<<"Total E:\t"; doOneDetector(h3, runFactor, 2101, 0);
+  cout<<"Total E:\t"; doOneDetector(h3, runFactor, 2102, 0);
+  cout<<"Total E:\t"; doOneDetector(h3, runFactor, 3201, 0);
+
   fin->Close();
   return 0;
 }
@@ -70,7 +85,7 @@ void doLid(TH1D *h,double runV){
   cout<<"\t"<<dx*totFactor<<endl;
 }
 
-void doOne(TH1D *h, double runV){
+void doOneSummary(TH1D *h, double runV){
   int nb=h->GetXaxis()->GetNbins();
   string title=h->GetTitle();
   cout<<endl<<endl<<title<<endl;
@@ -88,4 +103,30 @@ void doOne(TH1D *h, double runV){
           <<"\t"<<h->GetBinContent(i)*totFactor<<"\t"<<h->GetBinError(i)*totFactor<<endl;
     }
   }
+}
+
+void doOneDetector(TH1D *h, double runV, int Det, int areaToggle){
+
+  string title=h->GetTitle();
+  cout<<endl<<endl<<title<<endl;
+
+  double ev2uA=1e13/1.6;
+
+  double area(-1);
+  if(areaToggle)
+    area = detArea[Det];
+  else
+    area = 1;
+
+  int nb=h->GetXaxis()->GetNbins();
+  for(int i=2;i<=nb;i+=2){
+    title=h->GetXaxis()->GetBinLabel(i);
+    int det = atoi( title.substr( 0, title.find(" ")).c_str());
+    if(det != Det) continue;
+    double totFactor = ev2uA/area*runV;
+    cout<<title<<"\t"<<h->GetBinContent(i)<<"\t"<<h->GetBinError(i)
+	<<"\t"<<h->GetBinContent(i)*totFactor<<"\t"<<h->GetBinError(i)*totFactor<<endl;
+
+  }
+  cout<<endl;
 }
