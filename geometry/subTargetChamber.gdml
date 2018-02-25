@@ -82,10 +82,10 @@
         <positionref ref="pos_center"/>
       </physvol>
 
-      <!-- <physvol name="phys_front_flange"> -->
-      <!--   <volumeref ref="logic_front_flange"/> -->
-      <!--   <positionref ref="pos_front_flange"/> -->
-      <!-- </physvol> -->
+      <physvol name="phys_front_flange">
+        <volumeref ref="logic_front_flange"/>
+        <positionref ref="pos_front_flange"/>
+      </physvol>
 
       <physvol name="phys_rear_flange">
         <volumeref ref="logic_rear_flange"/>
