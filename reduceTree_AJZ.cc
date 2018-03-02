@@ -23,26 +23,28 @@ float xO,yO,zO;
 float kE, eD, neil, mrem;
 TTree *tout;
 int nTotalPerFile(0);
+int cut_flag(0);
 vector<int> detNr;
 
 void Initialize();
 void WriteOutput();
 
 long currentEv(0), prevEv(0), processedEv(0);
-void ProcessOne(string, long);
+void ProcessOne(string, long, int);
 radDamage radDmg;
 
 int main(int argc, char **argv){
   if(argc < 6){
-    cout<<"Usage: build/redTree_AJZ <folder for event rootfiles> <outfile name> <num files to process> <num events per file to process>  <list of detector IDs>\n"
-        <<"\tfor example: build/redTree_AJZ ~/farmOut/prexII_current_900kEv/ prexII_current 50 100000 1001 1002 1003\n";
+    cout<<"Usage: build/redTree_AJZ <folder for event rootfiles> <outfile name> <num files to process> <num events per file to process>  <100 keV cut flag> <list of detector IDs>\n"
+        <<"\tfor example: build/redTree_AJZ ~/farmOut/prexII_current_900kEv/ prexII_current 50 100000 1 1001 1002 1003\n";
     return 1;
   }
   
   nTotalPerFile = atoi(argv[4]);
-  for(int i = 5; i < argc; i++){
+  cut_flag = atoi(argv[5]);
+  for(int i = 6; i < argc; i++){
     detNr.push_back(atoi(argv[i]));
-    cout<<"\t\t"<<detNr[i-5]<<endl;
+    cout<<"\t\t"<<detNr[i-6]<<endl;
   }
   
   string dir    = argv[1];
@@ -60,7 +62,7 @@ int main(int argc, char **argv){
 
     string infile_name = dir + "/" + infile_num + "/o_prexSim.root";
     cout<<"Processing file: "<<dir<<"/"<<infile_num<<endl;
-    ProcessOne(infile_name, nTotalPerFile);
+    ProcessOne(infile_name, nTotalPerFile, cut_flag);
   }
 
   cout<<"Processed a total of "<<processedEv<<endl;
@@ -69,7 +71,7 @@ int main(int argc, char **argv){
   return 0;
 }
 
-void ProcessOne(string fnm, long ntpf){
+void ProcessOne(string fnm, long ntpf, int keV_cut){
   TFile *fin=new TFile(fnm.c_str(),"READ");
   if(!fin->IsOpen()){
     cout<<"Problem: can't find file: "<<fnm<<endl;
@@ -136,7 +138,7 @@ void ProcessOne(string fnm, long ntpf){
     //else
     //  E = Edeposit;
 
-    if( kinE < 0.1 && Edeposit < 0.1) continue;
+    if( kinE < 0.1 && Edeposit < 0.1 && keV_cut) continue;
 
     nEv   = processedEv + evNr;
     tID   = track;

@@ -27,21 +27,17 @@ config=prexII
 #ident=noSkyshine_v1geom
 #ident=oRingBeamPipe
 #ident=v2geom
-ident=v2SAMs
-#ident=v2Point6degSAMs
+#ident=v2SAMs
+ident=v2NewSAMsHalfRing
+#ident=v2ConcSSPlusNewSAMs
+#ident=v1ThickConcSS
 
-#TESTING FILES
-#ident=concrete2blocksPlusWPlusQ1fringe
-#ident=conc2blocksPlusCollShields
-#ident=conc2blocksPlusTargCham
-#ident=conc2blocksPlusCollimator
-#ident=conc2blocksPlusLargerHall
-#ident=concrete2blocksPlusW
-#ident=concrete2blocksPlusW
-
-#output=v2NoSAMs
-output=v2SAMs
-#output=v2SAMsPoint6degSAMs
+output=input
+#output=v2NoSAMsLid
+#output=v2SAMsLid
+#output=v2Point6degSAMsLid
+#output=v2NewSAMsNoFlange
+#output=v1ThickConcSSPartial
 
 start_run=0
 end_run=20
@@ -55,4 +51,4 @@ uva_id=ajz3ee
 jlab_id=ajzec
 
 #comma separated, no spaces, correct capitalization is important
-subassemblies=TargetChamber,CollShields,BeamPipe,DumpShield,HRSplatform,ExtendedDump,SkyshineIronV3,BeamPipe_newSAMs,BeamPipe_SAMs
+subassemblies=TargetChamber,CollShields,BeamPipe,DumpShield,HRSplatform,ExtendedDump,SkyshineIronV3,BeamPipe_newSAMs,BeamPipe_SAMs,BeamPipe_newSAMsAlFlange,BeamPipe_newSAMsNoFlange,BeamPipe_newSAMsHalfRing

@@ -172,9 +172,8 @@ G4bool MollerDetectorSD::ProcessHits(G4Step* aStep, G4TouchableHistory*)
   newHit->SetPDG(pdgID);
   newHit->SetTrackStatus(trackstatusID);
 
-  if (!(volume == 1006 && edep < 30)){
-    hitsCollection->insert( newHit );
-  }
+  hitsCollection->insert( newHit );
+  
   
   return true;
 }

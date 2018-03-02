@@ -16,7 +16,12 @@ def nr_events(): return int(read_file()['n_events'])
 def uva_id(): return read_file()['uva_id']
 def jlab_id(): return read_file()['jlab_id']
 def e_cut(): return int(read_file()['e_cut'])
-def ident_output(): return read_file()['output']
+def ident_output():
+  outname = read_file()['output']
+  if outname == 'input':
+    return identifier()
+  else: 
+    return outname
 
 def subassems():
 	assem_string = read_file()['subassemblies']
