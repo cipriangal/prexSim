@@ -9,7 +9,7 @@
       xsi:noNamespaceSchemaLocation="./schema/gdml.xsd">
 
   <define>
-    <constant name="mid_shield_width" value="45.811"/>
+    <constant name="mid_shield_width" value="44.911"/>
     <constant name="mid_shield_height" value="30"/>
     <constant name="bot_z" value="45"/>
     <constant name="top_z" value="34.837"/>
