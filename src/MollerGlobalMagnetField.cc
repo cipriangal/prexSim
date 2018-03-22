@@ -4,6 +4,8 @@
 #include "MollerGlobalMagnetField.hh"
 #include "TGraph.h"
 
+using namespace CLHEP;
+
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 MollerGlobalMagnetField::MollerGlobalMagnetField()
