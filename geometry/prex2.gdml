@@ -2858,6 +2858,7 @@
 
       <physvol>
         <file name="geometry/subBeamPipe_P2_6inDonut_noSAMs.gdml"/>
+	<!-- z= 132.335 -->
         <positionref ref="dDet_beamline_pos_1"/>
       </physvol>
 
