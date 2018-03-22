@@ -7,6 +7,8 @@
   <define>
     <!--Positions are relative to the end of the septum beamPipe-->
     <position name="center_posRel" unit="cm" x="0" y="0" z="0"/>
+    <position name="detMol01_posRel" unit="cm" x="0" y="0" z="-1732.7"/>
+    <position name="detCpt01_posRel" unit="cm" x="0" y="0" z="-2650."/>
     <position name="det02_posRel" unit="cm" x="0" y="0" z="111.004"/>
     <position name="det03_posRel" unit="cm" x="0" y="0" z="350.740"/>
     <position name="det04_posRel" unit="cm" x="0" y="0" z="2400"/>
@@ -141,6 +143,16 @@
     <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="det12_solid"
           rmin="0"
           rmax="30."
+          z="0.1"/>
+
+    <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="detMol01_solid"
+          rmin="0.3"
+          rmax="50."
+          z="0.1"/>
+
+    <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="detCpt01_solid"
+          rmin="0"
+          rmax="300."
           z="0.1"/>
 
     <polycone aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="beamPipe_solid1">
@@ -449,6 +461,16 @@
       <second ref="det12_solid"/>
       <positionref ref="det12_posRel"/>
     </union>
+    <union name ="bP2worldUnion29">
+      <first ref="bP2worldUnion28"/>
+      <second ref="detMol01_solid"/>
+      <positionref ref="detMol01_posRel"/>
+    </union>
+    <union name ="bP2worldUnion30">
+      <first ref="bP2worldUnion29"/>
+      <second ref="detCpt01_solid"/>
+      <positionref ref="detCpt01_posRel"/>
+    </union>
 
   </solids>
 
@@ -524,6 +546,18 @@
       <materialref ref="Vacuum"/>
       <solidref ref="det12_solid"/>
       <auxiliary auxtype="SensDet" auxvalue="volumeN2212"/>
+    </volume>
+
+    <volume name="detMol01_logic">
+      <materialref ref="Vacuum"/>
+      <solidref ref="detMol01_solid"/>
+      <auxiliary auxtype="SensDet" auxvalue="volumeN2401"/>
+    </volume>
+
+    <volume name="detCpt01_logic">
+      <materialref ref="Vacuum"/>
+      <solidref ref="detCpt01_solid"/>
+      <auxiliary auxtype="SensDet" auxvalue="volumeN2411"/>
     </volume>
 
     <volume name="gateValve_logic">
@@ -605,7 +639,7 @@
 
     <volume name="beamPipeP2">
       <materialref ref="Vacuum"/>
-      <solidref ref="bP2worldUnion28"/>
+      <solidref ref="bP2worldUnion30"/>
 
       <physvol name="beamPipe_phys1">
         <volumeref ref="beamPipe_logic1"/>
@@ -675,6 +709,16 @@
       <physvol name="det12_phys">
         <volumeref ref="det12_logic"/>
         <positionref ref="det12_posRel"/>
+      </physvol>
+
+      <physvol name="detMol01_phys">
+        <volumeref ref="detMol01_logic"/>
+        <positionref ref="detMol01_posRel"/>
+      </physvol>
+
+      <physvol name="detCpt01_phys">
+        <volumeref ref="detCpt01_logic"/>
+        <positionref ref="detCpt01_posRel"/>
       </physvol>
 
       <physvol name="usDet_dumpShield_phys">
