@@ -44,9 +44,9 @@ radDamage radDmg;
 int main(int argc, char **argv){
 
   int inputRes = processInput(argc,argv);
-  if(!inputRes)
+  if(inputRes)
     return inputRes;
-  
+
   string foutNm = Form("%s_hallRad.root",finNm.substr(0,finNm.find(".")).c_str());
   fout=new TFile(foutNm.c_str(),"RECREATE");
 
@@ -210,39 +210,39 @@ void Initialize(){
       int nrBins=nBins;
       vector<TH1D*> dt2,da2,dv2;
       for(int idmg=0;idmg<5;idmg++){
-	if(idmg>=3) nrBins=100;
-	TH1D *h=new TH1D(Form("ht_%d_%s_%s",detNr[id],hPnm[ip].c_str(),type[idmg].c_str()),
-			 Form("Total hits for det %d| part: %s| %s; energy [MeV]",
-			      detNr[id],hPnm[ip].c_str(),type[idmg].c_str()),
-			 nrBins,-6,3.3);
+        if(idmg>=3) nrBins=100;
+        TH1D *h=new TH1D(Form("ht_%d_%s_%s",detNr[id],hPnm[ip].c_str(),type[idmg].c_str()),
+                         Form("Total hits for det %d| part: %s| %s; energy [MeV]",
+                              detNr[id],hPnm[ip].c_str(),type[idmg].c_str()),
+                         nrBins,-6,3.3);
 
-	TH1D *a=new TH1D(Form("ha_%d_%s_%s",detNr[id],hPnm[ip].c_str(),type[idmg].c_str()),
-			 Form("Hits/(%d ev) hits for det %d| part: %s| %s; energy [MeV]",
-			      nAvg,detNr[id],hPnm[ip].c_str(),type[idmg].c_str()),
-			 nrBins,-6,3.3);
+        TH1D *a=new TH1D(Form("ha_%d_%s_%s",detNr[id],hPnm[ip].c_str(),type[idmg].c_str()),
+                         Form("Hits/(%d ev) hits for det %d| part: %s| %s; energy [MeV]",
+                              nAvg,detNr[id],hPnm[ip].c_str(),type[idmg].c_str()),
+                         nrBins,-6,3.3);
 
-	//dummy histograms
-	TH1D *v=new TH1D(Form("hv_%d_%s_%s",detNr[id],hPnm[ip].c_str(),type[idmg].c_str()),
-			 Form("Hits/(%d ev) hits for det %d| part: %s| %s; energy [MeV]",
-			      nAvg,detNr[id],hPnm[ip].c_str(),type[idmg].c_str()),
-			 nrBins,-6,3.3);
+        //dummy histograms
+        TH1D *v=new TH1D(Form("hv_%d_%s_%s",detNr[id],hPnm[ip].c_str(),type[idmg].c_str()),
+                         Form("Hits/(%d ev) hits for det %d| part: %s| %s; energy [MeV]",
+                              nAvg,detNr[id],hPnm[ip].c_str(),type[idmg].c_str()),
+                         nrBins,-6,3.3);
 
         if(idmg>=3){
-	  double xBins[101];
-	  for(int i=0;i<=40;i++){
-	    xBins[i]    = i*(0.1)/40;
-	    xBins[40+i] = 0.1 + i*(10-0.1)/40;
-	    if(i<=20)
-	      xBins[80+i] = 10  + i*(2000 - 10)/20;
-	  }
-	  h -> GetXaxis() -> Set(100,xBins);
-	  a -> GetXaxis() -> Set(100,xBins);
-	  v -> GetXaxis() -> Set(100,xBins);
-	}else{
-	  niceLogBins(h);
-	  niceLogBins(a);
-	  niceLogBins(v);
-	}
+          double xBins[101];
+          for(int i=0;i<=40;i++){
+            xBins[i]    = i*(0.1)/40;
+            xBins[40+i] = 0.1 + i*(10-0.1)/40;
+            if(i<=20)
+              xBins[80+i] = 10  + i*(2000 - 10)/20;
+          }
+          h -> GetXaxis() -> Set(100,xBins);
+          a -> GetXaxis() -> Set(100,xBins);
+          v -> GetXaxis() -> Set(100,xBins);
+        }else{
+          niceLogBins(h);
+          niceLogBins(a);
+          niceLogBins(v);
+        }
 
         dt2.push_back(h);
         da2.push_back(a);
@@ -258,7 +258,7 @@ void Initialize(){
   }
   for(int i=0;i<3;i++){
     hSummary[i]=new TH1D(Form("hSummary_%s",type[i].c_str()),
-			 Form("summary histogram per electron on target| %s",type[i].c_str()),
+                         Form("summary histogram per electron on target| %s",type[i].c_str()),
                          detNr.size()*2,0,detNr.size()*2);
     for(int ib=1;ib<=int(detNr.size());ib++){
       hSummary[i]->GetXaxis()->SetBinLabel(2*ib-1,Form("%d Tot",detNr[ib-1]));
@@ -376,9 +376,9 @@ int processInput(int argc, char **argv){
       int det = atoi(argv[elem]);
       detNr.clear();
       while (elem<argc && (det>1000 && det<12000)){
-	detNr.push_back(det);
-	elem++;
-	det = atoi(argv[elem]);
+        detNr.push_back(det);
+        elem++;
+        det = atoi(argv[elem]);
       }
     }
   }
