@@ -191,7 +191,6 @@ void UpdateMeans(){
 
           hAvg[id][ip][idmg]->SetBinContent(ib,newMean);
           hAvg[id][ip][idmg]->SetBinError(ib,newVar);
-
         }
       }
     }
@@ -235,9 +234,9 @@ void Initialize(){
             if(i<=20)
               xBins[80+i] = 10  + i*(2000 - 10)/20;
           }
-          h -> GetXaxis() -> Set(100,xBins);
-          a -> GetXaxis() -> Set(100,xBins);
-          v -> GetXaxis() -> Set(100,xBins);
+          h -> GetXaxis() -> Set(nBins,xBins);
+          a -> GetXaxis() -> Set(nBins,xBins);
+          v -> GetXaxis() -> Set(nBins,xBins);
         }else{
           niceLogBins(h);
           niceLogBins(a);
@@ -376,9 +375,9 @@ int processInput(int argc, char **argv){
       int det = atoi(argv[elem]);
       detNr.clear();
       while (elem<argc && (det>1000 && det<12000)){
-        detNr.push_back(det);
+	det = atoi(argv[elem]);
+	detNr.push_back(det);
         elem++;
-        det = atoi(argv[elem]);
       }
     }
   }
@@ -389,7 +388,13 @@ int processInput(int argc, char **argv){
   }else if(defaultFlag == 1){
     cout << "using default detectors and averaging\n";
   }else if(defaultFlag == 0){
-    cout << "default not specified but not detector list given. using default.\n";
+    cout << "default not specified and no detector list given. using default.\n";
   }
+
+  cout<<"Processing for the following detectors:\n";
+  for(auto &element : detNr)
+    cout<<element<<"\t";
+  cout<<endl;
+
   return 0;
 }
