@@ -21,38 +21,32 @@ void niceLogBins(TH1*);
 //photons/electron/neutrons
 vector<vector<vector<TH1D*> > > hTotal, hAvg, valAvg;
 vector<vector<vector<vector<int> > > > intAvg;
-const int nBins=100;
+const int nBins=93;
 TH1D *hSummary[3];//energy, neil, mRem
 void UpdateMeans();
-int nAvg(-1);
 
 TFile *fout;
-vector<int> detNr;
 
 void Initialize();
 void Summarize();
 void FinalizeAvg();
 void WriteOutput();
 
+int processInput(int,char**);
+string finNm("0");
+int nAvg(100000);
+vector<int> detNr={1001, 1002, 1003, 1004, 1005, 1006, 1101, 1102, 2101, 2105, 2110, 2112, 3120, 3121, 3201, 2401, 2411};
+
 long currentEv(0),prevEv(0),processedEv(0);
 void ProcessOne(string);
 radDamage radDmg;
 
 int main(int argc, char **argv){
-  if(argc<4){
-    cout<<"Usage: build/hallRad <inputFile name: either rootfile or list of rootfiles> <nr of events to average over> <list of detector IDs>\n"
-        <<"\tfor example: build/hallRad o_SimName.root 5000 10013 10008 10009\n";
-    return 1;
-  }
-  string finNm=argv[1];
-  nAvg = atoi(argv[2]);
-  cout<<"looking at file: "<<finNm
-      <<"\n\twith an average of "<<nAvg<<" and for detectors:"<<endl;
-  for(int i=3;i<argc;i++){
-    detNr.push_back(atoi(argv[i]));
-    cout<<"\t\t"<<detNr[i-3]<<endl;
-  }
 
+  int inputRes = processInput(argc,argv);
+  if(!inputRes)
+    return inputRes;
+  
   string foutNm = Form("%s_hallRad.root",finNm.substr(0,finNm.find(".")).c_str());
   fout=new TFile(foutNm.c_str(),"RECREATE");
 
@@ -135,7 +129,7 @@ void ProcessOne(string fnm){
     else continue;
 
     //electrons directly from the gun
-    if(z0== -17720) continue;
+    if(z0 == -17720) continue;
 
     //if(z0>= 26000) continue;
 
@@ -214,23 +208,24 @@ void Initialize(){
     intAvg.push_back(vector<vector<vector<int> > >(3, vector<vector<int> >(5, vector<int>(nBins))));
     for(int ip=0;ip<3;ip++){
       int nrBins=nBins;
-      if(ip==2)
-        nrBins/=10;
       vector<TH1D*> dt2,da2,dv2;
       for(int idmg=0;idmg<5;idmg++){
 	if(idmg>=3) nrBins=100;
 	TH1D *h=new TH1D(Form("ht_%d_%s_%s",detNr[id],hPnm[ip].c_str(),type[idmg].c_str()),
-			 Form("Total hits for det %d| part: %s| %s; energy [MeV]",detNr[id],hPnm[ip].c_str(),type[idmg].c_str()),
-			 nrBins,-4,4);
+			 Form("Total hits for det %d| part: %s| %s; energy [MeV]",
+			      detNr[id],hPnm[ip].c_str(),type[idmg].c_str()),
+			 nrBins,-6,3.3);
 
 	TH1D *a=new TH1D(Form("ha_%d_%s_%s",detNr[id],hPnm[ip].c_str(),type[idmg].c_str()),
-			 Form("Hits/(%d ev) hits for det %d| part: %s| %s; energy [MeV]",nAvg,detNr[id],hPnm[ip].c_str(),type[idmg].c_str()),
-			 nrBins,-4,4);
+			 Form("Hits/(%d ev) hits for det %d| part: %s| %s; energy [MeV]",
+			      nAvg,detNr[id],hPnm[ip].c_str(),type[idmg].c_str()),
+			 nrBins,-6,3.3);
 
 	//dummy histograms
 	TH1D *v=new TH1D(Form("hv_%d_%s_%s",detNr[id],hPnm[ip].c_str(),type[idmg].c_str()),
-			 Form("Hits/(%d ev) hits for det %d| part: %s| %s; energy [MeV]",nAvg,detNr[id],hPnm[ip].c_str(),type[idmg].c_str()),
-			 nrBins,-4,4);
+			 Form("Hits/(%d ev) hits for det %d| part: %s| %s; energy [MeV]",
+			      nAvg,detNr[id],hPnm[ip].c_str(),type[idmg].c_str()),
+			 nrBins,-6,3.3);
 
         if(idmg>=3){
 	  double xBins[101];
@@ -262,7 +257,8 @@ void Initialize(){
     valAvg.push_back(dv1);
   }
   for(int i=0;i<3;i++){
-    hSummary[i]=new TH1D(Form("hSummary_%s",type[i].c_str()),Form("summary histogram per electron on target| %s",type[i].c_str()),
+    hSummary[i]=new TH1D(Form("hSummary_%s",type[i].c_str()),
+			 Form("summary histogram per electron on target| %s",type[i].c_str()),
                          detNr.size()*2,0,detNr.size()*2);
     for(int ib=1;ib<=int(detNr.size());ib++){
       hSummary[i]->GetXaxis()->SetBinLabel(2*ib-1,Form("%d Tot",detNr[ib-1]));
@@ -348,4 +344,52 @@ void niceLogBins(TH1*h)
   }
   axis->Set(bins, new_bins);
   delete new_bins;
+}
+
+int processInput(int argc, char **argv){
+  if( argc == 1 || (strcmp("--help",argv[1])==0)){
+    cout << "Usage:\n$build/hallRad --infile [file.name] <other options>\n";
+    cout << "Options:\n\t--help : print this usage guide\n";
+    cout << "\t--infile <file.name>: specify prexSim output file to process. Can be root file or list of patchs to rootfiles. \n";
+    cout << "\t--default : process a set of default detectors and use default averaing\n";
+    cout << "\t\tdefault averging: "<<nAvg<<endl;
+    cout << "\t\tdefault detectors:";
+    for(auto &element : detNr)
+      cout<<"\t"<<element;
+    cout<<endl;
+    cout << "\t--avgOverN <number> : int used as number of events to average over for uncertainty\n";
+    cout << "\t--detList <Ndetector> : list of detectors that you want to process\n";
+    return 1;
+  }
+
+  int defaultFlag(0);
+  for(int i=1;i<argc;i++){
+    if(strcmp("--infile",argv[i])==0){
+      finNm = argv[i+1];
+    }else if(strcmp("--avgOverN",argv[i])==0){
+      nAvg = atoi(argv[i+1]);
+    }else if(strcmp("--default",argv[i])==0){
+      defaultFlag=1;
+    }else if(strcmp("--detList",argv[i])==0){
+      defaultFlag = -1;
+      int elem = i+1;
+      int det = atoi(argv[elem]);
+      detNr.clear();
+      while (elem<argc && (det>1000 && det<12000)){
+	detNr.push_back(det);
+	elem++;
+	det = atoi(argv[elem]);
+      }
+    }
+  }
+
+  if(finNm == "0"){
+    cout << "you have to provide an input file! quitting" <<endl;
+    return 2;
+  }else if(defaultFlag == 1){
+    cout << "using default detectors and averaging\n";
+  }else if(defaultFlag == 0){
+    cout << "default not specified but not detector list given. using default.\n";
+  }
+  return 0;
 }
