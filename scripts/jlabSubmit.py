@@ -6,9 +6,9 @@ def main():
 
     email = "ciprian@jlab.org"
 
-    #configuration = "prexI"
-    #configuration = "crex5"
-    configuration = "prexII"
+    #configuration = "prex1"
+    #configuration = "crex"
+    configuration = "prex2"
     #configuration = "moller"
     #configuration = "happex2"
 
@@ -62,18 +62,18 @@ def createMacFiles(config,outDir,sourceDir,nrEv,jobNr,identifier):
     seedB=long(time.time()*100+jobNr)
     f.write("/random/setSeeds "+str(seedA)+" "+str(seedB)+"\n")
 
-    if config=="crex5":
+    if config=="crex":
         f.write("/gun/energy 2. GeV\n")
         f.write("/moller/field/setConfiguration crex\n")
-        f.write("/moller/det/setDetectorFileName geometry/crex5"+identifier+".gdml\n")
-    elif config=="prexII":
+        f.write("/moller/det/setDetectorFileName geometry/crex"+identifier+".gdml\n")
+    elif config=="prex2":
     	f.write("/gun/energy 1. GeV\n")
         f.write("/moller/field/setConfiguration prex2\n")
-        f.write("/moller/det/setDetectorFileName geometry/prexII"+identifier+".gdml\n")
-    elif config=="prexI":
+        f.write("/moller/det/setDetectorFileName geometry/prex2"+identifier+".gdml\n")
+    elif config=="prex1":
     	f.write("/gun/energy 1. GeV\n")
         f.write("/moller/field/setConfiguration prex1\n")
-        f.write("/moller/det/setDetectorFileName geometry/prexI"+identifier+".gdml\n")
+        f.write("/moller/det/setDetectorFileName geometry/prex1"+identifier+".gdml\n")
     elif config=="moller":
     	f.write("/gun/energy 11. GeV\n")
         f.write("/moller/field/setConfiguration moller\n")
