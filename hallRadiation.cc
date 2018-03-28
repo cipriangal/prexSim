@@ -371,13 +371,11 @@ int processInput(int argc, char **argv){
       defaultFlag=1;
     }else if(strcmp("--detList",argv[i])==0){
       defaultFlag = -1;
-      int elem = i+1;
-      int det = atoi(argv[elem]);
       detNr.clear();
-      while (elem<argc && (det>1000 && det<12000)){
-	det = atoi(argv[elem]);
+      for(int elem=i+1;elem<argc;elem++){
+	int det = atoi(argv[elem]);
+	if(det<1000 || det>12000) break;
 	detNr.push_back(det);
-        elem++;
       }
     }
   }
