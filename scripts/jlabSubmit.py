@@ -6,21 +6,20 @@ def main():
 
     email = "ciprian@jlab.org"
 
-    #configuration = "prex1"
+    configuration = "prex1"
     #configuration = "crex"
-    configuration = "prex2"
-    #configuration = "moller"
+    #configuration = "prex2"
     #configuration = "happex2"
 
     sourceDir = "/work/halla/parity/disk1/ciprian/prexSim"
-    outputDir = "/lustre/expphy/volatile/halla/parity/ciprian/farmOut/dump/6inDonut_woSAMs"
+    outputDir = "/volatile/halla/parity/ciprian/farmOut/tests"
 
     nrEv   = 900000
     nrStart= 0
     nrStop = 60
 
     ###format should be _Name
-    identifier = "_6inDonut_noSAMs"
+    identifier = ""
 
     print('Running ' + str(nrEv*(nrStop - nrStart)) + ' events...')
 
@@ -139,6 +138,7 @@ def make_tarfile(sourceDir,config):
     tar.add(sourceDir+"/build/prexsim",arcname="prexsim")
     tar.add(sourceDir+"/geometry/schema",arcname="geometry/schema")
     tar.add(sourceDir+"/geometry/"+config+".gdml" ,arcname="geometry/"+config+".gdml")
+    tar.add(sourceDir+"/geometry/materials.xml" ,arcname="geometry/materials.xml")
 
     subFiles = glob.glob(sourceDir+"/geometry/sub*.gdml")
     for fileNm in subFiles:
