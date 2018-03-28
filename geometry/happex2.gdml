@@ -1854,13 +1854,13 @@
       </physvol>
 
       <physvol>
-        <file name="geometry/kriptoniteDetectors.gdml"/>
+        <file name="geometry/subKriptoniteDetectors.gdml"/>
         <positionref ref="pos_global_SEPT_elec"/>
         <rotationref ref="identity"/>
       </physvol>
 
       <physvol>
-        <file name="geometry/prex1Beampipe.gdml"/>
+        <file name="geometry/subBeamPipe_P1.gdml"/>
         <positionref ref="dDet_beamline_pos_1"/>
       </physvol>
 
