@@ -33,6 +33,7 @@ void FinalizeAvg();
 void WriteOutput();
 
 int processInput(int,char**);
+string suffix;
 string finNm("0");
 int nAvg(100000);
 vector<int> detNr={1001, 1002, 1003, 1004, 1005, 1006, 1101, 1102, 2101, 2105, 2110, 2112, 3120, 3121, 3201, 2401, 2411};
@@ -47,7 +48,11 @@ int main(int argc, char **argv){
   if(inputRes)
     return inputRes;
 
-  string foutNm = Form("%s_hallRad.root",finNm.substr(0,finNm.find(".")).c_str());
+  string foutNm;
+  if(suffix!="")
+    foutNm = suffix + "_hallRad.root";
+  else
+    foutNm = Form("%s_hallRad.root",finNm.substr(0,finNm.find(".")).c_str());
   fout=new TFile(foutNm.c_str(),"RECREATE");
 
   Initialize();
@@ -358,6 +363,7 @@ int processInput(int argc, char **argv){
     cout<<endl;
     cout << "\t--avgOverN <number> : int used as number of events to average over for uncertainty\n";
     cout << "\t--detList <Ndetector> : list of detectors that you want to process\n";
+    cout << "\t--suffix <name> : suffix for output file. can contain path to a particular folder\n";
     return 1;
   }
 
@@ -369,6 +375,8 @@ int processInput(int argc, char **argv){
       nAvg = atoi(argv[i+1]);
     }else if(strcmp("--default",argv[i])==0){
       defaultFlag=1;
+    }else if(strcmp("--suffix",argv[i])==0){
+      suffix=argv[i+1];
     }else if(strcmp("--detList",argv[i])==0){
       defaultFlag = -1;
       detNr.clear();
