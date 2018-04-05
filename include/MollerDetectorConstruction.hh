@@ -227,6 +227,7 @@ private:
   G4Material* concmat;
   G4Material* bormat;
   G4Material* borpoly;
+  G4Material* borhdpe;
   G4Material* borcrete;
   G4Material* polycrete;
   G4Material* fluorpoly;
@@ -236,9 +237,12 @@ private:
   G4Material* Ar;
   G4Material* Mn;
   G4Material* C;
+  G4Material* Ca;
   G4Material* Cu;
   G4Material* Cr;
   G4Material* F;
+  G4Material* Mg;
+  G4Material* Na;
   G4Material* Ni;
   G4Material* O;
   G4Material* Fe;
@@ -246,6 +250,7 @@ private:
   G4Material* P;
   G4Material* S;
   G4Material* SS;
+  G4Material* Sr;
   G4Material* H2O;
   G4Material* Kryptonite;
   G4Material* Air;

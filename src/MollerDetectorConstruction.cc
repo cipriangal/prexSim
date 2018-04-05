@@ -203,6 +203,7 @@ G4VPhysicalVolume* MollerDetectorConstruction::Construct()
     G4VisAttributes* SiVisAtt= new G4VisAttributes(G4Colour(0.4,0.4,0.0));
     G4VisAttributes* shieldVisAtt= new G4VisAttributes(G4Colour(0.7,0.0,0.0));
     G4VisAttributes* fpolyVisAtt= new G4VisAttributes(G4Colour(0.6,0.0,0.8));
+    G4VisAttributes* borhdpeVisAtt= new G4VisAttributes(G4Colour(0.7,0.4,0.4));
     G4VisAttributes* oringVisAtt= new G4VisAttributes(G4Colour(0.7,0.2,0.2));
     G4VisAttributes* ConcVisAtt= new G4VisAttributes(G4Colour(0.976,0.839,0.620));
 
@@ -264,6 +265,10 @@ G4VPhysicalVolume* MollerDetectorConstruction::Construct()
           if (worldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->GetDaughter(j)->GetLogicalVolume()->GetMaterial()->GetName().compare("Fluoropolymer")==0){
             worldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->GetDaughter(j)->GetLogicalVolume()->SetVisAttributes(fpolyVisAtt);
             worldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->GetDaughter(j)->GetLogicalVolume()->SetMaterial(fluorpoly);}
+
+          if (worldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->GetDaughter(j)->GetLogicalVolume()->GetMaterial()->GetName().compare("Borated_HDPE")==0){
+            worldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->GetDaughter(j)->GetLogicalVolume()->SetVisAttributes(borhdpeVisAtt);
+            worldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->GetDaughter(j)->GetLogicalVolume()->SetMaterial(borhdpe);}
 
           if (worldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->GetDaughter(j)->GetLogicalVolume()->GetMaterial()->GetName().compare("Quartz")==0){
             worldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->GetDaughter(j)->GetLogicalVolume()->SetVisAttributes(fpolyVisAtt);
@@ -345,6 +350,10 @@ G4VPhysicalVolume* MollerDetectorConstruction::Construct()
         if (worldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->GetMaterial()->GetName().compare("Fluoropolymer")==0){
           worldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->SetVisAttributes(fpolyVisAtt);
           worldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->SetMaterial(fluorpoly);}
+        
+        if (worldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->GetMaterial()->GetName().compare("Borated_HDPE")==0){
+          worldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->SetVisAttributes(shieldVisAtt);
+          worldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->SetMaterial(borhdpe);}
 
         if (worldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->GetMaterial()->GetName().compare("Quartz")==0){
           worldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->SetVisAttributes(fpolyVisAtt);
@@ -585,16 +594,20 @@ void MollerDetectorConstruction::DefineMaterials()
   quartz->AddMaterial(Si, fractionmass=33.*perCent);
   quartz->AddMaterial(O, fractionmass=67.*perCent);
 
-  //H =  matman->FindOrBuildMaterial("G4_H");
+  H =  matman->FindOrBuildMaterial("G4_H");
   Al = matman->FindOrBuildMaterial("G4_Al");
   Ar = matman->FindOrBuildMaterial("G4_Ar");
   Mn = matman->FindOrBuildMaterial("G4_Mn");
+  Ca = matman->FindOrBuildMaterial("G4_Ca");
   Cu  = matman->FindOrBuildMaterial("G4_Cu");
   Cr = matman->FindOrBuildMaterial("G4_Cr");
+  Mg = matman->FindOrBuildMaterial("G4_Mg");
+  Na = matman->FindOrBuildMaterial("G4_Na");
   Ni  = matman->FindOrBuildMaterial("G4_Ni");
   Fe  = matman->FindOrBuildMaterial("G4_Fe");
   P  = matman->FindOrBuildMaterial("G4_P");
   S  = matman->FindOrBuildMaterial("G4_S");
+  Sr = matman->FindOrBuildMaterial("G4_Sr");
   W  = matman->FindOrBuildMaterial("G4_W");
   Pb  = matman->FindOrBuildMaterial("G4_Pb");
   H2O = matman->FindOrBuildMaterial("G4_WATER");
@@ -609,6 +622,21 @@ void MollerDetectorConstruction::DefineMaterials()
   SS->AddMaterial(Si, fractionmass=1.000*perCent);
   SS->AddMaterial(P,  fractionmass=0.045*perCent);
   SS->AddMaterial(S,  fractionmass=0.030*perCent);
+
+  //Made with the information provided by Shieldwerx, Kent has the document
+  borhdpe = new G4Material("Borated_HDPE", density=1.6*g/cm3, nComponents=12);
+  borhdpe->AddMaterial(O,  fractionmass=42.89*perCent);
+  borhdpe->AddMaterial(C,  fractionmass=25.69*perCent);
+  borhdpe->AddMaterial(Al, fractionmass=11.74*perCent);
+  borhdpe->AddMaterial(Ca, fractionmass=7.46*perCent);
+  borhdpe->AddMaterial(H,  fractionmass=6.65*perCent);
+  borhdpe->AddMaterial(bormat, fractionmass=4.71*perCent);
+  borhdpe->AddMaterial(Si, fractionmass=0.15*perCent);
+  borhdpe->AddMaterial(Na, fractionmass=0.13*perCent);
+  borhdpe->AddMaterial(Mg, fractionmass=0.09*perCent);
+  borhdpe->AddMaterial(S,  fractionmass=0.07*perCent);
+  borhdpe->AddMaterial(Sr, fractionmass=0.04*perCent);
+  borhdpe->AddMaterial(Fe, fractionmass=0.03*perCent);
 
   // this material will kill every tracks that touch it
   Kryptonite = new G4Material("Kryptonite", density= 0.00000001*mg/cm3, nComponents=1);

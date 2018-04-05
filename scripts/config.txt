@@ -26,23 +26,25 @@ config=prexII
 #ident=iron2blocks_v1geom
 #ident=noSkyshine_v1geom
 #ident=oRingBeamPipe
-#ident=v2geom
+ident=v2geom
 #ident=v2SAMs
-ident=v2NewSAMsHalfRing
+#ident=v2NewSAMsHalfRing
 #ident=v2ConcSSPlusNewSAMs
 #ident=v1ThickConcSS
 
-output=input
+#output=input
 #output=v2NoSAMsLid
 #output=v2SAMsLid
 #output=v2Point6degSAMsLid
 #output=v2NewSAMsNoFlange
 #output=v1ThickConcSSPartial
+#output=v2Current
+output=v2BoronSWCollShields
 
 start_run=0
-end_run=20
+end_run=50
 
-n_events=200000
+n_events=800000
 
 e_cut=30
 

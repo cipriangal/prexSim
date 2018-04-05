@@ -6,9 +6,10 @@
 
   <define>
     <!--Positions are relative to the end of the septum beamPipe-->
-    <constant name="ring_length" value="5.08"/>
+    <constant name="ring_length" value="2.54"/>
     <constant name="ring_cut_length" value="ring_length + 2.54"/>
     <constant name="ring_torus_r" value="54.53"/>
+    <constant name="ring_thickness" value="5.08"/>
     <constant name="sam_can_height" value="1.6"/>
     <constant name="sam_can_width" value="2.6"/>
     <constant name="sam_can_length" value="36."/>

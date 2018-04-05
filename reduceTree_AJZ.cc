@@ -157,8 +157,8 @@ void ProcessOne(string fnm, long ntpf, int keV_cut){
     kE    = kinE;
     eD    = Edeposit;
 
-    neil = radDmg.getNEIL(pdgID,kE,0);
-    mrem = radDmg.getMREM(pdgID,kE,0);
+    neil = radDmg.getNEIL(pdgID,kE+eD,0);
+    mrem = radDmg.getMREM(pdgID,kE+eD,0);
     // cout<<tst<<endl;
     // tst++;
     // std::cin.ignore();

@@ -217,34 +217,34 @@ void particle_histo_quad(string sim, string conf, int n_events_k, string meas, s
   TH1F* h2 = new TH1F("h2", (conf + ": " + cuts + ", electrons").c_str(),     nbinsx, xlo, xhi);
   TH1F* h3 = new TH1F("h3", (conf + ": " + cuts + ", gammas").c_str(),        nbinsx, xlo, xhi);
   TH1F* h4 = new TH1F("h4", (conf + ": " + cuts + ", neutrons").c_str(),      nbinsx, xlo, xhi);
-  TH1F* h5 = new TH1F("h5", (conf + ": " + cuts + ", targ neutrons").c_str(), nbinsx, xlo, xhi);
-  TH1F* h6 = new TH1F("h6", (conf + ": " + cuts + ", coll neutrons").c_str(), nbinsx, xlo, xhi);
+  //TH1F* h5 = new TH1F("h5", (conf + ": " + cuts + ", targ neutrons").c_str(), nbinsx, xlo, xhi);
+  //TH1F* h6 = new TH1F("h6", (conf + ": " + cuts + ", coll neutrons").c_str(), nbinsx, xlo, xhi);
 
   TCanvas *c1 = new TCanvas("c1", "c1", 2000, 1400);
-  c1->Divide(2, 3);
-  //c1->Divide(2, 2);
+  //c1->Divide(2, 3);
+  c1->Divide(2, 2);
   gStyle->SetOptStat("eMRiou");
   
   t->Project("h1", meas.c_str(), cuts.c_str());
   t->Project("h2", meas.c_str(), ("(" + cuts + ") && abs(pdgID)==11").c_str());
   t->Project("h3", meas.c_str(), ("(" + cuts + ") && abs(pdgID)==22").c_str());
   t->Project("h4", meas.c_str(), ("(" + cuts + ") && abs(pdgID)==2112").c_str());
-  t->Project("h5", meas.c_str(), ("(" + cuts + ") && abs(pdgID)==2112 && z0>-1225.24 && z0<-895.04").c_str());
-  t->Project("h6", meas.c_str(), ("(" + cuts + ") && abs(pdgID)==2112 && z0>-250 && z0<-85").c_str());
+  //t->Project("h5", meas.c_str(), ("(" + cuts + ") && abs(pdgID)==2112 && z0>-1225.24 && z0<-895.04").c_str());
+  //t->Project("h6", meas.c_str(), ("(" + cuts + ") && abs(pdgID)==2112 && z0>-250 && z0<-85").c_str());
 
   h1->GetXaxis()->SetTitle(meas.c_str());
   h2->GetXaxis()->SetTitle(meas.c_str());
   h3->GetXaxis()->SetTitle(meas.c_str());
   h4->GetXaxis()->SetTitle(meas.c_str());
-  h5->GetXaxis()->SetTitle(meas.c_str());
-  h6->GetXaxis()->SetTitle(meas.c_str());
+  //h5->GetXaxis()->SetTitle(meas.c_str());
+  //h6->GetXaxis()->SetTitle(meas.c_str());
 
   c1->cd(1); h1->Draw();
   c1->cd(2); h2->Draw();
   c1->cd(3); h3->Draw();
   c1->cd(4); h4->Draw();
-  c1->cd(5); h5->Draw();
-  c1->cd(6); h6->Draw();
+  //c1->cd(5); h5->Draw();
+  //c1->cd(6); h6->Draw();
 }
 
 void particle_histo_quad_weighted(string sim, string conf, int n_events_k, string meas, string cuts, string weight, Int_t nbinsx, Double_t xlo, Double_t xhi){
@@ -340,4 +340,156 @@ void check_volIDs(const char* fname){
 
     cout<<"Volume ID for event "<<i<<": "<<volume<<endl;
   }
+}
+
+void e_range_neutron_histo_hex(string sim, string conf, int n_events_k, int dep_or_kin, string cuts, Int_t nbinsx, Double_t xlo, Double_t xhi){
+  TFile *f = new TFile(("~/farmOut/" + sim + "_" + conf + "_" + to_string(n_events_k) + "kEv/" + sim + "_" + conf + ".root").c_str());
+  TTree *t = (TTree*)f->Get("t");
+
+  string meas = "kineE";
+  if(dep_or_kin) meas = "edep";
+
+  TH1F *h1 = new TH1F("h1", (conf + ": " + cuts + ", all E's").c_str(),      200, 0, 1000);
+  TH1F* h2 = new TH1F("h2", (conf + ": " + cuts + ", <1eV").c_str(),         100, 0, 1E-6);
+  TH1F* h3 = new TH1F("h3", (conf + ": " + cuts + ", 1 eV - 100 keV").c_str(),        100, 1E-6, 0.1);
+  TH1F* h4 = new TH1F("h4", (conf + ": " + cuts + ", 100 keV - 1 MeV").c_str(),      100, 0.1, 1);
+  TH1F* h5 = new TH1F("h5", (conf + ": " + cuts + ", 1 MeV - 10 MeV").c_str(), 100, 1, 10);
+  TH1F* h6 = new TH1F("h6", (conf + ": " + cuts + ", >10 MeV").c_str(), 200, 10, 1000);
+
+  TCanvas *c1 = new TCanvas("c1", "c1", 2000, 1400);
+  c1->Divide(2, 3);
+  //c1->Divide(2, 2);
+  gStyle->SetOptStat("eMRiou");
+  
+  t->Project("h1", meas.c_str(), cuts.c_str());
+  t->Project("h2", meas.c_str(), ("(" + cuts + ") && " + meas + "<1E-6 && pdgID==2112").c_str());
+  t->Project("h3", meas.c_str(), ("(" + cuts + ") && " + meas + ">1E-6 && " + meas + "<0.1 && pdgID==2112").c_str());
+  t->Project("h4", meas.c_str(), ("(" + cuts + ") && " + meas + ">0.1 && "  + meas + "<1 && pdgID==2112").c_str());
+  t->Project("h5", meas.c_str(), ("(" + cuts + ") && " + meas + ">1 && "    + meas + "<10 && pdgID==2112").c_str());
+  t->Project("h6", meas.c_str(), ("(" + cuts + ") && " + meas + ">10 && pdgID==2112").c_str());
+
+  h1->GetXaxis()->SetTitle(meas.c_str());
+  h2->GetXaxis()->SetTitle(meas.c_str());
+  h3->GetXaxis()->SetTitle(meas.c_str());
+  h4->GetXaxis()->SetTitle(meas.c_str());
+  h5->GetXaxis()->SetTitle(meas.c_str());
+  h6->GetXaxis()->SetTitle(meas.c_str());
+
+  c1->cd(1); h1->Draw();
+  c1->cd(2); h2->Draw();
+  c1->cd(3); h3->Draw();
+  c1->cd(4); h4->Draw();
+  c1->cd(5); h5->Draw();
+  c1->cd(6); h6->Draw();
+}
+
+void e_range_em_histo_hex(string sim, string conf, int n_events_k, int dep_or_kin, string cuts, Int_t nbinsx, Double_t xlo, Double_t xhi){
+  TFile *f = new TFile(("~/farmOut/" + sim + "_" + conf + "_" + to_string(n_events_k) + "kEv/" + sim + "_" + conf + ".root").c_str());
+  TTree *t = (TTree*)f->Get("t");
+
+  string meas = "kineE";
+  if(dep_or_kin) meas = "edep";
+
+  TH1F *h1 = new TH1F("h1", (conf + ": " + cuts + ", <1 MeV gammas").c_str(),            200, 0,    1);
+  TH1F* h2 = new TH1F("h2", (conf + ": " + cuts + ", <1 MeV electrons").c_str(),         200, 0,    1);
+  TH1F* h3 = new TH1F("h3", (conf + ": " + cuts + ", 1 MeV - 10 MeV gammas").c_str(),    100, 1,   10);
+  TH1F* h4 = new TH1F("h4", (conf + ": " + cuts + ", 1 MeV - 10 MeV electrons").c_str(), 100, 1,   10);
+  TH1F* h5 = new TH1F("h5", (conf + ": " + cuts + ", >10 MeV gammas").c_str(),           200, 10, 1000);
+  TH1F* h6 = new TH1F("h6", (conf + ": " + cuts + ", >10 MeV electrons").c_str(),        200, 10, 1000);
+
+  TCanvas *c1 = new TCanvas("c1", "c1", 2000, 1400);
+  c1->Divide(2, 3);
+  //c1->Divide(2, 2);
+  gStyle->SetOptStat("eMRiou");
+  
+  t->Project("h1", meas.c_str(), ("(" + cuts + ") && " + meas + "<1 && pdgID==22").c_str());
+  t->Project("h2", meas.c_str(), ("(" + cuts + ") && " + meas + "<1 && abs(pdgID)==11").c_str());
+  t->Project("h3", meas.c_str(), ("(" + cuts + ") && " + meas + ">1 && " + meas + "<10 && pdgID==22").c_str());
+  t->Project("h4", meas.c_str(), ("(" + cuts + ") && " + meas + ">1 && " + meas + "<10 && abs(pdgID)==11").c_str());
+  t->Project("h5", meas.c_str(), ("(" + cuts + ") && " + meas + ">10 && pdgID==22").c_str());
+  t->Project("h6", meas.c_str(), ("(" + cuts + ") && " + meas + ">10 && abs(pdgID)==11").c_str());
+
+  h1->GetXaxis()->SetTitle(meas.c_str());
+  h2->GetXaxis()->SetTitle(meas.c_str());
+  h3->GetXaxis()->SetTitle(meas.c_str());
+  h4->GetXaxis()->SetTitle(meas.c_str());
+  h5->GetXaxis()->SetTitle(meas.c_str());
+  h6->GetXaxis()->SetTitle(meas.c_str());
+
+  c1->cd(1); h1->Draw();
+  c1->cd(2); h2->Draw();
+  c1->cd(3); h3->Draw();
+  c1->cd(4); h4->Draw();
+  c1->cd(5); h5->Draw();
+  c1->cd(6); h6->Draw();
+}
+
+void e_range_neutron_neil_hex(string sim, string conf, int n_events_k, int dep_or_kin, string cuts, Int_t nbinsx, Double_t xlo, Double_t xhi){
+  TFile *f = new TFile(("~/farmOut/" + sim + "_" + conf + "_" + to_string(n_events_k) + "kEv/" + sim + "_" + conf + ".root").c_str());
+  TTree *t = (TTree*)f->Get("t");
+
+  string meas = "kineE";
+  if(dep_or_kin) meas = "edep";
+
+  TH1F *h1 = new TH1F("h1", (conf + ": " + cuts + ", all E's").c_str(),      200, 0, 1000);
+  TH1F* h2 = new TH1F("h2", (conf + ": " + cuts + ", <1eV").c_str(),         100, 0, 1E-6);
+  TH1F* h3 = new TH1F("h3", (conf + ": " + cuts + ", 1 eV - 100 keV").c_str(),        100, 1E-6, 0.1);
+  TH1F* h4 = new TH1F("h4", (conf + ": " + cuts + ", 100 keV - 1 MeV").c_str(),      100, 0.1, 1);
+  TH1F* h5 = new TH1F("h5", (conf + ": " + cuts + ", 1 MeV - 10 MeV").c_str(), 100, 1, 10);
+  TH1F* h6 = new TH1F("h6", (conf + ": " + cuts + ", >10 MeV").c_str(), 200, 10, 1000);
+
+  TCanvas *c1 = new TCanvas("c1", "c1", 2000, 1400);
+  c1->Divide(2, 3);
+  //c1->Divide(2, 2);
+  gStyle->SetOptStat("eMRiou");
+  
+  t->Project("h1", meas.c_str(), ("neil*((" + cuts + ") && pdgID==2112)").c_str());
+  t->Project("h2", meas.c_str(), ("neil*((" + cuts + ") && " + meas + "<1E-6 && pdgID==2112)").c_str());
+  t->Project("h3", meas.c_str(), ("neil*((" + cuts + ") && " + meas + ">1E-6 && " + meas + "<0.1 && pdgID==2112)").c_str());
+  t->Project("h4", meas.c_str(), ("neil*((" + cuts + ") && " + meas + ">0.1 && "  + meas + "<1 && pdgID==2112)").c_str());
+  t->Project("h5", meas.c_str(), ("neil*((" + cuts + ") && " + meas + ">1 && "    + meas + "<10 && pdgID==2112)").c_str());
+  t->Project("h6", meas.c_str(), ("neil*((" + cuts + ") && " + meas + ">10 && pdgID==2112)").c_str());
+
+  h1->GetXaxis()->SetTitle(meas.c_str());
+  h2->GetXaxis()->SetTitle(meas.c_str());
+  h3->GetXaxis()->SetTitle(meas.c_str());
+  h4->GetXaxis()->SetTitle(meas.c_str());
+  h5->GetXaxis()->SetTitle(meas.c_str());
+  h6->GetXaxis()->SetTitle(meas.c_str());
+
+  c1->cd(1); h1->Draw();
+  c1->cd(2); h2->Draw();
+  c1->cd(3); h3->Draw();
+  c1->cd(4); h4->Draw();
+  c1->cd(5); h5->Draw();
+  c1->cd(6); h6->Draw();
+}
+
+void e_range_electron_neil_hex(string sim, string conf, int n_events_k, int dep_or_kin, string cuts, Int_t nbinsx, Double_t xlo, Double_t xhi){
+  TFile *f = new TFile(("~/farmOut/" + sim + "_" + conf + "_" + to_string(n_events_k) + "kEv/" + sim + "_" + conf + ".root").c_str());
+  TTree *t = (TTree*)f->Get("t");
+
+  string meas = "kineE";
+  if(dep_or_kin) meas = "edep";
+
+  TH1F *h1 = new TH1F("h1", (conf + ": " + cuts + ", <1 MeV electrons").c_str(),         200, 0,     1);
+  TH1F* h2 = new TH1F("h2", (conf + ": " + cuts + ", 1 MeV - 10 MeV electrons").c_str(), 100, 1,    10);
+  TH1F* h3 = new TH1F("h3", (conf + ": " + cuts + ", >10 MeV electrons").c_str(),        200, 10, 1000);
+
+  TCanvas *c1 = new TCanvas("c1", "c1", 1000, 1400);
+  c1->Divide(1, 3);
+  //c1->Divide(2, 2);
+  gStyle->SetOptStat("eMRiou");
+  
+  t->Project("h1", meas.c_str(), ("neil*((" + cuts + ") && " + meas + "<1 && abs(pdgID)==11)").c_str());
+  t->Project("h2", meas.c_str(), ("neil*((" + cuts + ") && " + meas + ">1 && " + meas + "<10 && abs(pdgID)==11)").c_str());
+  t->Project("h3", meas.c_str(), ("neil*((" + cuts + ") && " + meas + ">10 && abs(pdgID)==11)").c_str());
+
+  h1->GetXaxis()->SetTitle(meas.c_str());
+  h2->GetXaxis()->SetTitle(meas.c_str());
+  h3->GetXaxis()->SetTitle(meas.c_str());
+
+  c1->cd(1); h1->Draw();
+  c1->cd(2); h2->Draw();
+  c1->cd(3); h3->Draw();
 }
