@@ -25,7 +25,7 @@
     <position name="dumpDoor_posRel" unit="cm" x="0" y="42" z="0"/>
     <position name="dumpDet_pos" unit="cm" x="0" y="0" z="2490"/>
     <position name="usDet_dumpShield_pos" unit="cm" x="0" y="0" z="2250"/>
-    <position name="dsDet_dumpShield_pos" unit="cm" x="0" y="0" z="2380"/>
+    <position name="dsDet_dumpShield_pos" unit="cm" x="0" y="0" z="2450"/>
 
     <!-- Stuff from generateBeamPipe.py -->
     <position name="dumpICS1_beamL_pos" unit="cm" x="68" y="-110" z="2785.185"/>
