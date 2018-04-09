@@ -306,6 +306,10 @@ G4VPhysicalVolume* MollerDetectorConstruction::Construct()
             worldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->GetDaughter(j)->GetLogicalVolume()->SetVisAttributes(targetVisAtt);
             worldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->GetDaughter(j)->GetLogicalVolume()->SetMaterial(LD2);}
 
+          if (worldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->GetDaughter(j)->GetLogicalVolume()->GetMaterial()->GetName().compare("Tritium")==0){
+            worldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->GetDaughter(j)->GetLogicalVolume()->SetVisAttributes(targetVisAtt);
+            worldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->GetDaughter(j)->GetLogicalVolume()->SetMaterial(T3);}
+
           if (worldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->GetDaughter(j)->GetLogicalVolume()->GetMaterial()->GetName().compare("Calcium48")==0){
             worldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->GetDaughter(j)->GetLogicalVolume()->SetVisAttributes(targetVisAtt);
             worldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->GetDaughter(j)->GetLogicalVolume()->SetMaterial(pureCa48);}
@@ -390,6 +394,10 @@ G4VPhysicalVolume* MollerDetectorConstruction::Construct()
         if (worldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->GetMaterial()->GetName().compare("LiquidDeuterium")==0){
           worldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->SetVisAttributes(targetVisAtt);
           worldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->SetMaterial(LD2);}
+
+        if (worldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->GetMaterial()->GetName().compare("Tritium")==0){
+          worldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->SetVisAttributes(targetVisAtt);
+          worldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->SetMaterial(T3);}
 
         if (worldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->GetMaterial()->GetName().compare("Calcium48")==0){
           worldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->SetVisAttributes(targetVisAtt);
@@ -522,8 +530,10 @@ void MollerDetectorConstruction::setTargetMaterial(const G4String& nam)
     //targetMaterial = Pb;
     targetMaterial = purePb;
     G4cout<<"Setting target material to Pb"<<G4endl;
+  } else if(targMat.compare("Tritium")==0){
+    targetMaterial = T3;
+    G4cout<<"Setting target material to T2"<<G4endl;
   }
-
 }
 
 void MollerDetectorConstruction::DefineMaterials()
@@ -647,6 +657,12 @@ void MollerDetectorConstruction::DefineMaterials()
   elD->AddIsotope(D, abundance=100.*perCent);
   LD2 = new G4Material("Liquid_Deuterium", density= 0.169*g/cm3, nComponents=1, kStateLiquid, temp);
   LD2->AddElement(elD, natoms=2); //sum of frac. masses 2 is not 1?
+
+  T = new G4Isotope("Tritium", z=1, n=3, a=3.016*g/mole);
+  elT = new G4Element("TritiumElement", symbol="elT", nIso = 1);
+  elT->AddIsotope(T, abundance=100.*perCent);
+  T3 = new G4Material("Tritium", density=3.08*g/cm3, nComponents=1, kStateGas, 298*kelvin);
+  T3->AddElement(elT, natoms=2);
 
   //-----How pure was the Lead???------//
 

@@ -190,7 +190,8 @@
     <constant name="center_wall" value="radius_of_hall+thick_wall/2"/>
     
     <constant name="height_cylwall" value="1777.0"/>
-    <constant name="radius_of_cylwall" value="2546."/>
+    <!-- <constant name="radius_of_cylwall" value="2546."/> -->
+    <constant name="radius_of_cylwall" value="2652"/>
     <constant name="thick_cylwall" value="148.7"/> 
     <constant name="radius_topwall_out" value="5472.78"/>
     <constant name="radius_topwall_in" value="5402.78"/>
@@ -1817,11 +1818,17 @@
       </physvol>
       
       <physvol>
-	<file name="geometry/kriptoniteDetectors_withHRS.gdml"/>
+	<file name="geometry/kriptoniteDetectors.gdml"/>
 	<positionref ref="pos_global_SEPT_elec"/>
 	<rotationref ref="identity"/>
       </physvol>
       
+      <physvol>
+        <file name="geometry/subHRSplatform.gdml"/>
+        <position name="HRSplatform_pos" unit="cm" x="467.3" y="42.5" z="2107.8"/>
+        <rotation name="HRSplatform_rot" unit="deg" x="0" y="-12.5" z="0"/>
+      </physvol>
+
     </volume>
   </structure>
 

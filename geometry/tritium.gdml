@@ -27,23 +27,6 @@
 
     <!-- Septum dimensions  -->
     <constant name="width_septum" value="137.16"/> <constant name="length_septum" value="74.3863"/>
-    <constant name="septum_us_face" value="20."/>
-
-    <!-- Beamline -->
-    <constant name="ri_septum_pipe" value= "3.797"/>
-    <constant name="ro_septum_pipe" value="4.102"/>
-
-    <constant name="length_septum_pipe" value= "100."/>
-    <constant name="center_septum_pipe" value= "septum_us_face + length_septum_pipe/2"/>
-
-    <!-- To access matrix elements, use matrix_name[row_number, column_number] -->
-    <!-- Rows are inner and outer radii, length and distance of center from end of septum pipe-->
-    <!-- Would like some way to calculate the center of the pipes from the lengths... -->
-
-    <matrix name="beamline" coldim="13" values =" 4.128  4.445  4.763  5.080   6.350   7.620  10.160  10.478  12.700  15.240  30.480   45.720   45.720
-                                                 4.432  4.750  5.067  5.385   6.655   7.925  10.478  10.795  13.018  15.558  30.798   46.038   46.038
-						 28.018 19.01  15.24  37.028  23.416  27.622  22.368  94.456  30.48  106.204 551.18  1564.642  554.776
-						 14.009 37.523 54.648 80.782 111.004 136.523 161.518 219.93  282.398 350.74  679.432 1737.343 2797.052"/>
 
     <!-- Hall - wall, floor and "dump" -->
     <constant name="radius_of_hall" value="2651.7"/>
@@ -51,7 +34,8 @@
     <constant name="center_wall" value="radius_of_hall+thick_wall/2"/>
     
     <constant name="height_cylwall" value="1777.0"/>
-    <constant name="radius_of_cylwall" value="2546."/>
+    <!--<constant name="radius_of_cylwall" value="2546."/> -->
+    <constant name="radius_of_cylwall" value="2652."/>
     <constant name="thick_cylwall" value="148.7"/> 
     <constant name="radius_topwall_out" value="5472.78"/>
     <constant name="radius_topwall_in" value="5402.78"/>
@@ -67,11 +51,6 @@
     <constant name="length_dump_hole" value="length_dump"/> <constant name="width_dump_hole" value="212.816"/> <constant name="height_dump_hole" value="299.876"/>
     <constant name="dump_hole_z_center" value="center_dump-1.001*(length_dump-length_dump_hole)/2"/>
     <constant name="dump_hole_y_center" value="-43.531"/>
-
-    <constant name="thick_dump_ss_enc" value="11.46"/>  
-    <constant name="dump_ss_enc_center" value="center_dump-length_dump/2-thick_wall+5."/>
-    <constant name="dump_ss_enc_cylcenter" value="center_cyldump-length_dump/2-thick_cylwall+5."/>
-    <constant name="dump_ss_enc_hole_radius" value="46.038"/>
 
     <!-- Pedestal scattering chamber -->
     <constant name="ped_downstream_high" value="199." />
@@ -124,11 +103,11 @@
     <constant name="sc_arm_ped_high" value="1.0" />
 
     <!-- Positions -->
+    <position unit="cm" name="tritium_target_pos" x="0" y="0" z="tritium_target_center"/>
+    <position unit="cm" name="dDet_beamline_pos_1"       x="0" y="0"     z="prex_target_center+237.535+0.1"/>
     <position unit="cm" name="dumpTrans_1"       x="0" y="dump_hole_y_center"     z="dump_hole_z_center - center_dump"/>	
     <position unit="cm" name="dumpTrans_2"       x="0" y="-dump_hole_y_center"    z="0"/>	
     <position unit="cm" name="dump_center"       x="0" y="0"     z="center_dump"/>	
-    <position unit="cm" name="ssenc_center"      x="0" y="dump_hole_y_center"     z="dump_ss_enc_center"/>
-    <position unit="cm" name="ssenc_cylcenter"      x="0" y="dump_hole_y_center"     z="dump_ss_enc_cylcenter"/>
 
     <position unit="cm" name="cylwallTrans_1"    x="0" y="0"     z="thick_cylwall/2"/>
     <position unit="cm" name="cylwallTrans_2"    x="0" y="-1.0*radius_of_cylwall-0.5*thick_cylwall" z="+dump_hole_y_center-center_cylwall"/>
@@ -203,8 +182,8 @@
     <rotation name="scRot_3" unit="deg" x="0" y="0" z="45"/>
     <rotation name="scRot_4" unit="deg" x="0" y="0" z="-45"/>
     <rotation name="scRot_5" unit="deg" x="0" y="0" z="225"/>
-    <rotation name="scRot_6" unit="deg" x="90" y="0" z="12.5"/>
-    <rotation name="scRot_7" unit="deg" x="90" y="0" z="-12.5"/>
+    <rotation name="scRot_6" unit="deg" x="90" y="0" z="35"/>
+    <rotation name="scRot_7" unit="deg" x="90" y="0" z="-35"/>
     <rotation name="scRot_8" unit="deg" x="90" y="0" z="30"/>
     <rotation name="scRot_22" unit="deg" x="0"   y="-90" z="0"/>
     <rotation name="identity"/>
@@ -233,64 +212,6 @@
   <solids>
     <!-- Mother Volume -->
     <box lunit="cm" name="boxMother" x="width_mother" y="height_mother" z="length_mother"/>
-
-    <!-- Beamline -->
-    <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="septum_pipe_tube" rmin="ri_septum_pipe" rmax="ro_septum_pipe" z="length_septum_pipe" />
-    
-    <polycone aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="beamtube_1"> 
-      <zplane rmin="ro_septum_pipe" rmax="beamline[2,1]" z="-0.5*beamline[3,1]-0.5*beamline[3,2]-0.5*beamline[3,3]-0.5*beamline[3,4]-0.5*beamline[3,5]-0.5*beamline[3,6]-0.5*beamline[3,7]-0.5*beamline[3,8]-0.5*beamline[3,9]-0.5*beamline[3,10]-0.5*beamline[3,11]-0.5*beamline[3,12]-0.5*beamline[3,13] -1."/> 
-      <zplane rmin="ro_septum_pipe" rmax="beamline[2,1]" z="-0.5*beamline[3,1]-0.5*beamline[3,2]-0.5*beamline[3,3]-0.5*beamline[3,4]-0.5*beamline[3,5]-0.5*beamline[3,6]-0.5*beamline[3,7]-0.5*beamline[3,8]-0.5*beamline[3,9]-0.5*beamline[3,10]-0.5*beamline[3,11]-0.5*beamline[3,12]-0.5*beamline[3,13]"/> 
-      <zplane rmin="beamline[1,1]"  rmax="beamline[2,1]"  z="-0.5*beamline[3,1]-0.5*beamline[3,2]-0.5*beamline[3,3]-0.5*beamline[3,4]-0.5*beamline[3,5]-0.5*beamline[3,6]-0.5*beamline[3,7]-0.5*beamline[3,8]-0.5*beamline[3,9]-0.5*beamline[3,10]-0.5*beamline[3,11]-0.5*beamline[3,12]-0.5*beamline[3,13]" /> 
-      <zplane rmin="beamline[1,1]"  rmax="beamline[2,1]"  z="+0.5*beamline[3,1]-0.5*beamline[3,2]-0.5*beamline[3,3]-0.5*beamline[3,4]-0.5*beamline[3,5]-0.5*beamline[3,6]-0.5*beamline[3,7]-0.5*beamline[3,8]-0.5*beamline[3,9]-0.5*beamline[3,10]-0.5*beamline[3,11]-0.5*beamline[3,12]-0.5*beamline[3,13] -1." />
-      <zplane rmin="beamline[1,1]" rmax="beamline[2,2]" z="+0.5*beamline[3,1]-0.5*beamline[3,2]-0.5*beamline[3,3]-0.5*beamline[3,4]-0.5*beamline[3,5]-0.5*beamline[3,6]-0.5*beamline[3,7]-0.5*beamline[3,8]-0.5*beamline[3,9]-0.5*beamline[3,10]-0.5*beamline[3,11]-0.5*beamline[3,12]-0.5*beamline[3,13] -1."/> 
-      <zplane rmin="beamline[1,1]" rmax="beamline[2,2]" z="+0.5*beamline[3,1]-0.5*beamline[3,2]-0.5*beamline[3,3]-0.5*beamline[3,4]-0.5*beamline[3,5]-0.5*beamline[3,6]-0.5*beamline[3,7]-0.5*beamline[3,8]-0.5*beamline[3,9]-0.5*beamline[3,10]-0.5*beamline[3,11]-0.5*beamline[3,12]-0.5*beamline[3,13]"/> 
-      <zplane rmin="beamline[1,2]"  rmax="beamline[2,2]"  z="+0.5*beamline[3,1]-0.5*beamline[3,2]-0.5*beamline[3,3]-0.5*beamline[3,4]-0.5*beamline[3,5]-0.5*beamline[3,6]-0.5*beamline[3,7]-0.5*beamline[3,8]-0.5*beamline[3,9]-0.5*beamline[3,10]-0.5*beamline[3,11]-0.5*beamline[3,12]-0.5*beamline[3,13]" /> 
-      <zplane rmin="beamline[1,2]"  rmax="beamline[2,2]"  z="+0.5*beamline[3,1]+0.5*beamline[3,2]-0.5*beamline[3,3]-0.5*beamline[3,4]-0.5*beamline[3,5]-0.5*beamline[3,6]-0.5*beamline[3,7]-0.5*beamline[3,8]-0.5*beamline[3,9]-0.5*beamline[3,10]-0.5*beamline[3,11]-0.5*beamline[3,12]-0.5*beamline[3,13] -1." /> 
-      <zplane rmin="beamline[1,2]" rmax="beamline[2,3]" z="+0.5*beamline[3,1]+0.5*beamline[3,2]-0.5*beamline[3,3]-0.5*beamline[3,4]-0.5*beamline[3,5]-0.5*beamline[3,6]-0.5*beamline[3,7]-0.5*beamline[3,8]-0.5*beamline[3,9]-0.5*beamline[3,10]-0.5*beamline[3,11]-0.5*beamline[3,12]-0.5*beamline[3,13] -1."/> 
-      <zplane rmin="beamline[1,2]" rmax="beamline[2,3]" z="+0.5*beamline[3,1]+0.5*beamline[3,2]-0.5*beamline[3,3]-0.5*beamline[3,4]-0.5*beamline[3,5]-0.5*beamline[3,6]-0.5*beamline[3,7]-0.5*beamline[3,8]-0.5*beamline[3,9]-0.5*beamline[3,10]-0.5*beamline[3,11]-0.5*beamline[3,12]-0.5*beamline[3,13]"/> 
-      <zplane  rmin="beamline[1,3]"  rmax="beamline[2,3]"  z="+0.5*beamline[3,1]+0.5*beamline[3,2]-0.5*beamline[3,3]-0.5*beamline[3,4]-0.5*beamline[3,5]-0.5*beamline[3,6]-0.5*beamline[3,7]-0.5*beamline[3,8]-0.5*beamline[3,9]-0.5*beamline[3,10]-0.5*beamline[3,11]-0.5*beamline[3,12]-0.5*beamline[3,13]" /> 
-      <zplane  rmin="beamline[1,3]"  rmax="beamline[2,3]"  z="+0.5*beamline[3,1]+0.5*beamline[3,2]+0.5*beamline[3,3]-0.5*beamline[3,4]-0.5*beamline[3,5]-0.5*beamline[3,6]-0.5*beamline[3,7]-0.5*beamline[3,8]-0.5*beamline[3,9]-0.5*beamline[3,10]-0.5*beamline[3,11]-0.5*beamline[3,12]-0.5*beamline[3,13] -1." /> 
-      <zplane rmin="beamline[1,3]" rmax="beamline[2,4]" z="+0.5*beamline[3,1]+0.5*beamline[3,2]+0.5*beamline[3,3]-0.5*beamline[3,4]-0.5*beamline[3,5]-0.5*beamline[3,6]-0.5*beamline[3,7]-0.5*beamline[3,8]-0.5*beamline[3,9]-0.5*beamline[3,10]-0.5*beamline[3,11]-0.5*beamline[3,12]-0.5*beamline[3,13] -1."/>
-      <zplane rmin="beamline[1,3]" rmax="beamline[2,4]" z="+0.5*beamline[3,1]+0.5*beamline[3,2]+0.5*beamline[3,3]-0.5*beamline[3,4]-0.5*beamline[3,5]-0.5*beamline[3,6]-0.5*beamline[3,7]-0.5*beamline[3,8]-0.5*beamline[3,9]-0.5*beamline[3,10]-0.5*beamline[3,11]-0.5*beamline[3,12]-0.5*beamline[3,13]"/> 
-      <zplane rmin="beamline[1,4]"  rmax="beamline[2,4]"  z="+0.5*beamline[3,1]+0.5*beamline[3,2]+0.5*beamline[3,3]-0.5*beamline[3,4]-0.5*beamline[3,5]-0.5*beamline[3,6]-0.5*beamline[3,7]-0.5*beamline[3,8]-0.5*beamline[3,9]-0.5*beamline[3,10]-0.5*beamline[3,11]-0.5*beamline[3,12]-0.5*beamline[3,13]" /> 
-      <zplane rmin="beamline[1,4]"  rmax="beamline[2,4]"  z="+0.5*beamline[3,1]+0.5*beamline[3,2]+0.5*beamline[3,3]+0.5*beamline[3,4]-0.5*beamline[3,5]-0.5*beamline[3,6]-0.5*beamline[3,7]-0.5*beamline[3,8]-0.5*beamline[3,9]-0.5*beamline[3,10]-0.5*beamline[3,11]-0.5*beamline[3,12]-0.5*beamline[3,13] -1." /> 
-      <zplane rmin="beamline[1,4]" rmax="beamline[2,5]" z="+0.5*beamline[3,1]+0.5*beamline[3,2]+0.5*beamline[3,3]+0.5*beamline[3,4]-0.5*beamline[3,5]-0.5*beamline[3,6]-0.5*beamline[3,7]-0.5*beamline[3,8]-0.5*beamline[3,9]-0.5*beamline[3,10]-0.5*beamline[3,11]-0.5*beamline[3,12]-0.5*beamline[3,13] -1."/> 
-      <zplane rmin="beamline[1,4]" rmax="beamline[2,5]" z="+0.5*beamline[3,1]+0.5*beamline[3,2]+0.5*beamline[3,3]+0.5*beamline[3,4]-0.5*beamline[3,5]-0.5*beamline[3,6]-0.5*beamline[3,7]-0.5*beamline[3,8]-0.5*beamline[3,9]-0.5*beamline[3,10]-0.5*beamline[3,11]-0.5*beamline[3,12]-0.5*beamline[3,13]"/> 
-      <zplane rmin="beamline[1,5]"  rmax="beamline[2,5]"  z="+0.5*beamline[3,1]+0.5*beamline[3,2]+0.5*beamline[3,3]+0.5*beamline[3,4]-0.5*beamline[3,5]-0.5*beamline[3,6]-0.5*beamline[3,7]-0.5*beamline[3,8]-0.5*beamline[3,9]-0.5*beamline[3,10]-0.5*beamline[3,11]-0.5*beamline[3,12]-0.5*beamline[3,13]" />  
-      <zplane rmin="beamline[1,5]"  rmax="beamline[2,5]"  z="+0.5*beamline[3,1]+0.5*beamline[3,2]+0.5*beamline[3,3]+0.5*beamline[3,4]+0.5*beamline[3,5]-0.5*beamline[3,6]-0.5*beamline[3,7]-0.5*beamline[3,8]-0.5*beamline[3,9]-0.5*beamline[3,10]-0.5*beamline[3,11]-0.5*beamline[3,12]-0.5*beamline[3,13] -1." /> 
-      <zplane rmin="beamline[1,5]" rmax="beamline[2,6]" z="+0.5*beamline[3,1]+0.5*beamline[3,2]+0.5*beamline[3,3]+0.5*beamline[3,4]+0.5*beamline[3,5]-0.5*beamline[3,6]-0.5*beamline[3,7]-0.5*beamline[3,8]-0.5*beamline[3,9]-0.5*beamline[3,10]-0.5*beamline[3,11]-0.5*beamline[3,12]-0.5*beamline[3,13] -1."/> 
-      <zplane rmin="beamline[2,5]" rmax="beamline[2,6]" z="+0.5*beamline[3,1]+0.5*beamline[3,2]+0.5*beamline[3,3]+0.5*beamline[3,4]+0.5*beamline[3,5]-0.5*beamline[3,6]-0.5*beamline[3,7]-0.5*beamline[3,8]-0.5*beamline[3,9]-0.5*beamline[3,10]-0.5*beamline[3,11]-0.5*beamline[3,12]-0.5*beamline[3,13]"/> 
-      <zplane rmin="beamline[1,6]"  rmax="beamline[2,6]"  z="+0.5*beamline[3,1]+0.5*beamline[3,2]+0.5*beamline[3,3]+0.5*beamline[3,4]+0.5*beamline[3,5]-0.5*beamline[3,6]-0.5*beamline[3,7]-0.5*beamline[3,8]-0.5*beamline[3,9]-0.5*beamline[3,10]-0.5*beamline[3,11]-0.5*beamline[3,12]-0.5*beamline[3,13]" />  
-      <zplane rmin="beamline[1,6]"  rmax="beamline[2,6]"  z="+0.5*beamline[3,1]+0.5*beamline[3,2]+0.5*beamline[3,3]+0.5*beamline[3,4]+0.5*beamline[3,5]+0.5*beamline[3,6]-0.5*beamline[3,7]-0.5*beamline[3,8]-0.5*beamline[3,9]-0.5*beamline[3,10]-0.5*beamline[3,11]-0.5*beamline[3,12]-0.5*beamline[3,13] -1." /> 
-      <zplane rmin="beamline[1,6]" rmax="beamline[2,7]" z="+0.5*beamline[3,1]+0.5*beamline[3,2]+0.5*beamline[3,3]+0.5*beamline[3,4]+0.5*beamline[3,5]+0.5*beamline[3,6]-0.5*beamline[3,7]-0.5*beamline[3,8]-0.5*beamline[3,9]-0.5*beamline[3,10]-0.5*beamline[3,11]-0.5*beamline[3,12]-0.5*beamline[3,13] -1"/> 
-      <zplane rmin="beamline[1,6]" rmax="beamline[2,7]" z="+0.5*beamline[3,1]+0.5*beamline[3,2]+0.5*beamline[3,3]+0.5*beamline[3,4]+0.5*beamline[3,5]+0.5*beamline[3,6]-0.5*beamline[3,7]-0.5*beamline[3,8]-0.5*beamline[3,9]-0.5*beamline[3,10]-0.5*beamline[3,11]-0.5*beamline[3,12]-0.5*beamline[3,13]"/> 
-      <zplane rmin="beamline[1,7]"  rmax="beamline[2,7]"  z="+0.5*beamline[3,1]+0.5*beamline[3,2]+0.5*beamline[3,3]+0.5*beamline[3,4]+0.5*beamline[3,5]+0.5*beamline[3,6]-0.5*beamline[3,7]-0.5*beamline[3,8]-0.5*beamline[3,9]-0.5*beamline[3,10]-0.5*beamline[3,11]-0.5*beamline[3,12]-0.5*beamline[3,13]" />  
-      <zplane rmin="beamline[1,7]"  rmax="beamline[2,7]"  z="+0.5*beamline[3,1]+0.5*beamline[3,2]+0.5*beamline[3,3]+0.5*beamline[3,4]+0.5*beamline[3,5]+0.5*beamline[3,6]+0.5*beamline[3,7]-0.5*beamline[3,8]-0.5*beamline[3,9]-0.5*beamline[3,10]-0.5*beamline[3,11]-0.5*beamline[3,12]-0.5*beamline[3,13] -1." />  
-      <zplane rmin="beamline[1,7]" rmax="beamline[2,8]" z="+0.5*beamline[3,1]+0.5*beamline[3,2]+0.5*beamline[3,3]+0.5*beamline[3,4]+0.5*beamline[3,5]+0.5*beamline[3,6]+0.5*beamline[3,7]-0.5*beamline[3,8]-0.5*beamline[3,9]-0.5*beamline[3,10]-0.5*beamline[3,11]-0.5*beamline[3,12]-0.5*beamline[3,13] -1."/> 
-      <zplane rmin="beamline[1,7]" rmax="beamline[2,8]" z="+0.5*beamline[3,1]+0.5*beamline[3,2]+0.5*beamline[3,3]+0.5*beamline[3,4]+0.5*beamline[3,5]+0.5*beamline[3,6]+0.5*beamline[3,7]-0.5*beamline[3,8]-0.5*beamline[3,9]-0.5*beamline[3,10]-0.5*beamline[3,11]-0.5*beamline[3,12]-0.5*beamline[3,13]"/> 
-      <zplane rmin="beamline[1,8]"  rmax="beamline[2,8]"  z="+0.5*beamline[3,1]+0.5*beamline[3,2]+0.5*beamline[3,3]+0.5*beamline[3,4]+0.5*beamline[3,5]+0.5*beamline[3,6]+0.5*beamline[3,7]-0.5*beamline[3,8]-0.5*beamline[3,9]-0.5*beamline[3,10]-0.5*beamline[3,11]-0.5*beamline[3,12]-0.5*beamline[3,13]" /> 
-      <zplane rmin="beamline[1,8]"  rmax="beamline[2,8]"  z="+0.5*beamline[3,1]+0.5*beamline[3,2]+0.5*beamline[3,3]+0.5*beamline[3,4]+0.5*beamline[3,5]+0.5*beamline[3,6]+0.5*beamline[3,7]+0.5*beamline[3,8]-0.5*beamline[3,9]-0.5*beamline[3,10]-0.5*beamline[3,11]-0.5*beamline[3,12]-0.5*beamline[3,13] -1." />
-      <zplane rmin="beamline[1,8]" rmax="beamline[2,9]" z="+0.5*beamline[3,1]+0.5*beamline[3,2]+0.5*beamline[3,3]+0.5*beamline[3,4]+0.5*beamline[3,5]+0.5*beamline[3,6]+0.5*beamline[3,7]+0.5*beamline[3,8]-0.5*beamline[3,9]-0.5*beamline[3,10]-0.5*beamline[3,11]-0.5*beamline[3,12]-0.5*beamline[3,13] -1."/> 
-      <zplane rmin="beamline[1,8]" rmax="beamline[2,9]" z="+0.5*beamline[3,1]+0.5*beamline[3,2]+0.5*beamline[3,3]+0.5*beamline[3,4]+0.5*beamline[3,5]+0.5*beamline[3,6]+0.5*beamline[3,7]+0.5*beamline[3,8]-0.5*beamline[3,9]-0.5*beamline[3,10]-0.5*beamline[3,11]-0.5*beamline[3,12]-0.5*beamline[3,13]"/>
-      <zplane rmin="beamline[1,9]"  rmax="beamline[2,9]"  z="+0.5*beamline[3,1]+0.5*beamline[3,2]+0.5*beamline[3,3]+0.5*beamline[3,4]+0.5*beamline[3,5]+0.5*beamline[3,6]+0.5*beamline[3,7]+0.5*beamline[3,8]-0.5*beamline[3,9]-0.5*beamline[3,10]-0.5*beamline[3,11]-0.5*beamline[3,12]-0.5*beamline[3,13]" /> 
-      <zplane rmin="beamline[1,9]"  rmax="beamline[2,9]"  z="+0.5*beamline[3,1]+0.5*beamline[3,2]+0.5*beamline[3,3]+0.5*beamline[3,4]+0.5*beamline[3,5]+0.5*beamline[3,6]+0.5*beamline[3,7]+0.5*beamline[3,8]+0.5*beamline[3,9]-0.5*beamline[3,10]-0.5*beamline[3,11]-0.5*beamline[3,12]-0.5*beamline[3,13] -1." /> 
-      <zplane rmin="beamline[1,9]" rmax="beamline[2,10]" z="+0.5*beamline[3,1]+0.5*beamline[3,2]+0.5*beamline[3,3]+0.5*beamline[3,4]+0.5*beamline[3,5]+0.5*beamline[3,6]+0.5*beamline[3,7]+0.5*beamline[3,8]+0.5*beamline[3,9]-0.5*beamline[3,10]-0.5*beamline[3,11]-0.5*beamline[3,12]-0.5*beamline[3,13] -1."/> 
-      <zplane rmin="beamline[1,9]" rmax="beamline[2,10]" z="+0.5*beamline[3,1]+0.5*beamline[3,2]+0.5*beamline[3,3]+0.5*beamline[3,4]+0.5*beamline[3,5]+0.5*beamline[3,6]+0.5*beamline[3,7]+0.5*beamline[3,8]+0.5*beamline[3,9]-0.5*beamline[3,10]-0.5*beamline[3,11]-0.5*beamline[3,12]-0.5*beamline[3,13]"/> 
-      <zplane rmin="beamline[1,10]" rmax="beamline[2,10]" z="+0.5*beamline[3,1]+0.5*beamline[3,2]+0.5*beamline[3,3]+0.5*beamline[3,4]+0.5*beamline[3,5]+0.5*beamline[3,6]+0.5*beamline[3,7]+0.5*beamline[3,8]+0.5*beamline[3,9]-0.5*beamline[3,10]-0.5*beamline[3,11]-0.5*beamline[3,12]-0.5*beamline[3,13]" />  
-      <zplane rmin="beamline[1,10]" rmax="beamline[2,10]" z="+0.5*beamline[3,1]+0.5*beamline[3,2]+0.5*beamline[3,3]+0.5*beamline[3,4]+0.5*beamline[3,5]+0.5*beamline[3,6]+0.5*beamline[3,7]+0.5*beamline[3,8]+0.5*beamline[3,9]+0.5*beamline[3,10]-0.5*beamline[3,11]-0.5*beamline[3,12]-0.5*beamline[3,13] -1." />  
-      <zplane rmin="beamline[1,10]" rmax="beamline[2,11]" z="+0.5*beamline[3,1]+0.5*beamline[3,2]+0.5*beamline[3,3]+0.5*beamline[3,4]+0.5*beamline[3,5]+0.5*beamline[3,6]+0.5*beamline[3,7]+0.5*beamline[3,8]+0.5*beamline[3,9]+0.5*beamline[3,10]-0.5*beamline[3,11]-0.5*beamline[3,12]-0.5*beamline[3,13] -1."/> 
-      <zplane rmin="beamline[1,10]" rmax="beamline[2,11]" z="+0.5*beamline[3,1]+0.5*beamline[3,2]+0.5*beamline[3,3]+0.5*beamline[3,4]+0.5*beamline[3,5]+0.5*beamline[3,6]+0.5*beamline[3,7]+0.5*beamline[3,8]+0.5*beamline[3,9]+0.5*beamline[3,10]-0.5*beamline[3,11]-0.5*beamline[3,12]-0.5*beamline[3,13]"/> 
-      <zplane rmin="beamline[1,11]" rmax="beamline[2,11]" z="+0.5*beamline[3,1]+0.5*beamline[3,2]+0.5*beamline[3,3]+0.5*beamline[3,4]+0.5*beamline[3,5]+0.5*beamline[3,6]+0.5*beamline[3,7]+0.5*beamline[3,8]+0.5*beamline[3,9]+0.5*beamline[3,10]-0.5*beamline[3,11]-0.5*beamline[3,12]-0.5*beamline[3,13]" />  
-      <zplane rmin="beamline[1,11]" rmax="beamline[2,11]" z="+0.5*beamline[3,1]+0.5*beamline[3,2]+0.5*beamline[3,3]+0.5*beamline[3,4]+0.5*beamline[3,5]+0.5*beamline[3,6]+0.5*beamline[3,7]+0.5*beamline[3,8]+0.5*beamline[3,9]+0.5*beamline[3,10]+0.5*beamline[3,11]-0.5*beamline[3,12]-0.5*beamline[3,13] -1." /> 
-      <zplane rmin="beamline[1,11]" rmax="beamline[2,12]" z="+0.5*beamline[3,1]+0.5*beamline[3,2]+0.5*beamline[3,3]+0.5*beamline[3,4]+0.5*beamline[3,5]+0.5*beamline[3,6]+0.5*beamline[3,7]+0.5*beamline[3,8]+0.5*beamline[3,9]+0.5*beamline[3,10]+0.5*beamline[3,11]-0.5*beamline[3,12]-0.5*beamline[3,13] -1."/> 
-      <zplane rmin="beamline[1,11]" rmax="beamline[2,12]" z="+0.5*beamline[3,1]+0.5*beamline[3,2]+0.5*beamline[3,3]+0.5*beamline[3,4]+0.5*beamline[3,5]+0.5*beamline[3,6]+0.5*beamline[3,7]+0.5*beamline[3,8]+0.5*beamline[3,9]+0.5*beamline[3,10]+0.5*beamline[3,11]-0.5*beamline[3,12]-0.5*beamline[3,13]"/> 
-      <zplane rmin="beamline[1,12]" rmax="beamline[2,12]" z="+0.5*beamline[3,1]+0.5*beamline[3,2]+0.5*beamline[3,3]+0.5*beamline[3,4]+0.5*beamline[3,5]+0.5*beamline[3,6]+0.5*beamline[3,7]+0.5*beamline[3,8]+0.5*beamline[3,9]+0.5*beamline[3,10]+0.5*beamline[3,11]-0.5*beamline[3,12]-0.5*beamline[3,13]" /> 
-      <zplane rmin="beamline[1,12]" rmax="beamline[2,12]" z="+0.5*beamline[3,1]+0.5*beamline[3,2]+0.5*beamline[3,3]+0.5*beamline[3,4]+0.5*beamline[3,5]+0.5*beamline[3,6]+0.5*beamline[3,7]+0.5*beamline[3,8]+0.5*beamline[3,9]+0.5*beamline[3,10]+0.5*beamline[3,11]+0.5*beamline[3,12]-0.5*beamline[3,13] -1." /> 
-      <zplane rmin="beamline[1,12]" rmax="beamline[2,13]" z="+0.5*beamline[3,1]+0.5*beamline[3,2]+0.5*beamline[3,3]+0.5*beamline[3,4]+0.5*beamline[3,5]+0.5*beamline[3,6]+0.5*beamline[3,7]+0.5*beamline[3,8]+0.5*beamline[3,9]+0.5*beamline[3,10]+0.5*beamline[3,11]+0.5*beamline[3,12]-0.5*beamline[3,13] -1."/> 
-      <zplane rmin="beamline[1,12]" rmax="beamline[2,13]" z="+0.5*beamline[3,1]+0.5*beamline[3,2]+0.5*beamline[3,3]+0.5*beamline[3,4]+0.5*beamline[3,5]+0.5*beamline[3,6]+0.5*beamline[3,7]+0.5*beamline[3,8]+0.5*beamline[3,9]+0.5*beamline[3,10]+0.5*beamline[3,11]+0.5*beamline[3,12]-0.5*beamline[3,13]"/> 
-      <zplane rmin="beamline[1,13]" rmax="beamline[2,13]" z="+0.5*beamline[3,1]+0.5*beamline[3,2]+0.5*beamline[3,3]+0.5*beamline[3,4]+0.5*beamline[3,5]+0.5*beamline[3,6]+0.5*beamline[3,7]+0.5*beamline[3,8]+0.5*beamline[3,9]+0.5*beamline[3,10]+0.5*beamline[3,11]+0.5*beamline[3,12]-0.5*beamline[3,13]" />  
-      <zplane rmin="beamline[1,13]" rmax="beamline[2,13]" z="+0.5*beamline[3,1]+0.5*beamline[3,2]+0.5*beamline[3,3]+0.5*beamline[3,4]+0.5*beamline[3,5]+0.5*beamline[3,6]+0.5*beamline[3,7]+0.5*beamline[3,8]+0.5*beamline[3,9]+0.5*beamline[3,10]+0.5*beamline[3,11]+0.5*beamline[3,12]+0.5*beamline[3,13]" /> 
-    </polycone>
 
     <!-- Pedestal scattering chamber -->
     <box lunit="cm" name="ped_tube_upstream_o" x="ped_tube_width" y="ped_tube_side/2" z="ped_tube_side"/>
@@ -656,19 +577,10 @@
     <box lunit="cm" name="dump_0_solid" x="width_dump" y="height_dump" z="length_dump"/>
     <box lunit="cm" name="dump_hole" x="width_dump_hole" y="height_dump_hole" z="1.2*length_dump_hole"/>
 
-    <box lunit="cm" name="dump_ss_0_enc" x="width_dump_hole" y="height_dump_hole" z="thick_dump_ss_enc"/>
-    <cone aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="dump_ss_enc_hole" rmin1="0.0" rmax1="dump_ss_enc_hole_radius" rmin2="0.0" rmax2="dump_ss_enc_hole_radius" z="1.001*thick_dump_ss_enc"/>
-
     <subtraction name ="dump_solid">
       <first ref="dump_0_solid"/>
       <second ref="dump_hole"/>
       <positionref ref="dumpTrans_1"/>
-    </subtraction>
-
-    <subtraction name ="dump_ss_enc">
-      <first ref="dump_ss_0_enc"/>
-      <second ref="dump_ss_enc_hole"/>
-      <positionref ref="dumpTrans_2"/>
     </subtraction>
 
     <!-- Q1 dipole -->
@@ -704,16 +616,6 @@
 
 
   <structure>
-    <volume name="septum_pipe_logic">
-      <materialref ref="StainlessSteel"/>
-      <solidref ref="septum_pipe_tube"/>
-    </volume>
-    
-    <volume name="beamtube_1_logic">
-      <materialref ref="Aluminum"/>
-      <solidref ref="beamtube_1"/>
-    </volume>
-    
     <volume name="ped_union_logic">
       <materialref ref="StainlessSteel"/>
       <solidref ref="ped_un_p19"/>
@@ -743,10 +645,6 @@
       <materialref ref="Concrete"/>
       <solidref ref="dump_solid"/>
     </volume>
-    <volume name="ssenc_logic">
-      <materialref ref="StainlessSteel"/>
-      <solidref ref="dump_ss_enc"/>
-    </volume>
 
     <!-- dipoles  -->
     <volume name="dipole_logic_1">
@@ -761,16 +659,6 @@
     <volume name="logicMother">
       <materialref ref="Vacuum"/>
       <solidref ref="boxMother"/>
-
-      <physvol name="septum_pipe">
-	<volumeref ref="septum_pipe_logic" />
-	<position name="posbeamline" unit="cm" x="0" y="0" z="center_septum_pipe"/>
-      </physvol>
-      
-      <physvol name="beam_pipe_1">
-	<volumeref ref="beamtube_1_logic" />
-	<position name="posbeamline_1" unit="cm" x="0" y="0" z="center_septum_pipe+length_septum_pipe/2+0.5*(beamline[3,1]+beamline[3,2]+beamline[3,3]+beamline[3,4]+beamline[3,5]+beamline[3,6]+beamline[3,7]+beamline[3,8]+beamline[3,9]+beamline[3,10]+beamline[3,11]+beamline[3,12]+beamline[3,13])"/>
-      </physvol>
 
       <physvol name="cylwall">
 	<volumeref ref="cylwall_logic"/>
@@ -787,11 +675,6 @@
       <physvol name="dump">
 	<volumeref ref="dump_logic"/>
 	<positionref ref="dump_center"/>
-      </physvol>
-
-      <physvol name="ssenc">
-	<volumeref ref="ssenc_logic"/>
-	<positionref ref="ssenc_cylcenter"/>
       </physvol>
             
       <physvol name="ped_union">
@@ -827,9 +710,25 @@
       </physvol>
       
       <physvol>
-	<file name="geometry/kriptoniteDetectors_withHRS.gdml"/>
+	<file name="geometry/kriptoniteDetectors_tritium.gdml"/>
 	<positionref ref="pos_global_SEPT_elec"/>
 	<rotationref ref="identity"/>
+      </physvol>
+
+      <physvol>
+        <file name="geometry/subTritiumTarget.gdml"/>
+        <positionref ref="tritium_target_pos"/>
+      </physvol>
+
+      <physvol>
+        <file name="geometry/subBeamPipe_4inDonut.gdml"/>
+        <positionref ref="dDet_beamline_pos_1"/>
+      </physvol>
+
+      <physvol>
+        <file name="geometry/subHRSplatform.gdml"/>
+        <position name="HRSplatform_pos" unit="cm" x="1238.3" y="42.5" z="1768.5"/>
+        <rotation name="HRSplatform_rot" unit="deg" x="0" y="-35" z="0"/>
       </physvol>
       
     </volume>

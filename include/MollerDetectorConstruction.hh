@@ -205,12 +205,14 @@ private:
 
   //Isotope
   G4Isotope* D;
+  G4Isotope* T;
   G4Isotope* I_Pb;
   G4Isotope* I_Ca48;
   G4Isotope* I_Ca40;
 
   //Elements
   G4Element* elD;
+  G4Element* elT;
   G4Element* Pb208;
   G4Element* Ca48;
   G4Element* Ca40;
@@ -221,6 +223,7 @@ private:
   G4Material* pureCa40;
   G4Material* pureCa48;
   G4Material* LD2;
+  G4Material* T3;
 
   G4Material* rubberneo;
   G4Material* polymat;

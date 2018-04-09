@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+
+<gdml xmlns:gdml="http://cern.ch/2001/Schemas/GDML"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="./schema/gdml.xsd">
+
+  <define>
+    <constant name="cm_factor" value="2.54"/>
+    <constant name="targ_tube_length" value="9.52*cm_factor"/>
+    <constant name="targ_tube_outer_r" value="0.268*cm_factor"/>
+    <constant name="targ_tube_inner_r" value="0.25*cm_factor"/>
+    <constant name="targ_end_thick" value="targ_tube_outer_r - targ_tube_inner_r"/>
+    
+    <position name="pos_center" unit="cm" x="0" y="0" z="0"/>
+    <position name="pos_rel_targ_entrance" unit="cm" x="0" y="0" z="-(targ_tube_length/2.)"/>
+    <position name="pos_rel_targ_end_cap" unit="cm" x="0" y="0" z="(targ_tube_length + targ_end_thick)/2."/>
+
+    <rotation name="x-90" unit="deg" x="-90" y="0" z="0"/>
+  </define>
+  
+  <materials>
+    <material name="Aluminum" Z="13" state="solid">
+      <T unit="K" value="298"/>
+      <D unit="g/cm3" value="2.699"/>
+      <atom unit="g/mole" value="26.982"/>
+    </material>
+    <material Z="1" name="Vacuum" state="gas">
+      <T unit="K" value="2.73"/>
+      <P unit="pascal" value="3e-18"/>
+      <D unit="g/cm3" value="1e-25"/>
+      <atom unit="g/mole" value="1.01"/>
+    </material>
+    <material name="Tritium" Z="1" state="gas">
+      <T unit="K" value="298"/>
+      <D unit="g/cm3" value="3.08"/>
+      <atom unit="g/mole" value="3"/>
+    </material>
+  </materials>
+  
+  <solids>
+    <tube name="targ_tube_solid" lunit="cm" aunit="deg" rmin="targ_tube_inner_r" rmax="targ_tube_outer_r" z="targ_tube_length" startphi="0" deltaphi="360"/>
+    <sphere name="targ_entrance_solid" lunit="cm" aunit="deg" rmin="targ_tube_inner_r" rmax="targ_tube_outer_r" 
+	    startphi="0" deltaphi="180" starttheta="0" deltatheta="180"/>
+    <tube name="targ_end_cap_solid" lunit="cm" aunit="deg" rmin="0" rmax="targ_tube_outer_r" z="targ_end_thick" startphi="0" deltaphi="360"/>
+
+    <tube name="targ_ds" lunit="cm" aunit="deg" rmin="0" rmax="targ_tube_inner_r" z="targ_tube_length" startphi="0" deltaphi="360"/>
+    <sphere name="targ_us" lunit="cm" aunit="deg" rmin="0" rmax="targ_tube_inner_r" 
+	  startphi="0" deltaphi="180" starttheta="0" deltatheta="180"/>
+
+    <tube name="tube_mother_solid" lunit="cm" aunit="deg" rmin="0" rmax="targ_tube_outer_r" z="targ_tube_length" startphi="0" deltaphi="360"/>
+    <sphere name="entrance_mother_solid" lunit="cm" aunit="deg" rmin="0" rmax="targ_tube_outer_r" startphi="0" deltaphi="180" starttheta="0" deltatheta="180"/>
+
+    <union name="target_cell_0_solid">
+      <first ref="targ_tube_solid"/>
+      <second ref="targ_entrance_solid"/>
+      <positionref ref="pos_rel_targ_entrance"/>
+      <rotationref ref="x-90"/>
+    </union>
+    <union name="target_cell_solid">
+      <first ref="target_cell_0_solid"/>
+      <second ref="targ_end_cap_solid"/>
+      <positionref ref="pos_rel_targ_end_cap"/>
+    </union>
+
+    <union name="target_solid">
+      <first ref="targ_ds"/>
+      <second ref="targ_us"/>
+      <positionref ref="pos_rel_targ_entrance"/>
+      <rotationref ref="x-90"/>
+    </union>
+
+    <union name="mother_solid_0">
+      <first ref="tube_mother_solid"/>
+      <second ref="entrance_mother_solid"/>
+      <positionref ref="pos_rel_targ_entrance"/>
+      <rotationref ref="x-90"/>
+    </union>
+    <union name="mother_solid">
+      <first ref="mother_solid_0"/>
+      <second ref="targ_end_cap_solid"/>
+      <positionref ref="pos_rel_targ_end_cap"/>
+    </union>
+  </solids>
+  
+  <structure>
+    <volume name="target_cell_logic">
+      <materialref ref="Aluminum"/>
+      <solidref ref="target_cell_solid"/>
+    </volume>
+    <volume name="target_logic">
+      <materialref ref="Tritium"/>
+      <solidref ref="target_solid"/>
+    </volume>
+    
+    <volume name="mother_target">
+      <materialref ref="Vacuum"/>
+      <solidref ref="mother_solid"/>
+      
+      <physvol name="target">
+	<volumeref ref="target_logic"/>
+	<positionref ref="pos_center"/>
+      </physvol>		
+      <physvol name="target_cell">
+	<volumeref ref="target_cell_logic"/>
+	<positionref ref="pos_center"/>
+      </physvol>
+    </volume>
+  </structure>
+  
+  <setup name="Tritium_Target" version="1.0">
+    <world ref="mother_target"/>
+  </setup>
+  
+</gdml>

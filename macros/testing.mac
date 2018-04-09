@@ -18,9 +18,9 @@
 /moller/field/setConfiguration prex2
 /moller/field/useQ1fringeField true
 #### Geometry files
-#/moller/det/setDetectorFileName geometry/kriptoniteDetectors.gdml
+#/moller/det/setDetectorFileName geometry/kriptoniteDetectors_withHRS.gdml
 #/moller/det/setDetectorFileName geometry/subTargetChamber.gdml
-/moller/det/setDetectorFileName geometry/subCollShields.gdml
+#/moller/det/setDetectorFileName geometry/subCollShields.gdml
 #/moller/det/setDetectorFileName geometry/subBeamPipe.gdml
 #/moller/det/setDetectorFileName geometry/subExtendedDump.gdml
 #/moller/det/setDetectorFileName geometry/subSkyshineIronV3.gdml
@@ -34,6 +34,11 @@
 #/moller/det/setDetectorFileName geometry/subBeamPipe_newSAMsAlFlange.gdml
 #/moller/det/setDetectorFileName geometry/crex5_v1ThickConcSS.gdml
 #/moller/det/setDetectorFileName geometry/prexII_v2NewSAMsAlFlange.gdml
+/moller/det/setDetectorFileName geometry/tritium_v2.xml
+#/moller/det/setDetectorFileName geometry/subTritiumTarget.gdml
+#/moller/det/setDetectorFileName geometry/subSkyshine.gdml
+#/moller/det/setDetectorFileName geometry/subBeamPipe_newSAMsDoubleRing.gdml
+#/moller/det/setDetectorFileName geometry/pvdis.xml
 
 /moller/det/setShieldMaterial polyethylene
 /testhadr/CutsAll          0.7 mm
