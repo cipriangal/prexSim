@@ -3,7 +3,7 @@
 
 map <int,int> detArea;//cm2
 void doOneSummary(TH1D *h, double runV);
-void doLid(TH1D *h,double runV);
+void doSEU(TH1D *h,double runV);
 void doOneDetector(TH1D *h, double runV, int Det, int areaToggle);
 
 int printHallRad(string fnm,string simType){
@@ -55,9 +55,12 @@ int printHallRad(string fnm,string simType){
   cout<<"NEIL:\t";  doOneDetector(h1, runFactor, 1001, 1);
   cout<<"NEIL:\t";  doOneDetector(h1, runFactor, 1005, 1);
 
-  TH1D *hL=(TH1D*)fin->Get("Det_1006/ha_1006_n_enerLinX");
-  if(hL)
-    doLid(hL,runFactor);
+  int seuDet[3]={1006, 1001, 1005};
+  for(int i=0;i<3;i++){
+    TH1D *hSEU = (TH1D*)fin->Get(Form("Det_%d/ha_%d_n_enerLogX",seuDet[i],seuDet[i]));
+    if(hSEU)
+      doSEU(hSEU,runFactor);
+  }
 
   cout<<"Total E/cm2:\t"; doOneDetector(h3, runFactor, 1002, 1);
   cout<<"Total E/cm2:\t"; doOneDetector(h3, runFactor, 1101, 1);
@@ -70,18 +73,21 @@ int printHallRad(string fnm,string simType){
   return 0;
 }
 
-void doLid(TH1D *h,double runV){
+void doSEU(TH1D *h,double runV){
   int nb=h->GetXaxis()->GetNbins();
   string title=h->GetTitle();
   cout<<endl<<endl<<title<<endl;
   double ev2uA=1e13/1.6;
   double totFactor = ev2uA*runV;
 
-  double b10=h->GetXaxis()->FindBin(10);
-  double bEnd=h->GetXaxis()->GetNbins();
+  int b10=h->GetXaxis()->FindBin(10);
+  int bEnd=h->GetXaxis()->GetNbins();
   cout<<endl<<"For this histogram the edge of the 10MeV bin is "<<h->GetXaxis()->GetBinLowEdge(b10)<<endl;
   double dx=-1;
-  cout<<"\tHall Lid:\t"<<h->IntegralAndError(b10,bEnd,dx)*totFactor;
+  cout<<"\tDet "<<h->GetName()<<" E>10MeV:\t"<<h->IntegralAndError(b10,bEnd,dx)*totFactor;
+  cout<<"\t"<<dx*totFactor<<endl;
+  int b100keV = h->GetXaxis()->FindBin(0.1);
+  cout<<"\t neutrons <100keV: "<<h->IntegralAndError(0,b100keV,dx)*totFactor;
   cout<<"\t"<<dx*totFactor<<endl;
 }
 
