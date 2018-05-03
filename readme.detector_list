@@ -1,0 +1,60 @@
+This file describes the detectors in the prexSim code by their number, and should be referred to during analysis.
+To be clear about the numbering scheme it goes as follows:
+1000-1999: Kriptonite detectors
+2000-2999: Vacuum detectors
+3000-3999: Plastic detectors
+4000-4999: Mineral detectors
+5000-8999: Undefined
+9000-9999: Misc detectors
+
+NOTE 1: This file was created by listing detectors used in prex_v2Geom.gdml and it's related subassembly files. Other detectors may exist in different geometries, this file will update to reflect that.
+
+NOTE 2: Some detectors are also defined in the code but are unused in the final geometry. They are marked with the (unused) flag.
+
+DET_NUM	| DESCRIPTION
+1001	| HRS platform, Maduka design
+1002	| Septum electronics package
+1003	| Upstream beam-right electrics
+1004	| Underneath and to the side of the HRS (opposite side of HRS as beam)
+1005	| Electronics package beneath dipole
+1006	| Hall lid
+1101	| Left of pivot
+1102	| Downstream left of pivot
+2003	| Large cylinder surrounding pivot
+2004	| Even larger cylinder around pivot (unused)
+2005	| Cylidner surrounding entire hall up to walls
+2101	| Small detector at upstream end of collimator
+2102	| Small detector at downstream end of collimator
+2103	| Box detector around pivot (unused)
+2201	| Cylindrical beamline detector in beam pipe
+2202	| Cylidnrical beamline detector in beam pipe (DS of 2201)
+2203	| Cylidnrical beamline detector in beam pipe (DS of 2202)
+...
+2208	| Cylindrical beamline detector in beam pipe (DS of 2201-2207)
+2209	| Cylindrical beamline detector a few cm US of SAMs (Only included in BeamPipe files that have SAMs)
+2210	| Cylidnrical beamline detector a few cm DS of SAMs (Only included in BeamPipe files that have SAMs)
+2211	| Cylindrical detector around beamline (unused)
+2212	| Spherical detector surrounding whole hall (unused)
+2221	| Inside surface of bottom coll shield
+2222	| Inside surface of top coll shield
+2223	| Inside surface of left coll shield
+2224	| Inside surface of right coll shield
+2225	| Outside surface of bottom coll shield
+2226	| Outside surface of top coll shield
+2227	| Outside surface of left coll shield
+2228	| Outside surface of right coll shield
+2301	| Detector placed near crex target pos (unused)
+3001	| Scattering chamber beam pipe (unused)
+3101	| PREX scattering chamber (unused)
+3102	| CREX scattering chamber (unused)
+3103	| Scattering chamber attachment (unused)
+3111	| Scattering chamber attachment shield (unused)
+3112	| Scattering chamber attachment hut (unused)
+3113	| Scattering chamber shield (unused)
+3121	| Bottom collimator shield
+3122	| Top Collimator Shield
+3123	| Downstream collimator shield
+3124	| Left collimator shield
+3125	| Right collimator shield
+3201	| O-Ring at end of beam pipe by entrance to dump
+4001	| Quartz pieces inside SAMs (Only included in BeamPipe files that ahve SAMs)

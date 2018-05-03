@@ -1,0 +1,13 @@
+/moller/det/readGeometryFromFile true
+/gun/particle e-
+/moller/gun/gen 7
+/random/setSeeds 1524066937 152406693791
+/gun/energy 11. GeV
+/moller/field/setFieldScaleFactor 0.
+/moller/field/setLowLim -74 cm
+/moller/field/setHighLim 74 cm
+/moller/det/setDetectorFileName geometry/tritium_v1.gdml
+/moller/field/useQ1fringeField false
+/moller/det/setShieldMaterial polyethylene
+/testhadr/CutsAll 0.7 mm
+/run/initialize

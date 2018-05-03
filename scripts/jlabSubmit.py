@@ -6,17 +6,16 @@ import config_reader as cr
 def main():
 
     email = cr.jlab_id() + "@jlab.org"
-    ##only crex5, prexII defined for now
-    #configuration = "crex5"
+    ##only crex5, prexII, tritium defined for now
 
     configuration = cr.config()
-    sourceDir = "/w/halla-scifs17exp/parity/disk1/" + cr.jlab_id() + "/prexSim"
-    outputDir = "/lustre/expphy/volatile/halla/parity/" + cr.jlab_id() + "/farmOut"
-    nrEv   = cr.nr_events()
-    nrStart= cr.start_run()
-    nrStop = cr.end_run()
-    ident_in = cr.identifier()
-    ident_out = cr.ident_output()
+    sourceDir     = "/w/halla-scifs17exp/parity/disk1/" + cr.jlab_id() + "/prexSim"
+    outputDir     = "/lustre/expphy/volatile/halla/parity/" + cr.jlab_id() + "/farmOut"
+    nrEv          = cr.nr_events()
+    nrStart       = cr.start_run()
+    nrStop        = cr.end_run()
+    ident_in      = cr.identifier()
+    ident_out     = cr.ident_output()
 
     print('Starting setup for ' + configuration + ' simulation with geometry ' + ident_in + '...')
     print('Running ' + str(nrEv*(nrStop - nrStart)) + ' events...')
@@ -68,6 +67,11 @@ def createMacFiles(config,outDir,sourceDir,nrEv,jobNr,identifier):
     	f.write("/gun/energy 1. GeV\n")
         f.write("/moller/field/setConfiguration prex2\n")
         f.write("/moller/det/setDetectorFileName geometry/prexII_"+identifier+".gdml\n")
+    elif config=="tritium":
+        f.write("/gun/energy 11. GeV\n")
+        f.write("/moller/field/setFieldScaleFactor 0.\n")
+        f.write("/moller/field/setLowLim -74 cm\n/moller/field/setHighLim 74 cm\n")
+        f.write("/moller/det/setDetectorFileName geometry/tritium_"+identifier+".gdml\n")
 
     f.write("/moller/field/useQ1fringeField false\n")
 
@@ -127,6 +131,7 @@ def make_tarfile(sourceDir,config):
     tar.add(sourceDir+"/geometry/"+config+".gdml" ,arcname="geometry/"+config+".gdml")
     tar.add(sourceDir+"/geometry/kriptoniteDetectors.gdml",arcname="geometry/kriptoniteDetectors.gdml")
     tar.add(sourceDir+"/geometry/kriptoniteDetectors_withHRS.gdml",arcname="geometry/kriptoniteDetectors_withHRS.gdml")
+    tar.add(sourceDir+"/geometry/kriptoniteDetectors_tritium.gdml",arcname="geometry/kriptoniteDetectors_tritium.gdml")
     for subassem in cr.subassems():
         tar.add(sourceDir + "/geometry/sub" + subassem + ".gdml",arcname="geometry/sub" + subassem + ".gdml")
 	print('Adding file: ' + subassem + '...')

@@ -721,7 +721,7 @@
       </physvol>
 
       <physvol>
-        <file name="geometry/subBeamPipe_4inDonut.gdml"/>
+        <file name="geometry/subBeamPipe_12GeV_SAMs.gdml"/>
         <positionref ref="dDet_beamline_pos_1"/>
       </physvol>
 
