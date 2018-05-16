@@ -957,8 +957,7 @@
           lunit="cm" name="tubeTarget"
           rmin="inner_rad_targ"
           rmax="outer_rad_targ"
-          z="0.05" />
-    <!-- z="0.6" /> -->
+	  z="0.6" />
 
     <!-- Scattering Chamber -->
     <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="outScattChamber" rmin="0.0" rmax="outer_r_sc" z="height_sc" />
@@ -2456,8 +2455,8 @@
     </volume>
 
     <volume name="target_logic">
-      <!-- <materialref ref="Calcium48"/> -->
-      <materialref ref="PureLead"/>
+      <materialref ref="Calcium48"/>
+      <!-- <materialref ref="PureLead"/> -->
       <solidref ref="tubeTarget"/>
     </volume>
 
@@ -2858,7 +2857,6 @@
 
       <physvol>
         <file name="geometry/subBeamPipe_P2_6inDonut_noSAMs.gdml"/>
-	<!-- z= 132.335 -->
         <positionref ref="dDet_beamline_pos_1"/>
       </physvol>
 
