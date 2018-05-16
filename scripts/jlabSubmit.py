@@ -6,20 +6,20 @@ def main():
 
     email = "ciprian@jlab.org"
 
-    configuration = "prex1"
-    #configuration = "crex"
+    #configuration = "prex1"
+    configuration = "crex"
     #configuration = "prex2"
     #configuration = "happex2"
 
     sourceDir = "/work/halla/parity/disk1/ciprian/prexSim"
-    outputDir = "/volatile/halla/parity/ciprian/farmOut/tests"
+    outputDir = "/volatile/halla/parity/ciprian/farmOut/dumpShield/offsetDS"
 
     nrEv   = 900000
     nrStart= 0
     nrStop = 60
 
     ###format should be _Name
-    identifier = ""
+    identifier = "_offsetDS"
 
     print('Running ' + str(nrEv*(nrStop - nrStart)) + ' events...')
 
@@ -106,7 +106,7 @@ def createXMLfile(source,writeDir,idRoot,nStart,nStop,email):
 
     f.write("  <Name name=\""+idRoot+"\"/>\n")
     f.write("  <OS name=\"centos7\"/>\n")
-    f.write("  <Memory space=\"3500\" unit=\"MB\"/>\n")
+    f.write("  <Memory space=\"4500\" unit=\"MB\"/>\n")
 
     f.write("  <Command><![CDATA[\n")
     f.write("    pwd\n")
