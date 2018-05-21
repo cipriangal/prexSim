@@ -2863,7 +2863,7 @@
       </physvol>
 
       <physvol>
-        <file name="geometry/subDumpShield.gdml"/>
+        <file name="geometry/subDumpShield_offset.gdml"/>
         <position name="dumpShield_posRel" unit="cm" x="0" y="-122" z="2530"/>
       </physvol>
 
