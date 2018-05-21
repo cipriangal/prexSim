@@ -6,7 +6,7 @@ import config_reader as cr
 def main():
 
     email = cr.jlab_id() + "@jlab.org"
-    ##only crex5, prexII, tritium defined for now
+    ##only crex, prexII, tritium defined for now
 
     configuration = cr.config()
     sourceDir     = "/w/halla-scifs17exp/parity/disk1/" + cr.jlab_id() + "/prexSim"
@@ -59,10 +59,10 @@ def createMacFiles(config,outDir,sourceDir,nrEv,jobNr,identifier):
     seedB=long(time.time()*100+jobNr)
     f.write("/random/setSeeds "+str(seedA)+" "+str(seedB)+"\n")
 
-    if config=="crex5":
+    if config=="crex":
         f.write("/gun/energy 2. GeV\n")
         f.write("/moller/field/setConfiguration crex\n")
-        f.write("/moller/det/setDetectorFileName geometry/crex5_"+identifier+".gdml\n")
+        f.write("/moller/det/setDetectorFileName geometry/crex_"+identifier+".gdml\n")
     elif config=="prexII":
     	f.write("/gun/energy 1. GeV\n")
         f.write("/moller/field/setConfiguration prex2\n")

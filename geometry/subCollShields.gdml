@@ -99,7 +99,7 @@
     
     <union name="top_and_bottom">
       <first ref="bot_solid"/>
-      <second ref="top_solid"/>
+      <second ref="top_solid_no_cut"/>
       <positionref ref="top_wrt_bot"/>
     </union>
     <union name="front_three">
@@ -173,12 +173,8 @@
     </volume>
     <volume name="top_logic">
       <materialref ref="Borated_HDPE"/>
-      <solidref ref="top_solid"/>
+      <solidref ref="top_solid_no_cut"/>
       <auxiliary auxtype="SensDet" auxvalue="volumeN3122"/>
-    </volume>
-    <volume name="W_logic">
-      <materialref ref="Tungsten"/>
-      <solidref ref="W_solid"/>
     </volume>
     <volume name="back_logic">
       <materialref ref="Borated_HDPE"/>
@@ -248,10 +244,10 @@
 	<volumeref ref="top_logic"/>
 	<positionref ref="top_wrt_bot"/>
       </physvol>
-      <physvol name="W_phys">
+      <!--<physvol name="W_phys">
 	<volumeref ref="W_logic"/>
 	<positionref ref="W_wrt_bot"/>
-      </physvol>
+      </physvol>-->
       <physvol name="back_phys">
 	<volumeref ref="back_logic"/>
 	<positionref ref="back_wrt_bot"/>

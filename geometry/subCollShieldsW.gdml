@@ -167,12 +167,12 @@
   
   <structure>
     <volume name="bot_logic">
-      <materialref ref="Shield"/>
+      <materialref ref="Borated_HDPE"/>
       <solidref ref="bot_solid"/>
       <auxiliary auxtype="SensDet" auxvalue="volumeN3121"/>
     </volume>
     <volume name="top_logic">
-      <materialref ref="Shield"/>
+      <materialref ref="Borated_HDPE"/>
       <solidref ref="top_solid"/>
       <auxiliary auxtype="SensDet" auxvalue="volumeN3122"/>
     </volume>
@@ -181,17 +181,17 @@
       <solidref ref="W_solid"/>
     </volume>
     <volume name="back_logic">
-      <materialref ref="Shield"/>
+      <materialref ref="Borated_HDPE"/>
       <solidref ref="back_solid"/>
       <auxiliary auxtype="SensDet" auxvalue="volumeN3123"/>
     </volume>
     <volume name="left_logic">
-      <materialref ref="Shield"/>
+      <materialref ref="Borated_HDPE"/>
       <solidref ref="left_solid"/>
       <auxiliary auxtype="SensDet" auxvalue="volumeN3124"/>
     </volume>
     <volume name="right_logic">
-      <materialref ref="Shield"/>
+      <materialref ref="Borated_HDPE"/>
       <solidref ref="right_solid"/>
       <auxiliary auxtype="SensDet" auxvalue="volumeN3125"/>
     </volume>
@@ -248,10 +248,10 @@
 	<volumeref ref="top_logic"/>
 	<positionref ref="top_wrt_bot"/>
       </physvol>
-      <!--<physvol name="W_phys">
+      <physvol name="W_phys">
 	<volumeref ref="W_logic"/>
 	<positionref ref="W_wrt_bot"/>
-      </physvol>-->
+      </physvol>
       <physvol name="back_phys">
 	<volumeref ref="back_logic"/>
 	<positionref ref="back_wrt_bot"/>

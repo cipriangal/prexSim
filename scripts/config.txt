@@ -1,7 +1,7 @@
 #Config File
-#config=prexII
-#config=crex5
-config=tritium
+config=prexII
+#config=crex
+#config=tritium
 
 #ident=shieldless
 #ident=concrete2blocks28thick
@@ -30,11 +30,12 @@ config=tritium
 #ident=v2geom
 #ident=v2SAMs
 #ident=v2NewSAMsHalfRing
-#ident=v2ConcSSPlusNewSAMs
+#ident=v2Point6degSAMs
 #ident=v1ThickConcSS
-ident=v1
+#ident=v1
+ident=v3geom
 
-#output=input
+output=input
 #output=v2NoSAMsLid
 #output=v2SAMsLid
 #output=v2Point6degSAMsLid
@@ -42,7 +43,7 @@ ident=v1
 #output=v1ThickConcSSPartial
 #output=v2Current
 #output=v2BoronSWCollShields
-output=v1Edit
+#output=v1Edit
 
 start_run=0
 end_run=50
@@ -56,5 +57,5 @@ uva_id=ajz3ee
 jlab_id=ajzec
 
 #comma separated, no spaces, correct capitalization is important
-#subassemblies=TargetChamber,CollShields,BeamPipe,DumpShield,HRSplatform,ExtendedDump,SkyshineIronV3,BeamPipe_newSAMs,BeamPipe_SAMs,BeamPipe_newSAMsAlFlange,BeamPipe_newSAMsNoFlange,BeamPipe_newSAMsHalfRing
-subassemblies=BeamPipe_12GeV_SAMs,HRSplatform,TritiumTarget
+subassemblies=TargetChamber,CollShields,BeamPipe,DumpShield,HRSplatform,ExtendedDump,BeamPipe_newSAMs,BeamPipe_SAMs,BeamPipe_newSAMsAlFlange,Skyshine,SkyShineShield,BeamPipe_P2_6inDonut_noSAMs,Q1HosesCylRedesign
+#subassemblies=BeamPipe_12GeV_SAMs,HRSplatform,TritiumTarget

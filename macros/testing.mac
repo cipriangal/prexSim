@@ -27,7 +27,7 @@
 #/moller/det/setDetectorFileName geometry/subHallLid.gdml
 #/moller/det/setDetectorFileName geometry/subCollimator.gdml
 #/moller/det/setDetectorFileName geometry/subBeamPipe_newSAMs.gdml
-/moller/det/setDetectorFileName geometry/prexII_v2geom.gdml
+#/moller/det/setDetectorFileName geometry/prexII_v2geom.gdml
 #/moller/det/setDetectorFileName geometry/prexII_v2SAMs.gdml
 #/moller/det/setDetectorFileName geometry/prexII_v2Point6degSAMs.gdml
 #/moller/det/setDetectorFileName geometry/prexII_v1ThickConcSS.gdml
@@ -40,6 +40,8 @@
 #/moller/det/setDetectorFileName geometry/subBeamPipe_newSAMsDoubleRing.gdml
 #/moller/det/setDetectorFileName geometry/pvdis.xml
 #/moller/det/setDetectorFileName geometry/kriptoniteDetectors_tritium.gdml
+#/moller/det/setDetectorFileName geometry/crex_v3geom.gdml
+/moller/det/setDetectorFileName geometry/subCollShieldBlock.gdml
 
 /moller/det/setShieldMaterial polyethylene
 /testhadr/CutsAll          0.7 mm

@@ -327,18 +327,20 @@ void two_by_two_hit_map(string sim, string conf1, string conf2, int n_events_k, 
   c1->cd(4); h4->Draw("colz");
 }
 
-void check_volIDs(const char* fname){
+void check_two_tags(const char* fname, const char* prop1, const char* prop2){
   TFile *f = new TFile(fname);
   TTree *t = (TTree*)f->Get("t");
   
-  Int_t volume;
+  Float_t value1;
+  Int_t value2;
 
   long nEntries = t->GetEntries();
   for(int i = 0; i < nEntries; i+=1000){
     t->GetEntry(i);
-    t->SetBranchAddress("volID",&volume);
+    t->SetBranchAddress(prop1,&value1);
+    t->SetBranchAddress(prop2,&value2);
 
-    cout<<"Volume ID for event "<<i<<": "<<volume<<endl;
+    cout<<"Volume ID for event "<<i<<": "<<value1<<"; "<<value2<<endl;
   }
 }
 

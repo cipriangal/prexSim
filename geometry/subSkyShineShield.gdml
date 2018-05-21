@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+
+<gdml xmlns:gdml="http://cern.ch/2001/Schemas/GDML"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="./schema/gdml.xsd">
+
+  <define>
+    <position unit="cm" name="pos_rel_giantShield1" x="0" y="-20" z="53"/>
+    <position unit="cm" name="pos_rel_giantShield2" x="-105" y="-100" z="-110"/>
+    <position unit="cm" name="pos_rel_giantShield3" x="0" y="0" z="71.4 + 74/2. - 4.9"/>
+    <position unit="cm" name="pos_rel_giantShield4" x="0" y="45" z="-4.9 + 71.4 + 70"/>
+
+    <rotation name="rot_z45"  unit="deg" x="0"   y="0"   z="45"/>
+
+    <position unit="cm" name="pos_bottom_det_giantShield" x="0" y="-23" z="20"/>
+    <position unit="cm" name="pos_top_det_giantShield" x="0" y="70" z="20"/>
+  </define>
+
+  <materials>
+    <material Z="1" name="Vacuum" state="gas">
+      <T unit="K" value="2.73"/>
+      <P unit="pascal" value="3e-18"/>
+      <D unit="g/cm3" value="1e-25"/>
+      <atom unit="g/mole" value="1.01"/>
+    </material>
+
+    <material Z="13" name="Concrete" state="solid">
+      <T unit="K" value="298"/>
+      <D unit="g/cm3" value="2.699"/>
+      <atom unit="g/mole" value="26.982"/>
+    </material>
+
+    <material Z="13" name="Iron" state="solid">
+      <T unit="K" value="298"/>
+      <D unit="g/cm3" value="2.699"/>
+      <atom unit="g/mole" value="26.982"/>
+    </material>
+  </materials>
+
+  <solids>
+
+    <box lunit="cm" name="giantShield_solid0" x="123.5" y="40" z="247"/>
+    <box lunit="cm" name="giantShield_solid2" x="247" y="247" z="247"/>
+    <box lunit="cm" name="giantShield_solid3" x="280" y="100" z="74"/>
+    <box lunit="cm" name="giantShield_solid4" x="123.5" y="40" z="140"/>
+
+    <box lunit="cm" name="det_solid" x="130" y="0.1" z="400"/>
+
+    <subtraction name ="giantShield_solid_temp2">
+      <first ref="giantShield_solid0"/>
+      <second ref="giantShield_solid2"/>
+      <positionref ref="pos_rel_giantShield2"/>
+      <rotationref ref="rot_z45"/>
+    </subtraction>
+    <subtraction name ="giantShield_solid_temp3">
+      <first ref="giantShield_solid_temp2"/>
+      <second ref="giantShield_solid3"/>
+      <positionref ref="pos_rel_giantShield3"/>
+    </subtraction>
+    <union name ="giantShield_solid">
+      <first ref="giantShield_solid_temp3"/>
+      <second ref="giantShield_solid4"/>
+      <positionref ref="pos_rel_giantShield4"/>
+    </union>
+
+    <union name ="skyUnion0">
+      <first ref="giantShield_solid"/>
+      <second ref="det_solid"/>
+      <positionref ref="pos_bottom_det_giantShield"/>
+    </union>
+    <union name ="skyUnion1">
+      <first ref="skyUnion0"/>
+      <second ref="det_solid"/>
+      <positionref ref="pos_top_det_giantShield"/>
+    </union>
+
+  </solids>
+
+  <structure>
+
+
+    <volume name="giantShield_logic">
+      <materialref ref="Concrete"/>
+      <solidref ref="giantShield_solid"/>
+    </volume>
+
+    <volume name="bottom_det_giantShield_logic">
+      <materialref ref="Vacuum"/>
+      <solidref ref="det_solid"/>
+      <auxiliary auxtype="SensDet" auxvalue="volumeN3120"/>
+    </volume>
+
+    <volume name="top_det_giantShield_logic">
+      <materialref ref="Vacuum"/>
+      <solidref ref="det_solid"/>
+      <auxiliary auxtype="SensDet" auxvalue="volumeN3121"/>
+    </volume>
+
+    <volume name="skyShineShield">
+      <materialref ref="Vacuum"/>
+      <solidref ref="skyUnion1"/>
+
+      <physvol name="giantShield_phys">
+        <volumeref ref="giantShield_logic"/>
+        <position name="center" unit="cm" x="0" y="0" z="0"/>
+      </physvol>
+
+      <physvol name="bottom_det_giantShield_phys">
+        <volumeref ref="bottom_det_giantShield_logic"/>
+        <positionref ref="pos_bottom_det_giantShield"/>
+      </physvol>
+
+      <physvol name="top_det_giantShield_phys">
+        <volumeref ref="top_det_giantShield_logic"/>
+        <positionref ref="pos_top_det_giantShield"/>
+      </physvol>
+
+    </volume>
+
+  </structure>
+
+  <setup name="subSkyShineShield" version="1.0">
+    <world ref="skyShineShield"/>
+  </setup>
+
+</gdml>
