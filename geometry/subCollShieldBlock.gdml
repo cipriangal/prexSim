@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+
+<!DOCTYPE gdml [
+<!ENTITY materials SYSTEM "materials.xml">
+]>
+
+<gdml xmlns:gdml="http://cern.ch/2001/Schemas/GDML"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="./schema/gdml.xsd">
+
+  <define>
+    <constant name="cm_factor" value="2.54"/>
+    <constant name="length_plast_block" value="21*cm_factor"/>
+    <constant name="width_plast_block" value="36*cm_factor"/>
+    <constant name="height_plast_block" value="36*cm_factor"/>
+    <constant name="height_plast_add" value="cm_factor"/>
+    <constant name="length_plast_cut1" value="3*cm_factor"/>
+    <constant name="width_plast_cut1" value="12*cm_factor"/>
+    <constant name="height_plast_cut1" value="25*cm_factor"/>
+    <constant name="r_plast_cut2" value="4.25*cm_factor"/>
+    <constant name="length_plast_cut2" value="9*cm_factor"/>
+    <constant name="length_plast_cut3" value="9*cm_factor"/>
+    <constant name="r_plast_cut3" value="8.5*cm_factor"/>
+    <constant name="height_plast_trap_cut3" value="2.75*cm_factor"/>
+    <constant name="width_plast_trap_cut3" value="15.5*cm_factor"/>
+    <constant name="width_plast_box_cut3" value="21*cm_factor"/>
+    <constant name="height_plast_box_cut3" value="4.75*cm_factor"/>
+    <constant name="dist_bot_to_box" value="6*cm_factor"/>
+
+    <constant name="length_conc_block" value="9*cm_factor"/>
+    <constant name="width_conc_block" value="36*cm_factor"/>
+    <constant name="height_conc_block" value="36*cm_factor"/>
+    <constant name="width_conc_trap_cut1" value="14.8666*cm_factor"/>
+    <constant name="height_conc_trap_cut1" value="2.805*cm_factor"/>
+    <constant name="width_conc_box_cut1" value="20.5*cm_factor"/>
+    <constant name="height_conc_box_cut1" value="2.32*cm_factor"/>
+    <constant name="length_conc_cut1" value="0.75*cm_factor"/>
+    <constant name="dist_conc_bot_to_box" value="7.25*cm_factor"/>
+    <constant name="r_conc_cut2" value="8.265*cm_factor"/>
+    <constant name="length_conc_cut2" value="6.25*cm_factor"/>
+    <constant name="r_conc_cut3" value="9.89*cm_factor"/>
+    <constant name="length_conc_cut3" value="3.5*cm_factor"/>
+    <constant name="dist_z_conc_cut3" value="3.375*cm_factor"/>
+    <constant name="width_box_conc_cut4" value="3.4*cm_factor"/>
+    <constant name="height_box_conc_cut4" value="18*cm_factor"/>
+    <constant name="length_box_conc_cut4" value="2.2*cm_factor"/>
+    <constant name="dist_x_conc_cut4" value="10*cm_factor"/>
+    <constant name="height_top_box_conc_cut5" value="6.875*cm_factor"/>
+    <constant name="width_top_box_conc_cut5" value="8.514*cm_factor"/>
+    <constant name="height_bot_box_conc_cut5" value="3.1875*cm_factor"/>
+    <constant name="width_bot_box_conc_cut5" value="2.25*cm_factor"/>
+    
+    <position name="pos_center" x="0" y="0" z="0"/>
+    <position name="pos_rel_block_to_add" unit="cm" x="0" y="-(height_plast_block + height_plast_add)/2." z="0"/>
+    <position name="pos_rel_plast_cut1" unit="cm" x="0" y="-(height_plast_block - height_plast_cut1)/2. - height_plast_add" z="-(length_plast_block - length_plast_cut1)/2."/>
+    <position name="pos_rel_plast_cut2" unit="cm" x="0" y="0" z="(-length_plast_block + length_plast_cut2)/2. + length_plast_cut1"/>
+    <position name="pos_rel_plast_cut3_tube_to_trap" unit="cm" x="0" y="-(height_plast_block - height_plast_trap_cut3)/2. - height_plast_add + dist_bot_to_box + height_plast_box_cut3" z="0"/>
+    <position name="pos_rel_plast_cut3_tube_to_box" unit="cm" x="0" y="-(height_plast_block - height_plast_box_cut3)/2. - height_plast_add + dist_bot_to_box" z="0"/>
+    <position name="pos_rel_plast_cut3" unit="cm" x="0" y="0" z="(length_plast_block - length_plast_cut3)/2."/>
+
+    <position name="pos_global_conc_block" unit="cm" x="0" y="0" z="(length_plast_block + length_conc_block)/2. + 0.01"/>
+    <position name="pos_rel_conc_cut1_block_to_box" unit="cm" x="0" y="-(height_conc_block - height_conc_box_cut1)/2. + dist_conc_bot_to_box" z="0"/>
+    <position name="pos_rel_conc_cut1" unit="cm" x="0" y="-(height_conc_block - height_conc_trap_cut1)/2. + dist_conc_bot_to_box + height_conc_box_cut1" z="-(length_conc_block - length_conc_cut1)/2."/>
+    <position name="pos_rel_conc_cut2" unit="cm" x="0" y="0" z="-(length_conc_block - length_conc_cut2)/2."/>
+    <position name="pos_rel_conc_cut3" unit="cm" x="0" y="0" z="-(length_conc_block - length_conc_cut3)/2. + dist_z_conc_cut3"/>
+    <position name="pos_rel_conc_cut4_boxes" unit="cm" x="dist_x_conc_cut4" y="0" z="0"/>
+    <position name="pos_rel_conc_cut4" unit="cm" x="-(dist_x_conc_cut4)/2." y="(height_box_conc_cut4)/2." z="-(length_conc_block - length_box_conc_cut4)/2."/>
+    <position name="pos_rel_conc_cut5_top_box_tube1" unit="cm" x="(width_top_box_conc_cut5)/2." y="0" z="0"/>
+    <position name="pos_rel_conc_cut5_top_box_tube2" unit="cm" x="-(width_top_box_conc_cut5)/2." y="0" z="0"/>
+    <position name="pos_rel_conc_cut5_box_to_box" unit="cm" x="0" y="-(height_top_box_conc_cut5 + height_bot_box_conc_cut5)/2." z="0"/>
+    <position name="pos_rel_conc_cut5_box_to_bot_tube" unit="cm" x="0" y="-(height_top_box_conc_cut5)/2. - height_bot_box_conc_cut5" z="0"/>
+    <position name="pos_rel_conc_cut5" unit="cm" x="0" y="0" z="0"/>
+  
+  </define>
+    <materials>
+    <material Z="1" name="Vacuum" state="gas">
+      <T unit="K" value="2.73"/>
+      <P unit="pascal" value="3e-18"/>
+      <D unit="g/cm3" value="1e-25"/>
+      <atom unit="g/mole" value="1.01"/>
+    </material>
+
+    <material Z="13" name="Aluminum" state="solid">
+      <T unit="K" value="298"/>
+      <D unit="g/cm3" value="2.699"/>
+      <atom unit="g/mole" value="26.982"/>
+    </material>
+
+    <material Z="13" name="Concrete" state="solid">
+      <T unit="K" value="298"/>
+      <D unit="g/cm3" value="2.699"/>
+      <atom unit="g/mole" value="26.982"/>
+    </material>
+
+    <material Z="13" name="Shield" state="solid">
+      <T unit="K" value="298"/>
+      <D unit="g/cm3" value="2.699"/>
+      <atom unit="g/mole" value="26.982"/>
+    </material>
+  </materials>
+
+  <solids>
+    <box name="plast_block_solid_0" lunit="cm" x="width_plast_block" y="height_plast_block" z="length_plast_block"/>
+    <box name="plast_add_solid" lunit="cm" x="width_plast_block" y="height_plast_add" z="length_plast_block"/>
+    <union name="plast_block_solid_1">
+      <first ref="plast_block_solid_0"/>
+      <second ref="plast_add_solid"/>
+      <positionref ref="pos_rel_block_to_add"/>
+    </union>
+    <box name="plast_cut1_solid" lunit="cm" x="width_plast_cut1" y="height_plast_cut1" z="length_plast_cut1 + 0.01"/>
+    <subtraction name="plast_block_solid_2">
+      <first ref="plast_block_solid_1"/>
+      <second ref="plast_cut1_solid"/>
+      <positionref ref="pos_rel_plast_cut1"/>
+    </subtraction>
+    <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="plast_cut2_solid" rmin="0." rmax="r_plast_cut2 + 0.01" z="length_plast_cut2"/>
+    <subtraction name="plast_block_solid_3">
+      <first ref="plast_block_solid_2"/>
+      <second ref="plast_cut2_solid"/>
+      <positionref ref="pos_rel_plast_cut2"/>
+    </subtraction>
+    <tube name="tube_plast_cut3" lunit="cm" aunit="deg" startphi="0" deltaphi="360" rmin="0" rmax="r_plast_cut3 + 0.01" z="length_plast_cut3 + 0.01"/>
+    <trap name="trap_plast_cut3" z="length_plast_cut3 + 0.01" theta="0" phi="0" y1="height_plast_trap_cut3" x1="width_plast_box_cut3" x2="width_plast_trap_cut3" alpha1="1" y2="height_plast_trap_cut3" x3="width_plast_box_cut3" x4="width_plast_trap_cut3" alpha2="1" aunit="deg" lunit="cm"/>
+    <box name="box_plast_cut3" lunit="cm" x="width_plast_box_cut3" y="height_plast_box_cut3 + 0.01" z="length_plast_cut3 + 0.01"/>
+    <union name="plast_cut3_solid_0">
+      <first ref="tube_plast_cut3"/>
+      <second ref="trap_plast_cut3"/>
+      <positionref ref="pos_rel_plast_cut3_tube_to_trap"/>
+    </union>
+    <union name="plast_cut3_solid">
+      <first ref="plast_cut3_solid_0"/>
+      <second ref="box_plast_cut3"/>
+      <positionref ref="pos_rel_plast_cut3_tube_to_box"/>
+    </union>
+    <subtraction name="plast_block_solid">
+      <first ref="plast_block_solid_3"/>
+      <second ref="plast_cut3_solid"/>
+      <positionref ref="pos_rel_plast_cut3"/>
+    </subtraction>
+
+    <box name="conc_block_solid_0" lunit="cm" x="width_conc_block" y="height_conc_block" z="length_conc_block"/>
+    <trap name="trap_conc_cut1" z="length_conc_cut1 + 0.01" theta="0" phi="0" y1="height_conc_trap_cut1" x1="width_conc_box_cut1" x2="width_conc_trap_cut1" alpha1="1" y2="height_conc_trap_cut1" x3="width_conc_box_cut1" x4="width_conc_trap_cut1" alpha2="1" aunit="deg" lunit="cm"/>
+    <box name="box_conc_cut1" lunit="cm" x="width_conc_box_cut1" y="height_conc_box_cut1" z="length_conc_cut1 + 0.01"/>
+    <subtraction name="conc_block_solid_1">
+      <first ref="conc_block_solid_0"/>
+      <second ref="trap_conc_cut1"/>
+      <positionref ref="pos_rel_conc_cut1"/>
+    </subtraction>
+    <subtraction name="conc_block_solid_1A">
+      <first ref="conc_block_solid_0"/>
+      <second ref="box_conc_cut1"/>
+      <positionref ref="pos_rel_conc_cut1_block_to_box"/>
+    </subtraction>
+    <tube name="conc_cut2" lunit="cm" aunit="deg" startphi="0" deltaphi="360" rmin="0" rmax="r_conc_cut2 + 0.01" z="length_conc_cut2 + 0.01"/>
+    <subtraction name="conc_block_solid_2">
+      <first ref="conc_block_solid_1A"/>
+      <second ref="conc_cut2"/>
+      <positionref ref="pos_rel_conc_cut2"/>
+    </subtraction>
+    <tube name="conc_cut3" lunit="cm" aunit="deg" startphi="0" deltaphi="360" rmin="0" rmax="r_conc_cut3 + 0.01" z="length_conc_cut3 + 0.01"/>
+    <subtraction name="conc_block_solid_3">
+      <first ref="conc_block_solid_2"/>
+      <second ref="conc_cut3"/>
+      <positionref ref="pos_rel_conc_cut3"/>
+    </subtraction>
+    <box name="box_conc_cut4" lunit="cm" x="width_box_conc_cut4" y="height_box_conc_cut4 + 0.01" z="length_box_conc_cut4 + 0.01"/>
+    <union name="conc_cut4">
+      <first ref="box_conc_cut4"/>
+      <second ref="box_conc_cut4"/>
+      <positionref ref="pos_rel_conc_cut4_boxes"/>
+    </union>
+    <subtraction name="conc_block_solid_4">
+      <first ref="conc_block_solid_3"/>
+      <second ref="conc_cut4"/>
+      <positionref ref="pos_rel_conc_cut4"/>
+    </subtraction>
+    <box name="top_box_conc_cut5" lunit="cm" x="width_top_box_conc_cut5" y="height_top_box_conc_cut5" z="length_conc_block + 0.01"/>
+    <tube name="top_tube_conc_cut5" lunit="cm" aunit="deg" startphi="0" deltaphi="360" rmin="0" rmax="height_top_box_conc_cut5/2." z="length_conc_block + 0.01"/>
+    <subtraction name="conc_block_solid_5">
+      <first ref="conc_block_solid_4"/>
+      <second ref="top_box_conc_cut5"/>
+      <positionref ref="pos_rel_conc_cut5"/>
+    </subtraction>
+    <subtraction name="conc_block_solid_6">
+      <first ref="conc_block_solid_5"/>
+      <second ref="top_tube_conc_cut5"/>
+      <positionref ref="pos_rel_conc_cut5_top_box_tube1"/>
+    </subtraction>
+    <subtraction name="conc_block_solid_7">
+      <first ref="conc_block_solid_6"/>
+      <second ref="top_tube_conc_cut5"/>
+      <positionref ref="pos_rel_conc_cut5_top_box_tube2"/>
+    </subtraction>
+    <box name="bot_box_conc_cut5" lunit="cm" x="width_bot_box_conc_cut5" y="height_bot_box_conc_cut5 + 0.01" z="length_conc_block + 0.01"/>
+    <tube name="bot_tube_conc_cut5" lunit="cm" aunit="deg" startphi="0" deltaphi="360" rmin="0" rmax="(width_bot_box_conc_cut5)/2." z="length_conc_block + 0.01"/>
+    <subtraction name="conc_block_solid_8">
+      <first ref="conc_block_solid_7"/>
+      <second ref="bot_box_conc_cut5"/>
+      <positionref ref="pos_rel_conc_cut5_box_to_box"/>
+    </subtraction>
+    <subtraction name="conc_block_solid">
+      <first ref="conc_block_solid_8"/>
+      <second ref="bot_tube_conc_cut5"/>
+      <positionref ref="pos_rel_conc_cut5_box_to_bot_tube"/>
+    </subtraction>
+
+    <union name="coll_shield_mother">
+      <first ref="plast_block_solid"/>
+      <second ref="conc_block_solid"/>
+      <positionref ref="pos_global_conc_block"/>
+    </union>
+
+  </solids>
+  
+  <structure>
+    <volume name="plast_block_logic">
+      <materialref ref="Shield"/>
+      <solidref ref="plast_block_solid"/>
+    </volume>
+    <volume name="conc_block_logic">
+      <materialref ref="Concrete"/>
+      <solidref ref="conc_block_solid"/>
+    </volume>
+    
+    <volume name="coll_shields_logic">
+      <materialref ref="Vacuum"/>
+      <solidref ref="coll_shield_mother"/>
+
+      <physvol name="plast_block">
+        <volumeref ref="plast_block_logic"/>
+        <positionref ref="pos_center"/>
+      </physvol>
+
+      <physvol name="conc_block">
+        <volumeref ref="conc_block_logic"/>
+        <positionref ref="pos_global_conc_block"/>
+      </physvol>
+      
+    </volume>
+  </structure>
+  
+  <setup name="Coll_Shields" version="1.0">
+    <world ref="coll_shields_logic"/>
+  </setup>
+
+</gdml>
