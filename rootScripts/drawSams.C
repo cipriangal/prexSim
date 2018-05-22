@@ -1,6 +1,7 @@
 void drawSams(){
-  string fnm= "./v1_9_sams6inDonut_redTree.root";
-  string opdf = "v1_9_sams6inDonut_redTree.pdf";
+  //string fnm= "./v1_9_sams6inDonut_redTree.root";
+  string fnm= "../cameronOutput_redTree.root";
+  string opdf = Form("%s.pdf",fnm.substr(0,fnm.rfind(".")).c_str());
   TFile *fin = TFile::Open(fnm.c_str(),"READ");
 
   TCanvas *c1=new TCanvas("c1","c1",1400,800);
