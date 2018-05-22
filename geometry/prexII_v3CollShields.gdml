@@ -1,0 +1,1453 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<!DOCTYPE gdml [
+<!ENTITY materials SYSTEM "materials.xml">
+]>
+
+<gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="./schema/gdml.xsd">
+
+
+  <define>
+    <!-- Commonly adjusted parameters -->
+
+
+    <constant name="PI" value="1.*pi"/>
+
+    <!-- World Volume -->
+    <constant name="width_mother" value="10000.0"/>
+    <constant name="height_mother" value="10000.0"/>
+    <constant name="length_mother" value="10000.0"/>
+
+    <!-- reference everything to this -->
+    <constant name="prex_target_center" value="-105.3"/>
+
+    <!-- Target dimensions  -->
+    <constant name="inner_rad_targ" value="0.0"/>
+    <constant name="outer_rad_targ" value="4.0"/>
+    <constant name="center_targ" value="prex_target_center"/>
+
+
+    <!-- Collimator dimensions  -->
+    <constant name="radius_cw70_coll_1" value="5.00"/>
+    <constant name="length_cw70_coll" value="10.54"/> <!-- total collimator lenght -->
+
+    <constant name="delta_coll_us_face" value="83.2822"/>
+    <constant name="center_cw70_coll" value="prex_target_center + delta_coll_us_face + length_cw70_coll/2"/>
+    <position unit="cm" name="pos_global_coll_cw70" x="0" y="0" z="center_cw70_coll"/>
+
+
+    <!-- Collimator bore dimentions-->
+    <!-- 1.168 at the face of it and an angle of 0.78 deg: see https://ace.phys.virginia.edu:80/HAPPEX/2928 -->
+    <constant name="coll_bore_inner_r1" value="1.133"/>
+    <constant name="coll_bore_inner_r2" value="1.345"/>
+
+    <!-- Collimator surface grooves-->
+    <constant name="cw70_groove_inner_r" value="3.905"/>
+    <constant name="cw70_groove_outer_r" value="5"/>
+    <constant name="cw70_groove_length" value="0.96"/>
+
+    <position unit="cm" name="pos_rel_coll_g1" x="0" y="0" z="(-length_cw70_coll+ 3*cw70_groove_length)/2"/>
+    <position unit="cm" name="pos_rel_coll_g2" x="0" y="0" z="(-length_cw70_coll+ 7*cw70_groove_length)/2"/>
+    <position unit="cm" name="pos_rel_coll_g3" x="0" y="0" z="(-length_cw70_coll+11*cw70_groove_length)/2"/>
+    <position unit="cm" name="pos_rel_coll_g4" x="0" y="0" z="(-length_cw70_coll+15*cw70_groove_length)/2"/>
+    <position unit="cm" name="pos_rel_coll_g5" x="0" y="0" z="(-length_cw70_coll+19*cw70_groove_length)/2"/>
+    <position unit="cm" name="pos_rel_coll_frontHole" x="0" y="0" z="(-length_cw70_coll + 2.5 )/2."/>
+
+    <!-- Tungsten jacket volume dimentions-->
+    <constant name="width_w_coll_jacket" value="11.4"/>
+    <constant name="height_w_coll_jacket" value="22.7"/>
+    <constant name="length_w_coll_jacket" value="15.5575"/>
+    <constant name="height_w_coll_jacket_topExtension" value="6."/>
+
+    <constant name="delta_coll_ds_face" value="delta_coll_us_face+length_w_coll_jacket"/>
+
+    <position unit="cm" name="pos_rel_coll_jacket" x="0" y="0" z="  length_w_coll_jacket/2 - length_cw70_coll/2"/>
+    <position unit="cm" name="pos_rel_jacket_coll" x="0" y="0" z="- length_w_coll_jacket/2 + length_cw70_coll/2"/>
+    <position unit="cm" name="pos_global_coll_jacket" x="0" y="0"
+              z="center_cw70_coll + length_w_coll_jacket/2 - length_cw70_coll/2"/>
+    <position unit="cm" name="pos_rel_topExtension_wrt_jacket"
+              x="0"
+              y="(height_w_coll_jacket + height_w_coll_jacket_topExtension)/2."
+              z="0"/>
+
+    <!-- degrees. This is the angle of the particle envelope -->
+    <constant name="coll_angle" value="0.7797"/>
+
+    <!-- Space between CW70 surface and W block : rakitha Mon Nov 18 13:43:01 EST 2013  -->
+    <constant name="cw70_cooling_length" value="0.24"/>
+
+    <!--Dimensions of the Copper tube between the CW70 and W box -->
+    <constant name="Cu_tube_inner_r" value="radius_cw70_coll_1+0.001"/>
+    <constant name="Cu_tube_outer_r" value="radius_cw70_coll_1+cw70_cooling_length-0.001"/>
+
+    <constant name="coll_3_inner_r" value="0"/>
+    <constant name="coll_3_outer_r" value="3.073"/>
+    <constant name="length_coll_3" value="6.096"/>
+
+    <!-- set this parameter to actual length of the collimator -->
+    <constant name="length_coll" value="length_w_coll_jacket"/>
+    <constant name="length_bore" value="1.001*(length_w_coll_jacket)"/>
+
+
+    <!-- Scattering chamber dimensions -->
+    <constant name="outer_r_sc" value="57.15"/>
+    <constant name="deltaz_sc" value="-2.77"/>
+    <constant name="center_sc" value="center_targ+deltaz_sc"/> <!-- -108.07 -->
+
+    <!-- Septum dimensions  -->
+    <constant name="width_septum" value="137.16"/>
+    <constant name="height_septum" value="84."/>
+    <constant name="length_septum" value="74.3863"/>
+    <constant name="center_septum" value="175.211+prex_target_center"/> <!-- Seems about right; some space for coils...  -->
+
+    <constant name="width_septum_rect_hole" value="31.115"/>
+    <constant name="height_septum_rect_hole" value="25.0285"/>
+    <constant name="sept_pipe_cont_width" value="9.0" />
+    <constant name="sept_pipe_cont_high" value="9.6"/>
+
+    <!-- Septum coils -->
+    <constant name="width_coil1" value="8.3" />
+    <constant name="rect_hole_center_x" value="1.*width_coil1+0.5*width_septum_rect_hole"/>
+
+
+    <!-- Beamline -->
+    <!-- The offset is due to difference in collimator length compared to PREX-I geometry -->
+    <!-- This is computed by (Current collimator length - Previous collimator length) see elog-2873 for previous values : Rakitha  Tue Nov  5 17:56:29 EST 2013 -->
+    <constant name="beam_pipe_placement_offset" value= "0"/>
+    <constant name="ri_septum_pipe" value= "3.797"/>
+    <constant name="ro_septum_pipe" value="4.102"/>
+
+    <!--The thickness of the sc_attach is 5.08 cm and this is the could be the minimum sepration between the collimatorand the septum pipe (there will be bellows at either ends connecting septum pipe to sc_attach and beam pipe.  -->
+    <constant name="deltaz_pt4_septum_pipe" value="5.08"/>
+
+    <!-- <constant name="length_septum_pipe" value= "137.362"/> -->
+    <!-- The correct lenght is  135.213 cm to accormodate new collimator but due to the collimator box detector there is little over lap. to use this detector set the length to 135.150 cm-->
+    <constant name="length_septum_pipe_old" value= "135.213"/>
+    <constant name="length_septum_pipe" value= "length_septum_pipe_old - deltaz_pt4_septum_pipe"/>
+    <!-- The offset is required to coincide septum pipe with sc_attachment openning -->
+    <constant name="center_septum_pipe" value= "prex_target_center+delta_coll_ds_face+beam_pipe_placement_offset+deltaz_pt4_septum_pipe+length_septum_pipe/2"/>
+
+    <!-- To access matrix elements, use matrix_name[row_number, column_number] -->
+    <!-- Rows are inner and outer radii, length and distance of center from end of septum pipe-->
+    <!-- Would like some way to calculate the center of the pipes from the lengths... -->
+
+    <matrix name="beamline" coldim="13" values =" 4.128  4.445  4.763  5.080   6.350   7.620  10.160  10.478  12.700  15.240  30.480   45.720   45.720
+                                                 4.432  4.750  5.067  5.385   6.655   7.925  10.478  10.795  13.018  15.558  30.798   46.038   46.038
+                                                 28.018 19.01  15.24  37.028  23.416  27.622  22.368  94.456  30.48  106.204 551.18  1564.642  554.776
+                                                 14.009 37.523 54.648 80.782 111.004 136.523 161.518 219.93  282.398 350.74  679.432 1737.343 2797.052"/>
+
+
+
+    <!-- Vacuum enclosures  -->
+
+    <constant name="width_vac_u_enc" value="3.662"/>
+    <constant name="height_vac_u_enc" value="10.6596"/>
+    <constant name="width_vac_d_enc" value="10.4826"/>
+    <constant name="height_vac_d_enc" value="23.65"/>
+    <constant name="length_vac_enc" value="130.5688"/>
+    <constant name="center_vac_enc_z" value="center_septum_pipe-(length_septum_pipe-length_vac_enc)/2"/>
+
+    <constant name="center_vac_enc_yu" value="0."/>
+    <constant name="thick_vac_enc" value="0.635"/>
+
+    <constant name="left_theta" value="-atan((width_vac_d_enc-width_vac_u_enc+17.239)/length_vac_enc)*180/PI"/>
+    <constant name="left_phi" value="0"/>
+    <constant name="right_theta" value="-left_theta"/>
+    <constant name="right_phi" value="left_phi"/>
+
+    <constant name="center_vac_enc_xu" value="width_w_coll_jacket/2 + width_vac_u_enc/2-length_vac_enc*tan(left_theta*PI/180.)/2"/>
+
+    <constant name="alpha_l_1" value="0."/>
+    <constant name="alpha_r_1" value="-alpha_l_1"/>
+    <constant name="alpha_l_2" value="alpha_l_1"/>
+    <constant name="alpha_r_2" value="alpha_r_1"/>
+
+    <!-- Collimator Tube and Flages -->
+    <constant name="coll_tube_inner_r" value="19.84375"/>
+    <constant name="coll_tube_outer_r" value="20.32"/>
+    <constant name="coll_tube_length" value="31.115"/>
+    <constant name="coll_front_flange_inner_r" value="9.8425"/>
+    <constant name="coll_front_flange_length_1" value="1.0414"/>
+    <constant name="coll_front_flange_length_2" value="1.27"/>
+    <constant name="coll_back_flange_inner_r" value="20.0787"/>
+    <constant name="coll_back_flange_outer_r" value="24.765"/>
+    <constant name="coll_back_flange_length" value="6.66"/>
+    <constant name="coll_shield_z_pos" value="-46.324"/>
+    <constant name="coll_tube_z_pos" value="-25.4007245"/>
+    <position name="pos_global_coll_shield_block" unit="cm" x="0" y="0" z="coll_shield_z_pos"/>
+    <position name="pos_global_coll_tube" unit="cm" x="0" y="0" z="coll_tube_z_pos"/>
+    <position name="pos_rel_coll_front_flange" unit="cm" x="0" y="0" z="-(coll_tube_length + coll_front_flange_length_1)/2."/>
+    <position name="pos_rel_coll_back_flange" unit="cm" x="0" y="0" z="(coll_tube_length + coll_back_flange_length)/2."/>
+    <position name="pos_rel_coll_front_flange_ext" unit="cm" x="0" y="0" z="(coll_front_flange_length_1 + coll_front_flange_length_2)/2."/>
+
+
+    <!-- Hall - wall, floor and "dump" -->
+    <constant name="radius_of_hall" value="2651.7"/>
+    <constant name="height_wall" value="720."/>
+    <constant name="thick_wall" value="154.776"/>
+    <constant name="center_wall" value="radius_of_hall+thick_wall/2"/>
+
+    <constant name="height_cylwall" value="1777.0"/>
+    <!-- <constant name="radius_of_cylwall" value="2546."/> -->
+    <constant name="radius_of_cylwall" value="2652."/>
+    <constant name="thick_cylwall" value="148.7"/>
+    <constant name="radius_topwall_out" value="5472.78"/>
+    <constant name="radius_topwall_in" value="5402.78"/>
+    <constant name="center_topwall" value="-3435.26"/>
+    <constant name="bottom_cylwall" value="-447."/>
+    <constant name="center_cylwall" value="height_cylwall/2+bottom_cylwall"/>
+    <constant name="trans_topwall" value="radius_topwall_out-(-center_topwall+bottom_cylwall+height_cylwall)"/>
+
+    <constant name="thick_floor" value="50.0"/>
+    <constant name="width_floor" value="2000.0"/>
+    <constant name="length_floor" value="(center_wall+thick_wall/2-(prex_target_center-deltaz_sc-outer_r_sc))"/>
+    <constant name="floor_z_center" value="length_floor/2+(prex_target_center-deltaz_sc-outer_r_sc)"/>
+    <constant name="floor_y_center" value="(-height_wall-thick_floor)/2"/>
+
+    <constant name="width_dump" value="600.0"/>
+    <constant name="height_dump" value="height_wall"/>
+    <constant name="length_dump" value="600."/>
+    <constant name="center_dump" value="radius_of_cylwall+length_dump/2+thick_cylwall"/>
+    <constant name="center_cyldump" value="radius_of_cylwall+length_dump/2+thick_cylwall"/>
+
+    <constant name="length_dump_hole" value="length_dump"/>
+    <constant name="width_dump_hole" value="212.816"/>
+    <constant name="height_dump_hole" value="299.876"/>
+    <constant name="dump_hole_z_center" value="center_dump-1.001*(length_dump-length_dump_hole)/2"/>
+    <constant name="dump_hole_y_center" value="-43.531"/>
+
+    <!-- Cylindrical detector for Full hall simulation -->
+    <constant name="cDet_1_radius" value="prex_target_center+600."/>
+    <constant name="cDet_2_radius" value="prex_target_center+2300."/>
+    <constant name="cDet_3_radius" value="1*radius_of_cylwall - 1."/>
+
+
+
+    <!-- Pedestal scattering chamber -->
+    <constant name="ped_downstream_high" value="199." />
+    <constant name="ped_upstream_high" value="184." />
+    <constant name="ped_top_tobeamline" value="98." />
+    <constant name="ped_tube_side" value="30." />
+    <constant name="ped_tube_width" value="612.7" />
+    <constant name="ped_length_upstream" value="71.6" />
+    <constant name="ped_length_downstream" value="71.83" /> <!-- added deltaz_sc in order to have the same length to the septum -->
+    <constant name="center_to_tgcenter" value="105." />
+    <constant name="center_to_sepcenter" value="70." />
+    <constant name="sqrt_2" value="1.4142135" />
+    <constant name="ped_high_diag" value="119.88" />
+    <constant name="ped_infrac_length" value="182." />
+    <constant name="ped_infrac_side" value="11." />
+    <constant name="ped_infrac_depth" value="110."/>
+    <constant name="ped_infrac_high" value="14." />
+    <constant name="ped_infrac_dz1" value="28.86" />
+    <constant name="ped_infrac2_width" value="9." />
+    <constant name="ped_infrac2_high" value="14." />
+    <constant name="ped_infrac2_length1" value="145." />
+    <constant name="ped_infrac2_length2" value="126." />
+    <constant name="ped_infrac2_center_xr" value="-31." />
+    <constant name="ped_infrac2_center_xl" value="53." />
+    <constant name="ped_infrac2_center_dzr" value="35.5" />
+    <constant name="ped_infrac2_center_dzl" value="15.2" />
+    <constant name="ped_infrac3_high" value="11.0" />
+    <constant name="ped_infrac3_length" value="13.0" />
+    <constant name="ped_infrac3_dz_r_1" value="10.2" />
+    <constant name="ped_infrac3_dz_r_2" value="73.0" />
+    <constant name="ped_infrac3_dz_l_1" value="10.2" />
+    <constant name="ped_infrac3_dz_l_2" value="1.*ped_infrac3_dz_l_1+2.5*ped_infrac3_length" />
+    <constant name="ped_infrac5_tube_high" value="37." />
+    <constant name="ped_infrac5_tube_radius" value="5." />
+    <constant name="ped_infrac5_center_septum" value="70-deltaz_sc" /> <!-- taked away deltaz_sc in order to have the same septum to sc_center distance as Juliette -->
+    <constant name="ped_infrac5_dz" value="26." />
+    <constant name="ped_infrac6_high" value="13." />
+    <constant name="ped_infrac7_radius_o" value="64." />
+    <constant name="ped_infrac7_radius_i" value="28." />
+    <constant name="ped_infrac7_high" value="2." />
+
+    <!-- Part of Arms unider scattering chamber -->
+    <constant name="sc_arm_radius" value="172." />
+    <constant name="sc_arm_radius_in" value="145." />
+    <constant name="sc_arm_high" value="35." />
+    <constant name="sc_arm_center_1" value="-260.5" />
+    <constant name="sc_arm_center_2" value="-212.5" />
+    <constant name="sc_arm_trap_basemaj" value="2.*sc_arm_radius" />
+    <constant name="sc_arm_trap_basemin" value="270.3" />
+    <constant name="sc_arm_trap_high" value="659.08" />
+    <constant name="sc_arm_ped_high" value="1.0" />
+
+    <!-- Positions -->
+    <position unit="cm" name="center" x="0" y="0" z="0"/>
+    <position unit="cm" name="targ_center" x="0" y="0" z="center_targ"/>
+
+
+    <!--Positions for trapozoidal geometry to be added to the W collimator jacket -->
+    <!-- Subtracted 1.27/2 from height so that bottom side of the trapazoid will be below the W collimator volume when union together.  -->
+
+    <position unit="cm" name="septum_center"     x="0" y="0"     z="center_septum"/>
+    <position unit="cm" name="septTrans_l"       x="-rect_hole_center_x" y="0"     z="0"/>
+    <position unit="cm" name="septTrans_r"       x="rect_hole_center_x" y="0"     z="0"/>
+
+    <position unit="cm" name="vac_enc_center_l"     x="-center_vac_enc_xu" y="0"     z="center_vac_enc_z"/>
+    <position unit="cm" name="vac_enc_center_r"     x="center_vac_enc_xu" y="0"     z="center_vac_enc_z"/>
+
+    <position unit="cm" name="septShldTrans_l"        x="rect_hole_center_x - center_vac_enc_xu"  y="0"     z="center_vac_enc_z - center_septum"/>
+    <position unit="cm" name="septShldTrans_r"        x="-(rect_hole_center_x-center_vac_enc_xu)" y="0"     z="center_vac_enc_z - center_septum"/>
+    <position unit="cm" name="septShld_center_l"        x="-rect_hole_center_x" y="0"     z="center_septum"/>
+    <position unit="cm" name="septShld_center_r"        x="rect_hole_center_x" y="0"     z="center_septum"/>
+
+    <position unit="cm" name="floor_center"      x="0" y="floor_y_center"     z="floor_z_center"/>
+    <position unit="cm" name="dumpTrans_1"       x="0" y="dump_hole_y_center"     z="dump_hole_z_center - center_dump"/>
+    <position unit="cm" name="dumpTrans_2"       x="0" y="-dump_hole_y_center"    z="0"/>
+    <position unit="cm" name="dump_center"       x="0" y="0"     z="center_dump"/>
+
+    <position unit="cm" name="cylwallTrans_1"    x="0" y="0"     z="thick_cylwall/2"/>
+    <position unit="cm" name="cylwallTrans_2"    x="0" y="-1.0*radius_of_cylwall-0.5*thick_cylwall" z="+dump_hole_y_center-center_cylwall"/>
+    <position unit="cm" name="cylwall_center"    x="0" y="1.*center_cylwall" z="0"/>
+
+
+    <position unit="cm" name="topwallTrans_1"    x="0" y="0"     z="-trans_topwall"/>
+    <position unit="cm" name="topwall_center"    x="0" y="1.*center_topwall"     z="0"/>
+
+    <position unit="cm" name="cDet_1_pos"       x="0" y="center_cylwall+0.5*thick_cylwall"     z="0"/>
+    <position unit="cm" name="cDet_1_under_1pos"       x="0" y="0" z="-center_cylwall-0.5*thick_cylwall+1.*sc_arm_center_1"/>
+    <position unit="cm" name="cDet_1_under_2pos"       x="0" y="0" z="-center_cylwall-0.5*thick_cylwall+1.*sc_arm_center_2"/>
+
+    <position unit="cm" name="dDet_us_pos"
+              x="0" y="0"
+              z="center_targ+delta_coll_us_face - 0.1"/>
+    <position unit="cm" name="dDet_ds_pos"       x="0" y="0"     z="center_targ+delta_coll_ds_face+0.1"/>
+    <position unit="cm" name="dDet_beamline_pos_1"       x="0" y="0"     z="center_targ+237.535+0.1"/>
+
+    <position unit="cm" name="cDet_1_trans"     x="0" y="-cDet_1_radius"     z="-1.*center_cylwall-0.5*thick_cylwall"/>
+    <position unit="cm" name="cDet_2_trans"     x="0" y="-cDet_2_radius"     z="-1.*center_cylwall-0.5*thick_cylwall"/>
+    <position unit="cm" name="cDet_3_trans"     x="0" y="-cDet_3_radius"     z="-1.*center_cylwall-0.5*thick_cylwall"/>
+
+    <!-- Pedestal scattering chamber -->
+
+    <position unit="cm" name="ped_2_pos"       x="0" y="-1.*ped_top_tobeamline-0.25*ped_tube_side"     z="1.*prex_target_center+1.*center_to_tgcenter+1.*ped_length_downstream+0.5*ped_tube_side"/>
+    <position unit="cm" name="ped_3_pos"       x="0" y="-1.*ped_top_tobeamline-0.75*ped_tube_side"     z="1.*prex_target_center+1.*center_to_tgcenter+1.*ped_length_downstream+0.5*ped_tube_side"/>
+    <position unit="cm" name="pedv_1_pos"       x="-0.5*ped_tube_width+0.5*ped_tube_side" y="-1.*ped_top_tobeamline-1.*ped_downstream_high+0.5*(1.*ped_downstream_high-1.*ped_tube_side)"     z="1.*prex_target_center+1.*center_to_tgcenter+1.*ped_length_downstream+0.5*ped_tube_side"/>
+    <position unit="cm" name="pedv_2_pos"       x="+0.5*ped_tube_width-0.5*ped_tube_side" y="-1.*ped_top_tobeamline-1.*ped_downstream_high+0.5*(1.*ped_downstream_high-1.*ped_tube_side)"     z="1.*prex_target_center+1.*center_to_tgcenter+1.*ped_length_downstream+0.5*ped_tube_side"/>
+    <position unit="cm" name="pedv_3_pos"       x="-0.5*ped_tube_width+0.5*ped_tube_side" y="-1.*ped_top_tobeamline-1.*ped_downstream_high+0.5*(1.*ped_downstream_high-1.*ped_tube_side)"     z="1.*prex_target_center+1.*center_to_tgcenter-1.*ped_length_upstream-0.5*ped_tube_side"/>
+    <position unit="cm" name="pedv_4_pos"       x="+0.5*ped_tube_width-0.5*ped_tube_side" y="-1.*ped_top_tobeamline-1.*ped_downstream_high+0.5*(1.*ped_downstream_high-1.*ped_tube_side)"     z="1.*prex_target_center+1.*center_to_tgcenter-1.*ped_length_upstream-0.5*ped_tube_side"/>
+    <position unit="cm" name="pedo_1_pos"       x="-0.5*ped_tube_width+0.5*ped_tube_side" y="-1.*ped_top_tobeamline-1.5*ped_tube_side"     z="1.*center_sc+1.*center_to_tgcenter-0.5*(1.0*ped_length_downstream-1.0*ped_length_upstream)"/>
+    <position unit="cm" name="pedo_2_pos"       x="+0.5*ped_tube_width-0.5*ped_tube_side" y="-1.*ped_top_tobeamline-1.5*ped_tube_side"    z="1.*prex_target_center+1.*center_to_tgcenter-0.5*(1.0*ped_length_downstream-1.0*ped_length_upstream)"/>
+    <position unit="cm" name="ped_1_pos"       x="0" y="-1.*ped_top_tobeamline-0.75*ped_tube_side"     z="1.*center_sc+1.*center_to_tgcenter-1.*ped_length_upstream-0.5*ped_tube_side"/>
+
+    <position unit="cm" name="ped_2_trans"       x="0" y="0.5*ped_tube_side"     z="1.*ped_length_upstream+0.5*ped_tube_side+1.*ped_length_downstream+0.5*ped_tube_side"/>
+    <position unit="cm" name="ped_3_trans"       x="0" y="0"     z="1.*ped_length_upstream+0.5*ped_tube_side+1.*ped_length_downstream+0.5*ped_tube_side"/>
+    <position unit="cm" name="pedv_1_trans"       x="-0.5*ped_tube_width+0.5*ped_tube_side" y="0.75*ped_tube_side-1.*ped_downstream_high+0.5*(1.*ped_downstream_high-1.*ped_tube_side)"     z="1.*ped_length_upstream+0.5*ped_tube_side+1.*ped_length_downstream+0.5*ped_tube_side"/>
+    <position unit="cm" name="pedv_2_trans"       x="+0.5*ped_tube_width-0.5*ped_tube_side" y="0.75*ped_tube_side-1.*ped_downstream_high+0.5*(1.*ped_downstream_high-1.*ped_tube_side)"     z="1.*ped_length_upstream+0.5*ped_tube_side+1.*ped_length_downstream+0.5*ped_tube_side"/>
+    <position unit="cm" name="pedv_3_trans"       x="-0.5*ped_tube_width+0.5*ped_tube_side" y="0.75*ped_tube_side-1.*ped_downstream_high+0.5*(1.*ped_downstream_high-1.*ped_tube_side)"     z="0"/>
+    <position unit="cm" name="pedv_4_trans"       x="+0.5*ped_tube_width-0.5*ped_tube_side" y="0.75*ped_tube_side-1.*ped_downstream_high+0.5*(1.*ped_downstream_high-1.*ped_tube_side)"     z="0"/>
+    <position unit="cm" name="pedo_1_trans"       x="-0.5*ped_tube_width+0.5*ped_tube_side" y="-0.75*ped_tube_side"     z="1.*ped_length_upstream+0.5*ped_tube_side-0.5*(1.0*ped_length_downstream-1.0*ped_length_upstream)"/>
+    <position unit="cm" name="pedo_2_trans"       x="+0.5*ped_tube_width-0.5*ped_tube_side" y="-0.75*ped_tube_side"    z="1.*ped_length_upstream+0.5*ped_tube_side-0.5*(1.0*ped_length_downstream-1.0*ped_length_upstream)"/>
+    <position unit="cm" name="ped_notrans"       x="0" y="0" z="0"/>
+    <position unit="cm" name="ped_d_trans_1"       x="0" y="-0.5*(1.*ped_upstream_high-0.5*ped_tube_side)-0.5*ped_tube_side" z="0"/>
+    <position unit="cm" name="ped_d_trans_2"       x="0" y="+0.5*(1.*ped_upstream_high-0.5*ped_tube_side)+0.5*ped_tube_side" z="0"/>
+    <position unit="cm" name="ped_d_pos_1"       x="-0.5*ped_tube_width+1.*ped_tube_side+0.5*(1.*ped_upstream_high-0.5*ped_tube_side)/sqrt_2-0.5*ped_tube_side" y="-0.25*ped_tube_side-0.5*(1.*ped_upstream_high-0.5*ped_tube_side)/sqrt_2+0.5*ped_tube_side" z="0"/>
+    <position unit="cm" name="ped_d_pos_2"       x="-0.5*ped_tube_width+1.*ped_tube_side+0.5*(1.*ped_upstream_high-0.5*ped_tube_side)/sqrt_2-0.5*ped_tube_side" y="-0.25*ped_tube_side-0.5*(1.*ped_upstream_high-0.5*ped_tube_side)/sqrt_2+0.5*ped_tube_side" z="1.*ped_length_upstream+1.*ped_length_downstream+1.*ped_tube_side"/>
+    <position unit="cm" name="ped_d_pos_3"       x="+0.5*ped_tube_width-1.*ped_tube_side-0.5*(1.*ped_upstream_high-0.5*ped_tube_side)/sqrt_2+0.5*ped_tube_side" y="-0.25*ped_tube_side-0.5*(1.*ped_upstream_high-0.5*ped_tube_side)/sqrt_2+0.5*ped_tube_side" z="0"/>
+    <position unit="cm" name="ped_d_pos_4"       x="+0.5*ped_tube_width-1.*ped_tube_side-0.5*(1.*ped_upstream_high-0.5*ped_tube_side)/sqrt_2+0.5*ped_tube_side" y="-0.25*ped_tube_side-0.5*(1.*ped_upstream_high-0.5*ped_tube_side)/sqrt_2+0.5*ped_tube_side" z="1.*ped_length_upstream+1.*ped_length_downstream+1.*ped_tube_side"/>
+    <position unit="cm" name="ped_infrac_trans_1"  x="-0.25*ped_infrac_length" y="0" z="0.5*(1.*ped_infrac_depth-1.*ped_infrac_side)" />
+    <position unit="cm" name="ped_infrac_trans_2"  x="+0.25*ped_infrac_length" y="0" z="0.5*(1.*ped_infrac_depth-1.*ped_infrac_side)" />
+    <position unit="cm" name="ped_infrac_trans_3"  x="" y="0" z="1.*ped_infrac_depth-1.*ped_infrac_side" />
+    <position unit="cm" name="ped_infrac_pos_1"  x="0" y="0.25*ped_tube_side+0.5*ped_infrac_high" z="-1.0*ped_infrac_dz1 + 0.5*ped_infrac_side" />
+    <position unit="cm" name="ped_infrac_pos_2"  x="0" y="0.75*ped_tube_side+0.5*ped_infrac_high" z="0.5*ped_tube_side+1.*ped_length_upstream+0.5*ped_infrac_side" />
+
+    <position unit="cm" name="ped_infrac2_trans_1"  x="0.5*ped_infrac2_width + 1." y="0" z="0" />
+    <position unit="cm" name="ped_infrac2_trans_2"  x="-0.5*ped_infrac2_width - 1." y="0" z="0" />
+    <position unit="cm" name="ped_infrac2_pos_1"  x="ped_infrac2_center_xr" y="0.25*ped_tube_side+1.0*ped_infrac_high+0.5*ped_infrac2_high" z="-1.0*ped_infrac_dz1-1.*ped_infrac2_center_dzr+0.5*ped_infrac2_length1" />
+    <position unit="cm" name="ped_infrac2_pos_2"  x="ped_infrac2_center_xl" y="0.25*ped_tube_side+1.0*ped_infrac_high+0.5*ped_infrac2_high" z="-1.0*ped_infrac_dz1-1.*ped_infrac2_center_dzl+0.5*ped_infrac2_length2" />
+    <position unit="cm" name="ped_infrac3_trans_1"  x="0" y="-1.*(0.5*ped_infrac2_high+0.5*ped_infrac3_high - 2.)" z="0" />
+    <position unit="cm" name="ped_infrac3_pos_r_1"  x="0" y="+1.*(0.5*ped_infrac2_high+0.5*ped_infrac3_high)" z="-0.5*ped_infrac2_length1+1.0*ped_infrac3_dz_r_1+0.5*ped_infrac3_length" />
+    <position unit="cm" name="ped_infrac3_pos_r_2"  x="0" y="+1.*(0.5*ped_infrac2_high+0.5*ped_infrac3_high)" z="-0.5*ped_infrac2_length1+1.0*ped_infrac3_dz_r_2-0.5*ped_infrac3_length" />
+    <position unit="cm" name="ped_infrac3_pos_l_1"  x="0" y="+1.*(0.5*ped_infrac2_high+0.5*ped_infrac3_high)" z="-0.5*ped_infrac2_length2+1.0*ped_infrac3_dz_l_1+0.5*ped_infrac3_length" />
+    <position unit="cm" name="ped_infrac3_pos_l_2"  x="0" y="+1.*(0.5*ped_infrac2_high+0.5*ped_infrac3_high)" z="-0.5*ped_infrac2_length2+1.0*ped_infrac3_dz_l_2-0.5*ped_infrac3_length" />
+    <position unit="cm" name="ped_infrac3_pos_o_r"  x="0" y="1.*(0.5*ped_infrac2_high+1.*ped_infrac3_high + 1.)" z="-0.5*ped_infrac2_length1+1.0*ped_infrac3_dz_r_1+0.5*(1.*ped_infrac3_dz_r_2-1.*ped_infrac3_dz_r_1)" />
+    <position unit="cm" name="ped_infrac3_pos_o_l"  x="0" y="1.*(0.5*ped_infrac2_high+1.*ped_infrac3_high + 1.)" z="-0.5*ped_infrac2_length2+1.0*ped_infrac3_dz_l_1+1.25*ped_infrac3_length" />
+    <position unit="cm" name="ped_infrac5_trans_1" x="0" y="ped_infrac5_dz" z="0" />
+    <position unit="cm" name="ped_infrac5_trans_2" x="0.5*ped_infrac_length" y="0" z="0" />
+    <position unit="cm" name="ped_infrac5_trans_3" x="0.5*ped_infrac_length" y="ped_infrac5_dz" z="0" />
+    <position unit="cm" name="ped_infrac5_pos_1" x="-0.25*ped_infrac_length" y="0.75*ped_tube_side+1.*ped_infrac_high+0.5*ped_infrac5_tube_high" z="0.5*ped_tube_side+1.*ped_length_upstream+1.*ped_infrac5_center_septum-0.5*ped_infrac5_dz" />
+    <position unit="cm" name="ped_infrac6_trans_1" x="0" y="4." z="0" />
+    <position unit="cm" name="ped_infrac6_pos_1" x="0" y="0.75*ped_tube_side+1.*ped_infrac_high+1.*ped_infrac5_tube_high+0.5*ped_infrac6_high" z="0.5*ped_tube_side+1.*ped_length_upstream+1.*ped_infrac5_center_septum" />
+    <position unit="cm" name="ped_infrac7_pos_1" x="0" y="0.25*ped_tube_side+1.*ped_infrac_high+1.*ped_infrac2_high+1.*ped_infrac3_high + 6." z="-1.*center_to_tgcenter+1.*ped_length_upstream+0.5*ped_tube_side" />
+    <!-- Part of Arms unider scattering chamber -->
+    <position unit="cm" name="arm_under_ped_trans_1"  x="0" y="-0.5*sc_arm_trap_high" z="0" />
+    <position unit="cm" name="arm_under_ped_trans_2"  x="0" y="0" z="-0.5*sc_arm_trap_high" />
+    <position unit="cm" name="arm_under_ped_trans_3"  x="0" y="0" z="-0.5*(-1.*sc_arm_center_1-1.*ped_top_tobeamline-1.*ped_tube_side- 2. +0.5*sc_arm_high)+0.5*sc_arm_ped_high" />
+    <position unit="cm" name="arm_under_ped_pos_1"  x="0" y="sc_arm_center_1" z="0" />
+    <position unit="cm" name="arm_under_ped_pos_2"  x="0" y="sc_arm_center_2" z="0" />
+    <position unit="cm" name="arm_under_ped_pos_3"  x="0" y="-1.*ped_top_tobeamline-1.*ped_tube_side-0.5*sc_arm_ped_high - 2."     z="0"/>
+    <position unit="cm" name="test_under_ped_pos" x="1000" y="0.5*sc_arm_trap_high" z="0"/>
+
+    <!-- Dipole constants/positions -->
+    <constant name="arm_dipole_r1" value="733.32"/>
+    <constant name="arm_dipole_r2" value="956.7"/>
+    <constant name="arm_dipole_w1" value="97.0"/>
+
+    <constant name="arm_dipole_r5" value="659.0"/>
+    <constant name="arm_dipole_r6" value="1017.4"/>
+    <constant name="arm_dipole_w3" value="255.48"/>
+
+    <constant name="arm_dipole_center_y" value="987.0"/>
+
+    <position unit="cm" name="arm_dipole_pos2"  x="0" y="-1.*arm_dipole_center_y" z="1.*center_cylwall -40.0" />
+
+    <!-- Rotations -->
+    <rotation name="scRot_1"  unit="deg" x="90"  y="0"   z="0"/>
+    <rotation name="scRot_3"  unit="deg" x="0"   y="0"   z="45"/>
+    <rotation name="scRot_4"  unit="deg" x="0"   y="0"   z="-45"/>
+    <rotation name="scRot_5"  unit="deg" x="0"   y="0"   z="225"/>
+    <rotation name="scRot_6"  unit="deg" x="90"  y="0"   z="12.5"/>
+    <rotation name="scRot_7"  unit="deg" x="90"  y="0"   z="-12.5"/>
+    <rotation name="scRot_8"  unit="deg" x="90"  y="0"   z="30"/>
+    <rotation name="scRot_11" unit="deg" x="0"   y="0"   z="12.5"/>
+    <rotation name="scRot_12" unit="deg" x="0"   y="0"   z="-12.5"/>
+    <rotation name="scRot_22" unit="deg" x="0"   y="-90" z="0"/>
+    <rotation name="identity"/>
+
+    <position unit="cm" name="pos_global_SEPT_elec"
+              x="-125"
+              y="100"
+              z="150" />
+
+
+  </define>
+
+  &materials;
+
+  <solids>
+    <!-- Mother Volume -->
+    <box lunit="cm" name="boxMother" x="width_mother" y="height_mother" z="length_mother"/>
+
+
+    <!-- Cylindrical CW70 Collimator-->
+    <tube aunit="deg" startphi="0" deltaphi="360"
+          lunit="cm" name="coll_cw70_cyln"
+          rmin="0.0"
+          rmax="radius_cw70_coll_1"
+          z="length_cw70_coll"/>
+
+    <!-- Conic bore going through the whole collimator -->
+    <cone aunit="deg" startphi="0" deltaphi="360"
+          lunit="cm" name="coll_bore_cone"
+          rmin1="0.0" rmax1="coll_bore_inner_r1"
+          rmin2="0.0" rmax2="coll_bore_inner_r2"
+          z="length_w_coll_jacket+0.001"/>
+
+    <subtraction name ="coll_cw70_cyln_1">
+      <first ref="coll_cw70_cyln"/>
+      <second ref="coll_bore_cone"/>
+      <positionref ref="pos_rel_coll_jacket"/>
+      <rotationref ref="identity"/>
+    </subtraction>
+
+    <!-- Solid used to generate the CW70 surface grooves-->
+    <tube aunit="deg" startphi="0" deltaphi="360"
+          lunit="cm" name="cw70_groove_solid"
+          rmin="cw70_groove_inner_r"
+          rmax="cw70_groove_outer_r*1.001"
+          z="cw70_groove_length"/>
+
+    <!-- groove 1 -->
+    <subtraction name ="coll_cw70_cyln_2">
+      <first ref="coll_cw70_cyln_1"/>
+      <second ref="cw70_groove_solid"/>
+      <positionref ref="pos_rel_coll_g1"/>
+      <rotationref ref="identity"/>
+    </subtraction>
+    <!-- groove 2 -->
+    <subtraction name ="coll_cw70_cyln_3">
+      <first ref="coll_cw70_cyln_2"/>
+      <second ref="cw70_groove_solid"/>
+      <positionref ref="pos_rel_coll_g2"/>
+      <rotationref ref="identity"/>
+    </subtraction>
+    <!-- groove 3 -->
+    <subtraction name ="coll_cw70_cyln_4">
+      <first ref="coll_cw70_cyln_3"/>
+      <second ref="cw70_groove_solid"/>
+      <positionref ref="pos_rel_coll_g3"/>
+      <rotationref ref="identity"/>
+    </subtraction>
+    <!-- groove 4 -->
+    <subtraction name ="coll_cw70_cyln_5">
+      <first ref="coll_cw70_cyln_4"/>
+      <second ref="cw70_groove_solid"/>
+      <positionref ref="pos_rel_coll_g4"/>
+      <rotationref ref="identity"/>
+    </subtraction>
+    <!-- groove 5 -->
+    <subtraction name ="coll_cw70_cyln_6">
+      <first ref="coll_cw70_cyln_5"/>
+      <second ref="cw70_groove_solid"/>
+      <positionref ref="pos_rel_coll_g5"/>
+      <rotationref ref="identity"/>
+    </subtraction>
+
+    <tube aunit="deg" startphi="0" deltaphi="360"
+          lunit="cm" name="front_coll_hole"
+          rmin="0"
+          rmax="2"
+          z="2.51"/>
+    <subtraction name ="coll_cw70_cyln_7">
+      <first ref="coll_cw70_cyln_6"/>
+      <second ref="front_coll_hole"/>
+      <positionref ref="pos_rel_coll_frontHole"/>
+      <rotationref ref="identity"/>
+    </subtraction>
+
+
+    <!-- Copper Cylinder for water cooling CW70 Collimator-->
+    <tube aunit="deg" startphi="0" deltaphi="360"
+          lunit="cm" name="Cu_tube_solid"
+          rmin="Cu_tube_inner_r"
+          rmax="Cu_tube_outer_r"
+          z="length_cw70_coll"/>
+
+    <!-- W Box Collimator Jacket-->
+    <box lunit="cm" name="coll_jacket_W" x="width_w_coll_jacket" y="height_w_coll_jacket" z="length_w_coll_jacket"/>
+    <subtraction name ="coll_jacket_w_solid_1">
+      <first ref="coll_jacket_W"/>
+      <second ref="coll_bore_cone"/>
+      <positionref ref="center"/>
+      <rotationref ref="identity"/>
+    </subtraction>
+    <!-- Remove copper cylinder from jacket -->
+    <subtraction name ="coll_jacket_w_solid_2">
+      <first ref="coll_jacket_w_solid_1"/>
+      <second ref="Cu_tube_solid"/>
+      <positionref ref="pos_rel_jacket_coll"/>
+      <rotationref ref="identity"/>
+    </subtraction>
+    <!-- Remove collimator from jacket -->
+    <subtraction name ="coll_jacket_w_solid_3">
+      <first ref="coll_jacket_w_solid_2"/>
+      <second ref="coll_cw70_cyln"/>
+      <positionref ref="pos_rel_jacket_coll"/>
+      <rotationref ref="identity"/>
+    </subtraction>
+    <!-- Add extension on top of collimator     -->
+    <box lunit="cm" name="coll_jacket_topExtension"
+         x="width_w_coll_jacket"
+         y="height_w_coll_jacket_topExtension"
+         z="length_w_coll_jacket"/>
+    <union name ="coll_jacket_w_solid_4">
+      <first ref="coll_jacket_w_solid_3"/>
+      <second ref="coll_jacket_topExtension"/>
+      <positionref ref="pos_rel_topExtension_wrt_jacket"/>
+      <rotationref ref="identity"/>
+    </union>
+
+    <!-- Collimator Tube and Flanges -->
+    <tube name="coll_tube_middle" aunit="deg" lunit="cm" startphi="0" deltaphi="360" rmin="coll_tube_inner_r" rmax="coll_tube_outer_r" z="coll_tube_length"/>
+    <tube name="coll_front_flange_part1" aunit="deg" lunit="cm" startphi="0" deltaphi="360" rmin="coll_front_flange_inner_r" rmax="coll_tube_outer_r" z="coll_front_flange_length_1"/>
+    <tube name="coll_front_flange_part2" aunit="deg" lunit="cm" startphi="0" deltaphi="360" rmin="coll_front_flange_inner_r" rmax="coll_tube_inner_r" z="coll_front_flange_length_2"/>
+    <tube name="coll_back_flange" aunit="deg" lunit="cm" startphi="0" deltaphi="360" rmin="coll_back_flange_inner_r" rmax="coll_back_flange_outer_r" z="coll_back_flange_length"/>
+    <union name="coll_front_flange">
+      <first ref="coll_front_flange_part1"/>
+      <second ref="coll_front_flange_part2"/>
+      <positionref ref="pos_rel_coll_front_flange_ext"/>
+    </union>
+    <union name="coll_tube_and_front">
+      <first ref="coll_tube_middle"/>
+      <second ref="coll_front_flange"/>
+      <positionref ref="pos_rel_coll_front_flange"/>
+    </union>
+    <union name="coll_tube_solid">
+      <first ref="coll_tube_and_front"/>
+      <second ref="coll_back_flange"/>
+      <positionref ref="pos_rel_coll_back_flange"/>
+    </union>
+
+
+    <!-- Target  -->
+    <!--Assume 1.77g/cm3 Ca48 density gives a L of 0.6 cm-->
+    <tube aunit="deg" startphi="0" deltaphi="360"
+          lunit="cm" name="tubeTarget"
+          rmin="inner_rad_targ"
+          rmax="outer_rad_targ"
+          z="0.05" />
+    <!-- z="0.6" /> -->
+
+
+    <!--
+        width and height of hole will be the wrong size;
+        need to adjust width and height for increased length relative to actual vacuum enclosures
+    -->
+    <trap aunit="deg" lunit="cm" name="hole_for_l_vac_enc" z="1.0*length_vac_enc" theta="left_theta" phi="left_phi"
+          y1="1.0*height_vac_u_enc" x1="1.0*width_vac_u_enc" x2="1.0*width_vac_u_enc"  alpha1="alpha_l_1"
+          y2="1.0*height_vac_d_enc" x3="1.0*width_vac_d_enc" x4="1.0*width_vac_d_enc" alpha2="alpha_l_2" />
+
+    <trap aunit="deg" lunit="cm" name="hole_for_r_vac_enc" z="1.0*length_vac_enc" theta="right_theta" phi="right_phi"
+          y1="1.0*height_vac_u_enc" x1="1.0*width_vac_u_enc" x2="1.0*width_vac_u_enc"  alpha1="alpha_l_1"
+          y2="1.0*height_vac_d_enc" x3="1.0*width_vac_d_enc" x4="1.0*width_vac_d_enc" alpha2="alpha_l_2" />
+
+
+    <!-- Septum -->
+    <box lunit="cm" name="septum_solid_0" x="width_septum" y="height_septum" z="length_septum"/>
+
+    <box lunit="cm" name="sept_rect_hole" x="width_septum_rect_hole" y="height_septum_rect_hole" z="1.001*length_septum"/>
+    <tube aunit="deg" startphi="0" deltaphi="360"
+          lunit="cm" name="sept_beam_hole"
+          rmin="0."
+          rmax="1.001*ro_septum_pipe"
+          z="1.001*length_septum" />
+    <box lunit="cm" name="sept_beam_hole_2" x="sept_pipe_cont_width" y="sept_pipe_cont_high" z="1.001*length_septum" />
+
+    <subtraction name ="septum_solid_1">
+      <first ref="septum_solid_0"/>
+      <second ref="sept_rect_hole"/>
+      <positionref ref="septTrans_l"/>
+    </subtraction>
+    <subtraction name ="septum_solid_2">
+      <first ref="septum_solid_1"/>
+      <second ref="sept_rect_hole"/>
+      <positionref ref="septTrans_r"/>
+    </subtraction>
+    <subtraction name ="septum_solid">
+      <first ref="septum_solid_2"/>
+      <second ref="sept_beam_hole"/>
+    </subtraction>
+
+
+    <!-- Beamline -->
+    <polycone aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="septum_pipe_tube_1">
+      <zplane  rmin="1.2 * coll_bore_inner_r2" rmax="1.2 * coll_bore_inner_r2 + 1.0*ro_septum_pipe -1.0*ri_septum_pipe" z="-0.5*length_septum_pipe" />
+      <zplane  rmin="1.2 * coll_bore_inner_r2 + 20.0 * tan(coll_angle*PI/180.)" rmax="1.2 * coll_bore_inner_r2 + 20.0 * tan(coll_angle*PI/180.) + 1.0*ro_septum_pipe -1.0*ri_septum_pipe" z="-0.5*length_septum_pipe + 20.0" />
+      <zplane  rmin="ri_septum_pipe" rmax="ro_septum_pipe" z="-0.5*length_septum_pipe + 30.0" />
+      <zplane  rmin="ri_septum_pipe" rmax="ro_septum_pipe" z="+0.5*length_septum_pipe" />
+    </polycone>
+
+    <!-- Old Definition of beamtubes, to be used in the removal of the detectors intersecting the beampipe -->
+
+    <polycone aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="beamtube_10"> <zplane rmin="beamline[2,9]" rmax="beamline[2,10]" z="-0.5*beamline[3,10] -1."/> <zplane rmin="beamline[2,9]" rmax="beamline[2,10]" z="-0.5*beamline[3,10]"/> <zplane rmin="beamline[1,10]" rmax="beamline[2,10]" z="-0.5*beamline[3,10]" />  <zplane rmin="beamline[1,10]" rmax="beamline[2,10]" z="0.5*beamline[3,10]" /> </polycone>
+    <polycone aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="beamtube_12"> <zplane rmin="beamline[2,11]" rmax="beamline[2,12]" z="-0.5*beamline[3,12] -1."/> <zplane rmin="beamline[2,11]" rmax="beamline[2,12]" z="-0.5*beamline[3,12]"/> <zplane rmin="beamline[1,12]" rmax="beamline[2,12]" z="-0.5*beamline[3,12]" />  <zplane rmin="beamline[1,12]" rmax="beamline[2,12]" z="0.5*beamline[3,12]" /> </polycone>
+
+    <!-- Vacuum Enclosures -->
+    <trap aunit="deg" lunit="cm" name="vac_enc_l_o" z="length_vac_enc" theta="left_theta" phi="left_phi"
+          y1="height_vac_u_enc" x1="width_vac_u_enc" x2="width_vac_u_enc"  alpha1="alpha_l_1"
+          y2="height_vac_d_enc" x3="width_vac_d_enc" x4="width_vac_d_enc" alpha2="alpha_l_2" />
+    <trap aunit="deg" lunit="cm" name="vac_enc_r_o" z="length_vac_enc" theta="right_theta" phi="right_phi"
+          y1="height_vac_u_enc" x1="width_vac_u_enc" x2="width_vac_u_enc"  alpha1="alpha_l_1"
+          y2="height_vac_d_enc" x3="width_vac_d_enc" x4="width_vac_d_enc" alpha2="alpha_l_2" />
+
+    <trap aunit="deg" lunit="cm" name="vac_enc_l_i" z="length_vac_enc + 1." theta="left_theta" phi="left_phi"
+          y1="height_vac_u_enc - thick_vac_enc" x1="width_vac_u_enc - thick_vac_enc" x2="width_vac_u_enc - thick_vac_enc"  alpha1="alpha_l_1"
+          y2="height_vac_d_enc - thick_vac_enc" x3="width_vac_d_enc - thick_vac_enc" x4="width_vac_d_enc - thick_vac_enc" alpha2="alpha_l_2" />
+
+    <trap aunit="deg" lunit="cm" name="vac_enc_r_i" z="length_vac_enc + 1." theta="right_theta" phi="right_phi"
+          y1="height_vac_u_enc - thick_vac_enc" x1="width_vac_u_enc -thick_vac_enc" x2="width_vac_u_enc - thick_vac_enc"  alpha1="alpha_l_1"
+          y2="height_vac_d_enc - thick_vac_enc" x3="width_vac_d_enc - thick_vac_enc" x4="width_vac_d_enc - thick_vac_enc" alpha2="alpha_l_2" />
+
+    <subtraction name ="vac_enc_l_solid">
+      <first ref="vac_enc_l_o"/>
+      <second ref="vac_enc_l_i"/>
+    </subtraction>
+    <subtraction name ="vac_enc_r_solid">
+      <first ref="vac_enc_r_o"/>
+      <second ref="vac_enc_r_i"/>
+    </subtraction>
+
+    
+    <!--Septum Shields -->
+    <box lunit="cm" name="sept_shld_l_0" x="0.9999*width_septum_rect_hole" y="height_septum_rect_hole" z="length_septum"/>
+    <box lunit="cm" name="sept_shld_r_0" x="0.9999*width_septum_rect_hole" y="height_septum_rect_hole" z="length_septum"/>
+
+    <subtraction name ="sept_shld_l">
+      <first ref="sept_shld_l_0"/>
+      <second ref="hole_for_l_vac_enc"/>
+      <positionref ref="septShldTrans_l"/>
+    </subtraction>
+
+    <subtraction name ="sept_shld_r">
+      <first ref="sept_shld_r_0"/>
+      <second ref="hole_for_r_vac_enc"/>
+      <positionref ref="septShldTrans_r"/>
+    </subtraction>
+
+    <!-- Pedestal scattering chamber -->
+    <box lunit="cm" name="ped_tube_upstream_o" x="ped_tube_width" y="ped_tube_side/2" z="ped_tube_side"/>
+    <box lunit="cm" name="ped_tube_upstream_i" x="ped_tube_width" y="ped_tube_side/2 - 2." z="ped_tube_side - 2."/>
+
+    <subtraction name ="ped_tube_upstream">
+      <first ref="ped_tube_upstream_o"/>
+      <second ref="ped_tube_upstream_i"/>
+    </subtraction>
+
+    <box lunit="cm" name="ped_vert_o" x="ped_tube_side" y="1.*ped_downstream_high-1.*ped_tube_side" z="ped_tube_side"/>
+    <box lunit="cm" name="ped_vert_i" x="ped_tube_side - 2." y="1.*ped_downstream_high-1.*ped_tube_side" z="ped_tube_side - 2."/>
+    <box lunit="cm" name="ped_vert_2" x="2.*ped_tube_side" y="1.*ped_downstream_high-1.*ped_tube_side" z="2.*ped_tube_side"/>
+
+    <subtraction name ="ped_vert">
+      <first ref="ped_vert_o"/>
+      <second ref="ped_vert_i"/>
+    </subtraction>
+
+    <subtraction name ="ped_diag_p1">
+      <first ref="ped_vert"/>
+      <second ref="ped_vert_2"/>
+      <positionref ref="ped_d_trans_1"/>
+      <rotationref ref="scRot_3"/>
+    </subtraction>
+    <subtraction name ="ped_diag_p2">
+      <first ref="ped_diag_p1"/>
+      <second ref="ped_vert_2"/>
+      <positionref ref="ped_d_trans_2"/>
+      <rotationref ref="scRot_4"/>
+    </subtraction>
+
+
+    <box lunit="cm" name="ped_oriz_o" x="ped_tube_side" y="ped_tube_side" z="1.0*ped_length_downstream+1.0*ped_length_upstream"/>
+    <box lunit="cm" name="ped_oriz_i" x="ped_tube_side - 2." y="ped_tube_side - 2." z="1.0*ped_length_downstream+1.0*ped_length_upstream"/>
+
+    <subtraction name ="ped_oriz">
+      <first ref="ped_oriz_o"/>
+      <second ref="ped_oriz_i"/>
+    </subtraction>
+
+    <box lunit="cm" name="ped_infrac_1_o" x="ped_infrac_length" y="ped_infrac_high" z="ped_infrac_side"/>
+    <box lunit="cm" name="ped_infrac_1_i" x="ped_infrac_length" y="1.*ped_infrac_high - 1." z="1.*ped_infrac_side - 1."/>
+    <box lunit="cm" name="ped_infrac_2_o" x="ped_infrac_side" y="ped_infrac_high" z="ped_infrac_depth-2.*ped_infrac_side"/>
+    <box lunit="cm" name="ped_infrac_2_i" x="1.*ped_infrac_side - 1." y="1.*ped_infrac_high - 1." z="1.*ped_infrac_depth-2.*ped_infrac_side"/>
+
+
+    <subtraction name ="ped_infrac_1">
+      <first ref="ped_infrac_1_o"/>
+      <second ref="ped_infrac_1_i"/>
+    </subtraction>
+    <subtraction name ="ped_infrac_2">
+      <first ref="ped_infrac_2_o"/>
+      <second ref="ped_infrac_2_i"/>
+    </subtraction>
+
+
+    <union name ="ped_infrac_p1">
+      <first ref="ped_infrac_1"/>
+      <second ref="ped_infrac_2"/>
+      <positionref ref="ped_infrac_trans_1"/>
+      <rotationref ref="identity"/>
+    </union>
+    <union name ="ped_infrac_p2">
+      <first ref="ped_infrac_p1"/>
+      <second ref="ped_infrac_2"/>
+      <positionref ref="ped_infrac_trans_2"/>
+      <rotationref ref="identity"/>
+    </union>
+    <union name ="ped_infrac_p3">
+      <first ref="ped_infrac_p2"/>
+      <second ref="ped_infrac_1"/>
+      <positionref ref="ped_infrac_trans_3"/>
+      <rotationref ref="identity"/>
+    </union>
+
+
+    <box lunit="cm" name="ped_infrac_3_o" x="ped_infrac2_width" y="ped_infrac2_high" z="ped_infrac2_length1"/>
+    <box lunit="cm" name="ped_infrac_3_i" x="ped_infrac2_width" y="ped_infrac2_high - 2." z="ped_infrac2_length1 - 1."/>
+    <box lunit="cm" name="ped_infrac_v" x="ped_infrac2_width" y="ped_infrac3_high" z="ped_infrac3_length"/>
+    <box lunit="cm" name="ped_infrac_o_r" x="ped_infrac2_width" y="2." z="1.*ped_infrac3_dz_r_2-1.*ped_infrac3_dz_r_1+2.*ped_infrac3_length"/>
+
+    <subtraction name ="ped_infrac_3_p1">
+      <first ref="ped_infrac_3_o"/>
+      <second ref="ped_infrac_3_i"/>
+      <positionref ref="ped_infrac2_trans_1"/>
+    </subtraction>
+    <subtraction name ="ped_infrac_3_p2">
+      <first ref="ped_infrac_3_p1"/>
+      <second ref="ped_infrac_3_i"/>
+      <positionref ref="ped_infrac2_trans_2"/>
+    </subtraction>
+    <union name ="ped_infrac_3_p3">
+      <first ref="ped_infrac_3_p2"/>
+      <second ref="ped_infrac_v"/>
+      <positionref ref="ped_infrac3_pos_r_1"/>
+    </union>
+    <union name ="ped_infrac_3_p4">
+      <first ref="ped_infrac_3_p3"/>
+      <second ref="ped_infrac_v"/>
+      <positionref ref="ped_infrac3_pos_r_2"/>
+    </union>
+    <union name ="ped_infrac_3_p5">
+      <first ref="ped_infrac_3_p4"/>
+      <second ref="ped_infrac_o_r"/>
+      <positionref ref="ped_infrac3_pos_o_r"/>
+    </union>
+
+
+    <box lunit="cm" name="ped_infrac_4_o" x="ped_infrac2_width" y="ped_infrac2_high" z="ped_infrac2_length2"/>
+    <box lunit="cm" name="ped_infrac_4_i" x="ped_infrac2_width" y="ped_infrac2_high - 2." z="ped_infrac2_length2 - 1."/>
+    <box lunit="cm" name="ped_infrac_o_l" x="ped_infrac2_width" y="2." z="2.5*ped_infrac3_length"/>
+
+
+    <subtraction name ="ped_infrac_4_p">
+      <first ref="ped_infrac_4_o"/>
+      <second ref="ped_infrac_4_i"/>
+      <positionref ref="ped_infrac2_trans_1"/>
+    </subtraction>
+    <subtraction name ="ped_infrac_4_p2">
+      <first ref="ped_infrac_4_p"/>
+      <second ref="ped_infrac_4_i"/>
+      <positionref ref="ped_infrac2_trans_2"/>
+    </subtraction>
+    <union name ="ped_infrac_4_p3">
+      <first ref="ped_infrac_4_p2"/>
+      <second ref="ped_infrac_v"/>
+      <positionref ref="ped_infrac3_pos_l_1"/>
+    </union>
+    <union name ="ped_infrac_4_p4">
+      <first ref="ped_infrac_4_p3"/>
+      <second ref="ped_infrac_v"/>
+      <positionref ref="ped_infrac3_pos_l_2"/>
+    </union>
+    <union name ="ped_infrac_4_p5">
+      <first ref="ped_infrac_4_p4"/>
+      <second ref="ped_infrac_o_l"/>
+      <positionref ref="ped_infrac3_pos_o_l"/>
+    </union>
+
+
+    <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="ped_infrac5" rmin="0" rmax="ped_infrac5_tube_radius" z="ped_infrac5_tube_high" />
+
+    <union name ="ped_infrac5_p1">
+      <first ref="ped_infrac5"/>
+      <second ref="ped_infrac5"/>
+      <positionref ref="ped_infrac5_trans_1"/>
+      <rotationref ref="identity"/>
+    </union>
+    <union name ="ped_infrac5_p2">
+      <first ref="ped_infrac5_p1"/>
+      <second ref="ped_infrac5"/>
+      <positionref ref="ped_infrac5_trans_2"/>
+      <rotationref ref="identity"/>
+    </union>
+    <union name ="ped_infrac5_p3">
+      <first ref="ped_infrac5_p2"/>
+      <second ref="ped_infrac5"/>
+      <positionref ref="ped_infrac5_trans_3"/>
+      <rotationref ref="identity"/>
+    </union>
+
+    <box lunit="cm" name="ped_infrac6_o" x="1.*width_septum + 4." y="ped_infrac6_high" z="1.*length_septum + 4."/>
+    <box lunit="cm" name="ped_infrac6_i" x="1.*width_septum + 2." y="ped_infrac6_high" z="1.*length_septum + 2."/>
+    <subtraction name ="ped_infrac6_p">
+      <first ref="ped_infrac6_o"/>
+      <second ref="ped_infrac6_i"/>
+      <positionref ref="ped_infrac6_trans_1"/>
+    </subtraction>
+
+    <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="ped_infrac7" rmin="ped_infrac7_radius_i" rmax="ped_infrac7_radius_o" z="ped_infrac7_high" />
+
+    <!-- Summing all the parts to create the pedestsal: center is the big orizontal bar under the scattering chamber -->
+    <union name ="ped_un_p1">
+      <first ref="ped_tube_upstream"/>
+      <second ref="ped_tube_upstream"/>
+      <positionref ref="ped_2_trans"/>
+      <rotationref ref="identity"/>
+    </union>
+    <union name ="ped_un_p2">
+      <first ref="ped_un_p1"/>
+      <second ref="ped_tube_upstream"/>
+      <positionref ref="ped_3_trans"/>
+      <rotationref ref="identity"/>
+    </union>
+    <union name ="ped_un_p3">
+      <first ref="ped_un_p2"/>
+      <second ref="ped_vert"/>
+      <positionref ref="pedv_1_trans"/>
+      <rotationref ref="identity"/>
+    </union>
+    <union name ="ped_un_p4">
+      <first ref="ped_un_p3"/>
+      <second ref="ped_vert"/>
+      <positionref ref="pedv_2_trans"/>
+      <rotationref ref="identity"/>
+    </union>
+    <union name ="ped_un_p5">
+      <first ref="ped_un_p4"/>
+      <second ref="ped_vert"/>
+      <positionref ref="pedv_3_trans"/>
+      <rotationref ref="identity"/>
+    </union>
+    <union name ="ped_un_p6">
+      <first ref="ped_un_p5"/>
+      <second ref="ped_vert"/>
+      <positionref ref="pedv_4_trans"/>
+      <rotationref ref="identity"/>
+    </union>
+    <union name ="ped_un_p7">
+      <first ref="ped_un_p6"/>
+      <second ref="ped_oriz"/>
+      <positionref ref="pedo_1_trans"/>
+      <rotationref ref="identity"/>
+    </union>
+    <union name ="ped_un_p8">
+      <first ref="ped_un_p7"/>
+      <second ref="ped_oriz"/>
+      <positionref ref="pedo_2_trans"/>
+      <rotationref ref="identity"/>
+    </union>
+
+    <union name ="ped_un_p9">
+      <first ref="ped_un_p8"/>
+      <second ref="ped_diag_p2"/>
+      <positionref ref="ped_d_pos_3"/>
+      <rotationref ref="scRot_5"/>
+    </union>
+    <union name ="ped_un_p10">
+      <first ref="ped_un_p9"/>
+      <second ref="ped_diag_p2"/>
+      <positionref ref="ped_d_pos_4"/>
+      <rotationref ref="scRot_5"/>
+    </union>
+    <union name ="ped_un_p11">
+      <first ref="ped_un_p10"/>
+      <second ref="ped_diag_p2"/>
+      <positionref ref="ped_d_pos_1"/>
+      <rotationref ref="scRot_4"/>
+    </union>
+    <union name ="ped_un_p12">
+      <first ref="ped_un_p11"/>
+      <second ref="ped_diag_p2"/>
+      <positionref ref="ped_d_pos_2"/>
+      <rotationref ref="scRot_4"/>
+    </union>
+    <union name ="ped_un_p13">
+      <first ref="ped_un_p12"/>
+      <second ref="ped_infrac_p3"/>
+      <positionref ref="ped_infrac_pos_1"/>
+      <rotationref ref="identity"/>
+    </union>
+    <union name ="ped_un_p14">
+      <first ref="ped_un_p13"/>
+      <second ref="ped_infrac_p3"/>
+      <positionref ref="ped_infrac_pos_2"/>
+      <rotationref ref="identity"/>
+    </union>
+    <union name ="ped_un_p15">
+      <first ref="ped_un_p14"/>
+      <second ref="ped_infrac_3_p5"/>
+      <positionref ref="ped_infrac2_pos_1"/>
+      <rotationref ref="identity"/>
+    </union>
+    <union name ="ped_un_p16">
+      <first ref="ped_un_p15"/>
+      <second ref="ped_infrac_4_p5"/>
+      <positionref ref="ped_infrac2_pos_2"/>
+      <rotationref ref="identity"/>
+    </union>
+    <union name ="ped_un_p17">
+      <first ref="ped_un_p16"/>
+      <second ref="ped_infrac5_p3"/>
+      <positionref ref="ped_infrac5_pos_1"/>
+      <rotationref ref="scRot_1"/>
+    </union>
+    <union name ="ped_un_p18">
+      <first ref="ped_un_p17"/>
+      <second ref="ped_infrac6_p"/>
+      <positionref ref="ped_infrac6_pos_1"/>
+      <rotationref ref="identity"/>
+    </union>
+    <union name ="ped_un_p19">
+      <first ref="ped_un_p18"/>
+      <second ref="ped_infrac7"/>
+      <positionref ref="ped_infrac7_pos_1"/>
+      <rotationref ref="scRot_1"/>
+    </union>
+
+    <!-- Part of Arms unider scattering chamber -->
+    <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="tube_under_ped" rmin="sc_arm_radius_in" rmax="sc_arm_radius" z="sc_arm_high" />
+    <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="tube_under_ped_full" rmin="0" rmax="sc_arm_radius" z="2.*sc_arm_high" />
+    <trd name="trapez_under_ped" x1="sc_arm_trap_basemaj" x2="sc_arm_trap_basemin"  y1="sc_arm_high" y2="sc_arm_high" z="1.0*sc_arm_trap_high"  lunit="cm"/>
+    <box lunit="cm" name="box_under_ped" x="sc_arm_trap_basemaj" y="sc_arm_high" z="sc_arm_trap_high"/>
+    <polyhedra name=  "scattering_chamb_pedestal_p1" startphi="0" deltaphi="360"  numsides="6" aunit="deg" lunit="cm">
+      <zplane rmin="0" rmax="sc_arm_radius_in - 5." z="-0.5*sc_arm_ped_high" />
+      <zplane rmin="0" rmax="sc_arm_radius_in - 5." z="0.5*sc_arm_ped_high" />
+    </polyhedra>
+    <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="scattering_chamb_ped_tube" rmin="0.3*(sc_arm_radius_in - 5.) - 5." rmax="0.3*(sc_arm_radius_in - 5.)" z="-1.*sc_arm_center_1-1.*ped_top_tobeamline-1.*ped_tube_side- 2. +0.5*sc_arm_high" />
+    <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="scattering_chamb_ped_tube_full" rmin="0" rmax="0.3*(sc_arm_radius_in - 5.)" z="2.*(-1.*sc_arm_center_1-1.*ped_top_tobeamline-1.*ped_tube_side- 2.)" />
+
+
+    <subtraction name ="under_arm_solid_p1">
+      <first ref="trapez_under_ped"/>
+      <second ref="tube_under_ped_full"/>
+      <positionref ref="arm_under_ped_trans_2"/>
+      <rotationref ref="scRot_1"/>
+    </subtraction>
+
+    <union name ="under_arm_solid">
+      <first ref="tube_under_ped"/>
+      <second ref="under_arm_solid_p1"/>
+      <positionref ref="arm_under_ped_trans_1"/>
+      <rotationref ref="scRot_1"/>
+    </union>
+
+    <subtraction name ="scattering_chamb_pedestal_p2">
+      <first ref="scattering_chamb_pedestal_p1"/>
+      <second ref="scattering_chamb_ped_tube_full"/>
+      <positionref ref="arm_under_ped_trans_3"/>
+      <rotationref ref="identity"/>
+    </subtraction>
+
+    <union name ="scattering_chamb_pedestal">
+      <first ref="scattering_chamb_pedestal_p2"/>
+      <second ref="scattering_chamb_ped_tube"/>
+      <positionref ref="arm_under_ped_trans_3"/>
+      <rotationref ref="identity"/>
+    </union>
+
+    <!-- Hall and Dump -->
+    <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="out_cylwall" rmin="0.0" rmax="radius_of_cylwall+1.*thick_cylwall" z="height_cylwall" />
+    <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="in_cylwall" rmin="0.0" rmax="radius_of_cylwall" z="1*height_cylwall-1*thick_cylwall" />
+    <box lunit="cm" name="wall_cylhole" x="width_dump_hole" y="height_dump_hole" z="3.0*thick_cylwall"/>
+
+    <subtraction name ="cylwall_full">
+      <first ref="out_cylwall"/>
+      <second ref="in_cylwall"/>
+      <positionref ref="cylwallTrans_1"/>
+    </subtraction>
+    <subtraction name ="cylwall_hole">
+      <first ref="cylwall_full"/>
+      <second ref="wall_cylhole"/>
+      <positionref ref="cylwallTrans_2"/>
+      <rotationref ref="scRot_1"/>
+    </subtraction>
+
+    <sphere aunit="deg" startphi="0" deltaphi="360" starttheta="0" deltatheta="180" lunit="cm" name="hall_top_shell"  rmin="radius_topwall_in" rmax="radius_topwall_out"/>
+    <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="hall_top_sub" rmin="0.0" rmax="radius_topwall_out+1" z="2*radius_topwall_out" />
+
+    <subtraction name ="topwall_solid">
+      <first ref="hall_top_shell"/>
+      <second ref="hall_top_sub"/>
+      <positionref ref="topwallTrans_1"/>
+    </subtraction>
+
+    <box lunit="cm" name="floor_solid" x="width_floor" y="thick_floor" z="length_floor"/>
+
+    <box lunit="cm" name="dump_0_solid" x="width_dump" y="height_dump" z="length_dump"/>
+    <box lunit="cm" name="dump_hole" x="width_dump_hole" y="height_dump_hole" z="1.2*length_dump_hole"/>
+
+    <subtraction name ="dump_solid">
+      <first ref="dump_0_solid"/>
+      <second ref="dump_hole"/>
+      <positionref ref="dumpTrans_1"/>
+    </subtraction>
+
+    <!-- Detectors -->
+    <tube aunit="deg" startphi="0" deltaphi="360"
+          lunit="cm" name="cDet_1_f"
+          rmin="cDet_1_radius"
+          rmax="cDet_1_radius+1."
+          z="height_cylwall - thick_cylwall - 2" />
+    <subtraction name ="cDet_1_f_p1">
+      <first ref="cDet_1_f"/>
+      <second ref="beamtube_10"/>
+      <positionref ref="cDet_1_trans"/>
+      <rotationref ref="scRot_1"/>
+    </subtraction>
+    <subtraction name ="cDet_1_f_p2">
+      <first ref="cDet_1_f_p1"/>
+      <second ref="under_arm_solid"/>
+      <positionref ref="cDet_1_under_1pos"/>
+      <rotationref ref="scRot_12"/>
+    </subtraction>
+    <subtraction name ="cDet_1">
+      <first ref="cDet_1_f_p2"/>
+      <second ref="under_arm_solid"/>
+      <positionref ref="cDet_1_under_2pos"/>
+      <rotationref ref="scRot_11"/>
+    </subtraction>
+
+    <tube aunit="deg" startphi="0" deltaphi="360"
+          lunit="cm" name="cDet_2_f"
+          rmin="cDet_2_radius"
+          rmax="cDet_2_radius+1."
+          z="height_cylwall - thick_cylwall - 2" />
+    <subtraction name ="cDet_2">
+      <first ref="cDet_2_f"/>
+      <second ref="beamtube_12"/>
+      <positionref ref="cDet_2_trans"/>
+      <rotationref ref="scRot_1"/>
+    </subtraction>
+
+    <tube aunit="deg" startphi="0" deltaphi="360"
+          lunit="cm" name="cDet_3_f"
+          rmin="cDet_3_radius - 1."
+          rmax="cDet_3_radius"
+          z="height_cylwall - thick_cylwall - 2" />
+    <subtraction name ="cDet_3">
+      <first ref="cDet_3_f"/>
+      <second ref="beamtube_12"/>
+      <positionref ref="cDet_3_trans"/>
+      <rotationref ref="scRot_1"/>
+    </subtraction>
+
+    <box  lunit="cm" name="dDet_us"
+          x="width_w_coll_jacket"
+          y="height_w_coll_jacket"
+          z="0.1" />
+    <tube aunit="deg" startphi="0" deltaphi="360"
+          lunit="cm" name="dDet_ds"
+          rmin="0" rmax="(coll_bore_inner_r2)*1.0001"
+          z="0.1" />
+
+
+    <!-- Q1 dipole -->
+    <tube aunit="deg" startphi="90" deltaphi="360"
+          lunit="cm" name="Dipole_ip1_cut"
+          rmin="arm_dipole_r1 -5.0"
+          rmax="arm_dipole_r2 +5.0"
+          z="arm_dipole_w1 +5.0" />
+    <tube aunit="deg" startphi="181" deltaphi="42"
+          lunit="cm" name="Dipole_ip1"
+          rmin="arm_dipole_r5"
+          rmax="arm_dipole_r6"
+          z="arm_dipole_w3" />
+    <subtraction name ="Dipole_s_i_p1">
+      <first ref="Dipole_ip1"/>
+      <second ref="Dipole_ip1_cut"/>
+      <positionref ref="ped_notrans"/>
+      <rotationref ref="identity"/>
+    </subtraction>
+
+    <tube aunit="deg" startphi="0" deltaphi="360"
+          lunit="cm" name="in_cylwall_i"
+          rmin="0.0" rmax="radius_of_cylwall"
+          z="1*height_cylwall-1*thick_cylwall" />
+    <intersection name ="arm_i_solid">
+      <first ref="in_cylwall_i"/>
+      <second ref="Dipole_s_i_p1"/>
+      <positionref ref="arm_dipole_pos2"/>
+      <rotationref ref="scRot_22"/>
+    </intersection>
+
+  </solids>
+
+  <structure>
+
+    <volume name="W_coll_logic">
+      <materialref ref="matCW70"/>
+      <solidref ref="coll_cw70_cyln_7"/>
+    </volume>
+
+    <volume name="coll_jacket_W_logic">
+      <materialref ref="Tungsten"/>
+      <solidref ref="coll_jacket_w_solid_4"/>
+    </volume>
+
+    <volume name="Cu_tube_logic">
+      <materialref ref="Copper"/>
+      <solidref ref="Cu_tube_solid"/>
+    </volume>
+
+    <volume name="target_logic">
+      <!-- <materialref ref="Calcium48"/> -->
+      <materialref ref="PureLead"/>
+      <solidref ref="tubeTarget"/>
+    </volume>
+
+    <volume name="coll_tube_logic">
+      <materialref ref="Aluminum"/>
+      <solidref ref="coll_tube_solid"/>
+    </volume>
+
+    <volume name="septum_logic">
+      <materialref ref="Iron"/>
+      <solidref ref="septum_solid"/>
+      <!-- <auxiliary auxtype="SensDet" auxvalue="volumeN5006"/> -->
+    </volume>
+
+    <volume name="septum_pipe_logic">
+      <materialref ref="StainlessSteel"/>
+      <solidref ref="septum_pipe_tube_1"/>
+      <!-- <auxiliary auxtype="SensDet" auxvalue="volumeN5007"/> -->
+    </volume>
+
+    <volume name="vac_enc_l_logic">
+      <materialref ref="StainlessSteel"/>
+      <solidref ref="vac_enc_l_solid"/>
+    </volume>
+    <volume name="vac_enc_r_logic">
+      <materialref ref="StainlessSteel"/>
+      <solidref ref="vac_enc_r_solid"/>
+    </volume>
+
+    <volume name="septShld_l_logic">
+      <materialref ref="Shield"/>
+      <solidref ref="sept_shld_l"/>
+    </volume>
+    <volume name="septShld_r_logic">
+      <materialref ref="Shield"/>
+      <solidref ref="sept_shld_r"/>
+    </volume>
+
+    <volume name="ped_union_logic">
+      <materialref ref="StainlessSteel"/>
+      <solidref ref="ped_un_p19"/>
+    </volume>
+    <volume name="under_arm_logic_1">
+      <materialref ref="StainlessSteel"/>
+      <solidref ref="under_arm_solid"/>
+    </volume>
+    <volume name="under_arm_logic_2">
+      <materialref ref="StainlessSteel"/>
+      <solidref ref="under_arm_solid"/>
+    </volume>
+    <volume name="under_arm_logic_3">
+      <materialref ref="Aluminum"/>
+      <solidref ref="scattering_chamb_pedestal"/>
+    </volume>
+
+    <volume name="floor_logic">
+      <materialref ref="Concrete"/>
+      <solidref ref="floor_solid"/>
+    </volume>
+    <volume name="cylwall_logic">
+      <materialref ref="Concrete"/>
+      <solidref ref="cylwall_hole"/>
+      <!-- <auxiliary auxtype="SensDet" auxvalue="volumeN5009"/> -->
+    </volume>
+    <volume name="topwall_logic">
+      <materialref ref="Concrete"/>
+      <solidref ref="topwall_solid"/>
+      <!-- <auxiliary auxtype="SensDet" auxvalue="volumeN5010"/> -->
+    </volume>
+    <volume name="dump_logic">
+      <materialref ref="Concrete"/>
+      <solidref ref="dump_solid"/>
+    </volume>
+
+    <!-- hall detectors -->
+    <volume name="cDet_1_logic">
+      <materialref ref="Vacuum"/>
+      <solidref ref="cDet_1"/>
+      <auxiliary auxtype="SensDet" auxvalue="volumeN2003"/>
+    </volume>
+    <!-- <volume name="cDet_2_logic"> -->
+    <!--   <materialref ref="Vacuum"/> -->
+    <!--   <solidref ref="cDet_2"/> -->
+    <!--   <auxiliary auxtype="SensDet" auxvalue="volumeN2004"/> -->
+    <!-- </volume> -->
+    <volume name="cDet_3_logic">
+      <materialref ref="Vacuum"/>
+      <solidref ref="cDet_3"/>
+      <auxiliary auxtype="SensDet" auxvalue="volumeN2005"/>
+    </volume>
+
+    <!-- Collimator detectors -->
+    <volume name="dDet_us_logic">
+      <materialref ref="Vacuum"/>
+      <!-- <materialref ref="matKryptonite"/> -->
+      <solidref ref="dDet_us"/>
+      <auxiliary auxtype="SensDet" auxvalue="volumeN2101"/>
+    </volume>
+    <volume name="dDet_ds_logic">
+      <materialref ref="Vacuum"/>
+      <solidref ref="dDet_ds"/>
+      <auxiliary auxtype="SensDet" auxvalue="volumeN2102"/>
+    </volume>
+
+    <!-- dipoles  -->
+    <volume name="dipole_logic_1">
+      <materialref ref="Iron"/>
+      <solidref ref="arm_i_solid"/>
+    </volume>
+    <volume name="dipole_logic_2">
+      <materialref ref="Iron"/>
+      <solidref ref="arm_i_solid"/>
+    </volume>
+
+
+    <volume name="logicMother">
+      <materialref ref="Vacuum"/>
+      <solidref ref="boxMother"/>
+
+      <physvol name="collimator">
+        <volumeref ref="W_coll_logic"/>
+        <positionref ref="pos_global_coll_cw70"/>
+      </physvol>
+
+      <physvol name="Cu_tube">
+        <volumeref ref="Cu_tube_logic"/>
+        <positionref ref="pos_global_coll_cw70"/>
+      </physvol>
+
+      <physvol name="collimator_jacket">
+        <volumeref ref="coll_jacket_W_logic"/>
+        <positionref ref="pos_global_coll_jacket"/>
+      </physvol>
+
+      <physvol name="target">
+        <volumeref ref="target_logic"/>
+        <positionref ref="targ_center"/>
+      </physvol>
+
+      <physvol name="coll_tube">
+        <volumeref ref="coll_tube_logic"/>
+        <positionref ref="pos_global_coll_tube"/>
+      </physvol>
+
+      <physvol name="septum">
+        <volumeref ref="septum_logic"/>
+        <positionref ref="septum_center"/>
+      </physvol>
+
+      <physvol name="septum_shield_r">
+        <volumeref ref="septShld_r_logic"/>
+        <positionref ref="septShld_center_r"/>
+      </physvol>
+
+
+      <physvol name="septum_shield_l">
+        <volumeref ref="septShld_l_logic"/>
+        <positionref ref="septShld_center_l"/>
+      </physvol>
+
+      <physvol name="septum_pipe">
+        <volumeref ref="septum_pipe_logic" />
+        <position name="posbeamline" unit="cm" x="0" y="0" z="center_septum_pipe"/>
+      </physvol>
+
+      <physvol name="vacEnc_l">
+        <volumeref ref="vac_enc_l_logic"/>
+        <positionref ref="vac_enc_center_l"/>
+      </physvol>
+      <physvol name="vacEnc_r">
+        <volumeref ref="vac_enc_r_logic"/>
+        <positionref ref="vac_enc_center_r"/>
+      </physvol>
+
+      <physvol name="cylwall">
+        <volumeref ref="cylwall_logic"/>
+        <positionref ref="cylwall_center"/>
+        <rotationref ref="scRot_1"/>
+      </physvol>
+
+      <physvol name="topwall">
+        <volumeref ref="topwall_logic"/>
+        <positionref ref="topwall_center"/>
+        <rotationref ref="scRot_1"/>
+      </physvol>
+
+      <physvol name="dump">
+        <volumeref ref="dump_logic"/>
+        <positionref ref="dump_center"/>
+      </physvol>
+
+      <physvol name="ped_union">
+        <volumeref ref="ped_union_logic"/>
+        <positionref ref="ped_1_pos"/>
+      </physvol>
+      <physvol name="under_arm_ped_1">
+        <volumeref ref="under_arm_logic_1"/>
+        <positionref ref="arm_under_ped_pos_1"/>
+        <rotationref ref="scRot_6"/>
+      </physvol>
+      <physvol name="under_arm_ped_2">
+        <volumeref ref="under_arm_logic_2"/>
+        <positionref ref="arm_under_ped_pos_2"/>
+        <rotationref ref="scRot_7"/>
+      </physvol>
+      <physvol name="under_arm_ped_3">
+        <volumeref ref="under_arm_logic_3"/>
+        <positionref ref="arm_under_ped_pos_3"/>
+        <rotationref ref="scRot_8"/>
+      </physvol>
+
+      <physvol name="cyl_det_1">
+        <volumeref ref="cDet_1_logic"/>
+        <positionref ref="cDet_1_pos"/>
+        <rotationref ref="scRot_1"/>
+      </physvol>
+      <!-- <physvol name="cyl_det_2"> -->
+      <!--   <volumeref ref="cDet_2_logic"/> -->
+      <!--   <positionref ref="cDet_1_pos"/> -->
+      <!--   <rotationref ref="scRot_1"/> -->
+      <!-- </physvol> -->
+
+      <physvol name="cyl_det_3">
+        <volumeref ref="cDet_3_logic"/>
+        <positionref ref="cDet_1_pos"/>
+        <rotationref ref="scRot_1"/>
+      </physvol>
+
+      <physvol name="dsk_dDet_us">
+        <volumeref ref="dDet_us_logic"/>
+        <positionref ref="dDet_us_pos"/>
+      </physvol>
+      <physvol name="dsk_dDet_ds">
+        <volumeref ref="dDet_ds_logic"/>
+        <positionref ref="dDet_ds_pos"/>
+      </physvol>
+
+      <physvol name="dipole_left">
+        <volumeref ref="dipole_logic_1"/>
+        <positionref ref="cylwall_center"/>
+        <rotationref ref="scRot_6"/>
+      </physvol>
+
+      <physvol name="dipole_right">
+        <volumeref ref="dipole_logic_2"/>
+        <positionref ref="cylwall_center"/>
+        <rotationref ref="scRot_7"/>
+      </physvol>
+
+      <physvol>
+        <file name="geometry/kriptoniteDetectors.gdml"/>
+        <positionref ref="pos_global_SEPT_elec"/>
+        <rotationref ref="identity"/>
+      </physvol>
+
+      <!-- <physvol> -->
+      <!-- <file name="geometry/subCoilHoses.gdml"/> -->
+      <!-- <position name="coil_hose_pos" unit="cm" x="0" y="0" z="center_septum - 0.5*length_septum - 0.5*29.11"/> -->
+      <!-- <rotationref ref="identity"/> -->
+      <!-- </physvol> -->
+
+
+      <physvol>
+        <file name="geometry/subQ1HosesCylRedesign.gdml"/>
+        <position name="q1_hose_cyl_pos" unit="cm" x="0" y="0" z="210"/>
+      </physvol>
+
+      <physvol>
+        <file name="geometry/subTargetChamber.gdml"/>
+        <position name="target_chamber_center" unit="cm" x="0" y="0" z="prex_target_center"/>
+      </physvol>
+
+      <physvol>
+        <!-- <file name="geometry/subCollShields.gdml"/>
+        <position name="coll_shield_pos" unit="cm" x="0" y="-31.802 - 8" z="-57.531"/> -->
+        <file name="geometry/subCollShieldBlock.gdml"/>
+        <positionref ref="pos_global_coll_shield_block"/>
+      </physvol>
+
+      <physvol>
+	<file name="geometry/subSkyshine.gdml"/>
+	<position name="pos_skyshine_us_block" unit="cm" x="0" y="77.62" z="-130.379"/>
+      </physvol>
+
+      <physvol>
+        <file name="geometry/subBeamPipe_P2_6inDonut_noSAMs.gdml"/>
+	<!-- z= 132.335 -->
+        <positionref ref="dDet_beamline_pos_1"/>
+      </physvol>
+
+      <!-- <physvol> -->
+      <!--   <file name="geometry/subDumpShield.gdml"/> -->
+      <!--   <position name="dumpShield_posRel" unit="cm" x="0" y="-115" z="2450"/> -->
+      <!-- </physvol> -->
+
+      <physvol>
+        <file name="geometry/subHRSplatform.gdml"/>
+        <position name="HRSplatform_pos" unit="cm" x="467.3" y="42.5" z="2107.8"/>
+        <rotation name="HRSplatform_rot" unit="deg" x="0" y="-12.5" z="0"/>
+      </physvol>
+
+    </volume>
+  </structure>
+
+  <setup name="Default" version="1.0">
+    <world ref="logicMother"/>
+  </setup>
+
+</gdml>
