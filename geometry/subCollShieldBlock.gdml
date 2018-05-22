@@ -122,14 +122,14 @@
       <second ref="trap_conc_cut1"/>
       <positionref ref="pos_rel_conc_cut1"/>
     </subtraction>
-    <subtraction name="conc_block_solid_1.5">
+    <subtraction name="conc_block_solid_1A">
       <first ref="conc_block_solid_0"/>
       <second ref="box_conc_cut1"/>
       <positionref ref="pos_rel_conc_cut1_block_to_box"/>
     </subtraction>
     <tube name="conc_cut2" lunit="cm" aunit="deg" startphi="0" deltaphi="360" rmin="0" rmax="r_conc_cut2 + 0.01" z="length_conc_cut2 + 0.01"/>
     <subtraction name="conc_block_solid_2">
-      <first ref="conc_block_solid_1.5"/>
+      <first ref="conc_block_solid_1A"/>
       <second ref="conc_cut2"/>
       <positionref ref="pos_rel_conc_cut2"/>
     </subtraction>
