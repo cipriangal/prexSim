@@ -59,7 +59,7 @@
     <position name="pos_rel_plast_cut3" unit="cm" x="0" y="0" z="(length_plast_block - length_plast_cut3)/2."/>
 
     <position name="pos_global_conc_block" unit="cm" x="0" y="0" z="(length_plast_block + length_conc_block)/2. + 0.01"/>
-    <position name="pos_rel_conc_cut1_trap_to_box" unit="cm" x="0" y="-(height_conc_trap_cut1 + height_conc_box_cut1)/2." z="0"/>
+    <position name="pos_rel_conc_cut1_block_to_box" unit="cm" x="0" y="-(height_conc_block - height_conc_box_cut1)/2. + dist_conc_bot_to_box" z="0"/>
     <position name="pos_rel_conc_cut1" unit="cm" x="0" y="-(height_conc_block - height_conc_trap_cut1)/2. + dist_conc_bot_to_box + height_conc_box_cut1" z="-(length_conc_block - length_conc_cut1)/2."/>
     <position name="pos_rel_conc_cut2" unit="cm" x="0" y="0" z="-(length_conc_block - length_conc_cut2)/2."/>
     <position name="pos_rel_conc_cut3" unit="cm" x="0" y="0" z="-(length_conc_block - length_conc_cut3)/2. + dist_z_conc_cut3"/>
@@ -117,19 +117,19 @@
     <box name="conc_block_solid_0" lunit="cm" x="width_conc_block" y="height_conc_block" z="length_conc_block"/>
     <trap name="trap_conc_cut1" z="length_conc_cut1 + 0.01" theta="0" phi="0" y1="height_conc_trap_cut1" x1="width_conc_box_cut1" x2="width_conc_trap_cut1" alpha1="1" y2="height_conc_trap_cut1" x3="width_conc_box_cut1" x4="width_conc_trap_cut1" alpha2="1" aunit="deg" lunit="cm"/>
     <box name="box_conc_cut1" lunit="cm" x="width_conc_box_cut1" y="height_conc_box_cut1" z="length_conc_cut1 + 0.01"/>
-    <union name="conc_block_cut1">
-      <first ref="trap_conc_cut1"/>
-      <second ref="box_conc_cut1"/>
-      <positionref ref="pos_rel_conc_cut1_trap_to_box"/>
-    </union>
     <subtraction name="conc_block_solid_1">
       <first ref="conc_block_solid_0"/>
-      <second ref="conc_block_cut1"/>
+      <second ref="trap_conc_cut1"/>
       <positionref ref="pos_rel_conc_cut1"/>
+    </subtraction>
+    <subtraction name="conc_block_solid_1.5">
+      <first ref="conc_block_solid_0"/>
+      <second ref="box_conc_cut1"/>
+      <positionref ref="pos_rel_conc_cut1_block_to_box"/>
     </subtraction>
     <tube name="conc_cut2" lunit="cm" aunit="deg" startphi="0" deltaphi="360" rmin="0" rmax="r_conc_cut2 + 0.01" z="length_conc_cut2 + 0.01"/>
     <subtraction name="conc_block_solid_2">
-      <first ref="conc_block_solid_1"/>
+      <first ref="conc_block_solid_1.5"/>
       <second ref="conc_cut2"/>
       <positionref ref="pos_rel_conc_cut2"/>
     </subtraction>
@@ -152,32 +152,32 @@
     </subtraction>
     <box name="top_box_conc_cut5" lunit="cm" x="width_top_box_conc_cut5" y="height_top_box_conc_cut5" z="length_conc_block + 0.01"/>
     <tube name="top_tube_conc_cut5" lunit="cm" aunit="deg" startphi="0" deltaphi="360" rmin="0" rmax="height_top_box_conc_cut5/2." z="length_conc_block + 0.01"/>
-    <union name="conc_cut5_solid_0">
-      <first ref="top_box_conc_cut5"/>
+    <subtraction name="conc_block_solid_5">
+      <first ref="conc_block_solid_4"/>
+      <second ref="top_box_conc_cut5"/>
+      <positionref ref="pos_rel_conc_cut5"/>
+    </subtraction>
+    <subtraction name="conc_block_solid_6">
+      <first ref="conc_block_solid_5"/>
       <second ref="top_tube_conc_cut5"/>
       <positionref ref="pos_rel_conc_cut5_top_box_tube1"/>
-    </union>
-    <union name="conc_cut5_solid_1">
-      <first ref="conc_cut5_solid_0"/>
+    </subtraction>
+    <subtraction name="conc_block_solid_7">
+      <first ref="conc_block_solid_6"/>
       <second ref="top_tube_conc_cut5"/>
       <positionref ref="pos_rel_conc_cut5_top_box_tube2"/>
-    </union>
-    <box name="bot_box_conc_cut5" lunit="cm" x="width_bot_box_conc_cut5" y="height_bot_box_conc_cut5" z="length_conc_block + 0.01"/>
+    </subtraction>
+    <box name="bot_box_conc_cut5" lunit="cm" x="width_bot_box_conc_cut5" y="height_bot_box_conc_cut5 + 0.01" z="length_conc_block + 0.01"/>
     <tube name="bot_tube_conc_cut5" lunit="cm" aunit="deg" startphi="0" deltaphi="360" rmin="0" rmax="(width_bot_box_conc_cut5)/2." z="length_conc_block + 0.01"/>
-    <union name="conc_cut5_solid_2">
-      <first ref="conc_cut5_solid_1"/>
+    <subtraction name="conc_block_solid_8">
+      <first ref="conc_block_solid_7"/>
       <second ref="bot_box_conc_cut5"/>
       <positionref ref="pos_rel_conc_cut5_box_to_box"/>
-    </union>
-    <union name="conc_cut5_solid">
-      <first ref="conc_cut5_solid_2"/>
+    </subtraction>
+    <subtraction name="conc_block_solid">
+      <first ref="conc_block_solid_8"/>
       <second ref="bot_tube_conc_cut5"/>
       <positionref ref="pos_rel_conc_cut5_box_to_bot_tube"/>
-    </union>
-    <subtraction name="conc_block_solid">
-      <first ref="conc_block_solid_4"/>
-      <second ref="conc_cut5_solid"/>
-      <positionref ref="pos_rel_conc_cut5"/>
     </subtraction>
 
     <union name="coll_shield_mother">
@@ -195,7 +195,7 @@
     </volume>
     <volume name="conc_block_logic">
       <materialref ref="Concrete"/>
-      <solidref ref="conc_block_solid_1"/>
+      <solidref ref="conc_block_solid"/>
     </volume>
     
     <volume name="coll_shields_logic">
