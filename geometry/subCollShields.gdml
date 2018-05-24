@@ -24,7 +24,7 @@
     <constant name="right_z" value="75.832"/>
     
     <constant name="bot_z_pos" value="-21.883"/>
-    <constant name="front_abs_y_pos" value="30.007"/>
+    <constant name="front_abs_y_pos" value="30.007 + 8"/>
     <constant name="top_z_pos" value="-14.875"/>
     <constant name="W_y_pos" value="18.007"/>
     <constant name="W_z_pos" value="-12.556"/>
@@ -109,7 +109,7 @@
     </union>
     
     <union name="middle_shields">
-      <first ref="front_three"/>
+      <first ref="top_and_bottom"/>
       <second ref="back_solid"/>
       <positionref ref="back_wrt_bot"/>
     </union>
@@ -191,7 +191,7 @@
       <solidref ref="right_solid"/>
       <auxiliary auxtype="SensDet" auxvalue="volumeN3125"/>
     </volume>
-    <volume name="bot_inner_det_logic">
+    <!-- <volume name="bot_inner_det_logic">
       <materialref ref="Vacuum"/>
       <solidref ref="bot_inner_det_solid"/>
       <auxiliary auxtype="SensDet" auxvalue="volumeN2221"/>
@@ -230,11 +230,11 @@
       <materialref ref="Vacuum"/>
       <solidref ref="right_outer_det_solid"/>
       <auxiliary auxtype="SensDet" auxvalue="volumeN2228"/>
-    </volume>
+    </volume> -->
     
     <volume name="logicCollShields">
       <materialref ref="Vacuum"/>
-      <solidref ref="shields_and_dets"/>
+      <solidref ref="all_shields"/>
       
       <physvol name="bot_phys">
 	<volumeref ref="bot_logic"/>
@@ -244,7 +244,7 @@
 	<volumeref ref="top_logic"/>
 	<positionref ref="top_wrt_bot"/>
       </physvol>
-      <!--<physvol name="W_phys">
+      <!-- <physvol name="W_phys">
 	<volumeref ref="W_logic"/>
 	<positionref ref="W_wrt_bot"/>
       </physvol>-->
@@ -260,7 +260,7 @@
 	<volumeref ref="right_logic"/>
 	<positionref ref="right_wrt_bot"/>
       </physvol>
-      <physvol name="bot_inner_det">
+      <!-- <physvol name="bot_inner_det">
         <volumeref ref="bot_inner_det_logic"/>
         <positionref ref="bot_in_det_pos"/>
       </physvol>
@@ -291,7 +291,7 @@
       <physvol name="right_outer_det">
         <volumeref ref="right_outer_det_logic"/>
         <positionref ref="right_out_det_pos"/>
-      </physvol>
+      </physvol> -->
     </volume>
   </structure>
   

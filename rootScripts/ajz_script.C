@@ -327,6 +327,36 @@ void two_by_two_hit_map(string sim, string conf1, string conf2, int n_events_k, 
   c1->cd(4); h4->Draw("colz");
 }
 
+void hallRad_comp(string sim, string conf1, string conf2, int n_events_k1, int n_events_k2, string h_type){
+  string f1name = "~/farmOut/" + sim + "_" + conf1 + "_" + to_string(n_events_k1) + "kEv/" + sim + "_" + conf1 + "_hallRad.root";
+  string f2name = "~/farmOut/" + sim + "_" + conf2 + "_" + to_string(n_events_k2) + "kEv/" + sim + "_" + conf2 + "_hallRad.root";
+
+  TCanvas *c1 = new TCanvas("c1", "c1", 1000, 700);
+  TFile *f1 = new TFile(f1name.c_str()); TFile *f2 = new TFile(f2name.c_str());
+  string hist_name = "hSummary_" + h_type + "LogX";
+  TH1D *h1 = (TH1D*)f1->Get(hist_name.c_str());
+  TH1D *h2 = (TH1D*)f2->Get(hist_name.c_str());
+
+  h1->SetLineColor(kBlue); h2->SetLineColor(kRed);
+  h1->SetTitle( (conf1 + " (Blue), " + conf2 + " (Red): " + h_type).c_str());
+  h1->Draw(); h2->Draw("same"); 
+}
+
+void hallRad_det_comp(string sim, string conf1, string conf2, int n_events_k1, int n_events_k2, int det, string part, string h_type, string lin_log){
+  string f1name = "~/farmOut/" + sim + "_" + conf1 + "_" + to_string(n_events_k1) + "kEv/" + sim + "_" + conf1 + "_hallRad.root";
+  string f2name = "~/farmOut/" + sim + "_" + conf2 + "_" + to_string(n_events_k2) + "kEv/" + sim + "_" + conf2 + "_hallRad.root";
+
+  TCanvas *c1 = new TCanvas("c1", "c1", 1000, 700);
+  TFile *f1 = new TFile(f1name.c_str()); TFile *f2 = new TFile(f2name.c_str());
+  string hist_name = "Det_" + to_string(det) + "/ht_" + to_string(det) + "_" + part+ "_" + h_type + lin_log + "X";
+  TH1D *h1 = (TH1D*)f1->Get(hist_name.c_str());
+  TH1D *h2 = (TH1D*)f2->Get(hist_name.c_str());
+  
+  h1->SetLineColor(kBlue); h2->SetLineColor(kRed);
+  h1->SetTitle( (conf1 + " (Blue), " + conf2 + " (Red): " + to_string(det) + ", " + part + ", " + h_type).c_str());
+  h1->Draw("h"); h2->Draw("same && h"); 
+}
+
 void check_two_tags(const char* fname, const char* prop1, const char* prop2){
   TFile *f = new TFile(fname);
   TTree *t = (TTree*)f->Get("t");
@@ -342,156 +372,4 @@ void check_two_tags(const char* fname, const char* prop1, const char* prop2){
 
     cout<<"Volume ID for event "<<i<<": "<<value1<<"; "<<value2<<endl;
   }
-}
-
-void e_range_neutron_histo_hex(string sim, string conf, int n_events_k, int dep_or_kin, string cuts, Int_t nbinsx, Double_t xlo, Double_t xhi){
-  TFile *f = new TFile(("~/farmOut/" + sim + "_" + conf + "_" + to_string(n_events_k) + "kEv/" + sim + "_" + conf + ".root").c_str());
-  TTree *t = (TTree*)f->Get("t");
-
-  string meas = "kineE";
-  if(dep_or_kin) meas = "edep";
-
-  TH1F *h1 = new TH1F("h1", (conf + ": " + cuts + ", all E's").c_str(),      200, 0, 1000);
-  TH1F* h2 = new TH1F("h2", (conf + ": " + cuts + ", <1eV").c_str(),         100, 0, 1E-6);
-  TH1F* h3 = new TH1F("h3", (conf + ": " + cuts + ", 1 eV - 100 keV").c_str(),        100, 1E-6, 0.1);
-  TH1F* h4 = new TH1F("h4", (conf + ": " + cuts + ", 100 keV - 1 MeV").c_str(),      100, 0.1, 1);
-  TH1F* h5 = new TH1F("h5", (conf + ": " + cuts + ", 1 MeV - 10 MeV").c_str(), 100, 1, 10);
-  TH1F* h6 = new TH1F("h6", (conf + ": " + cuts + ", >10 MeV").c_str(), 200, 10, 1000);
-
-  TCanvas *c1 = new TCanvas("c1", "c1", 2000, 1400);
-  c1->Divide(2, 3);
-  //c1->Divide(2, 2);
-  gStyle->SetOptStat("eMRiou");
-  
-  t->Project("h1", meas.c_str(), cuts.c_str());
-  t->Project("h2", meas.c_str(), ("(" + cuts + ") && " + meas + "<1E-6 && pdgID==2112").c_str());
-  t->Project("h3", meas.c_str(), ("(" + cuts + ") && " + meas + ">1E-6 && " + meas + "<0.1 && pdgID==2112").c_str());
-  t->Project("h4", meas.c_str(), ("(" + cuts + ") && " + meas + ">0.1 && "  + meas + "<1 && pdgID==2112").c_str());
-  t->Project("h5", meas.c_str(), ("(" + cuts + ") && " + meas + ">1 && "    + meas + "<10 && pdgID==2112").c_str());
-  t->Project("h6", meas.c_str(), ("(" + cuts + ") && " + meas + ">10 && pdgID==2112").c_str());
-
-  h1->GetXaxis()->SetTitle(meas.c_str());
-  h2->GetXaxis()->SetTitle(meas.c_str());
-  h3->GetXaxis()->SetTitle(meas.c_str());
-  h4->GetXaxis()->SetTitle(meas.c_str());
-  h5->GetXaxis()->SetTitle(meas.c_str());
-  h6->GetXaxis()->SetTitle(meas.c_str());
-
-  c1->cd(1); h1->Draw();
-  c1->cd(2); h2->Draw();
-  c1->cd(3); h3->Draw();
-  c1->cd(4); h4->Draw();
-  c1->cd(5); h5->Draw();
-  c1->cd(6); h6->Draw();
-}
-
-void e_range_em_histo_hex(string sim, string conf, int n_events_k, int dep_or_kin, string cuts, Int_t nbinsx, Double_t xlo, Double_t xhi){
-  TFile *f = new TFile(("~/farmOut/" + sim + "_" + conf + "_" + to_string(n_events_k) + "kEv/" + sim + "_" + conf + ".root").c_str());
-  TTree *t = (TTree*)f->Get("t");
-
-  string meas = "kineE";
-  if(dep_or_kin) meas = "edep";
-
-  TH1F *h1 = new TH1F("h1", (conf + ": " + cuts + ", <1 MeV gammas").c_str(),            200, 0,    1);
-  TH1F* h2 = new TH1F("h2", (conf + ": " + cuts + ", <1 MeV electrons").c_str(),         200, 0,    1);
-  TH1F* h3 = new TH1F("h3", (conf + ": " + cuts + ", 1 MeV - 10 MeV gammas").c_str(),    100, 1,   10);
-  TH1F* h4 = new TH1F("h4", (conf + ": " + cuts + ", 1 MeV - 10 MeV electrons").c_str(), 100, 1,   10);
-  TH1F* h5 = new TH1F("h5", (conf + ": " + cuts + ", >10 MeV gammas").c_str(),           200, 10, 1000);
-  TH1F* h6 = new TH1F("h6", (conf + ": " + cuts + ", >10 MeV electrons").c_str(),        200, 10, 1000);
-
-  TCanvas *c1 = new TCanvas("c1", "c1", 2000, 1400);
-  c1->Divide(2, 3);
-  //c1->Divide(2, 2);
-  gStyle->SetOptStat("eMRiou");
-  
-  t->Project("h1", meas.c_str(), ("(" + cuts + ") && " + meas + "<1 && pdgID==22").c_str());
-  t->Project("h2", meas.c_str(), ("(" + cuts + ") && " + meas + "<1 && abs(pdgID)==11").c_str());
-  t->Project("h3", meas.c_str(), ("(" + cuts + ") && " + meas + ">1 && " + meas + "<10 && pdgID==22").c_str());
-  t->Project("h4", meas.c_str(), ("(" + cuts + ") && " + meas + ">1 && " + meas + "<10 && abs(pdgID)==11").c_str());
-  t->Project("h5", meas.c_str(), ("(" + cuts + ") && " + meas + ">10 && pdgID==22").c_str());
-  t->Project("h6", meas.c_str(), ("(" + cuts + ") && " + meas + ">10 && abs(pdgID)==11").c_str());
-
-  h1->GetXaxis()->SetTitle(meas.c_str());
-  h2->GetXaxis()->SetTitle(meas.c_str());
-  h3->GetXaxis()->SetTitle(meas.c_str());
-  h4->GetXaxis()->SetTitle(meas.c_str());
-  h5->GetXaxis()->SetTitle(meas.c_str());
-  h6->GetXaxis()->SetTitle(meas.c_str());
-
-  c1->cd(1); h1->Draw();
-  c1->cd(2); h2->Draw();
-  c1->cd(3); h3->Draw();
-  c1->cd(4); h4->Draw();
-  c1->cd(5); h5->Draw();
-  c1->cd(6); h6->Draw();
-}
-
-void e_range_neutron_neil_hex(string sim, string conf, int n_events_k, int dep_or_kin, string cuts, Int_t nbinsx, Double_t xlo, Double_t xhi){
-  TFile *f = new TFile(("~/farmOut/" + sim + "_" + conf + "_" + to_string(n_events_k) + "kEv/" + sim + "_" + conf + ".root").c_str());
-  TTree *t = (TTree*)f->Get("t");
-
-  string meas = "kineE";
-  if(dep_or_kin) meas = "edep";
-
-  TH1F *h1 = new TH1F("h1", (conf + ": " + cuts + ", all E's").c_str(),      200, 0, 1000);
-  TH1F* h2 = new TH1F("h2", (conf + ": " + cuts + ", <1eV").c_str(),         100, 0, 1E-6);
-  TH1F* h3 = new TH1F("h3", (conf + ": " + cuts + ", 1 eV - 100 keV").c_str(),        100, 1E-6, 0.1);
-  TH1F* h4 = new TH1F("h4", (conf + ": " + cuts + ", 100 keV - 1 MeV").c_str(),      100, 0.1, 1);
-  TH1F* h5 = new TH1F("h5", (conf + ": " + cuts + ", 1 MeV - 10 MeV").c_str(), 100, 1, 10);
-  TH1F* h6 = new TH1F("h6", (conf + ": " + cuts + ", >10 MeV").c_str(), 200, 10, 1000);
-
-  TCanvas *c1 = new TCanvas("c1", "c1", 2000, 1400);
-  c1->Divide(2, 3);
-  //c1->Divide(2, 2);
-  gStyle->SetOptStat("eMRiou");
-  
-  t->Project("h1", meas.c_str(), ("neil*((" + cuts + ") && pdgID==2112)").c_str());
-  t->Project("h2", meas.c_str(), ("neil*((" + cuts + ") && " + meas + "<1E-6 && pdgID==2112)").c_str());
-  t->Project("h3", meas.c_str(), ("neil*((" + cuts + ") && " + meas + ">1E-6 && " + meas + "<0.1 && pdgID==2112)").c_str());
-  t->Project("h4", meas.c_str(), ("neil*((" + cuts + ") && " + meas + ">0.1 && "  + meas + "<1 && pdgID==2112)").c_str());
-  t->Project("h5", meas.c_str(), ("neil*((" + cuts + ") && " + meas + ">1 && "    + meas + "<10 && pdgID==2112)").c_str());
-  t->Project("h6", meas.c_str(), ("neil*((" + cuts + ") && " + meas + ">10 && pdgID==2112)").c_str());
-
-  h1->GetXaxis()->SetTitle(meas.c_str());
-  h2->GetXaxis()->SetTitle(meas.c_str());
-  h3->GetXaxis()->SetTitle(meas.c_str());
-  h4->GetXaxis()->SetTitle(meas.c_str());
-  h5->GetXaxis()->SetTitle(meas.c_str());
-  h6->GetXaxis()->SetTitle(meas.c_str());
-
-  c1->cd(1); h1->Draw();
-  c1->cd(2); h2->Draw();
-  c1->cd(3); h3->Draw();
-  c1->cd(4); h4->Draw();
-  c1->cd(5); h5->Draw();
-  c1->cd(6); h6->Draw();
-}
-
-void e_range_electron_neil_hex(string sim, string conf, int n_events_k, int dep_or_kin, string cuts, Int_t nbinsx, Double_t xlo, Double_t xhi){
-  TFile *f = new TFile(("~/farmOut/" + sim + "_" + conf + "_" + to_string(n_events_k) + "kEv/" + sim + "_" + conf + ".root").c_str());
-  TTree *t = (TTree*)f->Get("t");
-
-  string meas = "kineE";
-  if(dep_or_kin) meas = "edep";
-
-  TH1F *h1 = new TH1F("h1", (conf + ": " + cuts + ", <1 MeV electrons").c_str(),         200, 0,     1);
-  TH1F* h2 = new TH1F("h2", (conf + ": " + cuts + ", 1 MeV - 10 MeV electrons").c_str(), 100, 1,    10);
-  TH1F* h3 = new TH1F("h3", (conf + ": " + cuts + ", >10 MeV electrons").c_str(),        200, 10, 1000);
-
-  TCanvas *c1 = new TCanvas("c1", "c1", 1000, 1400);
-  c1->Divide(1, 3);
-  //c1->Divide(2, 2);
-  gStyle->SetOptStat("eMRiou");
-  
-  t->Project("h1", meas.c_str(), ("neil*((" + cuts + ") && " + meas + "<1 && abs(pdgID)==11)").c_str());
-  t->Project("h2", meas.c_str(), ("neil*((" + cuts + ") && " + meas + ">1 && " + meas + "<10 && abs(pdgID)==11)").c_str());
-  t->Project("h3", meas.c_str(), ("neil*((" + cuts + ") && " + meas + ">10 && abs(pdgID)==11)").c_str());
-
-  h1->GetXaxis()->SetTitle(meas.c_str());
-  h2->GetXaxis()->SetTitle(meas.c_str());
-  h3->GetXaxis()->SetTitle(meas.c_str());
-
-  c1->cd(1); h1->Draw();
-  c1->cd(2); h2->Draw();
-  c1->cd(3); h3->Draw();
 }

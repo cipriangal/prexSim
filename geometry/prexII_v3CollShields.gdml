@@ -1415,10 +1415,10 @@
       </physvol>
 
       <physvol>
-        <!-- <file name="geometry/subCollShields.gdml"/>
-        <position name="coll_shield_pos" unit="cm" x="0" y="-31.802 - 8" z="-57.531"/> -->
-        <file name="geometry/subCollShieldBlock.gdml"/>
-        <positionref ref="pos_global_coll_shield_block"/>
+        <file name="geometry/subCollShields.gdml"/>
+        <position name="coll_shield_pos" unit="cm" x="0" y="-31.802 - 8" z="-57.531"/>
+        <!-- <file name="geometry/subCollShieldBlock.gdml"/>
+        <positionref ref="pos_global_coll_shield_block"/> -->
       </physvol>
 
       <physvol>
