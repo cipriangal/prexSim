@@ -276,7 +276,7 @@
 
     <!-- Positions -->
     <position unit="cm" name="center" x="0" y="0" z="0"/>
-    <position unit="cm" name="targ_center" x="0" y="0" z="prex_target_center"/>
+    <position unit="cm" name="targ_center" x="0" y="0" z="new_prex_target_center"/>
 
 
     <!--Positions for trapozoidal geometry to be added to the W collimator jacket -->
@@ -1413,7 +1413,7 @@
 
       <physvol>
         <file name="geometry/subTargetChamber.gdml"/>
-        <position name="target_chamber_center" unit="cm" x="0" y="0" z="prex_target_center"/>
+        <position name="target_chamber_center" unit="cm" x="0" y="0" z="new_prex_target_center"/>
       </physvol>
 
       <physvol>

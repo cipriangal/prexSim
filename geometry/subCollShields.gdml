@@ -24,7 +24,7 @@
     <constant name="right_z" value="75.832"/>
     
     <constant name="bot_z_pos" value="-21.883"/>
-    <constant name="front_abs_y_pos" value="30.007 + 8"/>
+    <constant name="front_abs_y_pos" value="30.007"/>
     <constant name="top_z_pos" value="-14.875"/>
     <constant name="W_y_pos" value="18.007"/>
     <constant name="W_z_pos" value="-12.556"/>

@@ -348,7 +348,7 @@ void hallRad_det_comp(string sim, string conf1, string conf2, int n_events_k1, i
 
   TCanvas *c1 = new TCanvas("c1", "c1", 1000, 700);
   TFile *f1 = new TFile(f1name.c_str()); TFile *f2 = new TFile(f2name.c_str());
-  string hist_name = "Det_" + to_string(det) + "/ht_" + to_string(det) + "_" + part+ "_" + h_type + lin_log + "X";
+  string hist_name = "Det_" + to_string(det) + "/ha_" + to_string(det) + "_" + part+ "_" + h_type + lin_log + "X";
   TH1D *h1 = (TH1D*)f1->Get(hist_name.c_str());
   TH1D *h2 = (TH1D*)f2->Get(hist_name.c_str());
   
@@ -372,4 +372,87 @@ void check_two_tags(const char* fname, const char* prop1, const char* prop2){
 
     cout<<"Volume ID for event "<<i<<": "<<value1<<"; "<<value2<<endl;
   }
+}
+
+//##############################
+//# SPECIAL ANALYSIS FUNCTIONS #
+//##############################
+
+void edep_neil_comp(string sim, string conf, int n_events_k){
+  string fin_name  = "~/farmOut/" + sim + "_" + conf + "_" + to_string(n_events_k) + "kEv/" + sim + "_" + conf + ".root";
+  string fout_name = sim + "_" + conf + "_plots.root";
+  
+  gStyle->SetOptStat("eMRuoi");
+  TFile *fin = new TFile(fin_name.c_str());
+  TTree *t = (TTree*)fin->Get("t");
+  TFile *fout = new TFile(fout_name.c_str(), "RECREATE");
+
+  string edep_lims1[] = {"0", "1E-6", "1E-3", "1", "10"};   int len_elim1 = sizeof(edep_lims1)/sizeof(edep_lims1[0]);
+  string edep_lims2[] = {"0", "1", "30"};                   int len_elim2 = sizeof(edep_lims2)/sizeof(edep_lims2[0]);
+  int pdgIDs[]        = {11, 2112};                         int len_pdgID = sizeof(pdgIDs)/sizeof(pdgIDs[0]);
+  int det_list[]      = {1001, 1006, 1101, 1102, 2401, 2411};
+  int len_dets  = sizeof(det_list)/sizeof(det_list[0]);
+
+  for(int n = 0; n < len_dets; n++){
+    cout<<"Making plots for det "<<det_list[n]<<"..."<<endl;
+    string en_type = "edep";
+    if(det_list[n] >= 2000 && det_list[n] <= 2999) en_type = "kineE";
+    else if(det_list[n] >= 3000) en_type = "(edep + kineE)";
+    for(int i = 0; i < len_pdgID; i++){
+      string part = "";
+      if(pdgIDs[i] == 11) part = "e";
+      else if(pdgIDs[i] == 2112) part = "n";
+      else if(pdgIDs[i] == 22) part = "g";
+      if(det_list[n] == 1006){
+        for(int j = 0; j < len_elim2; j++){
+          string h1name = (en_type + "_" + to_string(det_list[n]) + "_" + part + "_" + edep_lims2[j]).c_str();
+          string h2name = ("neil_" + to_string(det_list[n]) + "_" + part + "_" + edep_lims2[j]).c_str();
+          if(j == 2){
+            string cuts = "abs(pdgID)==" + to_string(pdgIDs[i]) + " && volID==" + to_string(det_list[n]) + " && " + en_type + ">=" + edep_lims2[j];
+            TH1F *h1 = new TH1F(h1name.c_str(), (conf + ": " + en_type + ", " + cuts).c_str(), 200, stod(edep_lims2[j]), 400);
+            TH1F *h2 = new TH1F(h2name.c_str(), (conf + ": NEIL, " + cuts).c_str(), 200, stod(edep_lims2[j]), 400);
+            t->Project(h1name.c_str(), en_type.c_str(), cuts.c_str());
+            t->Project(h2name.c_str(), en_type.c_str(), ("neil*(" + cuts + ")").c_str());
+            fout->cd();
+            h1->Write(); h2->Write();
+          }
+          else{
+            string cuts = "abs(pdgID)==" + to_string(pdgIDs[i]) + " && volID==" + to_string(det_list[n]) + " && " + en_type + ">=" + edep_lims2[j] + " && " + en_type + "<=" + edep_lims2[j + 1]; 
+            TH1F *h1 = new TH1F(h1name.c_str(), (conf + ": " + en_type + ", " + cuts).c_str(), 100, stod(edep_lims2[j]), stod(edep_lims2[j + 1]));
+            TH1F *h2 = new TH1F(h2name.c_str(), (conf + ": NEIL, " + cuts).c_str(), 100, stod(edep_lims2[j]), stod(edep_lims2[j + 1]));
+            t->Project(h1name.c_str(), en_type.c_str(), cuts.c_str());
+            t->Project(h2name.c_str(), en_type.c_str(), ("neil*(" + cuts + ")").c_str());
+            fout->cd();
+            h1->Write(); h2->Write();
+          }
+        }
+      }
+      else{
+        for(int j = 0; j < len_elim1; j++){
+          string h1name = (en_type + "_" + to_string(det_list[n]) + "_" + part + "_" + edep_lims1[j]).c_str();
+          string h2name = ("neil_" + to_string(det_list[n]) + "_" + part + "_" + edep_lims1[j]).c_str();
+          if(j == 4){
+
+            string cuts = "abs(pdgID)==" + to_string(pdgIDs[i]) + " && volID==" + to_string(det_list[n]) + " && " + en_type + ">=" + edep_lims1[j]; 
+            TH1F *h1 = new TH1F(h1name.c_str(), (conf + ": " + en_type + ", " + cuts).c_str(), 200, stod(edep_lims1[j]), 400);
+            TH1F *h2 = new TH1F(h2name.c_str(), (conf + ": NEIL, " + cuts).c_str(), 200, stod(edep_lims1[j]), 400);
+            t->Project(h1name.c_str(), en_type.c_str(), cuts.c_str());
+            t->Project(h2name.c_str(), en_type.c_str(), ("neil*(" + cuts + ")").c_str());
+            fout->cd();
+            h1->Write(); h2->Write();
+          }
+          else{
+            string cuts = "abs(pdgID)==" + to_string(pdgIDs[i]) + " && volID==" + to_string(det_list[n]) + " && " + en_type + ">=" + edep_lims1[j] + " && " + en_type + "<=" + edep_lims1[j + 1];
+            TH1F *h1 = new TH1F(h1name.c_str(), (conf + ": " + en_type + ", " + cuts).c_str(), 100, stod(edep_lims1[j]), stod(edep_lims1[j + 1]));
+            TH1F *h2 = new TH1F(h2name.c_str(), (conf + ": NEIL, " + cuts).c_str(), 100, stod(edep_lims1[j]), stod(edep_lims1[j + 1]));
+            t->Project(h1name.c_str(), en_type.c_str(), cuts.c_str());
+            t->Project(h2name.c_str(), en_type.c_str(), ("neil*(" + cuts + ")").c_str());
+            fout->cd();
+            h1->Write(); h2->Write();
+          }
+        }
+      }
+    }
+  }
+  fin->Close(); fout->Close();
 }

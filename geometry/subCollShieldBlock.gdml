@@ -27,7 +27,7 @@
     <constant name="height_plast_box_cut3" value="4.75*cm_factor"/>
     <constant name="dist_bot_to_box" value="6*cm_factor"/>
 
-    <constant name="length_conc_block" value="9*cm_factor"/>
+    <constant name="length_conc_block" value="12*cm_factor"/>
     <constant name="width_conc_block" value="36*cm_factor"/>
     <constant name="height_conc_block" value="36*cm_factor"/>
     <constant name="width_conc_trap_cut1" value="14.8666*cm_factor"/>
@@ -194,7 +194,7 @@
       <solidref ref="plast_block_solid"/>
     </volume>
     <volume name="conc_block_logic">
-      <materialref ref="Concrete"/>
+      <materialref ref="Borated_Concrete"/>
       <solidref ref="conc_block_solid"/>
     </volume>
     

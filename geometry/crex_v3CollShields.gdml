@@ -46,6 +46,7 @@
 
     <!-- reference everything to this -->
     <constant name="prex_target_center" value="-105.3"/>
+    <constant name="new_prex_target_center" value="-110"/>
     <!-- referenced from elog 2977 by Seamus where predicted relative shift is 46 cm -->
     <constant name="crex_target_center" value="-151.3"/>
 
@@ -2116,6 +2117,7 @@
     <volume name="W_coll_logic">
       <materialref ref="matCW70"/>
       <solidref ref="coll_cw70_cyln_7"/>
+      <auxiliary auxtype="SensDet" auxvalue="volumeN5001"/>
     </volume>
 
     <volume name="coll_jacket_W_logic">

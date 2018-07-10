@@ -2851,8 +2851,8 @@
       </physvol>
 
       <physvol>
-        <file name="geometry/subSkyShineShield.gdml"/>
-        <position name="pos_rel_skyShineShield" unit="cm" x="0" y="70" z="-100.4"/>
+	<file name="geometry/subSkyshine.gdml"/>
+	<position name="pos_skyshine_us_block" unit="cm" x="0" y="77.62" z="-130.379"/>
       </physvol>
 
       <physvol>
