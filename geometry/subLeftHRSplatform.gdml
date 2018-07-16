@@ -13,7 +13,6 @@
     <position name="frontBlockLeft_pos" unit="cm" x="-245" y="4" z="-314"/>
     <position name="frontBlockRight_pos" unit="cm" x="245" y="4" z="-314"/>
     <position name="HRSdet_pos" unit="cm" x="0" y="0" z="35"/>
-    <position name="HRSshield_pos" unit="cm" x="-310" y="-6" z="34"/>
   </define>
 
   <materials>
@@ -31,12 +30,6 @@
     </material>
 
     <material Z="13" name="Air" state="solid">
-      <T unit="K" value="298"/>
-      <D unit="g/cm3" value="2.699"/>
-      <atom unit="g/mole" value="26.982"/>
-    </material>
-
-    <material Z="13" name="Concrete" state="solid">
       <T unit="K" value="298"/>
       <D unit="g/cm3" value="2.699"/>
       <atom unit="g/mole" value="26.982"/>
@@ -87,8 +80,6 @@
       <position name="HRSdet_posRel" unit="cm" x="0" y="0" z="282"/>
     </union>
 
-    <box lunit="cm" name="HRSshield_solid" x="31" y="210" z="386"/>
-
     <!-- Union of all objects so that there is a space to physically add them -->
     <box lunit="cm" name="hrsWorldUnion0" x="1" y="1" z="1"/>
 
@@ -127,17 +118,12 @@
       <second ref="HRSdet_solid"/>
       <positionref ref="HRSdet_pos"/>
     </union>
-    <union name ="hrsWorldUnion8">
-      <first ref="hrsWorldUnion7"/>
-      <second ref="HRSshield_solid"/>
-      <positionref ref="HRSshield_pos"/>
-    </union>
 
   </solids>
 
   <structure>
 
-    <volume name="HRSdet_logic">
+    <volume name="lHRSdet_logic">
       <materialref ref="matKryptonite"/>
       <solidref ref="HRSdet_solid"/>
       <auxiliary auxtype="SensDet" auxvalue="volumeN1001"/>
@@ -227,19 +213,12 @@
       </physvol>
     </volume>
 
-    <volume name="HRSshield_logic">
-      <materialref ref="Concrete"/>
-      <solidref ref="HRSshield_solid"/>
-      <auxiliary auxtype="SensDet" auxvalue="volumeN9003"/>
-    </volume>
-
-
     <volume name="leftHRSplatform">
       <materialref ref="Vacuum"/>
-      <solidref ref="hrsWorldUnion8"/>
+      <solidref ref="hrsWorldUnion7"/>
 
-      <physvol name="HRSdet_phys">
-        <volumeref ref="HRSdet_logic"/>
+      <physvol name="lHRSdet_phys">
+        <volumeref ref="lHRSdet_logic"/>
         <positionref ref="HRSdet_pos"/>
       </physvol>
 
@@ -273,15 +252,10 @@
         <positionref ref="frontBlockRight_pos"/>
       </physvol>
 
-      <physvol name="HRSshield_phys">
-        <volumeref ref="HRSshield_logic"/>
-        <positionref ref="HRSshield_pos"/>
-      </physvol>
-
     </volume>
   </structure>
 
-  <setup name="subLeftHRSplatform_withShield" version="1.0">
+  <setup name="subLeftHRSplatform" version="1.0">
     <world ref="leftHRSplatform"/>
   </setup>
 
