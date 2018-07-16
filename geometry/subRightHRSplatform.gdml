@@ -123,10 +123,10 @@
 
   <structure>
 
-    <volume name="HRSdet_logic">
+    <volume name="rHRSdet_logic">
       <materialref ref="matKryptonite"/>
       <solidref ref="HRSdet_solid"/>
-      <auxiliary auxtype="SensDet" auxvalue="volumeN1001"/>
+      <auxiliary auxtype="SensDet" auxvalue="volumeN1007"/>
     </volume>
 
     <volume name="topBlockAir_logic">
@@ -213,12 +213,12 @@
       </physvol>
     </volume>
 
-    <volume name="leftHRSplatform">
+    <volume name="rightHRSplatform">
       <materialref ref="Vacuum"/>
       <solidref ref="hrsWorldUnion7"/>
 
-      <physvol name="HRSdet_phys">
-        <volumeref ref="HRSdet_logic"/>
+      <physvol name="rHRSdet_phys">
+        <volumeref ref="rHRSdet_logic"/>
         <positionref ref="HRSdet_pos"/>
       </physvol>
 
@@ -255,8 +255,8 @@
     </volume>
   </structure>
 
-  <setup name="subHRSplatform" version="1.0">
-    <world ref="leftHRSplatform"/>
+  <setup name="subRightHRSplatform" version="1.0">
+    <world ref="rightHRSplatform"/>
   </setup>
 
 </gdml>
