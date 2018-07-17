@@ -215,6 +215,7 @@ G4VPhysicalVolume* MollerDetectorConstruction::Construct()
     G4VisAttributes* fpolyVisAtt= new G4VisAttributes(G4Colour(0.6,0.0,0.8));
     G4VisAttributes* oringVisAtt= new G4VisAttributes(G4Colour(0.7,0.2,0.2));
     G4VisAttributes* ConcVisAtt= new G4VisAttributes(G4Colour(0.976,0.839,0.620));
+    G4VisAttributes* borhdpeVisAtt= new G4VisAttributes(G4Colour(0.7,0.4,0.4));
 
 
     WVisAtt->SetVisibility(true);
@@ -323,9 +324,17 @@ G4VPhysicalVolume* MollerDetectorConstruction::Construct()
             worldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->GetDaughter(j)->GetLogicalVolume()->SetVisAttributes(oringVisAtt);
             worldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->GetDaughter(j)->GetLogicalVolume()->SetMaterial(rubberneo);}
 
-          if (worldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->GetDaughter(j)->GetLogicalVolume()->GetMaterial()->GetName().compare("BorCrete")==0){
+          if (worldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->GetDaughter(j)->GetLogicalVolume()->GetMaterial()->GetName().compare("BoratedConcrete")==0){
             worldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->GetDaughter(j)->GetLogicalVolume()->SetVisAttributes(shieldVisAtt);
             worldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->GetDaughter(j)->GetLogicalVolume()->SetMaterial(borcrete);}
+
+          if (worldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->GetDaughter(j)->GetLogicalVolume()->GetMaterial()->GetName().compare("Borated5Concrete")==0){
+            worldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->GetDaughter(j)->GetLogicalVolume()->SetVisAttributes(shieldVisAtt);
+            worldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->GetDaughter(j)->GetLogicalVolume()->SetMaterial(bor5crete);}
+
+          if (worldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->GetDaughter(j)->GetLogicalVolume()->GetMaterial()->GetName().compare("Borated_HDPE")==0){
+            worldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->GetDaughter(j)->GetLogicalVolume()->SetVisAttributes(borhdpeVisAtt);
+            worldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->GetDaughter(j)->GetLogicalVolume()->SetMaterial(borhdpe);}
 
           if (worldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->GetDaughter(j)->GetLogicalVolume()->GetMaterial()->GetName().compare("matKryptonite")==0){
             worldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->GetDaughter(j)->GetLogicalVolume()->SetVisAttributes(kryptoVisAtt);
@@ -408,9 +417,17 @@ G4VPhysicalVolume* MollerDetectorConstruction::Construct()
           worldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->SetVisAttributes(oringVisAtt);
           worldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->SetMaterial(rubberneo);}
 
-        if (worldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->GetMaterial()->GetName().compare("BorCrete")==0){
+        if (worldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->GetMaterial()->GetName().compare("BoratedConcrete")==0){
           worldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->SetVisAttributes(shieldVisAtt);
           worldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->SetMaterial(borcrete);}
+
+        if (worldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->GetMaterial()->GetName().compare("Borated5Concrete")==0){
+          worldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->SetVisAttributes(shieldVisAtt);
+          worldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->SetMaterial(bor5crete);}
+
+        if (worldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->GetMaterial()->GetName().compare("Borated_HDPE")==0){
+          worldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->SetVisAttributes(borhdpeVisAtt);
+          worldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->SetMaterial(borhdpe);}
 
         if (worldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->GetMaterial()->GetName().compare("matKryptonite")==0){
           worldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->SetVisAttributes(kryptoVisAtt);
@@ -568,6 +585,20 @@ void MollerDetectorConstruction::DefineMaterials()
   F  = matman->FindOrBuildMaterial("G4_F");
   Si = matman->FindOrBuildMaterial("G4_Si");
   O  = matman->FindOrBuildMaterial("G4_O");
+  Al = matman->FindOrBuildMaterial("G4_Al");
+  Ar = matman->FindOrBuildMaterial("G4_Ar");
+  Mn = matman->FindOrBuildMaterial("G4_Mn");
+  Cu  = matman->FindOrBuildMaterial("G4_Cu");
+  Cr = matman->FindOrBuildMaterial("G4_Cr");
+  Ni  = matman->FindOrBuildMaterial("G4_Ni");
+  Fe  = matman->FindOrBuildMaterial("G4_Fe");
+  P  = matman->FindOrBuildMaterial("G4_P");
+  S  = matman->FindOrBuildMaterial("G4_S");
+  W  = matman->FindOrBuildMaterial("G4_W");
+  Pb  = matman->FindOrBuildMaterial("G4_Pb");
+  H2O = matman->FindOrBuildMaterial("G4_WATER");
+  Air = matman->FindOrBuildMaterial("G4_AIR");
+  H =  matman->FindOrBuildMaterial("G4_H");
 
   borpoly = new G4Material("Borated_Polyethylene", density= 1.19*g/cm3, nComponents=2);
   borpoly->AddMaterial(bormat, fractionmass=30.*perCent);
@@ -596,9 +627,28 @@ void MollerDetectorConstruction::DefineMaterials()
   boronCarbide->AddMaterial(matman->FindOrBuildMaterial("G4_C"), weightRatio=0.217);
 
   G4double b4cfraction = (1675.0+419.0+314.0)/3493.0;//0.689378
-  borcrete = new G4Material("Borated_Concrete", density = 120.8*(453.59/28316.83)*g/cm3 , nComponents=2);
+  borcrete = new G4Material("BoratedConcrete", density = 120.8*(453.59/28316.83)*g/cm3 , nComponents=2);
   borcrete->AddMaterial(boronCarbide, weightRatio=b4cfraction);
   borcrete->AddMaterial(lightConcrete, weightRatio=(1-b4cfraction));
+
+  bor5crete = new G4Material("Borated5Concrete", density= 2.42*g/cm3, nComponents=2);
+  bor5crete->AddMaterial(bormat, fractionmass=5.*perCent);
+  bor5crete->AddMaterial(concmat, fractionmass=95.*perCent);
+
+  //Made with the information provided by Shieldwerx, Kent has the document
+  borhdpe = new G4Material("Borated_HDPE", density=1.6*g/cm3, nComponents=12);
+  borhdpe->AddMaterial(O,  fractionmass=42.89*perCent);
+  borhdpe->AddMaterial(C,  fractionmass=25.69*perCent);
+  borhdpe->AddMaterial(Al, fractionmass=11.74*perCent);
+  borhdpe->AddMaterial(matman->FindOrBuildMaterial("G4_Ca"), fractionmass=7.46*perCent);
+  borhdpe->AddMaterial(H,  fractionmass=6.65*perCent);
+  borhdpe->AddMaterial(bormat, fractionmass=4.71*perCent);
+  borhdpe->AddMaterial(Si, fractionmass=0.15*perCent);
+  borhdpe->AddMaterial(matman->FindOrBuildMaterial("G4_Na"), fractionmass=0.13*perCent);
+  borhdpe->AddMaterial(matman->FindOrBuildMaterial("G4_Mg"), fractionmass=0.09*perCent);
+  borhdpe->AddMaterial(S,  fractionmass=0.07*perCent);
+  borhdpe->AddMaterial(matman->FindOrBuildMaterial("G4_Sr"), fractionmass=0.04*perCent);
+  borhdpe->AddMaterial(Fe, fractionmass=0.03*perCent);
 
   polycrete = new G4Material("Polycrete", density= 3.75*g/cm3, nComponents=2);
   polycrete->AddMaterial(polymat, fractionmass=40.*perCent);
@@ -611,21 +661,6 @@ void MollerDetectorConstruction::DefineMaterials()
   quartz = new G4Material("Quartz", density= 2.648*g/cm3, nComponents=2);
   quartz->AddMaterial(Si, fractionmass=33.*perCent);
   quartz->AddMaterial(O, fractionmass=67.*perCent);
-
-  //H =  matman->FindOrBuildMaterial("G4_H");
-  Al = matman->FindOrBuildMaterial("G4_Al");
-  Ar = matman->FindOrBuildMaterial("G4_Ar");
-  Mn = matman->FindOrBuildMaterial("G4_Mn");
-  Cu  = matman->FindOrBuildMaterial("G4_Cu");
-  Cr = matman->FindOrBuildMaterial("G4_Cr");
-  Ni  = matman->FindOrBuildMaterial("G4_Ni");
-  Fe  = matman->FindOrBuildMaterial("G4_Fe");
-  P  = matman->FindOrBuildMaterial("G4_P");
-  S  = matman->FindOrBuildMaterial("G4_S");
-  W  = matman->FindOrBuildMaterial("G4_W");
-  Pb  = matman->FindOrBuildMaterial("G4_Pb");
-  H2O = matman->FindOrBuildMaterial("G4_WATER");
-  Air = matman->FindOrBuildMaterial("G4_AIR");
 
   SS = new G4Material("Stainless_Steel", density= 8000*kg/m3, nComponents=8);
   SS->AddMaterial(Mn, fractionmass=2.000*perCent);

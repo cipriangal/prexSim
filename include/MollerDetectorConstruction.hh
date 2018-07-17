@@ -230,6 +230,8 @@ private:
   G4Material* boronCarbide;
   G4Material* lightConcrete;
   G4Material* borcrete;
+  G4Material* bor5crete;
+  G4Material* borhdpe;
   G4Material* polycrete;
   G4Material* fluorpoly;
   G4Material* W;
