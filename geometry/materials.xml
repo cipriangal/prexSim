@@ -99,6 +99,24 @@
     <atom unit="g/mole" value="26.982"/>
   </material>
 
+  <material Z="13" name="Borated_HDPE" state="solid"><!--FIXME -->
+    <T unit="K" value="298"/>
+    <D unit="g/cm3" value="2.699"/>
+    <atom unit="g/mole" value="26.982"/>
+  </material>
+
+  <material Z="13" name="BoratedConcrete" state="solid"><!--FIXME -->
+    <T unit="K" value="298"/>
+    <D unit="g/cm3" value="2.699"/>
+    <atom unit="g/mole" value="26.982"/>
+  </material>
+
+  <material Z="13" name="Borated5Concrete" state="solid"><!--FIXME -->
+    <T unit="K" value="298"/>
+    <D unit="g/cm3" value="2.699"/>
+    <atom unit="g/mole" value="26.982"/>
+  </material>
+
   <material Z="20" name="Calcium48" state="solid">
     <T unit="K" value="298"/>
     <D unit="g/cm3" value="1.86"/>
