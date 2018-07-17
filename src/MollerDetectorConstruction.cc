@@ -627,9 +627,10 @@ void MollerDetectorConstruction::DefineMaterials()
   boronCarbide->AddMaterial(matman->FindOrBuildMaterial("G4_C"), weightRatio=0.217);
 
   G4double b4cfraction = (1675.0+419.0+314.0)/3493.0;//0.689378
-  borcrete = new G4Material("BoratedConcrete", density = 120.8*(453.59/28316.83)*g/cm3 , nComponents=2);
+  borcrete = new G4Material("BoratedConcrete", density = 150.*(453.59/28316.83)*g/cm3 , nComponents=2);
   borcrete->AddMaterial(boronCarbide, weightRatio=b4cfraction);
-  borcrete->AddMaterial(lightConcrete, weightRatio=(1-b4cfraction));
+  //borcrete->AddMaterial(lightConcrete, weightRatio=(1-b4cfraction));
+  borcrete->AddMaterial(concmat, weightRatio=(1-b4cfraction));
 
   bor5crete = new G4Material("Borated5Concrete", density= 2.42*g/cm3, nComponents=2);
   bor5crete->AddMaterial(bormat, fractionmass=5.*perCent);
