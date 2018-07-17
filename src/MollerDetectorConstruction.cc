@@ -161,14 +161,14 @@ G4VPhysicalVolume* MollerDetectorConstruction::Construct()
                       // G4cout << "volume " << vol_str.Data() << " number overwritten to " << n_vol << G4endl;
                       collimatordetector[k]->SetVolume(n_vol);
                       G4cout << "  volume number overwritten to " << n_vol <<" to be accessed in the TNtuple" << G4endl<< G4endl;
-		      sensDet.push_back(n_vol);
-		      for(int idet=0;idet<sensDet.size()-1;idet++){
-			//G4cout<<"\t"<<n_vol<<"\t<>\t"<<sensDet[idet]<<G4endl;
-			if(sensDet[idet]==n_vol){
-			  G4cout<<"You have two detectors with the same number. This last one and detector number "<<idet<<" added previously!\nFix it! Exiting!!\n\n\n";
-			  exit(99);
-			}
-		      }
+                      sensDet.push_back(n_vol);
+                      for(int idet=0;idet<sensDet.size()-1;idet++){
+                        //G4cout<<"\t"<<n_vol<<"\t<>\t"<<sensDet[idet]<<G4endl;
+                        if(sensDet[idet]==n_vol){
+                          G4cout<<"You have two detectors with the same number. This last one and detector number "<<idet<<" added previously!\nFix it! Exiting!!\n\n\n";
+                          exit(99);
+                        }
+                      }
                     }
                     SDman->AddNewDetector(collimatordetector[k]);
                     myvol->SetSensitiveDetector(collimatordetector[k]);
@@ -542,7 +542,6 @@ void MollerDetectorConstruction::DefineMaterials()
   //-----------------------------MATERIALS------------------------//
   //--------------------------------------------------------------//
 
-
   G4double a;
   G4int z;
   G4int n;
@@ -551,28 +550,15 @@ void MollerDetectorConstruction::DefineMaterials()
   G4double abundance;
   G4double density;
   G4double temp = 22.0*kelvin;
-  //  G4double press = 22.7*psig;
-  // G4double press = 2.116*atmosphere;
   G4int nComponents;
   G4String symbol;
   G4double fractionmass;
 
   G4NistManager* matman = G4NistManager::Instance();
 
-
-
-  //-----Liquid Deuterium---//
-
-  //targetMaterial = matman->FindOrBuildMaterial("G4_Pb");
-  //targetMaterial = LD2;
-
-  //check for remol pre-shower scint material
-  //scintmat = matman->FindOrBuildMaterial("G4_PLASTIC_SC_VINYLTOLUENE");
-
   collMaterial   = matman->FindOrBuildMaterial("G4_W");
   worldMaterial  = matman->FindOrBuildMaterial("G4_Galactic");
   scattChamberMaterial  = matman->FindOrBuildMaterial("G4_Al");
-
 
   rubberneo = matman->FindOrBuildMaterial("G4_RUBBER_NEOPRENE");
   polymat = matman->FindOrBuildMaterial("G4_POLYETHYLENE");
@@ -587,44 +573,27 @@ void MollerDetectorConstruction::DefineMaterials()
   borpoly->AddMaterial(bormat, fractionmass=30.*perCent);
   borpoly->AddMaterial(polymat, fractionmass=70.*perCent);
 
-  G4Element *elG4Al = matman->FindOrBuildElement("G4_Al");
-  G4Element *elG4Ba = matman->FindOrBuildElement("G4_Ba");
-  G4Element *elG4Ca = matman->FindOrBuildElement("G4_Ca");
-  G4Element *elG4Fe = matman->FindOrBuildElement("G4_Fe");
-  G4Element *elG4H  = matman->FindOrBuildElement("G4_H") ;
-  G4Element *elG4K  = matman->FindOrBuildElement("G4_K") ;
-  G4Element *elG4O  = matman->FindOrBuildElement("G4_O") ;
-  G4Element *elG4P  = matman->FindOrBuildElement("G4_P") ;
-  G4Element *elG4S  = matman->FindOrBuildElement("G4_S") ;
-  G4Element *elG4Mg = matman->FindOrBuildElement("G4_Mg");
-  G4Element *elG4Mn = matman->FindOrBuildElement("G4_Mn");
-  G4Element *elG4Na = matman->FindOrBuildElement("G4_Na");
-  G4Element *elG4Si = matman->FindOrBuildElement("G4_Si");
-  G4Element *elG4Sr = matman->FindOrBuildElement("G4_Sr");
-  G4Element *elG4Ti = matman->FindOrBuildElement("G4_Ti");
-  G4Element *elG4B  = matman->FindOrBuildElement("G4_B");
-  G4Element *elG4C  = matman->FindOrBuildElement("G4_C");
   G4double weightRatio(0);
   lightConcrete = new G4Material("LightConcrete", density=1.526*g/cm3, nComponents=15);
-  lightConcrete->AddElement(elG4Al, weightRatio=0.0715247535321842);
-  lightConcrete->AddElement(elG4Ba, weightRatio=0.000292615925692978);
-  lightConcrete->AddElement(elG4Ca, weightRatio=0.0902578428842246);
-  lightConcrete->AddElement(elG4Fe, weightRatio=0.0443403751565724);
-  lightConcrete->AddElement(elG4H , weightRatio=0.0126910373153661);
-  lightConcrete->AddElement(elG4K , weightRatio=0.0181825600330761);
-  lightConcrete->AddElement(elG4O , weightRatio=0.502123887700617);
-  lightConcrete->AddElement(elG4P , weightRatio=0.000484778323047815);
-  lightConcrete->AddElement(elG4S , weightRatio=0.0028364585260099);
-  lightConcrete->AddElement(elG4Mg, weightRatio=0.0117754923569376);
-  lightConcrete->AddElement(elG4Mn, weightRatio=0.000961479923817951);
-  lightConcrete->AddElement(elG4Na, weightRatio=0.0136690903190142);
-  lightConcrete->AddElement(elG4Si, weightRatio=0.227263709531935);
-  lightConcrete->AddElement(elG4Sr, weightRatio=0.000110504797259485);
-  lightConcrete->AddElement(elG4Ti, weightRatio=0.00348541367424452);
+  lightConcrete->AddMaterial(matman->FindOrBuildMaterial("G4_Al"), weightRatio=0.0715247535321842);
+  lightConcrete->AddMaterial(matman->FindOrBuildMaterial("G4_Ba"), weightRatio=0.000292615925692978);
+  lightConcrete->AddMaterial(matman->FindOrBuildMaterial("G4_Ca"), weightRatio=0.0902578428842246);
+  lightConcrete->AddMaterial(matman->FindOrBuildMaterial("G4_Fe"), weightRatio=0.0443403751565724);
+  lightConcrete->AddMaterial(matman->FindOrBuildMaterial("G4_H") , weightRatio=0.0126910373153661);
+  lightConcrete->AddMaterial(matman->FindOrBuildMaterial("G4_K") , weightRatio=0.0181825600330761);
+  lightConcrete->AddMaterial(matman->FindOrBuildMaterial("G4_O") , weightRatio=0.0117754923569376);
+  lightConcrete->AddMaterial(matman->FindOrBuildMaterial("G4_P") , weightRatio=0.000961479923817951);
+  lightConcrete->AddMaterial(matman->FindOrBuildMaterial("G4_S") , weightRatio=0.0136690903190142);
+  lightConcrete->AddMaterial(matman->FindOrBuildMaterial("G4_Mg"), weightRatio=0.502123887700617);
+  lightConcrete->AddMaterial(matman->FindOrBuildMaterial("G4_Mn"), weightRatio=0.000484778323047815);
+  lightConcrete->AddMaterial(matman->FindOrBuildMaterial("G4_Na"), weightRatio=0.0028364585260099);
+  lightConcrete->AddMaterial(matman->FindOrBuildMaterial("G4_Si"), weightRatio=0.227263709531935);
+  lightConcrete->AddMaterial(matman->FindOrBuildMaterial("G4_Sr"), weightRatio=0.000110504797259485);
+  lightConcrete->AddMaterial(matman->FindOrBuildMaterial("G4_Ti"), weightRatio=0.00348541367424452);
 
   boronCarbide = new G4Material("Boron-Carbide", density = 2.52*g/cm3, nComponents=2);
-  boronCarbide->AddElement(elG4B, weightRatio=0.783);
-  boronCarbide->AddElement(elG4C, weightRatio=0.217);
+  boronCarbide->AddMaterial(matman->FindOrBuildMaterial("G4_B"), weightRatio=0.783);
+  boronCarbide->AddMaterial(matman->FindOrBuildMaterial("G4_C"), weightRatio=0.217);
 
   G4double b4cfraction = (1675.0+419.0+314.0)/3493.0;//0.689378
   borcrete = new G4Material("Borated_Concrete", density = 120.8*(453.59/28316.83)*g/cm3 , nComponents=2);
