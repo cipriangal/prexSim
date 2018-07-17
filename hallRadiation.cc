@@ -36,7 +36,7 @@ int processInput(int,char**);
 string suffix;
 string finNm("0");
 int nAvg(100000);
-vector<int> detNr={1001, 1002, 1003, 1004, 1005, 1006, 1101, 1102, 2101, 2105, 2110, 2112, 3120, 3121, 3201, 2401, 2411};
+vector<int> detNr={1001, 1002, 1003, 1004, 1005, 1006, 1007, 1101, 1102, 2101, 2105, 2110, 2112, 3120, 3121, 3201, 2401, 2411};
 
 long currentEv(0),prevEv(0),processedEv(0);
 void ProcessOne(string);
@@ -354,7 +354,7 @@ int processInput(int argc, char **argv){
   if( argc == 1 || (strcmp("--help",argv[1])==0)){
     cout << "Usage:\n$build/hallRad --infile [file.name] <other options>\n";
     cout << "Options:\n\t--help : print this usage guide\n";
-    cout << "\t--infile <file.name>: specify prexSim output file to process. Can be root file or list of patchs to rootfiles. \n";
+    cout << "\t--infile <file.name>: specify prexSim output file to process. Can be root file or list of paths to rootfiles. \n";
     cout << "\t--default : process a set of default detectors and use default averaing\n";
     cout << "\t\tdefault averging: "<<nAvg<<endl;
     cout << "\t\tdefault detectors:";
