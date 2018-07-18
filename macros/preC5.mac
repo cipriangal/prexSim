@@ -18,13 +18,12 @@
 #PREX-II collimator.  Latest shielding.
 ############
 #### beam energy
-/gun/energy 2.0 GeV ##CREX
+/gun/energy 2.22 GeV ##CREX
 #### Set B field configuration (prex1, prex2, crex)
-/moller/field/setConfiguration crex_2PipeSeptumShield_allOn
-/moller/field/useQ1fringeField true
+/moller/field/setConfiguration crex
+/moller/field/useQ1fringeField false
 #### Geometry files
-#/moller/det/setDetectorFileName geometry/crex5_current.gdml
-/moller/det/setDetectorFileName geometry/crex5_newHRS.gdml
+/moller/det/setDetectorFileName geometry/crex.gdml
 
 
 /moller/det/setShieldMaterial polyethylene
