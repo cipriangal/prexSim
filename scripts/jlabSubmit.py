@@ -12,14 +12,14 @@ def main():
     #configuration = "happex2"
 
     sourceDir = "/work/halla/parity/disk1/ciprian/prexSim"
-    outputDir = "/volatile/halla/parity/ciprian/farmOut/dumpShield/offsetDS"
+    outputDir = "/volatile/halla/parity/ciprian/farmOut/newCollChShieldsBorHDPE/newSeptFringe/usTgt/finalE"
 
     nrEv   = 900000
     nrStart= 0
     nrStop = 60
 
-    ###format should be _Name
-    identifier = "_offsetDS"
+    ###format should be _Name or "" for base config
+    identifier = "_usTgt"
 
     print('Running ' + str(nrEv*(nrStop - nrStart)) + ' events...')
 
@@ -62,23 +62,33 @@ def createMacFiles(config,outDir,sourceDir,nrEv,jobNr,identifier):
     f.write("/random/setSeeds "+str(seedA)+" "+str(seedB)+"\n")
 
     if config=="crex":
-        f.write("/gun/energy 2. GeV\n")
+        f.write("/gun/energy 2.22 GeV\n")
+        f.write("/prex/gun/setRasterX 1 cm\n")
+        f.write("/prex/gun/setRasterY 4 cm\n")
         f.write("/moller/field/setConfiguration crex\n")
         f.write("/moller/det/setDetectorFileName geometry/crex"+identifier+".gdml\n")
     elif config=="prex2":
-    	f.write("/gun/energy 1. GeV\n")
+    	f.write("/gun/energy 0.95 GeV\n")
+        f.write("/prex/gun/setRasterX 4 cm\n")
+        f.write("/prex/gun/setRasterY 4 cm\n")
         f.write("/moller/field/setConfiguration prex2\n")
         f.write("/moller/det/setDetectorFileName geometry/prex2"+identifier+".gdml\n")
     elif config=="prex1":
-    	f.write("/gun/energy 1. GeV\n")
+    	f.write("/gun/energy 1.06 GeV\n")
+        f.write("/prex/gun/setRasterX 5 cm\n")
+        f.write("/prex/gun/setRasterY 5 cm\n")
         f.write("/moller/field/setConfiguration prex1\n")
         f.write("/moller/det/setDetectorFileName geometry/prex1"+identifier+".gdml\n")
     elif config=="moller":
     	f.write("/gun/energy 11. GeV\n")
+        f.write("/prex/gun/setRasterX 5 cm\n")
+        f.write("/prex/gun/setRasterY 5 cm\n")
         f.write("/moller/field/setConfiguration moller\n")
         f.write("/moller/det/setDetectorFileName geometry/moller"+identifier+".gdml\n")
     elif config=="happex2":
     	f.write("/gun/energy 3. GeV\n")
+        f.write("/prex/gun/setRasterX 5 cm\n")
+        f.write("/prex/gun/setRasterY 5 cm\n")
         f.write("/moller/field/setConfiguration happex2\n")
         f.write("/moller/det/setDetectorFileName geometry/happex2"+identifier+".gdml\n")
 
