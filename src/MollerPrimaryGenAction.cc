@@ -12,7 +12,7 @@
 using namespace CLHEP;
 
 MollerPrimaryGenAction::MollerPrimaryGenAction()
-  :ebeam(1.05), mp(0.9382796),  rasterX(5*cm), rasterY(5*cm)
+  :ebeam(1.05), mp(0.9382796),  rasterX(5*mm), rasterY(5*mm)
 {
   eventnumber=0;
 

@@ -40,13 +40,13 @@ MollerPrimaryGeneratorMessenger::MollerPrimaryGeneratorMessenger(
   rasterXcmd = new G4UIcmdWithADoubleAndUnit("/prex/gun/setRasterX",this);
   rasterXcmd->SetGuidance("Set raster X size with unit");
   rasterXcmd->SetDefaultValue(5);
-  rasterXcmd->SetDefaultUnit("cm");
+  rasterXcmd->SetDefaultUnit("mm");
 
 
   rasterYcmd = new G4UIcmdWithADoubleAndUnit("/prex/gun/setRasterY",this);
   rasterYcmd->SetGuidance("Set raster Y size with unit");
   rasterYcmd->SetDefaultValue(5);
-  rasterYcmd->SetDefaultUnit("cm");
+  rasterYcmd->SetDefaultUnit("mm");
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
