@@ -19,6 +19,9 @@
 ############
 #### beam energy
 /gun/energy 2.22 GeV ##CREX
+#### Rastser size
+/prex/gun/setRasterX 4 cm
+/prex/gun/setRasterY 4 cm
 #### Set B field configuration (prex1, prex2, crex)
 /moller/field/setConfiguration crex
 /moller/field/useQ1fringeField false

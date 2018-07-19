@@ -25,7 +25,7 @@ typedef struct {
 
 class MollerPrimaryGenAction : public G4VUserPrimaryGeneratorAction
 {
- 
+
 public:
   MollerPrimaryGenAction();
   ~MollerPrimaryGenAction();
@@ -44,7 +44,9 @@ public:
   void SetGenerator(G4int val) { GeneratorNumber = val;}
   G4int GetGenerator() {return GeneratorNumber;}
 
-  void setSeedValue (G4bool value) { fSetSeedConst = value; 
+  void SetRasterX(G4double val){rasterX = val;}
+  void SetRasterY(G4double val){rasterY = val;}
+  void setSeedValue (G4bool value) { fSetSeedConst = value;
     G4cout<<"Setting fSetSeedConst"<<G4endl;};
 
 private:
@@ -59,6 +61,7 @@ private:
   const G4double ebeam;
   const G4double mp;
 
+  G4double rasterX, rasterY;
   G4bool fSetSeedConst;
 };
 

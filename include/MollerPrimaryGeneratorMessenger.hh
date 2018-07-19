@@ -9,6 +9,7 @@
 class MollerPrimaryGenAction;
 class G4UIdirectory;
 class G4UIcmdWithAnInteger;
+class G4UIcmdWithADoubleAndUnit;
 class G4UIcmdWithABool;
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -18,18 +19,19 @@ class MollerPrimaryGeneratorMessenger: public G4UImessenger
 public:
   MollerPrimaryGeneratorMessenger(MollerPrimaryGenAction*);
   virtual ~MollerPrimaryGeneratorMessenger();
-    
+
   void SetNewValue(G4UIcommand*, G4String);
   G4String GetCurrentValue(G4UIcommand * command);
 
 private:
   MollerPrimaryGenAction*   MollerAction;
-  G4UIdirectory*            gunDir; 
+  G4UIdirectory*            gunDir;
   G4UIcmdWithAnInteger*     GenCmd;
+  G4UIcmdWithADoubleAndUnit* rasterXcmd;
+  G4UIcmdWithADoubleAndUnit* rasterYcmd;
   G4UIcmdWithABool* seedCmd;
 };
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 #endif
-
