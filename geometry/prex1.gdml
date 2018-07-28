@@ -1672,7 +1672,7 @@
     <volume name="skyDetBottom_logic">
       <materialref ref="Vacuum"/>
       <solidref ref="skyDetBottom_solid"/>
-      <auxiliary auxtype="SensDet" auxvalue="volumeN3210"/>
+      <auxiliary auxtype="SensDet" auxvalue="volumeN3120"/>
     </volume>
     <!-- <volume name="dDet_beamline_1_logic"> -->
     <!--   <materialref ref="Vacuum"/> -->
