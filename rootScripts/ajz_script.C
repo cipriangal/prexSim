@@ -390,7 +390,7 @@ void edep_neil_comp(string sim, string conf, int n_events_k){
   string edep_lims1[] = {"0", "1E-6", "1E-3", "1", "10"};   int len_elim1 = sizeof(edep_lims1)/sizeof(edep_lims1[0]);
   string edep_lims2[] = {"0", "1", "30"};                   int len_elim2 = sizeof(edep_lims2)/sizeof(edep_lims2[0]);
   int pdgIDs[]        = {11, 2112};                         int len_pdgID = sizeof(pdgIDs)/sizeof(pdgIDs[0]);
-  int det_list[]      = {1001, 1006, 1101, 1102, 2401, 2411};
+  int det_list[]      = {1001, 1006, 9001, 9002};
   int len_dets  = sizeof(det_list)/sizeof(det_list[0]);
 
   for(int n = 0; n < len_dets; n++){

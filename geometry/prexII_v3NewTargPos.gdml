@@ -1128,7 +1128,7 @@
     <volume name="W_coll_logic">
       <materialref ref="matCW70"/>
       <solidref ref="coll_cw70_cyln_7"/>
-      <auxiliary auxtype="SensDet" auxvalue="volumeN5001"/>
+      <!-- <auxiliary auxtype="SensDet" auxvalue="volumeN5001"/> -->
     </volume>
 
     <volume name="coll_jacket_W_logic">
@@ -1434,10 +1434,10 @@
         <positionref ref="dDet_beamline_pos_1"/>
       </physvol>
 
-      <!-- <physvol> -->
-      <!--   <file name="geometry/subDumpShield.gdml"/> -->
-      <!--   <position name="dumpShield_posRel" unit="cm" x="0" y="-115" z="2450"/> -->
-      <!-- </physvol> -->
+      <physvol>
+        <file name="geometry/subDumpShieldCarbide.gdml"/>
+        <position name="dumpShield_posRel" unit="cm" x="0" y="-115" z="2450"/>
+      </physvol>
 
       <physvol>
         <file name="geometry/subHRSplatform.gdml"/>

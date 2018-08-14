@@ -232,6 +232,8 @@ private:
   G4Material* borpoly;
   G4Material* borhdpe;
   G4Material* borcrete;
+  G4Material* halfbor;
+  G4Material* carbide;
   G4Material* polycrete;
   G4Material* fluorpoly;
   G4Material* W;

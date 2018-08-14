@@ -5,13 +5,16 @@
       xsi:noNamespaceSchemaLocation="./schema/gdml.xsd">
 
   <define>
-    <constant name="shield_block_length" value="65"/>
-    <constant name="addition_length" value="10"/>
+    <constant name="shield_block_length" value="75"/>
+    <constant name="addition_length" value="2.54"/>
 
     <!--Positions are relative to the center block -->
     <position name="midlBlock_posRel" unit="cm" x="0" y="0" z="0"/>
     <position name="leftBlock_posRel" unit="cm" x="-127" y="104.5" z="0"/>
     <position name="righBlock_posRel" unit="cm" x="127" y="104.5" z="0"/>
+    <position name="midlBlockRear_posRel" unit="cm" x="0" y="0" z="(shield_block_length + addition_length)/2."/>
+    <position name="leftBlockRear_posRel" unit="cm" x="-127" y="104.5" z="(shield_block_length + addition_length)/2."/>
+    <position name="righBlockRear_posRel" unit="cm" x="127" y="104.5" z="(shield_block_length + addition_length)/2."/>
   </define>
 
   <materials>
@@ -35,6 +38,18 @@
     </material>
 
     <material Z="13" name="Iron" state="solid">
+      <T unit="K" value="298"/>
+      <D unit="g/cm3" value="2.699"/>
+      <atom unit="g/mole" value="26.982"/>
+    </material>
+
+    <material Z="13" name="Half_Boron" state="solid">
+      <T unit="K" value="298"/>
+      <D unit="g/cm3" value="2.699"/>
+      <atom unit="g/mole" value="26.982"/>
+    </material>
+
+    <material Z="13" name="Boron_Carbide" state="solid">
       <T unit="K" value="298"/>
       <D unit="g/cm3" value="2.699"/>
       <atom unit="g/mole" value="26.982"/>
@@ -64,6 +79,21 @@
       <second ref="righBlock_solid"/>
       <positionref ref="righBlock_posRel"/>
     </union>
+    <union name="worldUnion3">
+      <first ref="worldUnion2"/>
+      <second ref="midlBlockRear_solid"/>
+      <positionref ref="midlBlockRear_posRel"/>
+    </union>
+    <union name="worldUnion4">
+      <first ref="worldUnion3"/>
+      <second ref="leftBlockRear_solid"/>
+      <positionref ref="leftBlockRear_posRel"/>
+    </union>
+    <union name="worldUnion5">
+      <first ref="worldUnion4"/>
+      <second ref="righBlockRear_solid"/>
+      <positionref ref="righBlockRear_posRel"/>
+    </union>
 
   </solids>
 
@@ -87,9 +117,24 @@
       <solidref ref="righBlock_solid"/>
     </volume>
 
+    <volume name="midlBlockRear_logic">
+      <materialref ref="Boron_Carbide"/>
+      <solidref ref="midlBlockRear_solid"/>
+    </volume>
+
+    <volume name="leftBlockRear_logic">
+      <materialref ref="Boron_Carbide"/>
+      <solidref ref="leftBlockRear_solid"/>
+    </volume>
+
+    <volume name="righBlockRear_logic">
+      <materialref ref="Boron_Carbide"/>
+      <solidref ref="righBlockRear_solid"/>
+    </volume>
+
     <volume name="dumpShield">
       <materialref ref="Vacuum"/>
-      <solidref ref="worldUnion2"/>
+      <solidref ref="worldUnion5"/>
 
       <physvol name="leftBlock_phys">
         <volumeref ref="leftBlock_logic"/>
@@ -104,6 +149,21 @@
       <physvol name="midlBlock_phys">
         <volumeref ref="midlBlock_logic"/>
         <positionref ref="midlBlock_posRel"/>
+      </physvol>
+
+      <physvol name="leftBlockRear">
+        <volumeref ref="leftBlockRear_logic"/>
+        <positionref ref="leftBlockRear_posRel"/>
+      </physvol>
+
+      <physvol name="righBlockRear">
+        <volumeref ref="righBlockRear_logic"/>
+        <positionref ref="righBlockRear_posRel"/>
+      </physvol>
+
+      <physvol name="midlBlockRear">
+        <volumeref ref="midlBlockRear_logic"/>
+        <positionref ref="midlBlockRear_posRel"/>
       </physvol>
 
     </volume>

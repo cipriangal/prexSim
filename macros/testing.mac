@@ -40,8 +40,8 @@
 #/moller/det/setDetectorFileName geometry/subBeamPipe_newSAMsDoubleRing.gdml
 #/moller/det/setDetectorFileName geometry/pvdis.xml
 #/moller/det/setDetectorFileName geometry/kriptoniteDetectors_tritium.gdml
-#/moller/det/setDetectorFileName geometry/prexII_v3CollShields.gdml
-/moller/det/setDetectorFileName geometry/crex_v3NewTargPos.gdml
+/moller/det/setDetectorFileName geometry/prexII_v3NewTargPos.gdml
+#/moller/det/setDetectorFileName geometry/crex_v3NewTargPos.gdml
 #/moller/det/setDetectorFileName geometry/subCollShieldBlock.gdml
 
 /moller/det/setShieldMaterial polyethylene
