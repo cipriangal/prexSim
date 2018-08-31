@@ -2863,20 +2863,14 @@
       </physvol>
 
       <physvol>
-        <file name="geometry/subDumpShield.gdml"/>
-        <position name="dumpShield_posRel" unit="cm" x="0" y="-115" z="2450"/>
+        <file name="geometry/subDumpShield_offset.gdml"/>
+        <position name="dumpShield_posRel" unit="cm" x="0" y="-122" z="2530"/>
       </physvol>
 
       <physvol>
         <file name="geometry/subLeftHRSplatform.gdml"/>
         <position name="lHRSplatform_pos" unit="cm" x="467.3" y="42.5" z="2107.8"/>
         <rotation name="lHRSplatform_rot" unit="deg" x="0" y="-12.5" z="0"/>
-      </physvol>
-
-      <physvol>
-        <file name="geometry/subRightHRSplatform.gdml"/>
-        <position name="rHRSplatform_pos" unit="cm" x="-467.3" y="42.5" z="2107.8"/>
-        <rotation name="rHRSplatform_rot" unit="deg" x="0" y="12.5" z="0"/>
       </physvol>
 
     </volume>

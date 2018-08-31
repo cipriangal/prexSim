@@ -41,6 +41,7 @@ z_*
 *.table
 .#*
 scripts/jobs
+*.lst
 
 #build directory
 build*

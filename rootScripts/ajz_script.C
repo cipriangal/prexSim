@@ -9,6 +9,7 @@
 #include <stdio.h>
 #include <iostream>
 #include <string>
+#include "math.h"
 
 using namespace std;
 
@@ -455,4 +456,47 @@ void edep_neil_comp(string sim, string conf, int n_events_k){
     }
   }
   fin->Close(); fout->Close();
+}
+
+void sphere_det_subtraction_phi_theta(string sim, string conf, int n_events_k, Int_t nbinsx, Double_t xlo, Double_t xhi, Int_t nbinsy, Double_t ylo, Double_t yhi){
+  string fname = "~/farmOut/" + sim + "_" + conf + "_" + to_string(n_events_k) + "kEv/" + sim + "_" + conf + ".root";
+  TFile *f = new TFile(fname.c_str());
+  TTree* t = (TTree*)f->Get("t");
+
+  string iDet_innCut = "kineE*(volID==2103 && (x*px+y*py+(z+16.7478)*pz)/(sqrt(x*x+y*y+(z+16.7478)*(z+16.7478))*sqrt(px*px+py*py+pz*pz))<0)";
+  string iDet_outCut = "kineE*(volID==2103 && (x*px+y*py+(z+16.7478)*pz)/(sqrt(x*x+y*y+(z+16.7478)*(z+16.7478))*sqrt(px*px+py*py+pz*pz))>0)";
+  string oDet_innCut = "kineE*(volID==2104 && (x*px+y*py+(z+16.7478)*pz)/(sqrt(x*x+y*y+(z+16.7478)*(z+16.7478))*sqrt(px*px+py*py+pz*pz))<0)";
+  string oDet_outCut = "kineE*(volID==2104 && (x*px+y*py+(z+16.7478)*pz)/(sqrt(x*x+y*y+(z+16.7478)*(z+16.7478))*sqrt(px*px+py*py+pz*pz))>0)";
+
+  TH2F *h1 = new TH2F("h1", (conf + ": phi:theta, inner sphere, inner radiation").c_str(), nbinsx, xlo, xhi, nbinsy, ylo, yhi);
+  TH2F *h2 = new TH2F("h2", (conf + ": phi:theta, inner sphere, outer radiation").c_str(), nbinsx, xlo, xhi, nbinsy, ylo, yhi);
+  TH2F *h3 = new TH2F("h3", (conf + ": phi:theta, outer sphere, inner radiation").c_str(), nbinsx, xlo, xhi, nbinsy, ylo, yhi);
+  TH2F *h4 = new TH2F("h4", (conf + ": phi:theta, outer sphere, outer radiation").c_str(), nbinsx, xlo, xhi, nbinsy, ylo, yhi);
+  TH2F *h5 = new TH2F("h5", (conf + ": phi:theta, inner sphere, radiation difference").c_str(), nbinsx, xlo, xhi, nbinsy, ylo, yhi);
+  TH2F *h6 = new TH2F("h6", (conf + ": phi:theta, outer sphere, radiation difference").c_str(), nbinsx, xlo, xhi, nbinsy, ylo, yhi);
+  TH2F *h7 = new TH2F("h7", (conf + ": phi:theta, sDet difference").c_str(), nbinsx, xlo, xhi, nbinsy, ylo, yhi);
+ 
+  t->Project("h1", "acos(x/sqrt(x*x+y*y)):(3.14159 - acos((z+16.7478)/sqrt(x*x+y*y+(z+16.7478)*(z+16.7478))))", iDet_innCut.c_str());
+  t->Project("h2", "acos(x/sqrt(x*x+y*y)):acos((z+16.7478)/sqrt(x*x+y*y+(z+16.7478)*(z+16.7478)))", iDet_outCut.c_str());
+  t->Project("h3", "acos(x/sqrt(x*x+y*y)):(3.14159 - acos((z+16.7478)/sqrt(x*x+y*y+(z+16.7478)*(z+16.7478))))", oDet_innCut.c_str());
+  t->Project("h4", "acos(x/sqrt(x*x+y*y)):acos((z+16.7478)/sqrt(x*x+y*y+(z+16.7478)*(z+16.7478)))", oDet_outCut.c_str());
+
+  h5->Add(h2, 1); h5->Add(h1, -1);
+  h6->Add(h4, 1); h6->Add(h3, -1);
+  h7->Add(h5, 1); h7->Add(h6, -1);
+
+  gStyle->SetOptStat("eMRiou");
+  h1->GetXaxis()->SetTitle("theta"); h1->GetYaxis()->SetTitle("phi"); h2->GetXaxis()->SetTitle("theta"); h2->GetYaxis()->SetTitle("phi");
+  h3->GetXaxis()->SetTitle("theta"); h3->GetYaxis()->SetTitle("phi"); h4->GetXaxis()->SetTitle("theta"); h4->GetYaxis()->SetTitle("phi");
+  h5->GetXaxis()->SetTitle("theta"); h5->GetYaxis()->SetTitle("phi"); h6->GetXaxis()->SetTitle("theta"); h6->GetYaxis()->SetTitle("phi");
+  h7->GetXaxis()->SetTitle("theta"); h7->GetYaxis()->SetTitle("phi");
+
+  TH1D* h8 = h5->ProjectionX("h8", 0, 199); TH1D* h9 = h6->ProjectionX("h9", 0, 199); TH1D* h10 = h7->ProjectionX("h10", 0, 199);
+  h8->GetXaxis()->SetTitle("theta"); h9->GetXaxis()->SetTitle("theta"); h10->GetXaxis()->SetTitle("theta");
+  
+  string fout_name = sim + "_" + conf + "_coll_sDet_plots.root";
+  TFile *fout = new TFile(fout_name.c_str(), "RECREATE");
+  fout->cd();
+  h1->Write(); h2->Write(); h3->Write(); h4->Write(); h5->Write(); h6->Write(); h7->Write(); h8->Write(); h9->Write(); h10->Write();
+  fout->Close();
 }

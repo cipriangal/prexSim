@@ -6,26 +6,24 @@
 
   <define>
     <!--Positions are relative to the end of the septum beamPipe-->
-    <constant name="ring_length" value="5.08"/>
-    <constant name="ring_cut_length" value="ring_length + 2.54"/>
-    <constant name="ring_torus_r" value="54.53"/>
     <position name="center_posRel" unit="cm" x="0" y="0" z="0"/>
     <position name="det02_posRel" unit="cm" x="0" y="0" z="111.004"/>
     <position name="det03_posRel" unit="cm" x="0" y="0" z="350.740"/>
     <position name="det04_posRel" unit="cm" x="0" y="0" z="2400"/>
-    <position name="det05_posRel" unit="cm" x="0" y="0" z="2967"/>
-    <position name="det06_posRel" unit="cm" x="0" y="0" z="2689.385"/>
-    <position name="det07_posRel" unit="cm" x="0" y="0" z="2691.985"/>
-    <position name="det08_posRel" unit="cm" x="0" y="0" z="2912"/>
+    <position name="det05_posRel" unit="cm" x="0" y="0" z="2789.385"/>
+    <position name="det06_posRel" unit="cm" x="0" y="0" z="2791.985"/>
+    <position name="det07_posRel" unit="cm" x="0" y="0" z="2912"/>
+    <position name="det08_posRel" unit="cm" x="0" y="0" z="3007"/>
+    <position name="det09_posRel" unit="cm" x="0" y="0" z="3030"/>
+    <position name="det10_posRel" unit="cm" x="0" y="-42" z="3105"/>
+    <position name="det11_posRel" unit="cm" x="0" y="0" z="560"/>
+    <position name="det12_posRel" unit="cm" x="0" y="0" z="580"/>
     <position name="gateValve_cylinder_box_posRel" unit="cm" x="0" y="-8" z="0"/>
     <position name="gateValve_posRel" unit="cm" x="0" y="0" z="163.784"/>
     <position name="dumpDoor_posRel" unit="cm" x="0" y="42" z="0"/>
+    <position name="dumpDet_pos" unit="cm" x="0" y="0" z="2490"/>
     <position name="usDet_dumpShield_pos" unit="cm" x="0" y="0" z="2250"/>
     <position name="dsDet_dumpShield_pos" unit="cm" x="0" y="0" z="2380"/>
-
-    <position name="pos_rel_pipe_cut" unit="cm" x="0" y="0" z="2530.785 - ring_cut_length/2."/>
-
-    <rotation name="x90" unit="deg" x="90" y="0" z="0"/>
 
     <!-- Stuff from generateBeamPipe.py -->
     <position name="dumpICS1_beamL_pos" unit="cm" x="68" y="-110" z="2785.185"/>
@@ -37,6 +35,69 @@
     <position name="dumpDoor_pos" unit="cm" x="0" y="-42" z="3109.685"/>
     <position name="dumpIC_beamR_pos" unit="cm" x="-68" y="-80" z="2851.185"/>
     <position name="dumpIC_beamL_pos" unit="cm" x="68" y="-80" z="2851.185"/>
+
+    <!-- Small Angle Monitor and Dump O-ring stuff -->
+    <constant name="ring_length" value="5.08"/>
+    <constant name="ring_cut_length" value="ring_length + 2.54"/>
+    <constant name="ring_torus_r" value="54.53"/>
+    <constant name="sam_can_outer_r" value="1.92"/>
+    <constant name="sam_can_wall_thickness" value="0.15"/>
+    <constant name="sam_can_length" value="36."/>
+    <constant name="sam_can_inner_r" value="sam_can_outer_r - sam_can_wall_thickness"/>
+    <constant name="sam_cut_height" value="sam_can_length - 2*sam_can_wall_thickness"/>
+    <constant name="sam_quartz_height" value="1.3"/>
+    <constant name="sam_quartz_width" value="2."/>
+    <constant name="sam_quartz_length" value="3."/>
+    <constant name="sam_bot_face_sep" value="4.85"/>
+    <constant name="sam_mid_dist" value="sam_bot_face_sep + sam_can_length/2."/>
+    <constant name="sam_quartz_bot_face" value="5.5"/>
+    <constant name="sam_quartz_mid_dist" value="sam_quartz_bot_face + sam_quartz_length/2."/>
+    <constant name="sam_z_pos" value="567.765"/>
+
+    <position name="pos_rel_pipe_cut" unit="cm" x="0" y="0" z="2530.785 - ring_cut_length/2."/>
+    <position name="pos_rel_sam_center" unit="cm" x="0" y="sam_mid_dist" z="sam_z_pos"/>
+    <position name="pos_abs_sam_center" unit="cm" x="0" y="0" z="sam_z_pos"/>
+    <position name="pos_rel_quartz_center" unit="cm" x="0" y="sam_quartz_mid_dist" z="sam_z_pos"/>
+    <position name="pos_rel_sam_1200" unit="cm" x="0" y="0" z="sam_mid_dist"/>
+    <position name="pos_rel_sam_0130" unit="cm" x="sam_mid_dist/sqrt(2)" y="0" z="- sam_mid_dist + sam_mid_dist/sqrt(2)"/>
+    <position name="pos_rel_sam_0300" unit="cm" x="sam_mid_dist" y="0" z="- sam_mid_dist"/>
+    <position name="pos_rel_sam_0430" unit="cm" x="sam_mid_dist/sqrt(2)" y="0" z="- sam_mid_dist - sam_mid_dist/sqrt(2)"/>
+    <position name="pos_rel_sam_0600" unit="cm" x="0" y="0" z="- 2*sam_mid_dist"/>
+    <position name="pos_rel_sam_0730" unit="cm" x="- sam_mid_dist/sqrt(2)" y="0" z="- sam_mid_dist - sam_mid_dist/sqrt(2)"/>
+    <position name="pos_rel_sam_0900" unit="cm" x="- sam_mid_dist" y="0" z="- sam_mid_dist"/>
+    <position name="pos_rel_sam_1030" unit="cm" x="- sam_mid_dist/sqrt(2)" y="0" z="- sam_mid_dist + sam_mid_dist/sqrt(2)"/>
+    <position name="pos_rel_cut_1200" unit="cm" x="0" y="sam_mid_dist" z="sam_z_pos"/>
+    <position name="pos_rel_cut_0130" unit="cm" x="- sam_mid_dist/sqrt(2)" y="sam_mid_dist/sqrt(2)" z="sam_z_pos"/>
+    <position name="pos_rel_cut_0300" unit="cm" x="- sam_mid_dist" y="0" z="sam_z_pos"/>
+    <position name="pos_rel_cut_0430" unit="cm" x="- sam_mid_dist/sqrt(2)" y="- sam_mid_dist/sqrt(2)" z="sam_z_pos"/>
+    <position name="pos_rel_cut_0600" unit="cm" x="0" y="- sam_mid_dist" z="sam_z_pos"/>
+    <position name="pos_rel_cut_0730" unit="cm" x="sam_mid_dist/sqrt(2)" y="- sam_mid_dist/sqrt(2)" z="sam_z_pos"/>
+    <position name="pos_rel_cut_0900" unit="cm" x="sam_mid_dist" y="0" z="sam_z_pos"/>
+    <position name="pos_rel_cut_1030" unit="cm" x="sam_mid_dist/sqrt(2)" y="sam_mid_dist/sqrt(2)" z="sam_z_pos"/>
+    <position name="pos_rel_qtz_0130" unit="cm" x="sam_quartz_mid_dist/sqrt(2)" y="0" z="- sam_quartz_mid_dist + sam_quartz_mid_dist/sqrt(2)"/>
+    <position name="pos_rel_qtz_0300" unit="cm" x="sam_quartz_mid_dist" y="0" z="- sam_quartz_mid_dist"/>
+    <position name="pos_rel_qtz_0430" unit="cm" x="sam_quartz_mid_dist/sqrt(2)" y="0" z="- sam_quartz_mid_dist - sam_quartz_mid_dist/sqrt(2)"/>
+    <position name="pos_rel_qtz_0600" unit="cm" x="0" y="0" z="- 2*sam_quartz_mid_dist"/>
+    <position name="pos_rel_qtz_0730" unit="cm" x="- sam_quartz_mid_dist/sqrt(2)" y="0" z="- sam_quartz_mid_dist - sam_quartz_mid_dist/sqrt(2)"/>
+    <position name="pos_rel_qtz_0900" unit="cm" x="- sam_quartz_mid_dist" y="0" z="- sam_quartz_mid_dist"/>
+    <position name="pos_rel_qtz_1030" unit="cm" x="- sam_quartz_mid_dist/sqrt(2)" y="0" z="- sam_quartz_mid_dist + sam_quartz_mid_dist/sqrt(2)"/>
+
+    <rotation name="x90" unit="deg" x="90" y="0" z="0"/>
+    <rotation name="x90z45" unit="deg" z="45" y="0" x="90"/>
+    <rotation name="x90z90" unit="deg" z="90" y="0" x="90"/>
+    <rotation name="x90z135" unit="deg" z="135" y="0" x="90"/>
+    <rotation name="x90z180" unit="deg" z="180" y="0" x="90"/>
+    <rotation name="x90z-45" unit="deg" z="-45" y="0" x="90"/>
+    <rotation name="x90z-90" unit="deg" z="-90" y="0" x="90"/>
+    <rotation name="x90z-135" unit="deg" z="-135" y="0" x="90"/>
+    <rotation name="y45" unit="deg" x="0" y="45" z="0"/>
+    <rotation name="y90" unit="deg" x="0" y="90" z="0"/>
+    <rotation name="y135" unit="deg" x="0" y="135" z="0"/>
+    <rotation name="y180" unit="deg" x="0" y="180" z="0"/>
+    <rotation name="y-135" unit="deg" x="0" y="-135" z="0"/>
+    <rotation name="y-90" unit="deg" x="0" y="-90" z="0"/>
+    <rotation name="y-45" unit="deg" x="0" y="-45" z="0"/>
+
   </define>
 
   <materials>
@@ -70,6 +131,13 @@
       <D unit="g/cm3" value="2.699"/>
       <atom unit="g/mole" value="26.982"/>
     </material>
+
+    <material Z="13" name="Fluoropolymer" state="solid">
+      <T unit="K" value="298"/>
+      <D unit="g/cm3" value="2.699"/>
+      <atom unit="g/mole" value="26.982"/>
+    </material>
+
   </materials>
 
   <solids>
@@ -85,17 +153,17 @@
 
     <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="det03_solid"
           rmin="0"
-          rmax="15.45"
+          rmax="14.45"
           z="0.1"/>
 
     <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="det04_solid"
           rmin="0"
-          rmax="45.62"
+          rmax="45.0"
           z="0.1"/>
 
     <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="det05_solid"
           rmin="0"
-          rmax="45.62"
+          rmax="29.8"
           z="0.1"/>
 
     <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="det06_solid"
@@ -111,6 +179,23 @@
     <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="det08_solid"
           rmin="0"
           rmax="29.8"
+          z="0.1"/>
+
+    <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="det09_solid"
+          rmin="0"
+          rmax="45.62"
+          z="0.1"/>
+
+    <box lunit="cm" name="det10_solid" x="208" y="292" z="0.1"/>
+
+    <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="det11_solid"
+          rmin="0"
+          rmax="30."
+          z="0.1"/>
+
+    <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="det12_solid"
+          rmin="0"
+          rmax="30."
           z="0.1"/>
 
     <polycone aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="beamPipe_solid1">
@@ -172,40 +257,13 @@
       <zplane rmin="47.67" rmax="48.15" z="2530.795"/>
       <zplane rmin="29.89" rmax="30.37" z="2556.085"/>
       <zplane rmin="29.89" rmax="30.37" z="2789.685"/>
-      <zplane rmin="4.13" rmax="30.37" z="2789.685"/>
-      <zplane rmin="4.13" rmax="30.37" z="2791.685"/>
+      <zplane rmin="14.9" rmax="30.37" z="2789.685"/>
+      <zplane rmin="14.9" rmax="30.37" z="2791.685"/>
       <zplane rmin="29.89" rmax="30.37" z="2791.685"/>
       <zplane rmin="29.89" rmax="30.37" z="3008.485"/>
       <zplane rmin="15.23" rmax="15.70" z="3024.085"/>
       <zplane rmin="15.23" rmax="15.70" z="3028.885"/>
     </polycone>
-
-    <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="ring_cut"
-          rmin="0"
-          rmax="58.42"
-          z="ring_cut_length"/>
-
-    <subtraction name="cut_pipe_solid_2">
-      <first ref="beamPipe_solid2"/>
-      <second ref="ring_cut"/>
-      <positionref ref="pos_rel_pipe_cut"/>
-    </subtraction>
-
-    <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="flanges_solid"
-          rmin="47.62"
-          rmax="58.42"
-          z="ring_cut_length"/>
-
-    <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="o_ring_solid"
-          rmin="ring_torus_r - ring_length/2."
-          rmax="ring_torus_r + ring_length/2."
-          z="ring_length"/>
-
-    <subtraction name="flanges_hole_solid">
-      <first ref="flanges_solid"/>
-      <second ref="o_ring_solid"/>
-      <positionref ref="center_posRel"/>
-    </subtraction>
 
     <!-- Ion Chamber shielding -->
     <box lunit="cm" name="dumpIonChShield1_solid" x="38" y="166" z="61"/>
@@ -255,21 +313,214 @@
       <positionref ref="center_posRel"/>
     </subtraction>
 
-    <!-- FIXME temp vacuum dets to look at radiation. if you don't know what this is about it means you can probably just delete it -->
-    <box lunit="cm" name="usDet_dumpShield_solid0" x="370" y="500" z="0.1"/>
+    <box lunit="cm" name="usDet_dumpShield_solid0" x="350" y="500" z="0.1"/>
     <subtraction name ="usDet_dumpShield_solid1">
       <first ref="usDet_dumpShield_solid0"/>
       <second ref="beamPipe_solid2"/>
-      <positionref ref="usDet_dumpShield_pos"/>
+      <position name="pipe2_usDet_dumpShield_posRel" unit="cm" x="0" y="0" z="-2250"/>
     </subtraction>
     <box lunit="cm" name="dsDet_dumpShield_solid0" x="378" y="500" z="0.1"/>
     <subtraction name ="dsDet_dumpShield_solid1">
       <first ref="dsDet_dumpShield_solid0"/>
       <second ref="beamPipe_solid2"/>
-      <positionref ref="dsDet_dumpShield_pos"/>
+      <position name="pipe2_dsDet_dumpShield_posRel" unit="cm" x="0" y="0" z="-2380"/>
     </subtraction>
 
-    <!-- Union of all objects so that there is a space to physically add them -->
+    <box lunit="cm" name="dumpDet_solid0" x="350" y="500" z="0.1"/>
+    <subtraction name ="dumpDet_solid1">
+      <first ref="dumpDet_solid0"/>
+      <second ref="beamPipe_solid2"/>
+      <position name="pipe2_dumpDet_posRel" unit="cm" x="0" y="0" z="-2490"/>
+    </subtraction>
+
+    <!-- O-ring stuff -->
+    <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="ring_cut"
+          rmin="45.4"
+          rmax="58.42"
+          z="ring_cut_length"/>
+
+    <subtraction name="cut_pipe_solid_2">
+      <first ref="beamPipe_solid2"/>
+      <second ref="ring_cut"/>
+      <positionref ref="pos_rel_pipe_cut"/>
+    </subtraction>
+
+    <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="flanges_solid"
+          rmin="47.62"
+          rmax="58.42"
+          z="ring_cut_length"/>
+
+    <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="o_ring_solid"
+          rmin="ring_torus_r - ring_length/2."
+          rmax="ring_torus_r + ring_length/2."
+          z="ring_length"/>
+
+    <subtraction name="flanges_hole_solid">
+      <first ref="flanges_solid"/>
+      <second ref="o_ring_solid"/>
+      <positionref ref="center_posRel"/>
+    </subtraction>
+
+    <!-- SAM stuff -->
+    <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="sam_cyl_solid"
+          rmin="0"
+          rmax="sam_can_outer_r"
+          z="sam_can_length"/>
+
+    <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="sam_cut_cyl_solid"
+          rmin="0"
+          rmax="sam_can_inner_r"
+          z="sam_cut_height"/>
+
+    <subtraction name="sam_tube_solid">
+      <first ref="sam_cyl_solid"/>
+      <second ref="sam_cut_cyl_solid"/>
+      <positionref ref="center_posRel"/>
+    </subtraction>
+
+    <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="sam_cyl_mother_addition"
+          rmin="0"
+          rmax="sam_bot_face_sep + sam_can_length*1.01"
+          z="2.01*sam_can_outer_r"/>
+
+    <box lunit="cm" name="sam_quartz_box_solid" x="sam_quartz_width" y="sam_quartz_height" z="sam_quartz_length"/>
+
+    <subtraction name="beampipe2_solid_1">
+      <first ref="cut_pipe_solid_2"/>
+      <second ref="sam_cyl_solid"/>
+      <positionref ref="pos_rel_cut_1200"/>
+      <rotationref ref="x90"/>
+    </subtraction>
+    <subtraction name="beampipe2_solid_2">
+      <first ref="beampipe2_solid_1"/>
+      <second ref="sam_cyl_solid"/>
+      <positionref ref="pos_rel_cut_0130"/>
+      <rotationref ref="x90z45"/>
+    </subtraction>
+    <subtraction name="beampipe2_solid_3">
+      <first ref="beampipe2_solid_2"/>
+      <second ref="sam_cyl_solid"/>
+      <positionref ref="pos_rel_cut_0300"/>
+      <rotationref ref="x90z90"/>
+    </subtraction>
+    <subtraction name="beampipe2_solid_4">
+      <first ref="beampipe2_solid_3"/>
+      <second ref="sam_cyl_solid"/>
+      <positionref ref="pos_rel_cut_0430"/>
+      <rotationref ref="x90z135"/>
+    </subtraction>
+    <subtraction name="beampipe2_solid_5">
+      <first ref="beampipe2_solid_4"/>
+      <second ref="sam_cyl_solid"/>
+      <positionref ref="pos_rel_cut_0600"/>
+      <rotationref ref="x90z180"/>
+    </subtraction>
+    <subtraction name="beampipe2_solid_6">
+      <first ref="beampipe2_solid_5"/>
+      <second ref="sam_cyl_solid"/>
+      <positionref ref="pos_rel_cut_0730"/>
+      <rotationref ref="x90z-135"/>
+    </subtraction>
+    <subtraction name="beampipe2_solid_7">
+      <first ref="beampipe2_solid_6"/>
+      <second ref="sam_cyl_solid"/>
+      <positionref ref="pos_rel_cut_0900"/>
+      <rotationref ref="x90z-90"/>
+    </subtraction>
+    <subtraction name="beampipe2_solid">
+      <first ref="beampipe2_solid_7"/>
+      <second ref="sam_cyl_solid"/>
+      <positionref ref="pos_rel_cut_1030"/>
+      <rotationref ref="x90z-45"/>
+    </subtraction>
+
+    <union name="sam_cans_solid_1">
+      <first ref="sam_tube_solid"/>
+      <second ref="sam_tube_solid"/>
+      <positionref ref="pos_rel_sam_0130"/>
+      <rotationref ref="y45"/>
+    </union>
+    <union name="sam_cans_solid_2">
+      <first ref="sam_cans_solid_1"/>
+      <second ref="sam_tube_solid"/>
+      <positionref ref="pos_rel_sam_0300"/>
+      <rotationref ref="y90"/>
+    </union>
+    <union name="sam_cans_solid_3">
+      <first ref="sam_cans_solid_2"/>
+      <second ref="sam_tube_solid"/>
+      <positionref ref="pos_rel_sam_0430"/>
+      <rotationref ref="y135"/>
+    </union>
+    <union name="sam_cans_solid_4">
+      <first ref="sam_cans_solid_3"/>
+      <second ref="sam_tube_solid"/>
+      <positionref ref="pos_rel_sam_0600"/>
+      <rotationref ref="y180"/>
+    </union>
+    <union name="sam_cans_solid_5">
+      <first ref="sam_cans_solid_4"/>
+      <second ref="sam_tube_solid"/>
+      <positionref ref="pos_rel_sam_0730"/>
+      <rotationref ref="y-135"/>
+    </union>
+    <union name="sam_cans_solid_6">
+      <first ref="sam_cans_solid_5"/>
+      <second ref="sam_tube_solid"/>
+      <positionref ref="pos_rel_sam_0900"/>
+      <rotationref ref="y-90"/>
+    </union>
+    <union name="sam_cans_solid">
+      <first ref="sam_cans_solid_6"/>
+      <second ref="sam_tube_solid"/>
+      <positionref ref="pos_rel_sam_1030"/>
+      <rotationref ref="y-45"/>
+    </union>
+
+    <union name="sam_quartz_solid_1">
+      <first ref="sam_quartz_box_solid"/>
+      <second ref="sam_quartz_box_solid"/>
+      <positionref ref="pos_rel_qtz_0130"/>
+      <rotationref ref="y45"/>
+    </union>
+    <union name="sam_quartz_solid_2">
+      <first ref="sam_quartz_solid_1"/>
+      <second ref="sam_quartz_box_solid"/>
+      <positionref ref="pos_rel_qtz_0300"/>
+      <rotationref ref="y90"/>
+    </union>
+    <union name="sam_quartz_solid_3">
+      <first ref="sam_quartz_solid_2"/>
+      <second ref="sam_quartz_box_solid"/>
+      <positionref ref="pos_rel_qtz_0430"/>
+      <rotationref ref="y135"/>
+    </union>
+    <union name="sam_quartz_solid_4">
+      <first ref="sam_quartz_solid_3"/>
+      <second ref="sam_quartz_box_solid"/>
+      <positionref ref="pos_rel_qtz_0600"/>
+      <rotationref ref="y180"/>
+    </union>
+    <union name="sam_quartz_solid_5">
+      <first ref="sam_quartz_solid_4"/>
+      <second ref="sam_quartz_box_solid"/>
+      <positionref ref="pos_rel_qtz_0730"/>
+      <rotationref ref="y-135"/>
+    </union>
+    <union name="sam_quartz_solid_6">
+      <first ref="sam_quartz_solid_5"/>
+      <second ref="sam_quartz_box_solid"/>
+      <positionref ref="pos_rel_qtz_0900"/>
+      <rotationref ref="y-90"/>
+    </union>
+    <union name="sam_quartz_solid">
+      <first ref="sam_quartz_solid_6"/>
+      <second ref="sam_quartz_box_solid"/>
+      <positionref ref="pos_rel_qtz_1030"/>
+      <rotationref ref="y-45"/>
+    </union>
+
+    <!-- union of all objects so that there is a space to physically add them -->
     <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="bP2worldUnion0"
           rmin="0"
           rmax="4.102"
@@ -372,21 +623,50 @@
       <positionref ref="dumpIC_beamR_pos"/>
       <rotationref ref="x90"/>
     </union>
-    <!-- FIXME -->
     <union name ="bP2worldUnion20">
       <first ref="bP2worldUnion19"/>
-      <second ref="usDet_dumpShield_solid1"/>
+      <second ref="usDet_dumpShield_solid0"/>
       <positionref ref="usDet_dumpShield_pos"/>
     </union>
     <union name ="bP2worldUnion21">
       <first ref="bP2worldUnion20"/>
-      <second ref="dsDet_dumpShield_solid1"/>
+      <second ref="dsDet_dumpShield_solid0"/>
       <positionref ref="dsDet_dumpShield_pos"/>
     </union>
-    <union name="bP2worldUnion22">
+    <union name ="bP2worldUnion22">
       <first ref="bP2worldUnion21"/>
+      <second ref="dumpDet_solid0"/>
+      <positionref ref="dumpDet_pos"/>
+    </union>
+    <union name ="bP2worldUnion23">
+      <first ref="bP2worldUnion22"/>
+      <second ref="det09_solid"/>
+      <positionref ref="det09_posRel"/>
+    </union>
+    <union name ="bP2worldUnion24">
+      <first ref="bP2worldUnion23"/>
+      <second ref="det10_solid"/>
+      <positionref ref="det10_posRel"/>
+    </union>
+    <union name ="bP2worldUnion25">
+      <first ref="bP2worldUnion24"/>
       <second ref="ring_cut"/>
       <positionref ref="pos_rel_pipe_cut"/>
+    </union>
+    <union name ="bP2worldUnion26">
+      <first ref="bP2worldUnion25"/>
+      <second ref="sam_cyl_mother_addition"/>
+      <positionref ref="pos_abs_sam_center"/>
+    </union>
+    <union name ="bP2worldUnion27">
+      <first ref="bP2worldUnion26"/>
+      <second ref="det11_solid"/>
+      <positionref ref="det11_posRel"/>
+    </union>
+    <union name ="bP2worldUnion28">
+      <first ref="bP2worldUnion27"/>
+      <second ref="det12_solid"/>
+      <positionref ref="det12_posRel"/>
     </union>
 
   </solids>
@@ -441,14 +721,28 @@
       <auxiliary auxtype="SensDet" auxvalue="volumeN2208"/>
     </volume>
 
-    <volume name="beamPipe_logic1">
-      <materialref ref="Aluminum"/>
-      <solidref ref="beamPipe_solid1"/>
+    <volume name="det09_logic">
+      <materialref ref="Vacuum"/>
+      <solidref ref="det09_solid"/>
+      <auxiliary auxtype="SensDet" auxvalue="volumeN2209"/>
     </volume>
 
-    <volume name="beamPipe_logic2">
-      <materialref ref="Aluminum"/>
-      <solidref ref="cut_pipe_solid_2"/>
+    <volume name="det10_logic">
+      <materialref ref="Vacuum"/>
+      <solidref ref="det10_solid"/>
+      <auxiliary auxtype="SensDet" auxvalue="volumeN2210"/>
+    </volume>
+
+    <volume name="det11_logic">
+      <materialref ref="Vacuum"/>
+      <solidref ref="det11_solid"/>
+      <auxiliary auxtype="SensDet" auxvalue="volumeN2211"/>
+    </volume>
+
+    <volume name="det12_logic">
+      <materialref ref="Vacuum"/>
+      <solidref ref="det12_solid"/>
+      <auxiliary auxtype="SensDet" auxvalue="volumeN2212"/>
     </volume>
 
     <volume name="gateValve_logic">
@@ -488,20 +782,27 @@
       <auxiliary auxtype="SensDet" auxvalue="volumeN11001"/>
     </volume>
 
-    <!-- FIXME -->
     <volume name="usDet_dumpShield_logic">
       <materialref ref="Vacuum"/>
       <solidref ref="usDet_dumpShield_solid1"/>
       <auxiliary auxtype="SensDet" auxvalue="volumeN9001"/>
     </volume>
+
     <volume name="dsDet_dumpShield_logic">
       <materialref ref="Vacuum"/>
       <solidref ref="dsDet_dumpShield_solid1"/>
       <auxiliary auxtype="SensDet" auxvalue="volumeN9002"/>
     </volume>
 
+    <volume name="dumpDet_logic">
+      <materialref ref="Vacuum"/>
+      <solidref ref="dumpDet_solid1"/>
+      <auxiliary auxtype="SensDet" auxvalue="volumeN9003"/>
+    </volume>
+
+    <!-- dump o-ring -->
     <volume name="flanges_logic">
-      <materialref ref="StainlessSteel"/>
+      <materialref ref="Aluminum"/>
       <solidref ref="flanges_hole_solid"/>
     </volume>
     <volume name="o_ring_logic">
@@ -510,9 +811,41 @@
       <auxiliary auxtype="SensDet" auxvalue="volumeN3201"/>
     </volume>
 
+    <!-- SAMs -->
+    <volume name="sam_cans_logic">
+      <materialref ref="Aluminum"/>
+      <solidref ref="sam_cans_solid"/>
+    </volume>
+
+    <volume name="sam_quartz_logic">
+      <materialref ref="Quartz"/>
+      <solidref ref="sam_quartz_solid"/>
+    </volume>
+
+    <volume name="beamPipe_logic1">
+      <materialref ref="Aluminum"/>
+      <solidref ref="beamPipe_solid1"/>
+    </volume>
+
+    <volume name="beamPipe_logic2">
+      <materialref ref="Aluminum"/>
+      <solidref ref="cut_pipe_solid_2"/>
+    </volume>
+
+
     <volume name="beamPipeP2">
       <materialref ref="Vacuum"/>
-      <solidref ref="bP2worldUnion22"/>
+      <solidref ref="bP2worldUnion28"/>
+
+      <physvol name="beamPipe_phys1">
+        <volumeref ref="beamPipe_logic1"/>
+        <positionref ref="center_posRel"/>
+      </physvol>
+
+      <physvol name="beamPipe_phys2">
+        <volumeref ref="beamPipe_logic2"/>
+        <positionref ref="center_posRel"/>
+      </physvol>
 
       <physvol name="det01_phys">
         <volumeref ref="det01_logic"/>
@@ -554,14 +887,39 @@
         <positionref ref="det08_posRel"/>
       </physvol>
 
-      <physvol name="beamPipe_phys1">
-        <volumeref ref="beamPipe_logic1"/>
-        <positionref ref="center_posRel"/>
+      <physvol name="det09_phys">
+        <volumeref ref="det09_logic"/>
+        <positionref ref="det09_posRel"/>
       </physvol>
 
-      <physvol name="beamPipe_phys2">
-        <volumeref ref="beamPipe_logic2"/>
-        <positionref ref="center_posRel"/>
+      <physvol name="det10_phys">
+        <volumeref ref="det10_logic"/>
+        <positionref ref="det10_posRel"/>
+      </physvol>
+
+      <physvol name="det11_phys">
+        <volumeref ref="det11_logic"/>
+        <positionref ref="det11_posRel"/>
+      </physvol>
+
+      <physvol name="det12_phys">
+        <volumeref ref="det12_logic"/>
+        <positionref ref="det12_posRel"/>
+      </physvol>
+
+      <physvol name="usDet_dumpShield_phys">
+        <volumeref ref="usDet_dumpShield_logic"/>
+        <positionref ref="usDet_dumpShield_pos"/>
+      </physvol>
+
+      <physvol name="dsDet_dumpShield_phys">
+        <volumeref ref="dsDet_dumpShield_logic"/>
+        <positionref ref="dsDet_dumpShield_pos"/>
+      </physvol>
+
+      <physvol name="dumpDet_phys">
+        <volumeref ref="dumpDet_logic"/>
+        <positionref ref="dumpDet_pos"/>
       </physvol>
 
       <physvol name="gateValve_phys">
@@ -616,17 +974,7 @@
         <rotationref ref="x90"/>
       </physvol>
 
-      <!-- FIXME -->
-      
-      <physvol name="usDet_dumpShield_phys">
-        <volumeref ref="usDet_dumpShield_logic"/>
-        <positionref ref="usDet_dumpShield_pos"/>
-      </physvol>
-      <physvol name="dsDet_dumpShield_phys">
-        <volumeref ref="dsDet_dumpShield_logic"/>
-        <positionref ref="dsDet_dumpShield_pos"/>
-      </physvol>
-
+      <!-- dump o-ring -->
       <physvol name="flanges">
         <volumeref ref="flanges_logic"/>
         <positionref ref="pos_rel_pipe_cut"/>
@@ -636,6 +984,21 @@
         <volumeref ref="o_ring_logic"/>
         <positionref ref="pos_rel_pipe_cut"/>
       </physvol>
+
+      <!-- SAMs -->
+      <physvol name="sam_cans">
+        <volumeref ref="sam_cans_logic"/>
+        <positionref ref="pos_rel_sam_center"/>
+        <rotationref ref="x90"/>
+      </physvol>
+
+      <physvol name="sam_quartz">
+        <volumeref ref="sam_quartz_logic"/>
+        <positionref ref="pos_rel_quartz_center"/>
+        <rotationref ref="x90"/>
+      </physvol>
+
+
 
       <!-- ~~~For side by side comparisons only~~~ -->
       <!-- <physvol> -->

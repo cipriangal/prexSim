@@ -21,7 +21,7 @@ void niceLogBins(TH1*);
 //photons/electron/neutrons
 vector<vector<vector<TH1D*> > > hTotal, hAvg, valAvg;
 vector<vector<vector<vector<int> > > > intAvg;
-const int nBins=93;
+const int nBins=113;
 TH1D *hSummary[3];//energy, neil, mRem
 void UpdateMeans();
 
@@ -36,7 +36,7 @@ int processInput(int,char**);
 string suffix;
 string finNm("0");
 int nAvg(100000);
-vector<int> detNr={1001, 1002, 1003, 1004, 1005, 1006, 1101, 1102, 2101, 2105, 2110, 2112, 3120, 3121, 3201, 2401, 2411};
+vector<int> detNr={1001, 1002, 1003, 1004, 1005, 1006, 1007, 1101, 1102, 2101, 2105, 2110, 2112, 3120, 3121, 3201, 2401, 2411};
 
 long currentEv(0),prevEv(0),processedEv(0);
 void ProcessOne(string);
@@ -214,30 +214,31 @@ void Initialize(){
       int nrBins=nBins;
       vector<TH1D*> dt2,da2,dv2;
       for(int idmg=0;idmg<5;idmg++){
-        if(idmg>=3) nrBins=100;
+        if(idmg>=3) nrBins=200;
         TH1D *h=new TH1D(Form("ht_%d_%s_%s",detNr[id],hPnm[ip].c_str(),type[idmg].c_str()),
                          Form("Total hits for det %d| part: %s| %s; energy [MeV]",
                               detNr[id],hPnm[ip].c_str(),type[idmg].c_str()),
-                         nrBins,-6,3.3);
+                         nrBins,-8,3.3);
 
         TH1D *a=new TH1D(Form("ha_%d_%s_%s",detNr[id],hPnm[ip].c_str(),type[idmg].c_str()),
                          Form("Hits/(%d ev) hits for det %d| part: %s| %s; energy [MeV]",
                               nAvg,detNr[id],hPnm[ip].c_str(),type[idmg].c_str()),
-                         nrBins,-6,3.3);
+                         nrBins,-8,3.3);
 
         //dummy histograms
         TH1D *v=new TH1D(Form("hv_%d_%s_%s",detNr[id],hPnm[ip].c_str(),type[idmg].c_str()),
                          Form("Hits/(%d ev) hits for det %d| part: %s| %s; energy [MeV]",
                               nAvg,detNr[id],hPnm[ip].c_str(),type[idmg].c_str()),
-                         nrBins,-6,3.3);
+                         nrBins,-8,3.3);
 
         if(idmg>=3){
-          double xBins[101];
+          double xBins[201];
           for(int i=0;i<=40;i++){
-            xBins[i]    = i*(0.1)/40;
-            xBins[40+i] = 0.1 + i*(10-0.1)/40;
-            if(i<=20)
-              xBins[80+i] = 10  + i*(2000 - 10)/20;
+            xBins[i]     = i*(0.000001)/40;
+            xBins[40+i]  = 0.000001 + i*(0.001-0.000001)/40;
+            xBins[80+i]  = 0.001 + i*(1-0.001)/40;
+            xBins[120+i] = 1 + i*(10 - 1)/40;
+            xBins[160+i] = 10 + i*(2000 - 10)/40;
           }
           h -> GetXaxis() -> Set(nBins,xBins);
           a -> GetXaxis() -> Set(nBins,xBins);
@@ -354,7 +355,7 @@ int processInput(int argc, char **argv){
   if( argc == 1 || (strcmp("--help",argv[1])==0)){
     cout << "Usage:\n$build/hallRad --infile [file.name] <other options>\n";
     cout << "Options:\n\t--help : print this usage guide\n";
-    cout << "\t--infile <file.name>: specify prexSim output file to process. Can be root file or list of patchs to rootfiles. \n";
+    cout << "\t--infile <file.name>: specify prexSim output file to process. Can be root file or list of paths to rootfiles. \n";
     cout << "\t--default : process a set of default detectors and use default averaing\n";
     cout << "\t\tdefault averging: "<<nAvg<<endl;
     cout << "\t\tdefault detectors:";

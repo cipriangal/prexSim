@@ -11,16 +11,17 @@
 
 using namespace CLHEP;
 
-MollerPrimaryGenAction::MollerPrimaryGenAction() : ebeam(1.05), mp(0.9382796)
+MollerPrimaryGenAction::MollerPrimaryGenAction()
+  :ebeam(1.05), mp(0.9382796),  rasterX(5*mm), rasterY(5*mm)
 {
   eventnumber=0;
-  
+
   //create a messenger for this class
   gunMessenger = new MollerPrimaryGeneratorMessenger(this);
 
   G4int n_particle = 1;
   particleGun = new G4ParticleGun(n_particle);
-  
+
   particleGun->SetParticleDefinition( G4ParticleTable::GetParticleTable()->FindParticle("e-") );
   particleGun->SetParticleMomentumDirection(G4ThreeVector(0.,0.,1.));
   particleGun->SetParticleEnergy(1.05*GeV);
@@ -57,18 +58,18 @@ void MollerPrimaryGenAction::GeneratePrimaries(G4Event* anEvent)
     //  case 4:
     //    GeneratePrimaries_phasespace_motts(anEvent);
     //    break;
-   case 4:
-     GeneratePrimaries_prex(anEvent);
-     break;
-   case 5:
-     GeneratePrimaries_g4raster(anEvent); /* Current setting for PREX simulation. Rakitha Thu May 16 19:04:49 EDT 2013 */
-     break;
-   case 6:
-     GeneratePrimaries_g4(anEvent);
-     break;
-   case 7:
-     GeneratePrimaries_g4Realraster(anEvent);
-     break;
+  case 4:
+    GeneratePrimaries_prex(anEvent);
+    break;
+  case 5:
+    GeneratePrimaries_g4raster(anEvent); /* Current setting for PREX simulation. Rakitha Thu May 16 19:04:49 EDT 2013 */
+    break;
+  case 6:
+    GeneratePrimaries_g4(anEvent);
+    break;
+  case 7:
+    GeneratePrimaries_g4Realraster(anEvent);
+    break;
   default:
     G4cerr << "Generator number " << GeneratorNumber << " does not exist!\n";
     G4cerr << "Choose which generator to use.\n";
@@ -90,36 +91,26 @@ void MollerPrimaryGenAction::GeneratePrimaries(G4Event* anEvent)
 
 void MollerPrimaryGenAction::GeneratePrimaries_g4raster(G4Event* anEvent)
 {
-  //For 5 by 5 mm raster
-  G4double vertex_x = (-0.25*cm + (0.5*cm*(G4UniformRand())));
-  G4double vertex_y = (-0.25*cm + (0.5*cm*(G4UniformRand())));
-  //For 4 by 4 mm raster
-  //G4double vertex_x = (-0.2*cm + (0.4*cm*(G4UniformRand())));
-  //G4double vertex_y = (-0.2*cm + (0.4*cm*(G4UniformRand())));
+  G4double vertex_x = (-rasterX/2 + (rasterX*(G4UniformRand())));
+  G4double vertex_y = (-rasterY/2 + (rasterY*(G4UniformRand())));
 
   G4double vertex_z = -1500.*cm;
-
-  //G4cout<<"x0 : y0 : z0 "<<vertex_x/cm<<" : "<<vertex_y/cm<<" : "<<vertex_z/cm<<G4endl;
 
   particleGun->SetParticlePosition(G4ThreeVector(vertex_x,vertex_y,vertex_z));
   //particleGun->SetParticleMomentumDirection(G4ThreeVector(0.,0.,1.));
 
   particleGun->GeneratePrimaryVertex(anEvent);
-  anEvent->GetPrimaryVertex(0)->GetPrimary(0);//->SetTrackID(99999);
+  anEvent->GetPrimaryVertex(0)->GetPrimary(0);
 
 }
 
 void MollerPrimaryGenAction::GeneratePrimaries_g4Realraster(G4Event* anEvent)
 {
-  //For 5 by 5 mm raster
-  G4double vertex_x = (-0.25*cm + (0.5*cm*(G4UniformRand())));
-  G4double vertex_y = (-0.25*cm + (0.5*cm*(G4UniformRand())));
-  //For 4 by 4 mm raster
-  //G4double vertex_x = (-0.2*cm + (0.4*cm*(G4UniformRand())));
-  //G4double vertex_y = (-0.2*cm + (0.4*cm*(G4UniformRand())));
+  G4double vertex_x = (-rasterX/2 + (rasterX * (G4UniformRand())));
+  G4double vertex_y = (-rasterY/2 + (rasterY * (G4UniformRand())));
   G4double z_0 = 1666.7*cm;
 
-  G4double vertex_z = -105.3*cm - z_0;
+  G4double vertex_z = -110.3*cm - z_0;
 
   G4double R, unitX,unitY,unitZ;
 
@@ -128,15 +119,11 @@ void MollerPrimaryGenAction::GeneratePrimaries_g4Realraster(G4Event* anEvent)
   unitY = vertex_y/R;
   unitZ = z_0/R;
 
-  //G4cout<<"x0 : y0 : z0 "<<vertex_x/cm<<" : "<<vertex_y/cm<<" : "<<vertex_z/cm<<G4endl;
-
   particleGun->SetParticlePosition(G4ThreeVector(0,0,vertex_z));
   particleGun->SetParticleMomentumDirection(G4ThreeVector(unitX,unitY,unitZ));
-  //particleGun->SetParticleMomentumDirection(G4ThreeVector(0,0,1.));
 
   particleGun->GeneratePrimaryVertex(anEvent);
-  anEvent->GetPrimaryVertex(0)->GetPrimary(0);//->SetTrackID(99999);
-
+  anEvent->GetPrimaryVertex(0)->GetPrimary(0);
 }
 
 void MollerPrimaryGenAction::GeneratePrimaries_g4(G4Event* anEvent)

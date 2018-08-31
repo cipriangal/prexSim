@@ -20,13 +20,11 @@
 ########
 #### beam energy
 /gun/energy 3. GeV
-#### Scale factor for fringe mag field
-/moller/field/setFieldScaleFactor 3.
-####Limits for Fringe field
-/moller/field/setLowLim -44 cm
-/moller/field/setHighLim 44 cm
+#### Scale B field configuration
+/moller/field/setConfiguration happex2
+/moller/field/useQ1fringefield false
 ### Geometry files
-/moller/det/setDetectorFileName geometry/happex2.xml
+/moller/det/setDetectorFileName geometry/happex2.gdml
 
 
 ########
@@ -37,11 +35,9 @@
 ########
 #### beam energy
 #/gun/energy 3. GeV
-#### Scale factor for fringe mag field
-#/moller/field/setFieldScaleFactor 0.
-####Limits for Fringe field ##These don't matter with scaleFactor 0
-#/moller/field/setLowLim -74 cm
-#/moller/field/setHighLim 74 cm
+#### Scale B field configuration
+#/moller/field/setConfiguration happex3
+#/moller/field/useQ1fringefield false
 #### Geometry files
 #/moller/det/setDetectorFileName geometry/happex3.xml
 

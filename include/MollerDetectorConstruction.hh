@@ -230,10 +230,11 @@ private:
   G4Material* concmat;
   G4Material* bormat;
   G4Material* borpoly;
-  G4Material* borhdpe;
+  G4Material* boronCarbide;
+  G4Material* lightConcrete;
   G4Material* borcrete;
-  G4Material* halfbor;
-  G4Material* carbide;
+  G4Material* bor5crete;
+  G4Material* borhdpe;
   G4Material* polycrete;
   G4Material* fluorpoly;
   G4Material* W;
@@ -246,8 +247,6 @@ private:
   G4Material* Cu;
   G4Material* Cr;
   G4Material* F;
-  G4Material* Mg;
-  G4Material* Na;
   G4Material* Ni;
   G4Material* O;
   G4Material* Fe;

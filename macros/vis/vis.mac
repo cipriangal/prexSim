@@ -27,7 +27,7 @@
 # Specify zoom value:
 /vis/viewer/set/viewpointThetaPhi 90 180 deg
 /vis/viewer/zoom 7.0
-/vis/viewer/panTo 0 0 m				  
+/vis/viewer/pan 0 40 m
 /vis/viewer/set/lightsThetaPhi 40 50
 /vis/viewer/set/cutawayMode intersection
 /vis/viewer/addCutawayPlane -500  0  0  cm 1 0 0

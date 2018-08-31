@@ -33,7 +33,7 @@ config=prexII
 #ident=v2Point6degSAMs
 #ident=v1ThickConcSS
 #ident=v1
-ident=v3NewTargPos
+ident=v3usTgt
 
 #output=input
 #output=v2NoSAMsLid
@@ -45,7 +45,8 @@ ident=v3NewTargPos
 #output=v2BoronSWCollShields
 #output=v1Edit
 #output=v3OldCollShields
-output=v3DumpShieldCarbide
+#output=v3current
+output=v3CollDets
 
 start_run=0
 end_run=50
@@ -59,5 +60,5 @@ uva_id=ajz3ee
 jlab_id=ajzec
 
 #comma separated, no spaces, correct capitalization is important
-subassemblies=TargetChamber,CollShields,BeamPipe,DumpShield,HRSplatform,BeamPipe_newSAMs,BeamPipe_SAMs,BeamPipe_newSAMsAlFlange,Skyshine,BeamPipe_P2_6inDonut_noSAMs,Q1HosesCylRedesign,CollShieldBlock,DumpShieldBorated,DumpShieldCarbide
-#subassemblies=BeamPipe_12GeV_SAMs,HRSplatform,TritiumTarget,DumpShieldBorated,DumpShieldCarbide
+subassemblies=KriptoniteDetectors,LeftHRSplatform,RightHRSplatform,TargetChamber,DumpShield,BeamPipe_newSAMs,BeamPipe_SAMs,BeamPipe_newSAMsAlFlange,SkyShineShieldV2,BeamPipe_P2_6inDonut_noSAMs,Q1HosesCylRedesign,CollShieldBlock
+#subassemblies=BeamPipe_12GeV_SAMs,HRSplatform,TritiumTarget

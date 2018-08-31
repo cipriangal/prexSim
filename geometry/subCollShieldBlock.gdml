@@ -49,7 +49,7 @@
     <constant name="width_top_box_conc_cut5" value="8.514*cm_factor"/>
     <constant name="height_bot_box_conc_cut5" value="3.1875*cm_factor"/>
     <constant name="width_bot_box_conc_cut5" value="2.25*cm_factor"/>
-    
+
     <position name="pos_center" x="0" y="0" z="0"/>
     <position name="pos_rel_block_to_add" unit="cm" x="0" y="-(height_plast_block + height_plast_add)/2." z="0"/>
     <position name="pos_rel_plast_cut1" unit="cm" x="0" y="-(height_plast_block - height_plast_cut1)/2. - height_plast_add" z="-(length_plast_block - length_plast_cut1)/2."/>
@@ -70,32 +70,75 @@
     <position name="pos_rel_conc_cut5_box_to_box" unit="cm" x="0" y="-(height_top_box_conc_cut5 + height_bot_box_conc_cut5)/2." z="0"/>
     <position name="pos_rel_conc_cut5_box_to_bot_tube" unit="cm" x="0" y="-(height_top_box_conc_cut5)/2. - height_bot_box_conc_cut5" z="0"/>
     <position name="pos_rel_conc_cut5" unit="cm" x="0" y="0" z="0"/>
-  
+
+        <!-- Collimator Tube and Flages -->
+    <constant name="coll_tube_inner_r" value="19.84375"/>
+    <constant name="coll_tube_outer_r" value="20.32"/>
+    <constant name="coll_tube_length" value="31.115"/>
+    <constant name="coll_front_flange_inner_r" value="9.8425"/>
+    <constant name="coll_front_flange_length_1" value="1.0414"/>
+    <constant name="coll_front_flange_length_2" value="1.27"/>
+    <constant name="coll_back_flange_inner_r" value="20.0787"/>
+    <constant name="coll_back_flange_outer_r" value="24.765"/>
+    <constant name="coll_back_flange_length" value="3.33"/>
+    <constant name="coll_shield_z_pos" value="-46.324"/>
+    <constant name="coll_tube_z_pos" value="-25.4007245"/>
+
+    <constant name="outer_flange_main_radius" value="9.781*cm_factor"/>
+    <constant name="inner_flange_sec_radius" value="8.572*cm_factor"/>
+    <constant name="flange_total_length" value="1.312*cm_factor"/>
+    <constant name="flange_us_length" value="0.171*cm_factor"/>
+    <constant name="flange_cone_cut_us_radius" value="0.32*cm_factor"/>
+    <constant name="flange_cone_cut_ds_radius" value="0.3435*cm_factor"/>
+    <constant name="flange_cyl_cut_radius" value="2.51*cm_factor"/>
+    <constant name="flange_cyl_cut_length" value="2*cm_factor"/>
+
+    <position name="pos_rel_coll_tube" unit="cm" x="0" y="0" z="coll_tube_z_pos - coll_shield_z_pos"/>
+    <position name="pos_rel_coll_front_flange" unit="cm" x="0" y="0"
+	      z="-(coll_tube_length + coll_front_flange_length_1)/2."/>
+    <position name="pos_rel_coll_back_flange" unit="cm" x="0" y="0"
+	      z="(coll_tube_length + coll_back_flange_length)/2."/>
+    <position name="pos_rel_coll_front_flange_ext" unit="cm" x="0" y="0"
+	      z="(coll_front_flange_length_1 + coll_front_flange_length_2)/2."/>
+
+    <position name="pos_rel_flange_us_cut" unit="cm" x="0" y="0" z="(flange_us_length - flange_total_length)/2."/>
+    <position name="pos_rel_flange_cone_cut" unit="cm" x="0" y="0" z="(-flange_total_length)/2."/>
+    <position name="pos_rel_flange_cyl_cut_r" unit="cm" x="-3.9859*cm_factor" y="0" z="0"/>
+    <position name="pos_rel_flange_cyl_cut_l" unit="cm" x="3.9859*cm_factor" y="0" z="0"/>
+    <position name="pos_rel_conc_cut3_add" unit="cm" x="0" y="0" z="(length_conc_cut3 + flange_total_length)/2."/>
+    <position name="pos_global_flange" unit="cm" x="0" y="0" z="coll_tube_z_pos - coll_shield_z_pos + (coll_tube_length + flange_total_length)/2. + coll_back_flange_length + 0.25"/>
+    <rotation name="rot_flange_cyl_cut_l" unit="deg" x="0" y="5" z="0"/>
+    <rotation name="rot_flange_cyl_cut_r" unit="deg" x="0" y="-5" z="0"/>
+
   </define>
-  
+
   &materials;
 
   <solids>
-    <box name="plast_block_solid_0" lunit="cm" x="width_plast_block" y="height_plast_block" z="length_plast_block"/>
+    <box name="plast_block_solid_0" lunit="cm" x="width_plast_block"
+	 y="height_plast_block" z="length_plast_block"/>
     <box name="plast_add_solid" lunit="cm" x="width_plast_block" y="height_plast_add" z="length_plast_block"/>
     <union name="plast_block_solid_1">
       <first ref="plast_block_solid_0"/>
       <second ref="plast_add_solid"/>
       <positionref ref="pos_rel_block_to_add"/>
     </union>
-    <box name="plast_cut1_solid" lunit="cm" x="width_plast_cut1" y="height_plast_cut1" z="length_plast_cut1 + 0.01"/>
+    <box name="plast_cut1_solid" lunit="cm" x="width_plast_cut1"
+	 y="height_plast_cut1" z="length_plast_cut1 + 0.01"/>
     <subtraction name="plast_block_solid_2">
       <first ref="plast_block_solid_1"/>
       <second ref="plast_cut1_solid"/>
       <positionref ref="pos_rel_plast_cut1"/>
     </subtraction>
-    <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="plast_cut2_solid" rmin="0." rmax="r_plast_cut2 + 0.01" z="length_plast_cut2"/>
+    <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="plast_cut2_solid"
+	  rmin="0." rmax="r_plast_cut2 + 0.01" z="length_plast_cut2"/>
     <subtraction name="plast_block_solid_3">
       <first ref="plast_block_solid_2"/>
       <second ref="plast_cut2_solid"/>
       <positionref ref="pos_rel_plast_cut2"/>
     </subtraction>
-    <tube name="tube_plast_cut3" lunit="cm" aunit="deg" startphi="0" deltaphi="360" rmin="0" rmax="r_plast_cut3 + 0.01" z="length_plast_cut3 + 0.01"/>
+    <tube name="tube_plast_cut3" lunit="cm" aunit="deg" startphi="0" deltaphi="360"
+	  rmin="0" rmax="r_plast_cut3 + 0.01" z="length_plast_cut3 + 0.01"/>
     <trap name="trap_plast_cut3" z="length_plast_cut3 + 0.01" theta="0" phi="0" y1="height_plast_trap_cut3" x1="width_plast_box_cut3" x2="width_plast_trap_cut3" alpha1="1" y2="height_plast_trap_cut3" x3="width_plast_box_cut3" x4="width_plast_trap_cut3" alpha2="1" aunit="deg" lunit="cm"/>
     <box name="box_plast_cut3" lunit="cm" x="width_plast_box_cut3" y="height_plast_box_cut3 + 0.01" z="length_plast_cut3 + 0.01"/>
     <union name="plast_cut3_solid_0">
@@ -180,24 +223,108 @@
       <positionref ref="pos_rel_conc_cut5_box_to_bot_tube"/>
     </subtraction>
 
-    <union name="coll_shield_mother">
+    <!-- Collimator Tube and Flanges -->
+    <tube name="coll_tube_middle" aunit="deg" lunit="cm" startphi="0" deltaphi="360"
+          rmin="coll_tube_inner_r" rmax="coll_tube_outer_r" z="coll_tube_length"/>
+    <tube name="coll_front_flange_part1" aunit="deg" lunit="cm" startphi="0" deltaphi="360"
+	  rmin="coll_front_flange_inner_r" rmax="coll_tube_outer_r" z="coll_front_flange_length_1"/>
+    <tube name="coll_front_flange_part2" aunit="deg" lunit="cm" startphi="0" deltaphi="360"
+	  rmin="coll_front_flange_inner_r" rmax="coll_tube_inner_r" z="coll_front_flange_length_2"/>
+    <tube name="coll_back_flange" aunit="deg" lunit="cm" startphi="0" deltaphi="360"
+	  rmin="coll_back_flange_inner_r" rmax="coll_back_flange_outer_r" z="coll_back_flange_length"/>
+    <union name="coll_front_flange">
+      <first ref="coll_front_flange_part1"/>
+      <second ref="coll_front_flange_part2"/>
+      <positionref ref="pos_rel_coll_front_flange_ext"/>
+    </union>
+    <union name="coll_tube_and_front">
+      <first ref="coll_tube_middle"/>
+      <second ref="coll_front_flange"/>
+      <positionref ref="pos_rel_coll_front_flange"/>
+    </union>
+    <union name="coll_tube_solid">
+      <first ref="coll_tube_and_front"/>
+      <second ref="coll_back_flange"/>
+      <positionref ref="pos_rel_coll_back_flange"/>
+    </union>
+    
+    <tube name="flange_0_solid" aunit="deg" lunit="cm" startphi="0" deltaphi="360"
+          rmin="0" rmax="outer_flange_main_radius" z="flange_total_length"/>
+    <tube name="flange_tube_cut_solid" aunit="deg" lunit="cm" startphi="0" deltaphi="360"
+          rmin="inner_flange_sec_radius" rmax="outer_flange_main_radius" z="flange_us_length + 0.01"/>
+    <polycone aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="flange_cone_cut_solid">
+      <zplane rmin="0" rmax="flange_cone_cut_us_radius" z="-0.01"/>
+      <zplane rmin="0" rmax="flange_cone_cut_ds_radius" z="flange_total_length + 0.01"/>
+    </polycone>
+    <tube name="flange_cyl_cut_solid" aunit="deg" lunit="cm" startphi="0" deltaphi="360"
+          rmin="0" rmax="flange_cyl_cut_radius" z="flange_cyl_cut_length"/>
+    <subtraction name="flange_1_solid">
+      <first ref="flange_0_solid"/>
+      <second ref="flange_tube_cut_solid"/>
+      <positionref ref="pos_rel_flange_us_cut"/>
+    </subtraction>
+    <subtraction name="flange_2_solid">
+      <first ref="flange_1_solid"/>
+      <second ref="flange_cone_cut_solid"/>
+      <positionref ref="pos_rel_flange_cone_cut"/>
+    </subtraction>
+    <subtraction name="flange_3_solid">
+      <first ref="flange_2_solid"/>
+      <second ref="flange_cyl_cut_solid"/>
+      <positionref ref="pos_rel_flange_cyl_cut_r"/>
+      <rotationref ref="rot_flange_cyl_cut_r"/>
+    </subtraction>
+    <subtraction name="flange_solid">
+      <first ref="flange_3_solid"/>
+      <second ref="flange_cyl_cut_solid"/>
+      <positionref ref="pos_rel_flange_cyl_cut_l"/>
+      <rotationref ref="rot_flange_cyl_cut_l"/>
+    </subtraction>
+
+    <union name="coll_shield_mother0">
       <first ref="plast_block_solid"/>
       <second ref="conc_block_solid"/>
       <positionref ref="pos_global_conc_block"/>
     </union>
+    <union name="coll_shield_mother1">
+      <first ref="coll_shield_mother0"/>
+      <second ref="coll_tube_solid"/>
+      <positionref ref="pos_rel_coll_tube"/>
+    </union>
+    <union name="coll_shield_mother">
+      <first ref="coll_shield_mother1"/>
+      <second ref="flange_solid"/>
+      <positionref ref="pos_global_flange"/>
+    </union>
 
   </solids>
-  
+
   <structure>
     <volume name="plast_block_logic">
-      <materialref ref="Borated_HDPE"/>
+      <materialref ref="Shield"/>
+<!--      <materialref ref="Borated_HDPE"/>-->
       <solidref ref="plast_block_solid"/>
+      <auxiliary auxtype="SensDet" auxvalue="volumeN3121"/>
     </volume>
+
     <volume name="conc_block_logic">
-      <materialref ref="Borated_Concrete"/>
+      <materialref ref="Concrete"/>
+<!--      <materialref ref="Borated_Concrete"/> -->
       <solidref ref="conc_block_solid"/>
+      <auxiliary auxtype="SensDet" auxvalue="volumeN4101"/>
     </volume>
-    
+
+    <volume name="coll_tube_logic">
+      <materialref ref="Aluminum"/>
+      <solidref ref="coll_tube_solid"/>
+    </volume>
+
+    <volume name="flange_logic">
+      <materialref ref="StainlessSteel"/>
+      <solidref ref="flange_solid"/>
+      <auxiliary auxtype="SensDet" auxvalue="volumeN4102"/>
+    </volume>
+
     <volume name="coll_shields_logic">
       <materialref ref="Vacuum"/>
       <solidref ref="coll_shield_mother"/>
@@ -211,10 +338,20 @@
         <volumeref ref="conc_block_logic"/>
         <positionref ref="pos_global_conc_block"/>
       </physvol>
-      
+
+      <physvol name="coll_tube">
+        <volumeref ref="coll_tube_logic"/>
+        <positionref ref="pos_rel_coll_tube"/>
+      </physvol>
+
+      <physvol name="flange">
+        <volumeref ref="flange_logic"/>
+        <positionref ref="pos_global_flange"/>
+      </physvol>
+
     </volume>
   </structure>
-  
+
   <setup name="Coll_Shields" version="1.0">
     <world ref="coll_shields_logic"/>
   </setup>

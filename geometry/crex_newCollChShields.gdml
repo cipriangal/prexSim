@@ -957,8 +957,7 @@
           lunit="cm" name="tubeTarget"
           rmin="inner_rad_targ"
           rmax="outer_rad_targ"
-          z="0.05" />
-    <!-- z="0.6" /> -->
+	  z="0.6" />
 
     <!-- Scattering Chamber -->
     <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="outScattChamber" rmin="0.0" rmax="outer_r_sc" z="height_sc" />
@@ -2456,8 +2455,8 @@
     </volume>
 
     <volume name="target_logic">
-      <!-- <materialref ref="Calcium48"/> -->
-      <materialref ref="PureLead"/>
+      <materialref ref="Calcium48"/>
+      <!-- <materialref ref="PureLead"/> -->
       <solidref ref="tubeTarget"/>
     </volume>
 
@@ -2700,12 +2699,6 @@
         <positionref ref="pos_global_coll_jacket"/>
       </physvol>
 
-      <physvol name="collimator_pig_shield">
-        <volumeref ref="coll_pig_shield"/>
-        <positionref ref="pos_global_pig_shield"/>
-        <rotationref ref="scRot_1"/>
-      </physvol>
-
       <physvol name="target">
         <volumeref ref="target_logic"/>
         <positionref ref="targ_center"/>
@@ -2847,8 +2840,8 @@
       </physvol>
 
       <physvol>
-        <file name="geometry/subCollShields.gdml"/>
-        <position name="coll_shield_pos" unit="cm" x="0" y="-31.802" z="-57.531"/>
+        <file name="geometry/subCollShieldBlock.gdml"/>
+        <position name="coll_shield_pos" unit="cm" x="0" y="0" z="-46.324"/>
       </physvol>
 
       <physvol>
@@ -2858,7 +2851,6 @@
 
       <physvol>
         <file name="geometry/subBeamPipe_P2_6inDonut_noSAMs.gdml"/>
-	<!-- z= 132.335 -->
         <positionref ref="dDet_beamline_pos_1"/>
       </physvol>
 

@@ -2700,12 +2700,6 @@
         <positionref ref="pos_global_coll_jacket"/>
       </physvol>
 
-      <physvol name="collimator_pig_shield">
-        <volumeref ref="coll_pig_shield"/>
-        <positionref ref="pos_global_pig_shield"/>
-        <rotationref ref="scRot_1"/>
-      </physvol>
-
       <physvol name="target">
         <volumeref ref="target_logic"/>
         <positionref ref="targ_center"/>
@@ -2847,13 +2841,13 @@
       </physvol>
 
       <physvol>
-        <file name="geometry/subCollShields.gdml"/>
-        <position name="coll_shield_pos" unit="cm" x="0" y="-31.802" z="-57.531"/>
+        <file name="geometry/subCollShieldBlock.gdml"/>
+        <position name="coll_shield_pos" unit="cm" x="0" y="0" z="-46.324"/>
       </physvol>
 
       <physvol>
-        <file name="geometry/subSkyShineShield.gdml"/>
-        <position name="pos_rel_skyShineShield" unit="cm" x="0" y="70" z="-100.4"/>
+        <file name="geometry/subSkyShineShieldV2.gdml"/>
+        <position name="pos_global_skyShineShield" unit="cm" x="0" y="77.6" z="-130.4"/>
       </physvol>
 
       <physvol>

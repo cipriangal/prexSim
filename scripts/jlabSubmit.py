@@ -38,7 +38,7 @@ def main():
 
     createXMLfile(sourceDir,outputDir+"/"+jobName,jobName,nrStart,nrStop,email)
 
-    print "All done"
+    print "All done for configuration ", configuration+ident_out," for #s between ",nrStart, " and ", nrStop
 
 
 def createMacFiles(config,outDir,sourceDir,nrEv,jobNr,identifier):
@@ -60,11 +60,11 @@ def createMacFiles(config,outDir,sourceDir,nrEv,jobNr,identifier):
     f.write("/random/setSeeds "+str(seedA)+" "+str(seedB)+"\n")
 
     if config=="crex":
-        f.write("/gun/energy 2. GeV\n")
+        f.write("/gun/energy 2.22 GeV\n")
         f.write("/moller/field/setConfiguration crex\n")
         f.write("/moller/det/setDetectorFileName geometry/crex_"+identifier+".gdml\n")
     elif config=="prexII":
-    	f.write("/gun/energy 1. GeV\n")
+    	f.write("/gun/energy 0.95 GeV\n")
         f.write("/moller/field/setConfiguration prex2\n")
         f.write("/moller/det/setDetectorFileName geometry/prexII_"+identifier+".gdml\n")
     elif config=="tritium":
@@ -72,6 +72,18 @@ def createMacFiles(config,outDir,sourceDir,nrEv,jobNr,identifier):
         f.write("/moller/field/setFieldScaleFactor 0.\n")
         f.write("/moller/field/setLowLim -74 cm\n/moller/field/setHighLim 74 cm\n")
         f.write("/moller/det/setDetectorFileName geometry/tritium_"+identifier+".gdml\n")
+    elif config=="prex1":
+    	f.write("/gun/energy 1.06 GeV\n")
+        f.write("/prex/gun/setRasterX 5 mm\n")
+        f.write("/prex/gun/setRasterY 5 mm\n")
+        f.write("/moller/field/setConfiguration prex1\n")
+        f.write("/moller/det/setDetectorFileName geometry/prex1"+identifier+".gdml\n")
+    elif config=="happex2":
+    	f.write("/gun/energy 3. GeV\n")
+        f.write("/prex/gun/setRasterX 5 mm\n")
+        f.write("/prex/gun/setRasterY 5 mm\n")
+        f.write("/moller/field/setConfiguration happex2\n")
+        f.write("/moller/det/setDetectorFileName geometry/happex2"+identifier+".gdml\n")
 
     f.write("/moller/field/useQ1fringeField false\n")
 
@@ -97,7 +109,7 @@ def createXMLfile(source,writeDir,idRoot,nStart,nStop,email):
 
     f.write("  <Name name=\""+idRoot+"\"/>\n")
     f.write("  <OS name=\"centos7\"/>\n")
-    f.write("  <Memory space=\"3500\" unit=\"MB\"/>\n")
+    f.write("  <Memory space=\"4500\" unit=\"MB\"/>\n")
 
     f.write("  <Command><![CDATA[\n")
     f.write("    pwd\n")
@@ -129,8 +141,6 @@ def make_tarfile(sourceDir,config):
     tar.add(sourceDir+"/build/prexsim",arcname="prexsim")
     tar.add(sourceDir+"/geometry/schema",arcname="geometry/schema")
     tar.add(sourceDir+"/geometry/"+config+".gdml" ,arcname="geometry/"+config+".gdml")
-    tar.add(sourceDir+"/geometry/kriptoniteDetectors.gdml",arcname="geometry/kriptoniteDetectors.gdml")
-    tar.add(sourceDir+"/geometry/kriptoniteDetectors_withHRS.gdml",arcname="geometry/kriptoniteDetectors_withHRS.gdml")
     tar.add(sourceDir+"/geometry/kriptoniteDetectors_tritium.gdml",arcname="geometry/kriptoniteDetectors_tritium.gdml")
     for subassem in cr.subassems():
         tar.add(sourceDir + "/geometry/sub" + subassem + ".gdml",arcname="geometry/sub" + subassem + ".gdml")

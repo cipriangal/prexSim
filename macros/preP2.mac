@@ -19,14 +19,27 @@
 #PREX-II collimator.  Latest shielding.
 ############
 #### beam energy
-/gun/energy 1.0 GeV ##PREX
+/gun/energy 0.95 GeV ##PREX
+#### Rastser size
+/prex/gun/setRasterX 4 cm
+/prex/gun/setRasterY 4 cm
 #### Set B field configuration (prex1, prex2, crex)
 /moller/field/setConfiguration prex2
 /moller/field/useQ1fringeField false
 #### Geometry files
+<<<<<<< HEAD
 #/moller/det/setDetectorFileName geometry/prexII_current.gdml
 /moller/det/setDetectorFileName geometry/prexII_v2geom.gdml
+=======
+#/moller/det/setDetectorFileName geometry/prex2_newCollChShields.gdml
+/moller/det/setDetectorFileName geometry/prex2_newSky.gdml
+>>>>>>> fa7be3298e10a4d4e258902a84b1950fc5a51755
 
+#/moller/det/setDetectorFileName geometry/subBeamPipe_6inDonut_noSAMs.gdml
+#/moller/det/setDetectorFileName geometry/subBeamPipe.gdml
+#/moller/det/setDetectorFileName geometry/subSkyShineShield.gdml
+#/moller/det/setDetectorFileName geometry/subCollShields.gdml
+#/moller/det/setDetectorFileName geometry/subTargetChamber.gdml
 
 /moller/det/setShieldMaterial polyethylene
 /testhadr/CutsAll          0.7 mm

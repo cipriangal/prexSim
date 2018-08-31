@@ -1,23 +1,15 @@
 void collimatorPower(){
   int nev=9e5;
-  //string fnm="/lustre/expphy/volatile/halla/parity/ciprian/farmOut/prexII_current_900kEv_00000/o_prexSim.root";
-  //string fnm="/lustre/expphy/volatile/halla/parity/ciprian/farmOut/crex5_current_900kEv_00000/o_prexSim.root";
 
-  //string fnm="/lustre/expphy/volatile/halla/parity/ciprian/farmOut/prexII_smallerCollNeck_900kEv_00000/o_prexSim.root";
-  //string fnm="/lustre/expphy/volatile/halla/parity/ciprian/farmOut/crex5_smallerCollNeck_900kEv_00000/o_prexSim.root";
-
-  //string fnm="/lustre/expphy/volatile/halla/parity/ciprian/farmOut/prexII_smallerCollPipe2Donut_900kEv_00000/o_prexSim.root";
-  // string fnm="/lustre/expphy/volatile/halla/parity/ciprian/farmOut/crex5_smallerCollPipe2Donut_900kEv_00000/o_prexSim.root";
-
-  //string fnm="/lustre/expphy/volatile/halla/parity/ciprian/farmOut/prexII_smallerCollMidDonut_900kEv_00000/o_prexSim.root";
-   string fnm="/lustre/expphy/volatile/halla/parity/ciprian/farmOut/crex5_smallerCollMidDonut_900kEv_00000/o_prexSim.root";
+  string fnm="/lustre/expphy/volatile/halla/parity/ciprian/farmOut/prexII_newHRS_newDet_900kEv_00000/o_prexSim.root";
 
   TFile *fin=TFile::Open(fnm.c_str(),"READ");
   TNtuple *t=(TNtuple*)fin->Get("geant");
 
-  TH1D *h1=new TH1D("h1","US face;Energy [MeV];r[mm]",100,0,120);
-  TH1D *h2=new TH1D("h2","DS face;Energy [MeV];r[mm]",100,0,120);
-  TH1D *h3=new TH1D("h3","difference;Energy [MeV];r[mm]",100,0,120);
+  TH1D *h1=new TH1D("h1","US face;r[mm];Energy [MeV]",100,0,120);
+  TH1D *h2=new TH1D("h2","DS face;r[mm];Energy [MeV]",100,0,120);
+  TH1D *h3=new TH1D("h3","difference;r[mm];Energy [MeV]",100,0,120);
+  gStyle->SetOptStat("eMiou");
 
   TCanvas *c1=new TCanvas("c1","c1",1200,400);
   c1->Divide(3);

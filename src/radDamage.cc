@@ -26,11 +26,11 @@ double radDamage::getNEIL(int partType,double energy, double theta){
   if( abs(theta/(pi/2) - 1) < 0.01 ) theta=pi/2*1.01;
   interpolatedValue /= abs(cos(theta));
 
-  if(interpolatedValue < 0){
+  if(interpolatedValue < 0 || std::isnan(interpolatedValue) || std::isinf(interpolatedValue)){
     cout<<__LINE__<<"\t"<<__PRETTY_FUNCTION__<<endl
-        <<"\tNegative interpolated value: "<<interpolatedValue
-        <<"\t for nDmg "<<nDmg<<"\t and energy "<<energy<<endl;
-    return -1;
+        <<"\tBad interpolated value: "<<interpolatedValue
+        <<"\t for nDmg "<<nDmg<<"\t and energy "<<energy<<"\t and theta"<<theta<<endl;
+    return 0;
   }
 
   return interpolatedValue;
@@ -53,23 +53,22 @@ double radDamage::getMREM(int partType, double energy, double theta){
   double interpolatedValue = interpolate(xValMREM[nDmg],yValMREM[nDmg],energy);
   //if(nDmg <= 2){cout<<"Before Calculation: "<<interpolatedValue<<endl;}
 
-  if(interpolatedValue < 0){
-    cout<<__LINE__<<"\t"<<__PRETTY_FUNCTION__<<endl
-        <<"\tNegative interpolated value: "<<interpolatedValue
-        <<"\t for nDmg "<<nDmg<<"\t and energy "<<energy<<endl;
-    return -1;
-  }
-
   double pi=acos(-1);
   if( abs(theta/(pi/2) - 1) < 0.01 ) theta=pi/2*1.01;
 
   if(nDmg==0)
     interpolatedValue = 1*interpolatedValue/abs(cos(theta));
-  else if(nDmg==1)
+  else if(nDmg==1 && interpolatedValue > 0)
     interpolatedValue = 1/(3600*interpolatedValue*abs(cos(theta)));
-  else{
+  else if(nDmg==2 && interpolatedValue > 0 )
     interpolatedValue = 1/(3600*interpolatedValue*abs(cos(theta)));
     //cout<<"Returned value: "<<interpolatedValue<<"; From theta: "<<theta<<endl;
+
+  if(interpolatedValue < 0 || std::isnan(interpolatedValue) || std::isinf(interpolatedValue)){
+    cout<<__LINE__<<"\t"<<__PRETTY_FUNCTION__<<endl
+        <<"\tBad interpolated value: "<<interpolatedValue
+        <<"\t for nDmg "<<nDmg<<"\t and energy "<<energy<<"\t and theta"<<theta<<endl;
+    return 0;
   }
 
   return interpolatedValue;

@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+
+<gdml xmlns:gdml="http://cern.ch/2001/Schemas/GDML"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="./schema/gdml.xsd">
+
+  <define>
+    <!-- Positions are relative to upstr sheild -->
+    <constant name="us_block_length" value="190"/>
+    <constant name="us_block_width" value="125"/>
+    <constant name="us_block_height" value="40"/>
+    <constant name="us_cut_length" value="142.55"/>
+    <constant name="us_cut_1_width" value="13.24"/>
+    <constant name="us_cut_2_height" value="30.591586422"/>
+    <constant name="us_cut_2_width" value="87.162"/>
+    <constant name="ds_block_length" value="140"/>
+    <constant name="ds_block_width" value="125"/>
+    <constant name="ds_block_height" value="40"/>
+    <constant name="ds_y_pos" value="62.86"/>
+    <constant name="ds_z_pos" value="(us_block_length + ds_block_length)/2."/>
+    <constant name="us_block_add_length" value="125.227"/>
+    <constant name="us_block_add_width" value="65.8876"/>
+    <constant name="us_block_add_height" value="30.48"/>
+    <constant name="us_block_add_x_rel" value="6.619875"/>
+    <constant name="us_block_add_y_rel" value="(us_block_height + us_block_add_height)/2."/>
+    <constant name="us_block_add_z_rel" value="31.116080331"/>
+
+    <position name="pos_center" unit="cm" x="0" y="0" z="0"/>
+    <position name="pos_rel_cut_1" unit="cm" x="-(us_block_width - us_cut_1_width)/2." y="0" z="(- us_block_length + us_cut_length)/2. - 0.1"/>
+    <position name="pos_rel_cut_2" unit="cm" x="-(us_block_width)/2." y="0" z="(- us_block_length + us_cut_length)/2. - 0.1"/>
+    <position name="pos_global_dwn_shield" unit="cm" x="0" y="ds_y_pos" z="ds_z_pos"/>
+    <position name="pos_rel_ups_add" unit="cm" x="us_block_add_x_rel" y="us_block_add_y_rel" z="us_block_add_z_rel"/>
+    <rotation name="cut_rot" unit="deg" x="0" y="0" z="-45"/>
+
+    <position unit="cm" name="pos_bottom_det_giantShield" x="0" y="-23" z="40"/>
+    <position unit="cm" name="pos_top_det_giantShield" x="0" y="100" z="40"/>
+  </define>
+
+  <materials>
+    <material Z="1" name="Vacuum" state="gas">
+      <T unit="K" value="2.73"/>
+      <P unit="pascal" value="3e-18"/>
+      <D unit="g/cm3" value="1e-25"/>
+      <atom unit="g/mole" value="1.01"/>
+    </material>
+
+    <material Z="13" name="Concrete" state="solid">
+      <T unit="K" value="298"/>
+      <D unit="g/cm3" value="2.699"/>
+      <atom unit="g/mole" value="26.982"/>
+    </material>
+
+  </materials>
+
+  <solids>
+    <box name="shield_ups_solid_0" lunit="cm" x="us_block_width" y="us_block_height" z="us_block_length"/>
+    <box name="shield_ups_cut_0" lunit="cm" x="us_cut_1_width" y="us_block_height" z="us_cut_length"/>
+    <box name="shield_ups_cut_1" lunit="cm" x="us_cut_2_width" y="us_cut_2_height" z="us_cut_length"/>
+    <box name="shield_dwn_solid" lunit="cm" x="ds_block_width" y="ds_block_height" z="ds_block_length"/>
+    <box name="shield_ups_add" lunit="cm" x="us_block_add_width" y="us_block_add_height" z="us_block_add_length"/>
+
+    <box lunit="cm" name="det_solid" x="130" y="0.1" z="500"/>
+
+    <subtraction name="shield_ups_solid_1">
+      <first ref="shield_ups_solid_0"/>
+      <second ref="shield_ups_cut_0"/>
+      <positionref ref="pos_rel_cut_1"/>
+    </subtraction>
+    <subtraction name="shield_ups_solid_2">
+      <first ref="shield_ups_solid_1"/>
+      <second ref="shield_ups_cut_1"/>
+      <positionref ref="pos_rel_cut_2"/>
+      <rotationref ref="cut_rot"/>
+    </subtraction>
+    <union name="shield_ups_solid">
+      <first ref="shield_ups_solid_2"/>
+      <second ref="shield_ups_add"/>
+      <positionref ref="pos_rel_ups_add"/>
+    </union>
+
+    <union name="skyshine_world">
+      <first ref="shield_ups_solid"/>
+      <second ref="shield_dwn_solid"/>
+      <positionref ref="pos_global_dwn_shield"/>
+    </union>
+
+    <union name ="skyUnion0">
+      <first ref="skyshine_world"/>
+      <second ref="det_solid"/>
+      <positionref ref="pos_bottom_det_giantShield"/>
+    </union>
+    <union name ="skyUnion1">
+      <first ref="skyUnion0"/>
+      <second ref="det_solid"/>
+      <positionref ref="pos_top_det_giantShield"/>
+    </union>
+
+  </solids>
+
+  <structure>
+
+    <volume name="shield_ups_logic">
+      <materialref ref="Concrete"/>
+      <solidref ref="shield_ups_solid"/>
+    </volume>
+
+    <volume name="shield_dwn_logic">
+      <materialref ref="Concrete"/>
+      <solidref ref="shield_dwn_solid"/>
+    </volume>
+
+    <volume name="bottom_det_giantShield_logic">
+      <materialref ref="Vacuum"/>
+      <solidref ref="det_solid"/>
+      <auxiliary auxtype="SensDet" auxvalue="volumeN4111"/>
+    </volume>
+
+    <volume name="top_det_giantShield_logic">
+      <materialref ref="Vacuum"/>
+      <solidref ref="det_solid"/>
+      <auxiliary auxtype="SensDet" auxvalue="volumeN4112"/>
+    </volume>
+
+
+    <volume name="skyShineShield">
+      <materialref ref="Vacuum"/>
+      <solidref ref="skyUnion1"/>
+
+      <physvol name="shield_ups_phys">
+        <volumeref ref="shield_ups_logic"/>
+        <positionref ref="pos_center"/>
+      </physvol>
+      <physvol name="shield_dwn_phys">
+        <volumeref ref="shield_dwn_logic"/>
+        <positionref ref="pos_global_dwn_shield"/>
+      </physvol>
+
+      <physvol name="bottom_det_giantShield_phys">
+        <volumeref ref="bottom_det_giantShield_logic"/>
+        <positionref ref="pos_bottom_det_giantShield"/>
+      </physvol>
+
+      <physvol name="top_det_giantShield_phys">
+        <volumeref ref="top_det_giantShield_logic"/>
+        <positionref ref="pos_top_det_giantShield"/>
+      </physvol>
+
+    </volume>
+  </structure>
+
+  <setup name="subSkyShineShield" version="2.0">
+    <world ref="skyShineShield"/>
+  </setup>
+
+</gdml>
