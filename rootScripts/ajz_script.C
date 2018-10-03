@@ -458,6 +458,57 @@ void edep_neil_comp(string sim, string conf, int n_events_k){
   fin->Close(); fout->Close();
 }
 
+void coll_shields_analysis(string sim, string conf, int n_events_k, Int_t nbinsx, Double_t xlo, Double_t xhi){
+  string fin_name  = "~/farmOut/" + sim + "_" + conf + "_" + to_string(n_events_k) + "kEv/" + sim + "_" + conf + ".root";
+  string fout_name = sim + "_" + conf + "_plots.root";
+  
+  gStyle->SetOptStat("eMRuoi");
+  TFile *fin = new TFile(fin_name.c_str());
+  TTree *t = (TTree*)fin->Get("t");
+  TFile *fout = new TFile(fout_name.c_str(), "RECREATE");
+
+  double plast_min = 107.95;
+  double conc_min  = 58.928;
+  double flange_min = 8.7249;
+  cout<<"Making plots for detector 3121..."<<endl;
+  TH1F *h1 = new TH1F("3121_all", (conf + ": edep, volID==3121").c_str(), nbinsx, xlo, xhi);
+  t->Project("3121_all", "edep", "volID==3121");
+  fout->cd(); h1->Write();
+  for(double r = plast_min + 0.5; r < 118; r += 0.5){
+    cout<<"  Making plot with index "<<r<<endl;
+    string h_name = "3121_r=" + to_string(r) + "cut";
+    string cuts = "volID==3121 && z>-655 && z<-430 && sqrt(x*x+y*y)<" + to_string(r);
+    h1 = new TH1F(h_name.c_str(), (conf + ": edep, " + cuts).c_str(), nbinsx, xlo, xhi);
+    t->Project(h_name.c_str(), "edep", cuts.c_str());
+    fout->cd(); h1->Write();
+  }
+  cout<<"Making plots for detector 4101..."<<endl;
+  TH1F *h2 = new TH1F("4101_all", (conf + ": edep, volID==4101").c_str(), nbinsx, xlo, xhi);
+  t->Project("4101_all", "edep", "volID==4101");
+  fout->cd(); h2->Write();
+  for(double y = conc_min + 0.5; y < 65; y += 0.5){
+    cout<<"  Making plot with index "<<y<<endl;
+    string h_name = "4101_y=" + to_string(y) + "cut";
+    string cuts = "volID==4101 && x>-10 && x<10 && y<" + to_string(y);
+    h2 = new TH1F(h_name.c_str(), (conf + ": edep, " + cuts).c_str(), nbinsx, xlo, xhi);
+    t->Project(h_name.c_str(), "edep", cuts.c_str());
+    fout->cd(); h2->Write();
+  }
+  cout<<"Making plots for detector 4102..."<<endl;
+  TH1F *h3 = new TH1F("4102_all", (conf + ": edep, volID==4102").c_str(), nbinsx, xlo, xhi);
+  t->Project("4102_all", "edep", "volID==4102");
+  fout->cd(); h3->Write();
+  for(double r = flange_min + 0.5; r < 12; r += 0.5){
+    cout<<"  Making plot with index "<<r<<endl;
+    string h_name = "4102_r=" + to_string(r) + "cut";
+    string cuts = "volID==4102 && sqrt(x*x+y*y)<" + to_string(r);
+    h3 = new TH1F(h_name.c_str(), (conf + ": edep, " + cuts).c_str(), nbinsx, xlo, xhi);
+    t->Project(h_name.c_str(), "edep", cuts.c_str());
+    fout->cd(); h3->Write();
+  }
+  fin->Close(); fout->Close();
+}
+
 void sphere_det_subtraction_phi_theta(string sim, string conf, int n_events_k, Int_t nbinsx, Double_t xlo, Double_t xhi, Int_t nbinsy, Double_t ylo, Double_t yhi){
   string fname = "~/farmOut/" + sim + "_" + conf + "_" + to_string(n_events_k) + "kEv/" + sim + "_" + conf + ".root";
   TFile *f = new TFile(fname.c_str());

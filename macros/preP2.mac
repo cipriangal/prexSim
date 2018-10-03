@@ -27,13 +27,8 @@
 /moller/field/setConfiguration prex2
 /moller/field/useQ1fringeField false
 #### Geometry files
-<<<<<<< HEAD
-#/moller/det/setDetectorFileName geometry/prexII_current.gdml
-/moller/det/setDetectorFileName geometry/prexII_v2geom.gdml
-=======
 #/moller/det/setDetectorFileName geometry/prex2_newCollChShields.gdml
 /moller/det/setDetectorFileName geometry/prex2_newSky.gdml
->>>>>>> fa7be3298e10a4d4e258902a84b1950fc5a51755
 
 #/moller/det/setDetectorFileName geometry/subBeamPipe_6inDonut_noSAMs.gdml
 #/moller/det/setDetectorFileName geometry/subBeamPipe.gdml

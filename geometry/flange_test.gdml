@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+
+<!DOCTYPE gdml [
+<!ENTITY materials SYSTEM "materials.xml">
+]>
+
+<gdml xmlns:gdml="http://cern.ch/2001/Schemas/GDML"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="./schema/gdml.xsd">
+
+  <define>
+    <constant name="cm_factor" value="2.54"/>
+
+        <!-- Flanges Only -->
+    <constant name="outer_flange_main_radius" value="9.781*cm_factor"/>
+    <constant name="inner_flange_sec_radius" value="8.572*cm_factor"/>
+    <constant name="flange_total_length" value="1.312*cm_factor"/>
+    <constant name="flange_us_length" value="0.171*cm_factor"/>
+    <constant name="flange_cone_cut_us_radius" value="1.629"/>
+    <constant name="flange_cone_cut_ds_radius" value="1.745"/>
+    <constant name="flange_cyl_cut_radius" value="2.51*cm_factor"/>
+    <constant name="flange_cyl_cut_length" value="2*cm_factor"/>
+
+    <position name="pos_center" unit="cm" x="0" y="0" z="0"/>
+    <position name="pos_rel_flange_us_cut" unit="cm" x="0" y="0" z="(flange_us_length - flange_total_length)/2."/>
+    <position name="pos_rel_flange_cone_cut" unit="cm" x="0" y="0" z="(-flange_total_length)/2."/>
+    <position name="pos_rel_flange_cyl_cut_r" unit="cm" x="-3.9859*cm_factor" y="0" z="0"/>
+    <position name="pos_rel_flange_cyl_cut_l" unit="cm" x="3.9859*cm_factor" y="0" z="0"/>
+    <rotation name="rot_flange_cyl_cut_l" unit="deg" x="0" y="5" z="0"/>
+    <rotation name="rot_flange_cyl_cut_r" unit="deg" x="0" y="-5" z="0"/>
+
+  </define>
+
+  &materials;
+
+  <solids>
+    <!-- Collimator Tube and Flanges -->
+    <tube name="flange_0_solid" aunit="deg" lunit="cm" startphi="0" deltaphi="360"
+          rmin="0" rmax="outer_flange_main_radius" z="flange_total_length"/>
+    <tube name="flange_tube_cut_solid" aunit="deg" lunit="cm" startphi="0" deltaphi="360"
+          rmin="inner_flange_sec_radius + 0.01" rmax="outer_flange_main_radius + 0.02" z="flange_us_length + 0.01"/>
+    <polycone aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="flange_cone_cut_solid">
+      <zplane rmin="0" rmax="flange_cone_cut_us_radius + 0.001" z="-0.01"/>
+      <zplane rmin="0" rmax="flange_cone_cut_ds_radius + 0.001" z="flange_total_length + 0.01"/>
+    </polycone>
+    <tube name="flange_cyl_cut_solid" aunit="deg" lunit="cm" startphi="0" deltaphi="360"
+          rmin="0" rmax="flange_cyl_cut_radius + 0.01" z="flange_cyl_cut_length + 0.01"/>
+    <tube name="flange_test_subtract" aunit="deg" lunit="cm" startphi="0" deltaphi="360" rmin="0" rmax="10.0" z="100"/>
+    <subtraction name="flange_solid">
+      <first ref="flange_solid"/>
+      <second ref="flange_test_subtract"/>
+      <positionref ref="pos_center"/>
+    </subtraction>
+
+  </solids>
+
+  <structure>
+    <volume name="flange_logic">
+      <materialref ref="StainlessSteel"/>
+      <solidref ref="flange_solid"/>
+      <auxiliary auxtype="SensDet" auxvalue="volumeN4102"/>
+    </volume>
+
+    <volume name="ds_flange_logic">
+      <materialref ref="Vacuum"/>
+      <solidref ref="flange_solid"/>
+
+      <physvol name="flange">
+        <volumeref ref="flange_logic"/>
+        <positionref ref="pos_center"/>
+      </physvol>
+
+    </volume>
+  </structure>
+
+  <setup name="Coll_Shields" version="1.0">
+    <world ref="ds_flange_logic"/>
+  </setup>
+
+</gdml>
