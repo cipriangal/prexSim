@@ -47,7 +47,7 @@
           rmin="0" rmax="flange_cyl_cut_radius + 0.01" z="flange_cyl_cut_length + 0.01"/>
     <tube name="flange_test_subtract" aunit="deg" lunit="cm" startphi="0" deltaphi="360" rmin="0" rmax="10.0" z="100"/>
     <subtraction name="flange_solid">
-      <first ref="flange_solid"/>
+      <first ref="flange_0_solid"/>
       <second ref="flange_test_subtract"/>
       <positionref ref="pos_center"/>
     </subtraction>
