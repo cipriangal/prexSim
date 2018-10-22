@@ -1680,12 +1680,12 @@
 
       <physvol name="targetW">
         <volumeref ref="target_logicW"/>
-        <position name="target_posW" unit="mm" x="0" y="0" z="-0.053"/>
+        <position name="target_posW" unit="mm" x="0" y="0" z="-1000.053"/>
       </physvol>
 
       <physvol name="targetTa">
         <volumeref ref="target_logicTa"/>
-        <position name="target_posTa" unit="mm" x="0" y="0" z="0.06"/>
+        <position name="target_posTa" unit="mm" x="0" y="0" z="-999.94"/>
       </physvol>
 
       <physvol name="sc_other_1">
@@ -1805,7 +1805,8 @@
       </physvol>
 
       <physvol>
-        <file name="geometry/subBeamPipe_12GeV_SAMs.gdml"/>
+        <file name="geometry/subBeamPipe_P2_6inDonut_SAMs.gdml"/>
+        <!--<file name="geometry/subBeamPipe_12GeV_SAMs.gdml"/>-->
         <positionref ref="dDet_beamline_pos_1"/>
       </physvol>
 

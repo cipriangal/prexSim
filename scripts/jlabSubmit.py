@@ -8,18 +8,19 @@ def main():
 
     #configuration = "prex1"
     #configuration = "crex"
-    configuration = "prex2"
+    #configuration = "prex2"
+    configuration = "apex"
     #configuration = "happex2"
 
     sourceDir = "/work/halla/parity/disk1/ciprian/prexSim"
-    outputDir = "/volatile/halla/parity/ciprian/farmOut/newCollChShieldsBorHDPE/newSeptFringe/usTgt/finalE/finalRaster"
+    outputDir = "/volatile/halla/parity/ciprian/farmOut/apex/12GeV_beampipe_6inDonut"
 
     nrEv   = 900000
     nrStart= 0
     nrStop = 60
 
     ###format should be _Name or "" for base config
-    identifier = "_usTgt"
+    identifier = ""
 
     print('Running ' + str(nrEv*(nrStop - nrStart)) + ' events...')
 
@@ -75,8 +76,8 @@ def createMacFiles(config,outDir,sourceDir,nrEv,jobNr,identifier):
         f.write("/moller/det/setDetectorFileName geometry/prex2"+identifier+".gdml\n")
     elif config=="prex1":
     	f.write("/gun/energy 1.06 GeV\n")
-        f.write("/prex/gun/setRasterX 5 mm\n")
-        f.write("/prex/gun/setRasterY 5 mm\n")
+        f.write("/prex/gun/setRasterX 6 mm\n")
+        f.write("/prex/gun/setRasterY 4 mm\n")
         f.write("/moller/field/setConfiguration prex1\n")
         f.write("/moller/det/setDetectorFileName geometry/prex1"+identifier+".gdml\n")
     elif config=="moller":
@@ -91,6 +92,12 @@ def createMacFiles(config,outDir,sourceDir,nrEv,jobNr,identifier):
         f.write("/prex/gun/setRasterY 5 mm\n")
         f.write("/moller/field/setConfiguration happex2\n")
         f.write("/moller/det/setDetectorFileName geometry/happex2"+identifier+".gdml\n")
+    elif config=="apex":
+    	f.write("/gun/energy 2.2 GeV\n")
+        f.write("/prex/gun/setRasterX 4 mm\n")
+        f.write("/prex/gun/setRasterY 4 mm\n")
+        f.write("/moller/field/setConfiguration apex\n")
+        f.write("/moller/det/setDetectorFileName geometry/apex"+identifier+".gdml\n")
 
     f.write("/moller/field/useQ1fringeField false\n")
 
