@@ -620,6 +620,10 @@
       <zplane  rmin="ri_septum_pipe" rmax="ro_septum_pipe" z="+0.5*length_septum_pipe" />
     </polycone>
 
+    <box lunit="cm" name="septum_pipe_us_det_solid" x="12" y="30" z="0.01"/>
+    <tube aunit="deg" lunit="cm" startphi="0" deltaphi="360"
+          name="septum_pipe_ds_det_solid" rmin="0" rmax="1.001*ro_septum_pipe" z="0.01"/>
+
     <!-- Old Definition of beamtubes, to be used in the removal of the detectors intersecting the beampipe -->
 
     <polycone aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="beamtube_10"> <zplane rmin="beamline[2,9]" rmax="beamline[2,10]" z="-0.5*beamline[3,10] -1."/> <zplane rmin="beamline[2,9]" rmax="beamline[2,10]" z="-0.5*beamline[3,10]"/> <zplane rmin="beamline[1,10]" rmax="beamline[2,10]" z="-0.5*beamline[3,10]" />  <zplane rmin="beamline[1,10]" rmax="beamline[2,10]" z="0.5*beamline[3,10]" /> </polycone>
@@ -1164,6 +1168,18 @@
       <!-- <auxiliary auxtype="SensDet" auxvalue="volumeN5007"/> -->
     </volume>
 
+    <volume name="septum_pipe_us_det_logic">
+      <materialref ref="Vacuum"/>
+      <solidref ref="septum_pipe_us_det_solid"/>
+      <auxiliary auxtype="SensDet" auxvalue="volumeN2503"/>
+    </volume>
+
+    <volume name="septum_pipe_ds_det_logic">
+      <materialref ref="Vacuum"/>
+      <solidref ref="septum_pipe_ds_det_solid"/>
+      <auxiliary auxtype="SensDet" auxvalue="volumeN2504"/>
+    </volume>
+
     <volume name="vac_enc_l_logic">
       <materialref ref="StainlessSteel"/>
       <solidref ref="vac_enc_l_solid"/>
@@ -1307,6 +1323,16 @@
       <physvol name="septum_pipe">
         <volumeref ref="septum_pipe_logic" />
         <position name="posbeamline" unit="cm" x="0" y="0" z="center_septum_pipe"/>
+      </physvol>
+
+      <physvol name="septum_pipe_us_det">
+        <volumeref ref="septum_pipe_us_det_logic"/>
+        <position name="pos_sept_us_det" unit="cm" x="0" y="0" z="center_septum_pipe - length_septum_pipe/2. - 0.01"/>
+      </physvol>
+
+      <physvol name="septum_pipe_ds_det">
+        <volumeref ref="septum_pipe_ds_det_logic"/>
+        <position name="pos_sept_ds_det" unit="cm" x="0" y="0" z="center_septum_pipe + length_septum_pipe/2. + 0.01"/>
       </physvol>
 
       <physvol name="vacEnc_l">

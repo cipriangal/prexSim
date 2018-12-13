@@ -5,6 +5,7 @@
       xsi:noNamespaceSchemaLocation="./schema/gdml.xsd">
 
   <define>
+    <constant name="cm_factor" value="2.54"/>
     <constant name="sc_outer_radius" value="30.48"/>
     <constant name="sc_inner_radius" value="29.845"/>
     <constant name="sc_length" value="25.4"/>
@@ -14,12 +15,21 @@
     <constant name="rear_flange_cut_rad" value="17.4625"/>
     <constant name="front_flange_z" value="3.175"/>
 
+    <constant name="front_tube_inner_r" value="2.95*cm_factor"/>
+    <constant name="front_tube_outer_r" value="3.175*cm_factor"/>
+    <constant name="front_tube_length" value="2.82*cm_factor"/>
+
+    <constant name="tube_flange_outer_r" value="4*cm_factor"/>
+    <constant name="tube_flange_length" value="0.875*cm_factor"/>
+
     <constant name="mother_length" value="sc_length + 2*rear_flange_z"/>
     <constant name="mother_inner_rad" value="7.5"/>
 
     <position name="pos_center" unit="cm" x="0" y="0" z="0"/>
     <position name="pos_front_flange" unit="cm" x="0" y="0" z="14.2875"/>
     <position name="pos_rear_flange" unit="cm" x="0" y="0" z="-0.5*(rear_flange_z + sc_length)"/>
+    <position name="pos_front_tube" unit="cm" x="0" y="0" z="0.5*(sc_length + front_tube_length) + front_flange_z"/>
+    <position name="pos_tube_flange" unit="cm" x="0" y="0" z="0.5*(sc_length + tube_flange_length) + front_tube_length + front_flange_z"/>
 
     <rotation name="target_cut_rot" unit="deg" x="0" y="90" z="0"/>
   </define>
@@ -36,6 +46,11 @@
       <D unit="g/cm3" value="1e-25"/>
       <atom unit="g/mole" value="1.01"/>
     </material>
+    <material Z="1" name="StainlessSteel" state="gas">
+      <T unit="K" value="298"/>
+      <D unit="g/cm3" value="2.699"/>
+      <atom unit="g/mole" value="26.982"/>
+    </material>
   </materials>
 
   <solids>
@@ -49,14 +64,36 @@
       <positionref ref="pos_center"/>
       <rotationref ref="target_cut_rot"/>
     </subtraction>
+    <tube lunit="cm" aunit="deg" name="front_tube_solid" startphi="0" deltaphi="360" rmin="front_tube_inner_r"
+          rmax="front_tube_outer_r" z="front_tube_length"/>
+    <tube lunit="cm" aunit="deg" name="tube_flange_solid" startphi="0" deltaphi="360" rmin="front_tube_inner_r"
+          rmax="tube_flange_outer_r" z="tube_flange_length"/>
 
     <tube lunit="cm" aunit="deg" name="front_flange" z="front_flange_z" rmin="mother_inner_rad" rmax="sc_outer_radius"
           startphi="0" deltaphi="360"/>
     <tube lunit="cm" aunit="deg" name="rear_flange" z="rear_flange_z" rmin="rear_flange_cut_rad" rmax="sc_outer_radius"
           startphi="0" deltaphi="360"/>
 
-    <tube lunit="cm" aunit="deg" name="sc_mother" z="mother_length" rmin="mother_inner_rad" rmax="sc_outer_radius"
-          startphi="0" deltaphi="360"/>
+    <union name="sc_mother_0">
+      <first ref="sc_with_cut"/>
+      <second ref="front_flange"/>
+      <positionref ref="pos_front_flange"/>
+    </union>
+    <union name="sc_mother_1">
+      <first ref="sc_mother_0"/>
+      <second ref="rear_flange"/>
+      <positionref ref="pos_rear_flange"/>
+    </union>
+    <union name="sc_mother_2">
+      <first ref="sc_mother_1"/>
+      <second ref="front_tube_solid"/>
+      <positionref ref="pos_front_tube"/>
+    </union>
+    <union name="sc_mother">
+      <first ref="sc_mother_2"/>
+      <second ref="tube_flange_solid"/>
+      <positionref ref="pos_tube_flange"/>
+    </union>
   </solids>
 
   <structure>
@@ -72,6 +109,14 @@
       <materialref ref="Aluminum"/>
       <solidref ref="rear_flange"/>
     </volume>
+    <volume name="front_tube_logic">
+      <materialref ref="Aluminum"/>
+      <solidref ref="front_tube_solid"/>
+    </volume>
+    <volume name="tube_flange_logic">
+      <materialref ref="StainlessSteel"/>
+      <solidref ref="tube_flange_solid"/>
+    </volume>
 
     <volume name="logicTargetChamber">
       <materialref ref="Vacuum"/>
@@ -81,16 +126,23 @@
         <volumeref ref="logic_sc_body"/>
         <positionref ref="pos_center"/>
       </physvol>
-
       <physvol name="phys_front_flange">
         <volumeref ref="logic_front_flange"/>
         <positionref ref="pos_front_flange"/>
       </physvol>
-
       <physvol name="phys_rear_flange">
         <volumeref ref="logic_rear_flange"/>
         <positionref ref="pos_rear_flange"/>
       </physvol>
+      <physvol name="front_tube_phys">
+        <volumeref ref="front_tube_logic"/>
+        <positionref ref="pos_front_tube"/>
+      </physvol>
+      <physvol name="tube_flange_phys">
+        <volumeref ref="tube_flange_logic"/>
+        <positionref ref="pos_tube_flange"/>
+      </physvol>
+
     </volume>
   </structure>
 

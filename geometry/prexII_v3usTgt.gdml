@@ -1439,6 +1439,10 @@
           z="1.001*length_septum" />
     <box lunit="cm" name="sept_beam_hole_2" x="sept_pipe_cont_width" y="sept_pipe_cont_high" z="1.001*length_septum" />
 
+    <box lunit="cm" name="septum_pipe_us_det_solid" x="12" y="30" z="0.01"/>
+    <tube aunit="deg" lunit="cm" startphi="0" deltaphi="360"
+          name="septum_pipe_ds_det_solid" rmin="0" rmax="1.001*ro_septum_pipe" z="0.01"/>
+
     <subtraction name ="septum_solid_1">
       <first ref="septum_solid_0"/>
       <second ref="sept_rect_hole"/>
@@ -1447,7 +1451,7 @@
     <subtraction name ="septum_solid_2">
       <first ref="septum_solid_1"/>
       <second ref="sept_rect_hole"/>
-      <positionref ref="septTrans_r"/>9
+      <positionref ref="septTrans_r"/>
     </subtraction>
     <subtraction name ="septum_solid">
       <first ref="septum_solid_2"/>
@@ -2555,6 +2559,18 @@
       <!-- <auxiliary auxtype="SensDet" auxvalue="volumeN5007"/> -->
     </volume>
 
+    <volume name="septum_pipe_us_det_logic">
+      <materialref ref="Vacuum"/>
+      <solidref ref="septum_pipe_us_det_solid"/>
+      <auxiliary auxtype="SensDet" auxvalue="volumeN2503"/>
+    </volume>
+
+    <volume name="septum_pipe_ds_det_logic">
+      <materialref ref="Vacuum"/>
+      <solidref ref="septum_pipe_ds_det_solid"/>
+      <auxiliary auxtype="SensDet" auxvalue="volumeN2504"/>
+    </volume>
+
     <volume name="beamtube_1_logic">
       <materialref ref="Aluminum"/>
       <!--      <materialref ref="Tungsten"/> -->
@@ -2748,6 +2764,16 @@
         <position name="posbeamline" unit="cm" x="0" y="0" z="11.853"/>
       </physvol>
 
+      <physvol name="septum_pipe_us_det">
+        <volumeref ref="septum_pipe_us_det_logic"/>
+        <position name="pos_sept_us_det" unit="cm" x="0" y="0" z="center_septum_pipe - length_septum_pipe/2. - 0.01"/>
+      </physvol>
+
+      <physvol name="septum_pipe_ds_det">
+        <volumeref ref="septum_pipe_ds_det_logic"/>
+        <position name="pos_sept_ds_det" unit="cm" x="0" y="0" z="center_septum_pipe + length_septum_pipe/2. + 0.01"/>
+      </physvol>
+
       <physvol name="vacEnc_l">
         <volumeref ref="vac_enc_l_logic"/>
         <positionref ref="vac_enc_center_l"/>
@@ -2867,7 +2893,6 @@
 
       <physvol>
         <file name="geometry/subBeamPipe_P2_6inDonut_noSAMs.gdml"/>
-	<!-- z= 132.335 -->
         <positionref ref="dDet_beamline_pos_1"/>
       </physvol>
 

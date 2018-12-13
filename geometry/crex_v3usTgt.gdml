@@ -2464,7 +2464,7 @@
     <volume name="new_sc_beampipe_logic">
       <materialref ref="Aluminum"/>
       <solidref ref="new_sc_beampipe_solid"/>
-      <auxiliary auxtype="SensDet" auxvalue="volumeN3001"/>
+      <!-- <auxiliary auxtype="SensDet" auxvalue="volumeN3001"/> -->
       <!-- <auxiliary auxtype="SensDet" auxvalue="planeDet"/> -->
     </volume>
 

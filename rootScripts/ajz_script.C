@@ -467,14 +467,14 @@ void coll_shields_analysis(string sim, string conf, int n_events_k, Int_t nbinsx
   TTree *t = (TTree*)fin->Get("t");
   TFile *fout = new TFile(fout_name.c_str(), "RECREATE");
 
-  double plast_min = 107.95;
+  double plast_min = 152.4;
   double conc_min  = 58.928;
   double flange_min = 8.7249;
   cout<<"Making plots for detector 3121..."<<endl;
   TH1F *h1 = new TH1F("3121_all", (conf + ": edep, volID==3121").c_str(), nbinsx, xlo, xhi);
   t->Project("3121_all", "edep", "volID==3121");
   fout->cd(); h1->Write();
-  for(double r = plast_min + 0.5; r < 118; r += 0.5){
+  for(double r = plast_min + 0.5; r < plast_min + 5.5; r += 0.5){
     cout<<"  Making plot with index "<<r<<endl;
     string h_name = "3121_r=" + to_string(r) + "cut";
     string cuts = "volID==3121 && z>-655 && z<-430 && sqrt(x*x+y*y)<" + to_string(r);

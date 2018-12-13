@@ -1,6 +1,6 @@
 #Config File
-config=prexII
-#config=crex
+#config=prexII
+config=crex
 #config=tritium
 
 #ident=shieldless
@@ -46,12 +46,12 @@ ident=v3usTgt
 #output=v1Edit
 #output=v3OldCollShields
 #output=v3current
-output=v3CollDets
+output=v3ThickAlLiner
 
 start_run=0
-end_run=20
+end_run=10
 
-n_events=200000
+n_events=100000
 
 e_cut=30
 

@@ -120,7 +120,7 @@ void MollerPrimaryGenAction::GeneratePrimaries_g4Realraster(G4Event* anEvent)
   unitZ = z_0/R;
 
   particleGun->SetParticlePosition(G4ThreeVector(0,0,vertex_z));
-  particleGun->SetParticleMomentumDirection(G4ThreeVector(unitX,unitY,unitZ));
+  particleGun->SetParticleMomentumDirection(G4ThreeVector(0,0,1));
 
   particleGun->GeneratePrimaryVertex(anEvent);
   anEvent->GetPrimaryVertex(0)->GetPrimary(0);
