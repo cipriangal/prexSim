@@ -2702,7 +2702,7 @@
 
       <physvol name="target">
         <volumeref ref="target_logic"/>
-        <positionref ref="targ_center"/>
+        <position name="target_pos_global" unit="cm" x="0" y="0" z="-110.3"/>
       </physvol>
 
       <physvol name="septum">
@@ -2837,7 +2837,7 @@
 
       <physvol>
         <file name="geometry/subTargetChamber.gdml"/>
-        <position name="target_chamber_center" unit="cm" x="0" y="0" z="prex_target_center"/>
+        <position name="target_chamber_center" unit="cm" x="0" y="0" z="-110.3"/>
       </physvol>
 
       <physvol>
