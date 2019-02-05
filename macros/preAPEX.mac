@@ -1,0 +1,33 @@
+############
+### CREX 5degrees configurations
+############
+/control/macroPath macros
+/control/verbose 2
+/run/verbose 0
+/tracking/verbose 0
+/moller/gun/setConstSeed true ##FIXME later
+/moller/det/readGeometryFromFile true
+/gun/particle e-
+/moller/gun/gen 7
+/random/setSeeds 123515 9816459
+
+############
+#APEX:
+#E=2.2 GeV, T = W/Ta 7/10 (each target is 15/12 um)
+#no septum fringe field, no q1 fringe filed
+############
+#### beam energy
+/gun/energy 2.22 GeV ##APEX
+#### Rastser size
+/prex/gun/setRasterX 4 cm
+/prex/gun/setRasterY 4 cm
+#### Set B field configuration
+/moller/field/setConfiguration apex
+/moller/field/useQ1fringeField false
+#### Geometry files
+/moller/det/setDetectorFileName geometry/apex.gdml
+
+
+/moller/det/setShieldMaterial polyethylene
+/testhadr/CutsAll          0.7 mm
+/run/initialize

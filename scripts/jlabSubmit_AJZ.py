@@ -8,22 +8,14 @@ def main():
     email = cr.jlab_id() + "@jlab.org"
     ##only crex, prexII, tritium defined for now
 
-    #configuration = "prex1"
-    #configuration = "crex"
-    #configuration = "prex2"
-    configuration = "apex"
-    #configuration = "happex2"
-
-    sourceDir = "/work/halla/parity/disk1/ciprian/prexSim"
-    outputDir = "/volatile/halla/parity/ciprian/farmOut/apex/12GeV_beampipe_6inDonut"
-
-    nrEv   = 900000
-    nrStart= 0
-    nrStop = 60
-
-    ###format should be _Name or "" for base config
-    identifier = ""
-
+    configuration = cr.config()
+    sourceDir     = "/w/halla-scifs17exp/parity/disk1/" + cr.jlab_id() + "/prexSim"
+    outputDir     = "/lustre/expphy/volatile/halla/parity/" + cr.jlab_id() + "/farmOut"
+    nrEv          = cr.nr_events()
+    nrStart       = cr.start_run()
+    nrStop        = cr.end_run()
+    ident_in      = cr.identifier()
+    ident_out     = cr.ident_output()
     print('Starting setup for ' + configuration + ' simulation with geometry ' + ident_in + '...')
     print('Running ' + str(nrEv*(nrStop - nrStart)) + ' events...')
 
