@@ -1,6 +1,6 @@
 #Config File
-#config=prexII
-config=crex
+config=prexII
+#config=crex
 #config=tritium
 
 #ident=shieldless
@@ -46,12 +46,13 @@ ident=v3usTgt
 #output=v1Edit
 #output=v3OldCollShields
 #output=v3current
-output=v3ThickAlLiner
+#output=v3SeptumCoilHoses
+output=v3Test
 
 start_run=0
-end_run=10
+end_run=40
 
-n_events=100000
+n_events=1000
 
 e_cut=30
 
@@ -60,5 +61,5 @@ uva_id=ajz3ee
 jlab_id=ajzec
 
 #comma separated, no spaces, correct capitalization is important
-subassemblies=KriptoniteDetectors,LeftHRSplatform,RightHRSplatform,TargetChamber,DumpShield,BeamPipe_newSAMs,BeamPipe_SAMs,BeamPipe_newSAMsAlFlange,SkyShineShieldV2,BeamPipe_P2_6inDonut_noSAMs,Q1HosesCylRedesign,CollShieldBlock
+subassemblies=KriptoniteDetectors,LeftHRSplatform,RightHRSplatform,TargetChamber,DumpShield,BeamPipe_newSAMs,BeamPipe_SAMs,BeamPipe_newSAMsAlFlange,SkyShineShieldV2,BeamPipe_P2_6inDonut_noSAMs,Q1HosesCylRedesign,CollShieldBlock,CoilHoses
 #subassemblies=BeamPipe_12GeV_SAMs,HRSplatform,TritiumTarget

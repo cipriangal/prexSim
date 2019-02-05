@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+
+<!DOCTYPE gdml [
+<!ENTITY materials SYSTEM "materials.xml">
+]>
+
+<gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="./schema/gdml.xsd">
+<define>
+    <constant name="coil_hose_x_thick" value="24.36"/>
+    <constant name="coil_hose_y_thick" value="4"/>
+    <constant name="coil_hose_z_thick" value="6"/>
+
+    <constant name="box1_x_pos" value="22.2014"/>
+    <constant name="box1_y_pos" value="34.829"/>
+    <constant name="box1_z_pos" value="0.0"/>
+    <constant name="box2_x_pos" value="25.1986"/>
+    <constant name="box2_y_pos" value="43.227"/>
+    <constant name="box2_z_pos" value="0.0"/>
+    <constant name="box3_x_pos" value="22.2014"/>
+    <constant name="box3_y_pos" value="48.102"/>
+    <constant name="box3_z_pos" value="-6.0"/>
+    <constant name="box4_x_pos" value="25.1986"/>
+    <constant name="box4_y_pos" value="57.551"/>
+    <constant name="box4_z_pos" value="-6.0"/>		
+
+    <position unit="cm" name="pos_center" x="0" y="0" z="0" />
+
+    <position unit="cm" name="box1_topLeft_pos" x="box1_x_pos" y="box1_y_pos" z="box1_z_pos"/>
+    <position unit="cm" name="box2_topLeft_pos" x="box2_x_pos" y="box2_y_pos" z="box2_z_pos"/>
+    <position unit="cm" name="box3_topLeft_pos" x="box3_x_pos" y="box3_y_pos" z="box3_z_pos"/>
+    <position unit="cm" name="box4_topLeft_pos" x="box4_x_pos" y="box4_y_pos" z="box4_z_pos"/>
+    <position unit="cm" name="box1_topRigh_pos" x="-box1_x_pos" y="box1_y_pos" z="box1_z_pos"/>
+    <position unit="cm" name="box2_topRigh_pos" x="-box2_x_pos" y="box2_y_pos" z="box2_z_pos"/>
+    <position unit="cm" name="box3_topRigh_pos" x="-box3_x_pos" y="box3_y_pos" z="box3_z_pos"/>
+    <position unit="cm" name="box4_topRigh_pos" x="-box4_x_pos" y="box4_y_pos" z="box4_z_pos"/>
+    <position unit="cm" name="box1_botLeft_pos" x="box1_x_pos" y="-box1_y_pos" z="box1_z_pos"/>
+    <position unit="cm" name="box2_botLeft_pos" x="box2_x_pos" y="-box2_y_pos" z="box2_z_pos"/>
+    <position unit="cm" name="box3_botLeft_pos" x="box3_x_pos" y="-box3_y_pos" z="box3_z_pos"/>
+    <position unit="cm" name="box4_botLeft_pos" x="box4_x_pos" y="-box4_y_pos" z="box4_z_pos"/>
+    <position unit="cm" name="box1_botRigh_pos" x="-box1_x_pos" y="-box1_y_pos" z="box1_z_pos"/>
+    <position unit="cm" name="box2_botRigh_pos" x="-box2_x_pos" y="-box2_y_pos" z="box2_z_pos"/>
+    <position unit="cm" name="box3_botRigh_pos" x="-box3_x_pos" y="-box3_y_pos" z="box3_z_pos"/>
+    <position unit="cm" name="box4_botRigh_pos" x="-box4_x_pos" y="-box4_y_pos" z="box4_z_pos"/>
+
+</define>
+
+&materials;
+
+<solids>		
+    <box lunit="cm" name="coil_hose_det_solid" x="coil_hose_x_thick" y="coil_hose_y_thick" z="coil_hose_z_thick"/>
+    <box lunit="cm" name="anchor_solid" x="0.1" y="0.1" z="0.1"/>
+
+    <union name="mother_solid_0">
+        <first ref="anchor_solid"/>
+        <second ref="coil_hose_det_solid"/>
+        <positionref ref="box1_topLeft_pos"/>
+    </union>
+    <union name="mother_solid_1">
+        <first ref="mother_solid_0"/>
+        <second ref="coil_hose_det_solid"/>
+        <positionref ref="box2_topLeft_pos"/>
+    </union>
+    <union name="mother_solid_2">
+        <first ref="mother_solid_1"/>
+        <second ref="coil_hose_det_solid"/>
+        <positionref ref="box3_topLeft_pos"/>
+    </union>
+    <union name="mother_solid_3">
+        <first ref="mother_solid_2"/>
+        <second ref="coil_hose_det_solid"/>
+        <positionref ref="box4_topLeft_pos"/>
+    </union>
+    <union name="mother_solid_4">
+        <first ref="mother_solid_3"/>
+        <second ref="coil_hose_det_solid"/>
+        <positionref ref="box1_topRigh_pos"/>
+    </union>
+    <union name="mother_solid_5">
+        <first ref="mother_solid_4"/>
+        <second ref="coil_hose_det_solid"/>
+        <positionref ref="box2_topRigh_pos"/>
+    </union>
+    <union name="mother_solid_6">
+        <first ref="mother_solid_5"/>
+        <second ref="coil_hose_det_solid"/>
+        <positionref ref="box3_topRigh_pos"/>
+    </union>
+    <union name="mother_solid_7">
+        <first ref="mother_solid_6"/>
+        <second ref="coil_hose_det_solid"/>
+        <positionref ref="box4_topRigh_pos"/>
+    </union>
+    <union name="mother_solid_8">
+        <first ref="mother_solid_7"/>
+        <second ref="coil_hose_det_solid"/>
+        <positionref ref="box1_botLeft_pos"/>
+    </union>
+    <union name="mother_solid_9">
+        <first ref="mother_solid_8"/>
+        <second ref="coil_hose_det_solid"/>
+        <positionref ref="box2_botLeft_pos"/>
+    </union>
+    <union name="mother_solid_10">
+        <first ref="mother_solid_9"/>
+        <second ref="coil_hose_det_solid"/>
+        <positionref ref="box3_botLeft_pos"/>
+    </union>
+    <union name="mother_solid_11">
+        <first ref="mother_solid_10"/>
+        <second ref="coil_hose_det_solid"/>
+        <positionref ref="box4_botLeft_pos"/>
+    </union>
+    <union name="mother_solid_12">
+        <first ref="mother_solid_11"/>
+        <second ref="coil_hose_det_solid"/>
+        <positionref ref="box1_botRigh_pos"/>
+    </union>
+    <union name="mother_solid_13">
+        <first ref="mother_solid_12"/>
+        <second ref="coil_hose_det_solid"/>
+        <positionref ref="box2_botRigh_pos"/>
+    </union>
+    <union name="mother_solid_14">
+        <first ref="mother_solid_13"/>
+        <second ref="coil_hose_det_solid"/>
+        <positionref ref="box3_botRigh_pos"/>
+    </union>
+    <union name="mother_solid">
+        <first ref="mother_solid_14"/>
+        <second ref="coil_hose_det_solid"/>
+        <positionref ref="box4_botRigh_pos"/>
+    </union>
+</solids>
+
+<structure>
+    <volume name="box1_topLeft_logic">
+        <materialref ref="Shield"/>
+        <solidref ref="coil_hose_det_solid"/>
+        <auxiliary auxtype="SensDet" auxvalue="volumeN3701"/>
+    </volume>
+    <volume name="box2_topLeft_logic">
+        <materialref ref="Shield"/>
+        <solidref ref="coil_hose_det_solid"/>
+        <auxiliary auxtype="SensDet" auxvalue="volumeN3702"/>
+    </volume>
+    <volume name="box3_topLeft_logic">
+        <materialref ref="Shield"/>
+        <solidref ref="coil_hose_det_solid"/>
+        <auxiliary auxtype="SensDet" auxvalue="volumeN3703"/>
+    </volume>
+    <volume name="box4_topLeft_logic">
+        <materialref ref="Shield"/>
+        <solidref ref="coil_hose_det_solid"/>
+        <auxiliary auxtype="SensDet" auxvalue="volumeN3704"/>
+    </volume>
+    <volume name="box1_topRigh_logic">
+        <materialref ref="Shield"/>
+        <solidref ref="coil_hose_det_solid"/>
+        <auxiliary auxtype="SensDet" auxvalue="volumeN3705"/>
+    </volume>
+    <volume name="box2_topRigh_logic">
+        <materialref ref="Shield"/>
+        <solidref ref="coil_hose_det_solid"/>
+        <auxiliary auxtype="SensDet" auxvalue="volumeN3706"/>
+    </volume>
+    <volume name="box3_topRigh_logic">
+        <materialref ref="Shield"/>
+        <solidref ref="coil_hose_det_solid"/>
+        <auxiliary auxtype="SensDet" auxvalue="volumeN3707"/>
+    </volume>
+    <volume name="box4_topRigh_logic">
+        <materialref ref="Shield"/>
+        <solidref ref="coil_hose_det_solid"/>
+        <auxiliary auxtype="SensDet" auxvalue="volumeN3708"/>
+    </volume>
+    <volume name="box1_botLeft_logic">
+        <materialref ref="Shield"/>
+        <solidref ref="coil_hose_det_solid"/>
+        <auxiliary auxtype="SensDet" auxvalue="volumeN3709"/>
+    </volume>
+    <volume name="box2_botLeft_logic">
+        <materialref ref="Shield"/>
+        <solidref ref="coil_hose_det_solid"/>
+        <auxiliary auxtype="SensDet" auxvalue="volumeN3710"/>
+    </volume>
+    <volume name="box3_botLeft_logic">
+        <materialref ref="Shield"/>
+        <solidref ref="coil_hose_det_solid"/>
+        <auxiliary auxtype="SensDet" auxvalue="volumeN3711"/>
+    </volume>
+    <volume name="box4_botLeft_logic">
+        <materialref ref="Shield"/>
+        <solidref ref="coil_hose_det_solid"/>
+        <auxiliary auxtype="SensDet" auxvalue="volumeN3712"/>
+    </volume>
+    <volume name="box1_botRigh_logic">
+        <materialref ref="Shield"/>
+        <solidref ref="coil_hose_det_solid"/>
+        <auxiliary auxtype="SensDet" auxvalue="volumeN3713"/>
+    </volume>
+    <volume name="box2_botRigh_logic">
+        <materialref ref="Shield"/>
+        <solidref ref="coil_hose_det_solid"/>
+        <auxiliary auxtype="SensDet" auxvalue="volumeN3714"/>
+    </volume>
+    <volume name="box3_botRigh_logic">
+        <materialref ref="Shield"/>
+        <solidref ref="coil_hose_det_solid"/>
+        <auxiliary auxtype="SensDet" auxvalue="volumeN3715"/>
+    </volume>
+    <volume name="box4_botRigh_logic">
+        <materialref ref="Shield"/>
+        <solidref ref="coil_hose_det_solid"/>
+        <auxiliary auxtype="SensDet" auxvalue="volumeN3716"/>
+    </volume>
+    <volume name="anchor_logic">
+        <materialref ref="Vacuum"/>
+        <solidref ref="anchor_solid"/>
+    </volume>
+
+    <volume name="logic_coilHoses">
+        <materialref ref="Vacuum"/>
+        <solidref ref="mother_solid"/>
+
+        <physvol name="box1_topLeft">
+            <volumeref ref="box1_topLeft_logic"/>
+            <positionref ref="box1_topLeft_pos"/>
+        </physvol>
+        <physvol name="box2_topLeft">
+            <volumeref ref="box2_topLeft_logic"/>
+            <positionref ref="box2_topLeft_pos"/>
+        </physvol>
+        <physvol name="box3_topLeft">
+            <volumeref ref="box3_topLeft_logic"/>
+            <positionref ref="box3_topLeft_pos"/>
+        </physvol>
+        <physvol name="box4_topLeft">
+            <volumeref ref="box4_topLeft_logic"/>
+            <positionref ref="box4_topLeft_pos"/>
+        </physvol>
+        <physvol name="box1_topRigh">
+            <volumeref ref="box1_topRigh_logic"/>
+            <positionref ref="box1_topRigh_pos"/>
+        </physvol>
+        <physvol name="box2_topRigh">
+            <volumeref ref="box2_topRigh_logic"/>
+            <positionref ref="box2_topRigh_pos"/>
+        </physvol>
+        <physvol name="box3_topRigh">
+            <volumeref ref="box3_topRigh_logic"/>
+            <positionref ref="box3_topRigh_pos"/>
+        </physvol>
+        <physvol name="box4_topRigh">
+            <volumeref ref="box4_topRigh_logic"/>
+            <positionref ref="box4_topRigh_pos"/>
+        </physvol>
+        <physvol name="box1_botLeft">
+            <volumeref ref="box1_botLeft_logic"/>
+            <positionref ref="box1_botLeft_pos"/>
+        </physvol>
+        <physvol name="box2_botLeft">
+            <volumeref ref="box2_botLeft_logic"/>
+            <positionref ref="box2_botLeft_pos"/>
+        </physvol>
+        <physvol name="box3_botLeft">
+            <volumeref ref="box3_botLeft_logic"/>
+            <positionref ref="box3_botLeft_pos"/>
+        </physvol>
+        <physvol name="box4_botLeft">
+            <volumeref ref="box4_botLeft_logic"/>
+            <positionref ref="box4_botLeft_pos"/>
+        </physvol>
+        <physvol name="box1_botRigh">
+            <volumeref ref="box1_botRigh_logic"/>
+            <positionref ref="box1_botRigh_pos"/>
+        </physvol>
+        <physvol name="box2_botRigh">
+            <volumeref ref="box2_botRigh_logic"/>
+            <positionref ref="box2_botRigh_pos"/>
+        </physvol>
+        <physvol name="box3_botRigh">
+            <volumeref ref="box3_botRigh_logic"/>
+            <positionref ref="box3_botRigh_pos"/>
+        </physvol>
+        <physvol name="box4_botRigh">
+            <volumeref ref="box4_botRigh_logic"/>
+            <positionref ref="box4_botRigh_pos"/>
+        </physvol>
+     </volume>		
+
+</structure>
+
+<setup name="coilHoses" version="1.0">
+    <world ref="logic_coilHoses"/>
+</setup>
+
+</gdml>

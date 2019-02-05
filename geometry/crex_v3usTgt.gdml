@@ -2871,6 +2871,11 @@
         <rotation name="rHRSplatform_rot" unit="deg" x="0" y="12.5" z="0"/>
       </physvol>
 
+      <physvol>
+        <file name="geometry/subCoilHoses.gdml"/>
+        <position name="coil_hose_global_pos" unit="cm" x="0" y="0" z="138.518"/>
+      </physvol>
+
     </volume>
   </structure>
 

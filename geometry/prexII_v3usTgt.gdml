@@ -2864,13 +2864,6 @@
         <rotationref ref="identity"/>
       </physvol>
 
-      <!-- <physvol> -->
-      <!-- <file name="geometry/subCoilHoses.gdml"/> -->
-      <!-- <position name="coil_hose_pos" unit="cm" x="0" y="0" z="center_septum - 0.5*length_septum - 0.5*29.11"/> -->
-      <!-- <rotationref ref="identity"/> -->
-      <!-- </physvol> -->
-
-
       <physvol>
         <file name="geometry/subQ1HosesCylRedesign.gdml"/>
         <position name="q1_hose_cyl_pos" unit="cm" x="0" y="0" z="210"/>
@@ -2911,6 +2904,11 @@
         <file name="geometry/subRightHRSplatform.gdml"/>
         <position name="rHRSplatform_pos" unit="cm" x="-467.3" y="42.5" z="2107.8"/>
         <rotation name="rHRSplatform_rot" unit="deg" x="0" y="12.5" z="0"/>
+      </physvol>
+
+      <physvol>
+        <file name="geometry/subCoilHoses.gdml"/>
+        <position name="coil_hose_global_pos" unit="cm" x="0" y="0" z="138.518"/>
       </physvol>
 
     </volume>
