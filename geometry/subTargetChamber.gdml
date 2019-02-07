@@ -31,6 +31,9 @@
     <position name="pos_front_tube" unit="cm" x="0" y="0" z="0.5*(sc_length + front_tube_length) + front_flange_z"/>
     <position name="pos_tube_flange" unit="cm" x="0" y="0" z="0.5*(sc_length + tube_flange_length) + front_tube_length + front_flange_z"/>
 
+    <position name="inner_ladder_det_pos" unit="cm" x="-21.065*cm_factor" y="0" z="0"/>
+    <position name="outer_ladder_det_pos" unit="cm" x="-74*cm_factor" y="0" z="0"/>
+
     <rotation name="target_cut_rot" unit="deg" x="0" y="90" z="0"/>
   </define>
 
@@ -74,6 +77,9 @@
     <tube lunit="cm" aunit="deg" name="rear_flange" z="rear_flange_z" rmin="rear_flange_cut_rad" rmax="sc_outer_radius"
           startphi="0" deltaphi="360"/>
 
+    <box lunit="cm" name="inner_ladder_det_solid" x="3.31*cm_factor" y="16.02*cm_factor" z="17.5*cm_factor"/>
+    <box lunit="cm" name="outer_ladder_det_solid" x="5.875*cm_factor" y="13.693*cm_factor" z="17.5*cm_factor"/>
+
     <union name="sc_mother_0">
       <first ref="sc_with_cut"/>
       <second ref="front_flange"/>
@@ -89,6 +95,16 @@
       <second ref="front_tube_solid"/>
       <positionref ref="pos_front_tube"/>
     </union>
+    <!-- <union name="sc_mother_3">
+      <first ref="sc_mother_2"/>
+      <second ref="inner_ladder_det_solid"/>
+      <positionref ref="inner_ladder_det_pos"/>
+    </union>
+    <union name="sc_mother_4">
+      <first ref="sc_mother_3"/>
+      <second ref="outer_ladder_det_solid"/>
+      <positionref ref="outer_ladder_det_pos"/>
+    </union> -->
     <union name="sc_mother">
       <first ref="sc_mother_2"/>
       <second ref="tube_flange_solid"/>
@@ -117,6 +133,16 @@
       <materialref ref="StainlessSteel"/>
       <solidref ref="tube_flange_solid"/>
     </volume>
+    <!-- <volume name="inner_ladder_det_logic">
+      <materialref ref="Shield"/>
+      <solidref ref="inner_ladder_det_solid"/>
+      <auxiliary auxtype="SensDet" auxvalue="volumeN3801"/>
+    </volume>
+    <volume name="outer_ladder_det_logic">
+      <materialref ref="Shield"/>
+      <solidref ref="outer_ladder_det_solid"/>
+      <auxiliary auxtype="SensDet" auxvalue="volumeN3802"/>
+    </volume> -->
 
     <volume name="logicTargetChamber">
       <materialref ref="Vacuum"/>
@@ -142,6 +168,14 @@
         <volumeref ref="tube_flange_logic"/>
         <positionref ref="pos_tube_flange"/>
       </physvol>
+      <!-- <physvol name="inner_ladder_det">
+        <volumeref ref="inner_ladder_det_logic"/>
+        <positionref ref="inner_ladder_det_pos"/>
+      </physvol>
+      <physvol name="outer_ladder_det">
+        <volumeref ref="outer_ladder_det_logic"/>
+        <positionref ref="outer_ladder_det_pos"/>
+      </physvol> -->
 
     </volume>
   </structure>

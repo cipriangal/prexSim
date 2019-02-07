@@ -17,7 +17,7 @@
     <constant name="length_plast_cut1" value="3*cm_factor"/>
     <constant name="width_plast_cut1" value="12*cm_factor"/>
     <constant name="height_plast_cut1" value="25*cm_factor"/>
-    <constant name="r_plast_cut2" value="6*cm_factor"/>
+    <constant name="r_plast_cut2" value="6.25*cm_factor"/>
     <constant name="length_plast_cut2" value="9*cm_factor"/>
     <constant name="length_plast_cut3" value="9*cm_factor"/>
     <constant name="r_plast_cut3" value="8.5*cm_factor"/>
@@ -110,14 +110,15 @@
     <rotation name="rot_flange_cyl_cut_l" unit="deg" x="0" y="5" z="0"/>
     <rotation name="rot_flange_cyl_cut_r" unit="deg" x="0" y="-5" z="0"/>
 
-    <position name="pos_global_gate_valve" unit="cm" x="0" y="0" z="-28.93234"/>
+    <position name="pos_global_gate_valve" unit="cm" x="0" y="0" z="-33.5931"/>
     <rotation name="rot_global_gate_valve" unit="deg" x="0" y="0" z="180"/>
-    <position name="pos_global_targ_shld" unit="cm" x="0" y="0" z="-(length_plast_block + 6.001*cm_factor)/2. - 0.001"/>
+    <position name="pos_global_targ_shld" unit="cm" x="0" y="0" z="-(length_plast_block + 6.001*cm_factor)/2. - 0.001 - 4.6609"/>
     <position name="pos_rel_targ_shld_angle" unit="cm" x="-11.103*cm_factor" y="9.5459*cm_factor" z="0"/>
     <rotation name="rot_targ_shld_angle" unit="deg" x="0" y="0" z="-13.5"/>
-    <position name="pos_global_vacuum_pipe" unit="cm" x="0" y="0" z="-24.15609 + 0.02"/>
+    <position name="pos_global_vacuum_pipe" unit="cm" x="0" y="0" z="-28.744 + 0.02"/>
     <position name="pos_global_beam_det_1" unit="cm" x="0" y="0" z="-33.72"/>
     <position name="pos_global_beam_det_2" unit="cm" x="0" y="0" z="-14.16"/>
+    <position name="pos_global_targ_shld_liner" unit="cm" x="0" y="0" z="-(length_plast_block + 6.001*cm_factor)/2. - 0.001 - 7.9"/>
 
   </define>
 
@@ -345,7 +346,7 @@
     <box name="targ_shld_angle_cut" lunit="cm" x="4.001*cm_factor" y="15.778*cm_factor" z="6.001*cm_factor"/>
     <box name="targ_shld_foot_cut" lunit="cm" x="8*cm_factor" y="2.7*cm_factor" z="6.001*cm_factor"/>
     <tube name="targ_shld_beam_cut" lunit="cm" aunit="deg" startphi="0" deltaphi="360"
-          rmin="0" rmax="5.25*cm_factor" z="6.001*cm_factor"/>
+          rmin="0" rmax="6.251*cm_factor" z="6.001*cm_factor"/>
     <box name="targ_shld_valve_cut" lunit="cm" x="12*cm_factor" y="21.4*cm_factor" z="3*cm_factor"/>
     <union name="targ_shld_1">
       <first ref="targ_shld_0"/>
@@ -385,6 +386,7 @@
       <zplane rmin="7.302" rmax="7.62" z="24.74956"/>
       <zplane rmin="9.8425" rmax="10.16" z="27.64156"/>
       <zplane rmin="9.8425" rmax="10.16" z="28.38156"/>
+      <zplane rmin="9.8425" rmax="10.16" z="32.37662"/>
     </polycone>
 
     <tube name="beam_det_1_solid" lunit="cm" aunit="deg" startphi="0" deltaphi="360"
@@ -394,6 +396,9 @@
 
     <tube name="liner_shield_solid" lunit="cm" aunit="deg" startphi="0" deltaphi="360"
           rmin="r_plast_cut2 - 2.54" rmax="r_plast_cut2 - 0.01" z="length_plast_cut2"/>
+
+    <tube name="targ_shld_liner_solid" lunit="cm" aunit="deg" startphi="0" deltaphi="360"
+          rmin="5.25*cm_factor" rmax="6.25*cm_factor" z="3*cm_factor"/>
 
     <union name="coll_shield_mother0">
       <first ref="plast_block_solid"/>
@@ -436,24 +441,30 @@
       <second ref="liner_shield_solid"/>
       <positionref ref="pos_rel_plast_cut2"/>
     </union>
-    <union name="coll_shield_mother">
+    <union name="coll_shield_mother8">
       <first ref="coll_shield_mother7"/>
       <second ref="beam_det_2_solid"/>
       <positionref ref="pos_global_beam_det_2"/>
     </union>
+    <union name="coll_shield_mother">
+      <first ref="coll_shield_mother8"/>
+      <second ref="targ_shld_liner_solid"/>
+      <positionref ref="pos_global_targ_shld_liner"/>
+    </union>
+      
 
   </solids>
 
   <structure>
     <volume name="plast_block_logic">
-      <materialref ref="Shield"/>
-<!--      <materialref ref="Borated_HDPE"/>-->
+      <!-- <materialref ref="Shield"/> -->
+      <materialref ref="Borated_HDPE"/>
       <solidref ref="plast_block_solid"/>
       <auxiliary auxtype="SensDet" auxvalue="volumeN3121"/>
     </volume>
     <volume name="conc_block_logic">
       <materialref ref="Concrete"/>
-<!--      <materialref ref="Borated_Concrete"/> -->
+      <!-- <materialref ref="Borated_Concrete"/> -->
       <solidref ref="conc_block_solid"/>
       <auxiliary auxtype="SensDet" auxvalue="volumeN4101"/>
     </volume>
@@ -471,7 +482,7 @@
       <solidref ref="gate_valve_solid"/>
     </volume>
     <volume name="targ_shld_logic">
-      <materialref ref="Shield"/>
+      <materialref ref="Borated_HDPE"/>
       <solidref ref="targ_shld_solid"/>
       <auxiliary auxtype="SensDet" auxvalue="volumeN3122"/>
     </volume>
@@ -492,6 +503,10 @@
     <volume name="liner_shield_logic">
       <materialref ref="Aluminum"/>
       <solidref ref="liner_shield_solid"/>
+    </volume>
+    <volume name="targ_shld_liner_logic">
+      <materialref ref="Aluminum"/>
+      <solidref ref="targ_shld_liner_solid"/>
     </volume>
 
     <volume name="coll_shields_logic">
@@ -538,6 +553,10 @@
       <physvol name="liner_shield">
         <volumeref ref="liner_shield_logic"/>
         <positionref ref="pos_rel_plast_cut2"/>
+      </physvol>
+      <physvol name="targ_shld_liner">
+        <volumeref ref="targ_shld_liner_logic"/>
+        <positionref ref="pos_global_targ_shld_liner"/>
       </physvol>
 
     </volume>

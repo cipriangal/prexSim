@@ -35,6 +35,7 @@
 /moller/det/setDetectorFileName geometry/prexII_v3usTgt.gdml
 #/moller/det/setDetectorFileName geometry/crex_v3usTgt.gdml
 #/moller/det/setDetectorFileName geometry/subCoilHoses.gdml
+#/moller/det/setDetectorFileName geometry/subBeamPipe_P2_6inDonut_cadSAMs.gdml
 
 /moller/det/setShieldMaterial polyethylene
 /testhadr/CutsAll          0.7 mm

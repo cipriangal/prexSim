@@ -2761,12 +2761,12 @@
 
       <physvol name="septum_pipe">
         <volumeref ref="septum_pipe_logic" />
-        <position name="posbeamline" unit="cm" x="0" y="0" z="11.853"/>
+        <position name="posbeamline" unit="cm" x="0" y="0" z="center_septum_pipe - 43"/>
       </physvol>
 
       <physvol name="septum_pipe_us_det">
         <volumeref ref="septum_pipe_us_det_logic"/>
-        <position name="pos_sept_us_det" unit="cm" x="0" y="0" z="center_septum_pipe - length_septum_pipe/2. - 0.01"/>
+        <position name="pos_sept_us_det" unit="cm" x="0" y="0" z="center_septum_pipe - length_septum_pipe/2. - 0.01 + 12.5"/>
       </physvol>
 
       <physvol name="septum_pipe_ds_det">
@@ -2885,7 +2885,7 @@
       </physvol>
 
       <physvol>
-        <file name="geometry/subBeamPipe_P2_6inDonut_noSAMs.gdml"/>
+        <file name="geometry/subBeamPipe_P2_6inDonut_cadSAMs.gdml"/>
         <positionref ref="dDet_beamline_pos_1"/>
       </physvol>
 

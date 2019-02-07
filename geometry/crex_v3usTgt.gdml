@@ -2850,7 +2850,7 @@
       </physvol>
 
       <physvol>
-        <file name="geometry/subBeamPipe_P2_6inDonut_noSAMs.gdml"/>
+        <file name="geometry/subBeamPipe_P2_6inDonut_cadSAMs.gdml"/>
         <positionref ref="dDet_beamline_pos_1"/>
       </physvol>
 

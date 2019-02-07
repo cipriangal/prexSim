@@ -551,3 +551,11 @@ void sphere_det_subtraction_phi_theta(string sim, string conf, int n_events_k, I
   h1->Write(); h2->Write(); h3->Write(); h4->Write(); h5->Write(); h6->Write(); h7->Write(); h8->Write(); h9->Write(); h10->Write();
   fout->Close();
 }
+
+void grand_analysis(string sim, string conf, int n_events_k){
+  cout<<"Running grand analysis... this will take some time. Please be patient."<<endl;
+  string fname = "~/farmOut/" + sim + "_" + conf + "_" + to_string(n_events_k) + "kEv/" + sim + "_" + conf + ".root";
+  cout<<"Analyzing HRS..."<<endl;
+  
+  
+}
