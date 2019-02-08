@@ -435,8 +435,8 @@
 
     <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="sam_cyl_mother_addition"
           rmin="0"
-          rmax="full_sam_r_outward_offset + sam_bot_face_sep + sam_can_length*1.01"
-          z="2.01*sam_can_outer_r"/>
+          rmax="full_sam_r_outward_offset + sam_bot_face_sep + sam_can_length*2"
+          z="2.5*sam_can_outer_r"/>
 
     <box lunit="cm" name="sam_quartz_box_solid_box" x="sam_quartz_width" y="sam_quartz_height" z="sam_quartz_length"/>
     <box lunit="cm" name="sam_quartz_box_solid_bevel_1" x="sam_quartz_width" y="sam_quartz_height" z="sam_quartz_height" />
@@ -645,13 +645,8 @@
       <second ref="det08_solid"/>
       <positionref ref="det08_posRel"/>
     </union> -->
-    <union name="bP2worldUnion8">
-      <first ref="bP2worldUnion7"/>
-      <second ref="sam_container_solid"/>
-      <positionref ref="pos_rel_sam_center"/>
-    </union>
     <union name ="bP2worldUnion11">
-      <first ref="bP2worldUnion8"/>
+      <first ref="bP2worldUnion7"/>
       <second ref="dumpIonChShield1_solid"/>
       <positionref ref="dumpICS1_beamL_pos"/>
     </union>
@@ -925,7 +920,7 @@
 
     <volume name="beamPipe_logic2">
       <materialref ref="Aluminum"/>
-      <solidref ref="cut_pipe_solid_2"/>
+      <solidref ref="beampipe2_solid"/>
     </volume>
 
 

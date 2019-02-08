@@ -2559,7 +2559,7 @@
       <!-- <auxiliary auxtype="SensDet" auxvalue="volumeN5007"/> -->
     </volume>
 
-    <volume name="septum_pipe_us_det_logic">
+    <!-- <volume name="septum_pipe_us_det_logic">
       <materialref ref="Vacuum"/>
       <solidref ref="septum_pipe_us_det_solid"/>
       <auxiliary auxtype="SensDet" auxvalue="volumeN2503"/>
@@ -2569,7 +2569,7 @@
       <materialref ref="Vacuum"/>
       <solidref ref="septum_pipe_ds_det_solid"/>
       <auxiliary auxtype="SensDet" auxvalue="volumeN2504"/>
-    </volume>
+    </volume> -->
 
     <volume name="beamtube_1_logic">
       <materialref ref="Aluminum"/>
@@ -2764,7 +2764,7 @@
         <position name="posbeamline" unit="cm" x="0" y="0" z="center_septum_pipe - 43"/>
       </physvol>
 
-      <physvol name="septum_pipe_us_det">
+      <!-- <physvol name="septum_pipe_us_det">
         <volumeref ref="septum_pipe_us_det_logic"/>
         <position name="pos_sept_us_det" unit="cm" x="0" y="0" z="center_septum_pipe - length_septum_pipe/2. - 0.01 + 12.5"/>
       </physvol>
@@ -2772,7 +2772,7 @@
       <physvol name="septum_pipe_ds_det">
         <volumeref ref="septum_pipe_ds_det_logic"/>
         <position name="pos_sept_ds_det" unit="cm" x="0" y="0" z="center_septum_pipe + length_septum_pipe/2. + 0.01"/>
-      </physvol>
+      </physvol> -->
 
       <physvol name="vacEnc_l">
         <volumeref ref="vac_enc_l_logic"/>

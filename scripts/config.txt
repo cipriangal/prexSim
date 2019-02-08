@@ -47,12 +47,12 @@ ident=v3usTgt
 #output=v3OldCollShields
 #output=v3current
 #output=v3SeptumCoilHoses
-output=v3Test
+output=v3CoilHoseTestsHDPE
 
 start_run=0
-end_run=40
+end_run=10
 
-n_events=1000
+n_events=10000
 
 e_cut=30
 
@@ -61,5 +61,5 @@ uva_id=ajz3ee
 jlab_id=ajzec
 
 #comma separated, no spaces, correct capitalization is important
-subassemblies=KriptoniteDetectors,LeftHRSplatform,RightHRSplatform,TargetChamber,DumpShield,BeamPipe_newSAMs,BeamPipe_SAMs,BeamPipe_newSAMsAlFlange,SkyShineShieldV2,BeamPipe_P2_6inDonut_noSAMs,Q1HosesCylRedesign,CollShieldBlock,CoilHoses
+subassemblies=KriptoniteDetectors,LeftHRSplatform,RightHRSplatform,TargetChamber,DumpShield,SkyShineShieldV2,BeamPipe_P2_6inDonut_cadSAMs,Q1HosesCylRedesign,CollShieldBlock,CoilHoses
 #subassemblies=BeamPipe_12GeV_SAMs,HRSplatform,TritiumTarget

@@ -36,7 +36,7 @@ int processInput(int,char**);
 string suffix;
 string finNm("0");
 int nAvg(100000);
-vector<int> detNr={1001, 1002, 1003, 1004, 1005, 1006, 1007, 1101, 1102, 2101, 2105, 2110, 2112, 3120, 3121, 3201, 2401, 2411};
+vector<int> detNr={1001, 1002, 1003, 1004, 1005, 1006, 1007, 1101, 1102, 2101, 2102, 2110, 2112, 2203, 2211, 2212, 2401, 2411, 3120, 3121, 3122, 3201, 3211, 3212, 3213, 3124, 3701, 3702, 3703, 3704, 3705, 3706, 3707, 3708, 3709, 3710, 3711, 3712, 3713, 3714, 3715, 3716, 4101, 4102, 4111, 4112, 9001, 9002, 9003};
 
 long currentEv(0),prevEv(0),processedEv(0);
 void ProcessOne(string);
@@ -83,22 +83,21 @@ void ProcessOne(string fnm){
     return;
   }
 
-  Float_t type, volume, evNr;
+  Int_t type, volume, evNr, pdgID;
   Float_t Edeposit,kinE;
   Float_t x0,y0,z0,xd,yd,zd;
-  Float_t pdgID;
-  TNtuple *t = (TNtuple*)fin->Get("geant");
-  t->SetBranchAddress("type",&type);
-  t->SetBranchAddress("volume",&volume);
+  TNtuple *t = (TNtuple*)fin->Get("t");
+  t->SetBranchAddress("trackID",&type);
+  t->SetBranchAddress("volID",&volume);
   t->SetBranchAddress("x",&xd);
   t->SetBranchAddress("y",&yd);
   t->SetBranchAddress("z",&zd);
   t->SetBranchAddress("x0",&x0);
   t->SetBranchAddress("y0",&y0);
   t->SetBranchAddress("z0",&z0);
-  t->SetBranchAddress("ev_num",&evNr);
-  t->SetBranchAddress("PDGid",&pdgID);
-  t->SetBranchAddress("Edeposit",&Edeposit);
+  t->SetBranchAddress("nEv",&evNr);
+  t->SetBranchAddress("pdgID",&pdgID);
+  t->SetBranchAddress("edep",&Edeposit);
   t->SetBranchAddress("kineE",&kinE);
 
   long nEntries= t->GetEntries();

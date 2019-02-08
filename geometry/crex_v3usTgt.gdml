@@ -1463,14 +1463,37 @@
       <second ref="accept_sub"/>
     </subtraction>
 
-
     <!-- Beamline -->
-    <polycone aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="septum_pipe_tube_1">
+    <polycone aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="septum_pipe_tube_old">
       <zplane  rmin="1.2 * coll_bore_inner_r2" rmax="1.2 * coll_bore_inner_r2 + 1.0*ro_septum_pipe -1.0*ri_septum_pipe" z="-0.5*length_septum_pipe" />
       <zplane  rmin="1.2 * coll_bore_inner_r2 + 20.0 * tan(coll_angle*PI/180.)" rmax="1.2 * coll_bore_inner_r2 + 20.0 * tan(coll_angle*PI/180.) + 1.0*ro_septum_pipe -1.0*ri_septum_pipe" z="-0.5*length_septum_pipe + 20.0" />
       <zplane  rmin="ri_septum_pipe" rmax="ro_septum_pipe" z="-0.5*length_septum_pipe + 30.0" />
       <zplane  rmin="ri_septum_pipe" rmax="ro_septum_pipe" z="+0.5*length_septum_pipe" />
     </polycone>
+
+    <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="sept_us_tube_solid" rmin="2.38125" rmax="2.54" z="14.7574"/>
+    <polycone aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="septum_reducer_cone_solid">
+      <zplane rmin="2.38125" rmax="2.54" z="0.0"/>
+      <zplane rmin="3.6449" rmax="3.81" z="2.685"/>
+      <zplane rmin="3.6449" rmax="3.81" z="2.815"/>
+    </polycone>
+    <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="sept_beam_pipe_w_insert" rmin="2.8575" rmax="3.81" z="57.82056"/>
+    <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="sept_beam_pipe_wo_insert" rmin="3.4925" rmax="3.81" z="38.547294"/>
+    <union name="septum_pipe_tube_0">
+      <first ref="sept_us_tube_solid"/>
+      <second ref="septum_reducer_cone_solid"/>
+      <position name="pos_sep_tube_union_0" unit="cm" x="0" y="0" z="7.3787"/>
+    </union>
+    <union name="septum_pipe_tube_1">
+      <first ref="septum_pipe_tube_0"/>
+      <second ref="sept_beam_pipe_w_insert"/>
+      <position name="pos_sep_tube_union_1" unit="cm" x="0" y="0" z="39.10398"/>
+    </union>
+    <union name="septum_pipe_tube_solid">
+      <first ref="septum_pipe_tube_1"/>
+      <second ref="sept_beam_pipe_wo_insert"/>
+      <position name="pos_sep_tube_union_2" unit="cm" x="0" y="0" z="87.287907"/>
+    </union>
 
     <polycone aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="beamtube_1">
       <zplane rmin="ro_septum_pipe" rmax="beamline[2,1]" z="-0.5*beamline[3,1]-0.5*beamline[3,2]-0.5*beamline[3,3]-0.5*beamline[3,4]-0.5*beamline[3,5]-0.5*beamline[3,6]-0.5*beamline[3,7]-0.5*beamline[3,8]-0.5*beamline[3,9]-0.5*beamline[3,10]-0.5*beamline[3,11]-0.5*beamline[3,12]-0.5*beamline[3,13] -1."/>
@@ -2528,7 +2551,7 @@
 
     <volume name="septum_pipe_logic">
       <materialref ref="StainlessSteel"/>
-      <solidref ref="septum_pipe_tube_1"/>
+      <solidref ref="septum_pipe_tube_solid"/>
       <!-- <auxiliary auxtype="SensDet" auxvalue="volumeN5007"/> -->
     </volume>
 
@@ -2722,7 +2745,7 @@
 
       <physvol name="septum_pipe">
         <volumeref ref="septum_pipe_logic" />
-        <position name="posbeamline" unit="cm" x="0" y="0" z="center_septum_pipe"/>
+        <position name="posbeamline" unit="cm" x="0" y="0" z="center_septum_pipe - 43"/>
       </physvol>
 
       <physvol name="vacEnc_l">
@@ -2750,13 +2773,6 @@
         <volumeref ref="dump_logic"/>
         <positionref ref="dump_center"/>
       </physvol>
-
-      <!--
-          <physvol name="ssenc">
-          <volumeref ref="ssenc_logic"/>
-          <positionref ref="ssenc_cylcenter"/>
-          </physvol>
-      -->
 
       <physvol name="ped_union">
         <volumeref ref="ped_union_logic"/>
@@ -2821,13 +2837,6 @@
         <positionref ref="pos_global_SEPT_elec"/>
         <rotationref ref="identity"/>
       </physvol>
-
-      <!-- <physvol> -->
-      <!-- <file name="geometry/subCoilHoses.gdml"/> -->
-      <!-- <position name="coil_hose_pos" unit="cm" x="0" y="0" z="center_septum - 0.5*length_septum - 0.5*29.11"/> -->
-      <!-- <rotationref ref="identity"/> -->
-      <!-- </physvol> -->
-
 
       <physvol>
         <file name="geometry/subQ1HosesCylRedesign.gdml"/>

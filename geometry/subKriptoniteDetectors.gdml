@@ -155,11 +155,11 @@
 
   <structure>
 
-    <!-- <volume name="logic_SEPT_elec"> -->
-    <!--   <materialref ref="matKryptonite"/> -->
-    <!--   <solidref ref="solid_SEPT_elec"/> -->
-    <!--   <auxiliary auxtype="SensDet" auxvalue="volumeN1002"/> -->
-    <!-- </volume> -->
+    <volume name="logic_SEPT_elec">
+      <materialref ref="matKryptonite"/>
+      <solidref ref="solid_SEPT_elec"/>
+      <auxiliary auxtype="SensDet" auxvalue="volumeN1002"/>
+    </volume>
 
     <volume name="logic_upstreamRight_elec">
       <materialref ref="matKryptonite"/>
@@ -205,10 +205,10 @@
       <materialref ref="Vacuum"/>
       <solidref ref="detUnion8"/>
 
-      <!-- <physvol name="phys_SEPT_elec"> -->
-      <!--   <volumeref ref="logic_SEPT_elec"/> -->
-      <!--   <positionref ref="pos_center"/> -->
-      <!-- </physvol> -->
+      <physvol name="phys_SEPT_elec">
+        <volumeref ref="logic_SEPT_elec"/>
+        <positionref ref="pos_center"/>
+      </physvol>
 
       <physvol name="phys_upstreamRight_elec">
         <volumeref ref="logic_upstreamRight_elec"/>
