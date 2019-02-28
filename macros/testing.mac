@@ -23,7 +23,10 @@
 #/moller/det/setDetectorFileName geometry/subCollShields.gdml
 #/moller/det/setDetectorFileName geometry/prexII_v3usTgt.gdml
 #/moller/det/setDetectorFileName geometry/crex_v3usTgt.gdml
-/moller/det/setDetectorFileName geometry/subCollShieldBlock.gdml
+#/moller/det/setDetectorFileName geometry/CTgt_v3usTgt.gdml
+#/moller/det/setDetectorFileName geometry/ladder_v3usTgt.gdml
+/moller/det/setDetectorFileName geometry/prex1_AJZ.gdml
+#/moller/det/setDetectorFileName geometry/subCollShieldBlock.gdml
 #/moller/det/setDetectorFileName geometry/subBeamPipe_P2_6inDonut_cadSAMs.gdml
 
 /moller/det/setShieldMaterial polyethylene

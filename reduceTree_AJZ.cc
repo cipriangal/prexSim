@@ -107,12 +107,12 @@ void ProcessOne(string fnm, long ntpf, int keV_cut){
 
   long nEntries = t->GetEntries();
   long nComp    = 0;
-  if(nEntries <= ntpf || ntpf == 0){nComp = nEntries;}
+  if(nEntries <= ntpf || ntpf <= 0){nComp = nEntries;}
   else{nComp = ntpf;}
 
   float currentProc = 1, procStep = 10;
   //int tst=0;
-  for(long i = 0; i < nComp; i++){
+  for(long i = 0; i < nEntries; i++){
     //if( float(i+1)/nEntries*100 > 51) continue;
     t->GetEntry(i);
     if( float(i+1)/nComp*100 >= currentProc){
@@ -122,6 +122,10 @@ void ProcessOne(string fnm, long ntpf, int keV_cut){
 
     currentEv += evNr - prevEv;
     prevEv = evNr;
+
+    if(evNr >= nComp){
+      break;
+    }
 
     //electrons directly from the gun
     //if(zO== -17720) continue;

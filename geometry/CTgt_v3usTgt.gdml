@@ -1028,7 +1028,7 @@
           lunit="cm" name="tubeTarget"
           rmin="inner_rad_targ"
           rmax="outer_rad_targ"
-          z="0.05" />
+          z="0.5" />
     <!-- z="0.6" /> -->
 
     <!-- Scattering Chamber -->
@@ -2795,7 +2795,8 @@
 
     <volume name="target_logic">
       <!-- <materialref ref="Calcium48"/> -->
-      <materialref ref="PureLead"/>
+      <!-- <materialref ref="PureLead"/> -->
+      <materialref ref="G4_C"/>
       <solidref ref="tubeTarget"/>
     </volume>
 
