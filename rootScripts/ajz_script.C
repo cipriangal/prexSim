@@ -552,10 +552,313 @@ void sphere_det_subtraction_phi_theta(string sim, string conf, int n_events_k, I
   fout->Close();
 }
 
+void grand_analysis_krip(string sim, string conf, int n_events_k){
+  cout<<"Analyzing Krip Dets..."<<endl;
+  string fname = "~/farmOut/" + sim + "_" + conf + "_" + to_string(n_events_k) + "kEv/" + sim + "_" + conf + "KripDets.root"; 
+
+  TH1F *h1_1001, *h2_1001, *h3_1001, *h4_1001, *h5_1001, *h6_1001, *h7_1001, *h8_1001;
+  TH1F *h9_1001, *h10_1001, *h11_1001, *h12_1001, *h13_1001, *h14_1001, *h15_1001, *h16_1001;
+  TH1F *h1_1007, *h2_1007, *h3_1007, *h4_1007, *h5_1007, *h6_1007, *h7_1007, *h8_1007;
+  TH1F *h9_1007, *h10_1007, *h11_1007, *h12_1007, *h13_1007, *h14_1007, *h15_1007, *h16_1007;
+  TH1F *h1_1006, *h3_1006;
+  TH2F *h17_1001, *h17_1007, *h2_1006;
+  gStyle->SetOptStat("eMRiou");
+
+  TFile *f = new TFile(fname.c_str());
+  TTree* t = (TTree*)f->Get("t");
+
+  string e_low_cut = "abs(pdgID)==11 && edep<1";
+  string e_med_cut = "abs(pdgID)==11 && edep>1 && edep<10";
+  string e_hi_cut  = "abs(pdgID)==11 && edep>10";
+  string n_therm   = "pdgID==2112 && edep<1E-6";
+  string n_slow    = "pdgID==2112 && edep>1E-6 && edep<1E-3";
+  string n_interm  = "pdgID==2112 && edep>1E-3 && edep<1";
+  string n_fast    = "pdgID==2112 && edep>1 && edep<10";
+  string n_ufast   = "pdgID==2112 && edep>10";
+  string lHRS = "volID==1001";
+  string rHRS = "volID==1007";
+  string hallLid_cuts  = "volID==1006 && pdgID==2112 && edep>30";
+  string hallLid_cuts2 = "volID==1006 && abs(pdgID)==11 && edep>10"; 
+
+  h1_1001 = new TH1F("1001_e_lo_neil", ("lHRS: neil, " + e_low_cut).c_str(), 100, 0, 1);
+  h1_1007 = new TH1F("1007_e_lo_neil", ("rHRS: neil, " + e_low_cut).c_str(), 100, 0, 1);
+  h9_1001 = new TH1F("1001_e_lo_edep", ("lHRS: edep, " + e_low_cut).c_str(), 100, 0, 1);
+  h9_1007 = new TH1F("1007_e_lo_edep", ("rHRS: edep, " + e_low_cut).c_str(), 100, 0, 1);
+  t->Project("1001_e_lo_neil", "edep", ("neil*(" + lHRS + " && " + e_low_cut + ")").c_str());
+  t->Project("1007_e_lo_neil", "edep", ("neil*(" + rHRS + " && " + e_low_cut + ")").c_str());
+  t->Project("1001_e_lo_edep", "edep", (lHRS + " && " + e_low_cut).c_str());
+  t->Project("1007_e_lo_edep", "edep", (rHRS + " && " + e_low_cut).c_str());
+  cout<<"Low edep e's plotted..."<<endl;
+  h2_1001 = new TH1F("1001_e_md_neil", ("lHRS: neil, " + e_med_cut).c_str(), 100, 1, 10);
+  h2_1007 = new TH1F("1007_e_md_neil", ("rHRS: neil, " + e_med_cut).c_str(), 100, 1, 10);
+  h10_1001 = new TH1F("1001_e_md_edep", ("lHRS: edep, " + e_med_cut).c_str(), 100, 1, 10);
+  h10_1007 = new TH1F("1007_e_md_edep", ("rHRS: edep, " + e_med_cut).c_str(), 100, 1, 10);
+  t->Project("1001_e_md_neil", "edep", ("neil*(" + lHRS + " && " + e_med_cut + ")").c_str());
+  t->Project("1007_e_md_neil", "edep", ("neil*(" + rHRS + " && " + e_med_cut + ")").c_str());
+  t->Project("1001_e_md_edep", "edep", (lHRS + " && " + e_med_cut).c_str());
+  t->Project("1007_e_md_edep", "edep", (rHRS + " && " + e_med_cut).c_str());
+  cout<<"Med edep e's plotted..."<<endl;
+  h3_1001 = new TH1F("1001_e_hi_neil", ("lHRS: neil, " + e_hi_cut).c_str(), 100, 10, 1000);
+  h3_1007 = new TH1F("1007_e_hi_neil", ("rHRS: neil, " + e_hi_cut).c_str(), 100, 10, 1000);
+  h11_1001 = new TH1F("1001_e_hi_edep", ("lHRS: edep, " + e_hi_cut).c_str(), 100, 10, 1000);
+  h11_1007 = new TH1F("1007_e_hi_edep", ("rHRS: edep, " + e_hi_cut).c_str(), 100, 10, 1000);
+  t->Project("1001_e_hi_neil", "edep", ("neil*(" + lHRS + " && " + e_hi_cut + ")").c_str());
+  t->Project("1007_e_hi_neil", "edep", ("neil*(" + rHRS + " && " + e_hi_cut + ")").c_str());
+  t->Project("1001_e_hi_edep", "edep", (lHRS + " && " + e_hi_cut).c_str());
+  t->Project("1007_e_hi_edep", "edep", (rHRS + " && " + e_hi_cut).c_str());
+  cout<<"High edep e's plotted..."<<endl;
+
+  h4_1001 = new TH1F("1001_n_therm_neil", ("lHRS: neil, " + n_therm).c_str(), 100, 0, 1E-6);
+  h4_1007 = new TH1F("1007_n_therm_neil", ("rHRS: neil, " + n_therm).c_str(), 100, 0, 1E-6);
+  h12_1001 = new TH1F("1001_n_therm_edep", ("lHRS: edep, " + n_therm).c_str(), 100, 0, 1E-6);
+  h12_1007 = new TH1F("1007_n_therm_edep", ("rHRS: edep, " + n_therm).c_str(), 100, 0, 1E-6);
+  t->Project("1001_n_therm_neil", "edep", ("neil*(" + lHRS + " && " + n_therm + ")").c_str());
+  t->Project("1007_n_therm_neil", "edep", ("neil*(" + rHRS + " && " + n_therm + ")").c_str());
+  t->Project("1001_n_therm_edep", "edep", (lHRS + " && " + n_therm).c_str());
+  t->Project("1007_n_therm_edep", "edep", (rHRS + " && " + n_therm).c_str());
+  cout<<"Therm n's plotted..."<<endl;
+  h5_1001 = new TH1F("1001_n_slow_neil", ("lHRS: neil, " + n_slow).c_str(), 100, 1E-6, 1E-3);
+  h5_1007 = new TH1F("1007_n_slow_neil", ("rHRS: neil, " + n_slow).c_str(), 100, 1E-6, 1E-3);
+  h13_1001 = new TH1F("1001_n_slow_edep", ("lHRS: edep, " + n_slow).c_str(), 100, 1E-6, 1E-3);
+  h13_1007 = new TH1F("1007_n_slow_edep", ("rHRS: edep, " + n_slow).c_str(), 100, 1E-6, 1E-3);
+  t->Project("1001_n_slow_neil", "edep", ("neil*(" + lHRS + " && " + n_slow + ")").c_str());
+  t->Project("1007_n_slow_neil", "edep", ("neil*(" + rHRS + " && " + n_slow + ")").c_str());
+  t->Project("1001_n_slow_edep", "edep", (lHRS + " && " + n_slow).c_str());
+  t->Project("1007_n_slow_edep", "edep", (rHRS + " && " + n_slow).c_str());
+  cout<<"Slow n's plotted..."<<endl;
+  h6_1001 = new TH1F("1001_n_interm_neil", ("lHRS: neil, " + n_interm).c_str(), 100, 1E-3, 1);
+  h6_1007 = new TH1F("1007_n_interm_neil", ("rHRS: neil, " + n_interm).c_str(), 100, 1E-3, 1);
+  h14_1001 = new TH1F("1001_n_interm_edep", ("lHRS: edep, " + n_interm).c_str(), 100, 1E-3, 1);
+  h14_1007 = new TH1F("1007_n_interm_edep", ("rHRS: edep, " + n_interm).c_str(), 100, 1E-3, 1);
+  t->Project("1001_n_interm_neil", "edep", ("neil*(" + lHRS + " && " + n_interm + ")").c_str());
+  t->Project("1007_n_interm_neil", "edep", ("neil*(" + rHRS + " && " + n_interm + ")").c_str());
+  t->Project("1001_n_interm_edep", "edep", (lHRS + " && " + n_interm).c_str());
+  t->Project("1007_n_interm_edep", "edep", (rHRS + " && " + n_interm).c_str());
+  cout<<"Interm n's plotted..."<<endl;
+  h7_1001 = new TH1F("1001_n_fast_neil", ("lHRS: neil, " + n_fast).c_str(), 100, 1, 10);
+  h7_1007 = new TH1F("1007_n_fast_neil", ("rHRS: neil, " + n_fast).c_str(), 100, 1, 10);
+  h15_1001 = new TH1F("1001_n_fast_edep", ("lHRS: edep, " + n_fast).c_str(), 100, 1, 10);
+  h15_1007 = new TH1F("1007_n_fast_edep", ("rHRS: edep, " + n_fast).c_str(), 100, 1, 10);
+  t->Project("1001_n_fast_neil", "edep", ("neil*(" + lHRS + " && " + n_fast + ")").c_str());
+  t->Project("1007_n_fast_neil", "edep", ("neil*(" + rHRS + " && " + n_fast + ")").c_str());
+  t->Project("1001_n_fast_edep", "edep", (lHRS + " && " + n_fast).c_str());
+  t->Project("1007_n_fast_edep", "edep", (rHRS + " && " + n_fast).c_str());
+  cout<<"Fast n's plotted..."<<endl;
+  h8_1001 = new TH1F("1001_n_ufast_neil", ("lHRS: neil, " + n_ufast).c_str(), 100, 10, 500);
+  h8_1007 = new TH1F("1007_n_ufast_neil", ("rHRS: neil, " + n_ufast).c_str(), 100, 10, 500);
+  h16_1001 = new TH1F("1001_n_ufast_edep", ("lHRS: edep, " + n_ufast).c_str(), 100, 10, 500);
+  h16_1007 = new TH1F("1007_n_ufast_edep", ("rHRS: edep, " + n_ufast).c_str(), 100, 10, 500);
+  t->Project("1001_n_ufast_neil", "edep", ("neil*(" + lHRS + " && " + n_ufast + ")").c_str());
+  t->Project("1007_n_ufast_neil", "edep", ("neil*(" + rHRS + " && " + n_ufast + ")").c_str());
+  t->Project("1001_n_ufast_edep", "edep", (lHRS + " && " + n_ufast).c_str());
+  t->Project("1007_n_ufast_edep", "edep", (rHRS + " && " + n_ufast).c_str());
+  cout<<"Ultrafast n's plotted..."<<endl;
+  
+  h1_1006 = new TH1F("1006_n_ufast_edep", ("Hall Lid: n edep, " + hallLid_cuts).c_str(), 200, 30, 500);
+  h3_1006 = new TH1F("1006_e_hi_edep", ("Hall Lid: e edep, " + hallLid_cuts2).c_str(), 300, 10, 600);
+  t->Project("1006_n_ufast_edep", "edep", hallLid_cuts.c_str());
+  t->Project("1006_e_hi_edep", "edep", hallLid_cuts2.c_str());
+  cout<<"Hall Lid plotted..."<<endl;
+
+  h17_1001 = new TH2F("1001_x0z0_map", "Left HRS: xz", 400, -32000, 32000, 400, -32000, 32000);
+  h17_1007 = new TH2F("1007_x0z0_map", "Right HRS: xz", 400, -32000, 32000, 400, -32000, 32000);
+  h2_1006 = new TH2F("1006_x0z0_map", "Hall Lid: xz", 400, -32000, 32000, 400, -32000, 32000);
+  t->Project("1001_x0z0_map", "x0:z0", "edep*(volID==1001)");
+  t->Project("1007_x0z0_map", "x0:z0", "edep*(volID==1007)");
+  t->Project("1006_x0z0_map", "x0:z0", "edep*(volID==1006)");
+  cout<<"Particle maps plotted..."<<endl;
+  
+  string fout_name = sim + "_" + conf + "_kripDets_plots.root";
+  TFile *fout = new TFile(fout_name.c_str(), "RECREATE");
+  fout->cd();
+  h1_1001->Write(); h2_1001->Write(); h3_1001->Write(); h4_1001->Write(); 
+  h5_1001->Write(); h6_1001->Write(); h7_1001->Write(); h8_1001->Write();
+  h9_1001->Write(); h10_1001->Write(); h11_1001->Write(); h12_1001->Write(); 
+  h13_1001->Write(); h14_1001->Write(); h15_1001->Write(); h16_1001->Write();
+  h1_1007->Write(); h2_1007->Write(); h3_1007->Write(); h4_1007->Write(); 
+  h5_1007->Write(); h6_1007->Write(); h7_1007->Write(); h8_1007->Write();
+  h9_1007->Write(); h10_1007->Write(); h11_1007->Write(); h12_1007->Write(); 
+  h13_1007->Write(); h14_1007->Write(); h15_1007->Write(); h16_1007->Write();
+  h1_1006->Write(); h3_1006->Write();
+  h17_1001->Write(); h17_1007->Write(); h2_1006->Write();
+  fout->Close();
+}
+
+void grand_analysis_collimator(string sim, string conf, int n_events_k){
+  cout<<"Analyzing collimator dets, please wait..."<<endl;
+  string fname = "~/farmOut/" + sim + "_" + conf + "_" + to_string(n_events_k) + "kEv/" + sim + "_" + conf + "CollDets.root";
+
+  TH1F *h1_2101, *h1_2102;
+
+  gStyle->SetOptStat("eMRiou");
+  TFile *f = new TFile(fname.c_str());
+  TTree* t = (TTree*)f->Get("t");
+
+  h1_2101 = new TH1F("2101_kineE_pzCut", "Coll US Det: kineE, pz > 0", 230, 0, 2300);
+  h1_2102 = new TH1F("2102_kineE_pzCut", "Coll DS Det: kineE, pz > 0", 230, 0, 2300);
+  t->Project("2101_kineE_pzCut", "kineE", "volID==2101 && pz>0");
+  cout<<"US Det plot made..."<<endl;
+  t->Project("2102_kineE_pzCut", "kineE", "volID==2102 && pz>0");
+  cout<<"DS Det plot made..."<<endl;
+
+  string fout_name = sim + "_" + conf + "_collDets_plots.root";
+  TFile *fout = new TFile(fout_name.c_str(), "RECREATE");
+  fout->cd();
+  h1_2101->Write(); h1_2102->Write(); 
+  fout->Close();
+}
+
+void grand_analysis_plast_shields(string sim, string conf, int n_events_k){
+  cout<<"Analyzing collimator shield dets, please wait..."<<endl;
+  string fname = "~/farmOut/" + sim + "_" + conf + "_" + to_string(n_events_k) + "kEv/" + sim + "_" + conf + "PlastShieldDets.root";
+
+  TH1F *h1_3121, *h1_3122, *h2_3121, *h2_3122;
+  TH2F *h3_3121, *h3_3122;
+
+  gStyle->SetOptStat("eMRiou");
+  TFile *f = new TFile(fname.c_str());
+  TTree* t = (TTree*)f->Get("t");
+
+  h1_3121 = new TH1F("3121_edep", "Plast Shld Block Det: edep", 200, 0, 1000);
+  h1_3122 = new TH1F("3122_edep", "Targ Shield: edep", 200, 0, 1000);
+  h2_3121 = new TH1F("3121_edep_inner_bore", "Plast Block r<16.875: edep", 200, 0, 1000);
+  h2_3122 = new TH1F("3122_edep_inner_bore", "Targ Shld r<16.875: edep", 200, 0, 1000);
+  h3_3121 = new TH2F("3121_yz_map", "Plast Block: yz map", 400, -750, -190, 400, -500, 500);
+  h3_3122 = new TH2F("3122_yz_map", "Targ Shld: yz map", 400, -950, -750, 400, -400, 400);
+  t->Project("3121_edep", "edep", "volID==3121");
+  cout<<"Plast Det plot 1/3 made..."<<endl;
+  t->Project("3121_edep_inner_bore", "edep", "volID==3121 && sqrt(x*x + y*y)<168.75 && z<-425.14 && z>-653.74");
+  cout<<"Plast Det plot 2/3 made..."<<endl;
+  t->Project("3121_yz_map", "y:z", "edep*(volID==3121)");
+  cout<<"Plast Det plot 3/3 made..."<<endl;
+  t->Project("3122_edep", "edep", "volID==3122");
+  cout<<"Targ Shld plot 1/3 made..."<<endl;
+  t->Project("3122_edep_inner_bore", "edep", "volID==3122 && sqrt(x*x + y*y)<168.75 && z<-852.75 && z>-928.95");
+  cout<<"Targ Shld plot 2/3 made..."<<endl;
+  t->Project("3122_yz_map", "y:z", "edep*(volID==3122)");
+  cout<<"Targ Shld plot 3/3 made..."<<endl;
+
+  string fout_name = sim + "_" + conf + "_collShieldDets_plots.root";
+  TFile *fout = new TFile(fout_name.c_str(), "RECREATE");
+  fout->cd();
+  h1_3121->Write(); h1_3122->Write(); h2_3121->Write(); h2_3122->Write(); h3_3121->Write(); h3_3122->Write();
+  fout->Close();
+}
+
+void grand_analysis_coil_hoses(string sim, string conf, int n_events_k){
+  cout<<"Analyzing coil hose dets, please wait..."<<endl;
+  string fname = "~/farmOut/" + sim + "_" + conf + "_" + to_string(n_events_k) + "kEv/" + sim + "_" + conf + "CoilHoseDets.root";
+
+  TH1F *h1_3701, *h1_3702, *h1_3703, *h1_3704, *h1_3705, *h1_3706, *h1_3707, *h1_3708;
+  TH1F *h1_3709, *h1_3710, *h1_3711, *h1_3712, *h1_3713, *h1_3714, *h1_3715, *h1_3716;
+
+  gStyle->SetOptStat("eMRiou");
+  TFile *f = new TFile(fname.c_str());
+  TTree* t = (TTree*)f->Get("t");
+
+  h1_3701 = new TH1F("3701_edep", "Coil Hose 3701: edep", 200, 0, 1000);
+  h1_3702 = new TH1F("3702_edep", "Coil Hose 3702: edep", 200, 0, 1000);
+  h1_3703 = new TH1F("3703_edep", "Coil Hose 3703: edep", 200, 0, 1000);
+  h1_3704 = new TH1F("3704_edep", "Coil Hose 3704: edep", 200, 0, 1000);
+  h1_3705 = new TH1F("3705_edep", "Coil Hose 3705: edep", 200, 0, 1000);
+  h1_3706 = new TH1F("3706_edep", "Coil Hose 3706: edep", 200, 0, 1000);
+  h1_3707 = new TH1F("3707_edep", "Coil Hose 3707: edep", 200, 0, 1000);
+  h1_3708 = new TH1F("3708_edep", "Coil Hose 3708: edep", 200, 0, 1000);
+  h1_3709 = new TH1F("3709_edep", "Coil Hose 3709: edep", 200, 0, 1000);
+  h1_3710 = new TH1F("3710_edep", "Coil Hose 3710: edep", 200, 0, 1000);
+  h1_3711 = new TH1F("3711_edep", "Coil Hose 3711: edep", 200, 0, 1000);
+  h1_3712 = new TH1F("3712_edep", "Coil Hose 3712: edep", 200, 0, 1000);
+  h1_3713 = new TH1F("3713_edep", "Coil Hose 3713: edep", 200, 0, 1000);
+  h1_3714 = new TH1F("3714_edep", "Coil Hose 3714: edep", 200, 0, 1000);
+  h1_3715 = new TH1F("3715_edep", "Coil Hose 3715: edep", 200, 0, 1000);
+  h1_3716 = new TH1F("3716_edep", "Coil Hose 3716: edep", 200, 0, 1000);
+  t->Project("3701_edep", "edep", "volID==3701");
+  t->Project("3702_edep", "edep", "volID==3702");
+  t->Project("3703_edep", "edep", "volID==3703");
+  t->Project("3704_edep", "edep", "volID==3704");
+  cout<<"25 pct done with hose plots..."<<endl;
+  t->Project("3705_edep", "edep", "volID==3705");
+  t->Project("3706_edep", "edep", "volID==3706");
+  t->Project("3707_edep", "edep", "volID==3707");
+  t->Project("3708_edep", "edep", "volID==3708");
+  cout<<"50 pct done with hose plots..."<<endl;
+  t->Project("3709_edep", "edep", "volID==3709");
+  t->Project("3710_edep", "edep", "volID==3710");
+  t->Project("3711_edep", "edep", "volID==3711");
+  t->Project("3712_edep", "edep", "volID==3712");
+  cout<<"75 pct done with hose plots..."<<endl;
+  t->Project("3713_edep", "edep", "volID==3713");
+  t->Project("3714_edep", "edep", "volID==3714");
+  t->Project("3715_edep", "edep", "volID==3715");
+  t->Project("3716_edep", "edep", "volID==3716");
+  cout<<"100 pct done with hose plots!"<<endl;
+
+  string fout_name = sim + "_" + conf + "_coilHoseDets_plots.root";
+  TFile *fout = new TFile(fout_name.c_str(), "RECREATE");
+  fout->cd();
+  h1_3701->Write(); h1_3702->Write(); h1_3703->Write(); h1_3704->Write(); h1_3705->Write(); h1_3706->Write(); h1_3707->Write(); h1_3708->Write();
+  h1_3709->Write(); h1_3710->Write(); h1_3711->Write(); h1_3712->Write(); h1_3713->Write(); h1_3714->Write(); h1_3715->Write(); h1_3716->Write();
+  fout->Close();
+}
+
+void grand_analysis_q1_hoses(string sim, string conf, int n_events_k){
+  cout<<"Analyzing coil hose dets, please wait..."<<endl;
+  string fname = "~/farmOut/" + sim + "_" + conf + "_" + to_string(n_events_k) + "kEv/" + sim + "_" + conf + "Q1HoseDets.root";
+
+  TH1F *h1_3211, *h1_3212, *h1_3213, *h1_3214;
+
+  gStyle->SetOptStat("eMRiou");
+  TFile *f = new TFile(fname.c_str());
+  TTree* t = (TTree*)f->Get("t");
+
+  h1_3211 = new TH1F("3211_edep", "Coil Hose 3211: edep", 200, 0, 1000);
+  h1_3212 = new TH1F("3212_edep", "Coil Hose 3212: edep", 200, 0, 1000);
+  h1_3213 = new TH1F("3213_edep", "Coil Hose 3213: edep", 200, 0, 1000);
+  h1_3214 = new TH1F("3214_edep", "Coil Hose 3214: edep", 200, 0, 1000);
+  t->Project("3211_edep", "edep", "volID==3211");
+  cout<<"Q1 hose one finished..."<<endl;
+  t->Project("3212_edep", "edep", "volID==3212");
+  cout<<"Q1 hose two finished..."<<endl;
+  t->Project("3213_edep", "edep", "volID==3213");
+  cout<<"Q1 hose three finished..."<<endl;
+  t->Project("3214_edep", "edep", "volID==3214");
+  cout<<"Q1 hose four finished..."<<endl;
+
+  string fout_name = sim + "_" + conf + "_Q1HoseDets_plots.root";
+  TFile *fout = new TFile(fout_name.c_str(), "RECREATE");
+  fout->cd();
+  h1_3211->Write(); h1_3212->Write(); h1_3213->Write(); h1_3214->Write();
+  fout->Close();
+}
+
+void grand_analysis_us_dets(string sim, string conf, int n_events_k){
+  cout<<"Analyzing Moller and Compton Detectors, please wait..."<<endl;
+  string fname = "~/farmOut/" + sim + "_" + conf + "_" + to_string(n_events_k) + "kEv/" + sim + "_" + conf + "USDets.root";
+
+  TH1F *h1_2401, *h1_2411;
+
+  gStyle->SetOptStat("eMRiou");
+  TFile *f = new TFile(fname.c_str());
+  TTree* t = (TTree*)f->Get("t");
+
+  h1_2401 = new TH1F("2401_kineE", "Moller Det: kineE", 200, 0, 1000);
+  h1_2411 = new TH1F("2411_kineE", "Compton Det: kineE", 200, 0, 1000);
+  t->Project("2401_kineE", "kineE", "volID==2401");
+  t->Project("2411_kineE", "kineE", "volID==2411");
+
+  string fout_name = sim + "_" + conf + "_USDets_plots.root";
+  TFile *fout = new TFile(fout_name.c_str(), "RECREATE");
+  fout->cd();
+  h1_2401->Write(); h1_2411->Write();
+  fout->Close();
+}
+
 void grand_analysis(string sim, string conf, int n_events_k){
   cout<<"Running grand analysis... this will take some time. Please be patient."<<endl;
-  string fname = "~/farmOut/" + sim + "_" + conf + "_" + to_string(n_events_k) + "kEv/" + sim + "_" + conf + ".root";
-  cout<<"Analyzing HRS..."<<endl;
-  
-  
+  grand_analysis_krip(sim, conf, n_events_k);
+  grand_analysis_collimator(sim, conf, n_events_k);
+  grand_analysis_plast_shields(sim, conf, n_events_k);
+  grand_analysis_coil_hoses(sim, conf, n_events_k);
+  grand_analysis_q1_hoses(sim, conf, n_events_k);
+  cout<<"Grand Analysis finished!"<<endl;
 }

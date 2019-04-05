@@ -22,7 +22,10 @@ def ident_output():
     return identifier()
   else: 
     return outname
-
+def ener_conf():
+  ener = read_file()['energy_config']
+  if ener == 'same': return config()
+  else: return ener
 def subassems():
-	assem_string = read_file()['subassemblies']
-	return assem_string.split(',')
+  assem_string = read_file()['subassemblies']
+  return assem_string.split(',')

@@ -95,7 +95,7 @@
       <second ref="front_tube_solid"/>
       <positionref ref="pos_front_tube"/>
     </union>
-    <!-- <union name="sc_mother_3">
+    <union name="sc_mother_3">
       <first ref="sc_mother_2"/>
       <second ref="inner_ladder_det_solid"/>
       <positionref ref="inner_ladder_det_pos"/>
@@ -104,9 +104,9 @@
       <first ref="sc_mother_3"/>
       <second ref="outer_ladder_det_solid"/>
       <positionref ref="outer_ladder_det_pos"/>
-    </union> -->
+    </union>
     <union name="sc_mother">
-      <first ref="sc_mother_2"/>
+      <first ref="sc_mother_4"/>
       <second ref="tube_flange_solid"/>
       <positionref ref="pos_tube_flange"/>
     </union>
@@ -133,7 +133,7 @@
       <materialref ref="StainlessSteel"/>
       <solidref ref="tube_flange_solid"/>
     </volume>
-    <!-- <volume name="inner_ladder_det_logic">
+    <volume name="inner_ladder_det_logic">
       <materialref ref="Shield"/>
       <solidref ref="inner_ladder_det_solid"/>
       <auxiliary auxtype="SensDet" auxvalue="volumeN3801"/>
@@ -142,7 +142,7 @@
       <materialref ref="Shield"/>
       <solidref ref="outer_ladder_det_solid"/>
       <auxiliary auxtype="SensDet" auxvalue="volumeN3802"/>
-    </volume> -->
+    </volume>
 
     <volume name="logicTargetChamber">
       <materialref ref="Vacuum"/>
@@ -168,14 +168,14 @@
         <volumeref ref="tube_flange_logic"/>
         <positionref ref="pos_tube_flange"/>
       </physvol>
-      <!-- <physvol name="inner_ladder_det">
+      <physvol name="inner_ladder_det">
         <volumeref ref="inner_ladder_det_logic"/>
         <positionref ref="inner_ladder_det_pos"/>
       </physvol>
       <physvol name="outer_ladder_det">
         <volumeref ref="outer_ladder_det_logic"/>
         <positionref ref="outer_ladder_det_pos"/>
-      </physvol> -->
+      </physvol>
 
     </volume>
   </structure>

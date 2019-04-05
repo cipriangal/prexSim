@@ -18,10 +18,10 @@
     <constant name="box2_z_pos" value="0.0"/>
     <constant name="box3_x_pos" value="22.2014"/>
     <constant name="box3_y_pos" value="48.102"/>
-    <constant name="box3_z_pos" value="-6.0"/>
+    <constant name="box3_z_pos" value="6.0"/>
     <constant name="box4_x_pos" value="25.1986"/>
     <constant name="box4_y_pos" value="57.551"/>
-    <constant name="box4_z_pos" value="-6.0"/>		
+    <constant name="box4_z_pos" value="6.0"/>		
 
     <position unit="cm" name="pos_center" x="0" y="0" z="0" />
 

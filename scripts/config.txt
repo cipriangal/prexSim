@@ -1,58 +1,22 @@
 #Config File
-config=prexII
+#config=prexII
 #config=crex
 #config=tritium
+#config=CTgt
+#config=ladder
+config=prex1
+energy_config=same
 
-#ident=shieldless
-#ident=concrete2blocks28thick
-#ident=concrete2blocksPlusW
-#ident=concreteLHalfWidth45cutPlusWthick
-#ident=concrete2blocks28thick247Wide7cmZmovePlusW
-#ident=concrete2blocks28thick125WidePlusW
-#ident=concrete2blocks40thick247WideMove7cmZPlusW
-#ident=concrete2blocksPlusWPlusQ1fringe
-#ident=concWShields_septumHoses
-#ident=newHRS2ftIronDumpShield
-#ident=newHRS2ftConcDumpShield
-#ident=newHRS2layerDumpShield
-#ident=newHRSnoDumpShield
-#ident=collERR
-#ident=concrete2blocksPlusW
-#ident=shortDumpNoShield
-#ident=extDumpNoShield
-#ident=extDumpKripShield
-#ident=concrete2blocksPlusW_v1geom
-#ident=concrete2blocksPlusW_v1geomNoCollJacket
-#ident=concrete2blocksPlusW_v2geom
-#ident=iron2blocks_v1geom
-#ident=noSkyshine_v1geom
-#ident=oRingBeamPipe
-#ident=v2geom
-#ident=v2SAMs
-#ident=v2NewSAMsHalfRing
-#ident=v2Point6degSAMs
-#ident=v1ThickConcSS
-#ident=v1
-ident=v3usTgt
+ident=AJZ
 
 #output=input
-#output=v2NoSAMsLid
-#output=v2SAMsLid
-#output=v2Point6degSAMsLid
-#output=v2NewSAMsNoFlange
-#output=v1ThickConcSSPartial
-#output=v2Current
-#output=v2BoronSWCollShields
-#output=v1Edit
-#output=v3OldCollShields
-#output=v3current
-#output=v3SeptumCoilHoses
-output=v3CoilHoseTestsHDPE
+#output=v3Grandalysis
+output=config
 
 start_run=0
-end_run=10
+end_run=100
 
-n_events=10000
+n_events=100000
 
 e_cut=30
 
@@ -61,5 +25,5 @@ uva_id=ajz3ee
 jlab_id=ajzec
 
 #comma separated, no spaces, correct capitalization is important
-subassemblies=KriptoniteDetectors,LeftHRSplatform,RightHRSplatform,TargetChamber,DumpShield,SkyShineShieldV2,BeamPipe_P2_6inDonut_cadSAMs,Q1HosesCylRedesign,CollShieldBlock,CoilHoses
+subassemblies=KriptoniteDetectors,LeftHRSplatform,RightHRSplatform,TargetChamber,DumpShield,SkyShineShieldV2,BeamPipe_P2_6inDonut_cadSAMs,BeamPipe_P1,Q1HosesCylRedesign,CoilHoses,CoilHoses_p1
 #subassemblies=BeamPipe_12GeV_SAMs,HRSplatform,TritiumTarget

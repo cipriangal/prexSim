@@ -16,6 +16,7 @@ def main():
     nrStop        = cr.end_run()
     ident_in      = cr.identifier()
     ident_out     = cr.ident_output()
+    energy        = cr.ener_conf()
     print('Starting setup for ' + configuration + ' simulation with geometry ' + ident_in + '...')
     print('Running ' + str(nrEv*(nrStop - nrStart)) + ' events...')
 
@@ -29,7 +30,7 @@ def main():
 
         jobNumber   = '%05d'%nr
         jobFullName = jobName + '_%05d'%nr
-        createMacFiles(configuration, outputDir+"/"+jobName+"/"+jobNumber, sourceDir, nrEv, nr, ident_in)
+        createMacFiles(configuration, energy, outputDir+"/"+jobName+"/"+jobNumber, sourceDir, nrEv, nr, ident_in)
 
         ###copy tarfile
         call(["cp",sourceDir+"/scripts/z_config.tar.gz",
@@ -40,7 +41,7 @@ def main():
     print "All done for configuration ", configuration+ident_out," for #s between ",nrStart, " and ", nrStop
 
 
-def createMacFiles(config,outDir,sourceDir,nrEv,jobNr,identifier):
+def createMacFiles(config,energy,outDir,sourceDir,nrEv,jobNr,identifier):
 
     if not os.path.exists(outDir+"/log"):
         os.makedirs(outDir+"/log")
@@ -58,37 +59,45 @@ def createMacFiles(config,outDir,sourceDir,nrEv,jobNr,identifier):
     seedB=long(time.time()*100+jobNr)
     f.write("/random/setSeeds "+str(seedA)+" "+str(seedB)+"\n")
 
+    if energy=="crex":      f.write("/gun/energy 2.22 GeV\n")
+    elif energy=="prexII":  f.write("/gun/energy 0.95 GeV\n")
+    elif energy=="tritium": f.write("/gun/energy 11. GeV\n")
+    elif energy=="prex1":   f.write("/gun/energy 1.06 GeV\n")
+    elif config=="happex2": f.write("/gun/energy 3. GeV\n")
+    elif config=="apex":    f.write("/gun/energy 2.2 GeV\n")
+    elif config=="CTgt":    f.write("/gun/energy 0.95 GeV\n")
+    elif config=="ladder":  f.write("/gun/energy 0.95 GeV\n")
     if config=="crex":
-        f.write("/gun/energy 2.22 GeV\n")
         f.write("/moller/field/setConfiguration crex\n")
         f.write("/moller/det/setDetectorFileName geometry/crex_"+identifier+".gdml\n")
     elif config=="prexII":
-    	f.write("/gun/energy 0.95 GeV\n")
         f.write("/moller/field/setConfiguration prex2\n")
         f.write("/moller/det/setDetectorFileName geometry/prexII_"+identifier+".gdml\n")
     elif config=="tritium":
-        f.write("/gun/energy 11. GeV\n")
         f.write("/moller/field/setFieldScaleFactor 0.\n")
         f.write("/moller/field/setLowLim -74 cm\n/moller/field/setHighLim 74 cm\n")
         f.write("/moller/det/setDetectorFileName geometry/tritium_"+identifier+".gdml\n")
     elif config=="prex1":
-    	f.write("/gun/energy 1.06 GeV\n")
         f.write("/prex/gun/setRasterX 6 mm\n")
         f.write("/prex/gun/setRasterY 4 mm\n")
         f.write("/moller/field/setConfiguration prex1\n")
-        f.write("/moller/det/setDetectorFileName geometry/prex1"+identifier+".gdml\n")
+        f.write("/moller/det/setDetectorFileName geometry/prex1_"+identifier+".gdml\n")
     elif config=="happex2":
-    	f.write("/gun/energy 3. GeV\n")
         f.write("/prex/gun/setRasterX 5 mm\n")
         f.write("/prex/gun/setRasterY 5 mm\n")
         f.write("/moller/field/setConfiguration happex2\n")
-        f.write("/moller/det/setDetectorFileName geometry/happex2"+identifier+".gdml\n")
+        f.write("/moller/det/setDetectorFileName geometry/happex2_"+identifier+".gdml\n")
     elif config=="apex":
-    	f.write("/gun/energy 2.2 GeV\n")
         f.write("/prex/gun/setRasterX 4 mm\n")
         f.write("/prex/gun/setRasterY 4 mm\n")
         f.write("/moller/field/setConfiguration apex\n")
-        f.write("/moller/det/setDetectorFileName geometry/apex"+identifier+".gdml\n")
+        f.write("/moller/det/setDetectorFileName geometry/apex_"+identifier+".gdml\n")
+    elif config=="CTgt":
+        f.write("/moller/field/setConfiguration prex2\n")
+        f.write("/moller/det/setDetectorFileName geometry/CTgt_"+identifier+".gdml\n")
+    elif config=="ladder":
+        f.write("/moller/field/setConfiguration prex2\n")
+        f.write("/moller/det/setDetectorFileName geometry/ladder_"+identifier+".gdml\n")
 
     f.write("/moller/field/useQ1fringeField false\n")
 

@@ -15,6 +15,8 @@ int printHallRad(string fnm,string simType){
   detArea[1003] = 160000;
   detArea[1004] = 100000;
   detArea[1005] =  55000;
+  detArea[1006] = 19478188;
+  detArea[1007] = 987292;
   detArea[1101] =  60000;
   detArea[1102] =  60000;
   //for old simulations
@@ -29,7 +31,7 @@ int printHallRad(string fnm,string simType){
   double runFactor(-1);
   if(simType=="prex1")
     runFactor = 8.2e7;
-  else if(simType=="prex2")
+  else if(simType=="prexII")
     runFactor = 1.7e8;
   else if(simType=="crex")
     runFactor = 4.67e8;
@@ -53,16 +55,17 @@ int printHallRad(string fnm,string simType){
   // doOneSummary(h3,runFactor);
 
   cout<<"NEIL:\t";  doOneDetector(h1, runFactor, 1001, 1);
-  cout<<"NEIL:\t";  doOneDetector(h1, runFactor, 1005, 1);
+  cout<<"NEIL:\t";  doOneDetector(h1, runFactor, 1006, 1);
+  cout<<"NEIL:\t";  doOneDetector(h1, runFactor, 1007, 1);
 
-  int seuDet[3]={1006, 1001, 1005};
+  int seuDet[3]={1006, 1001, 1007};
   for(int i=0;i<3;i++){
     TH1D *hSEU = (TH1D*)fin->Get(Form("Det_%d/ha_%d_n_enerLogX",seuDet[i],seuDet[i]));
     if(hSEU)
       doSEU(hSEU,runFactor);
   }
 
-  cout<<"Total E/cm2:\t"; doOneDetector(h3, runFactor, 1002, 1);
+  cout<<"Total E/cm2:\t"; doOneDetector(h3, runFactor, 1006, 1);
   cout<<"Total E/cm2:\t"; doOneDetector(h3, runFactor, 1101, 1);
   cout<<"Total E/cm2:\t"; doOneDetector(h3, runFactor, 1102, 1);
   cout<<"Total E:\t"; doOneDetector(h3, runFactor, 2101, 0);
@@ -99,7 +102,7 @@ void doOneSummary(TH1D *h, double runV){
   for(int i=2;i<=nb;i+=2){
     title=h->GetXaxis()->GetBinLabel(i);
     int det = atoi( title.substr( 0, title.find(" ")).c_str());
-    if(det==1001 || det==1002 || det==1005 || det==1101 || det==1102){
+    if(det==1001 || det==1002 || det==1005 || det==1006 || det==1007 || det==1101 || det==1102){
       double totFactor = ev2uA/detArea[det]*runV;
       cout<<title<<"\t"<<h->GetBinContent(i)<<"\t"<<h->GetBinError(i)
           <<"\t"<<h->GetBinContent(i)*totFactor<<"\t"<<h->GetBinError(i)*totFactor<<endl;
