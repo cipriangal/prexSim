@@ -81,22 +81,22 @@
     <volume name="logic_q1_left_ups_hose">
       <materialref ref="G4_RUBBER_NEOPRENE"/>
       <solidref ref="ups_hose_cyl"/>
-      <auxiliary auxtype="SensDet" auxvalue="volumeN3211"/>
+      <!--<auxiliary auxtype="SensDet" auxvalue="volumeN3211"/>-->
     </volume>
     <volume name="logic_q1_left_dwn_hose">
       <materialref ref="G4_RUBBER_NEOPRENE"/>
       <solidref ref="dwn_hose_cyl"/>
-      <auxiliary auxtype="SensDet" auxvalue="volumeN3212"/>
+      <!--<auxiliary auxtype="SensDet" auxvalue="volumeN3212"/>-->
     </volume>
     <volume name="logic_q1_right_ups_hose">
       <materialref ref="G4_RUBBER_NEOPRENE"/>
       <solidref ref="ups_hose_cyl"/>
-      <auxiliary auxtype="SensDet" auxvalue="volumeN3213"/>
+      <!--<auxiliary auxtype="SensDet" auxvalue="volumeN3213"/>-->
     </volume>
     <volume name="logic_q1_right_dwn_hose">
       <materialref ref="G4_RUBBER_NEOPRENE"/>
       <solidref ref="dwn_hose_cyl"/>
-      <auxiliary auxtype="SensDet" auxvalue="volumeN3214"/>
+      <!--<auxiliary auxtype="SensDet" auxvalue="volumeN3214"/>-->
     </volume>
 
     <volume name="logic_q1_hoses">

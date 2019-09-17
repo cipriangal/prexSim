@@ -136,82 +136,82 @@
     <volume name="box1_topLeft_logic">
         <materialref ref="G4_RUBBER_NEOPRENE"/>
         <solidref ref="coil_hose_det_solid"/>
-        <auxiliary auxtype="SensDet" auxvalue="volumeN3701"/>
+        <!--<auxiliary auxtype="SensDet" auxvalue="volumeN3701"/>-->
     </volume>
     <volume name="box2_topLeft_logic">
         <materialref ref="G4_RUBBER_NEOPRENE"/>
         <solidref ref="coil_hose_det_solid"/>
-        <auxiliary auxtype="SensDet" auxvalue="volumeN3702"/>
+        <!--<auxiliary auxtype="SensDet" auxvalue="volumeN3702"/>-->
     </volume>
     <volume name="box3_topLeft_logic">
         <materialref ref="G4_RUBBER_NEOPRENE"/>
         <solidref ref="coil_hose_det_solid"/>
-        <auxiliary auxtype="SensDet" auxvalue="volumeN3703"/>
+        <!--<auxiliary auxtype="SensDet" auxvalue="volumeN3703"/>-->
     </volume>
     <volume name="box4_topLeft_logic">
         <materialref ref="G4_RUBBER_NEOPRENE"/>
         <solidref ref="coil_hose_det_solid"/>
-        <auxiliary auxtype="SensDet" auxvalue="volumeN3704"/>
+        <!--<auxiliary auxtype="SensDet" auxvalue="volumeN3704"/>-->
     </volume>
     <volume name="box1_topRigh_logic">
         <materialref ref="G4_RUBBER_NEOPRENE"/>
         <solidref ref="coil_hose_det_solid"/>
-        <auxiliary auxtype="SensDet" auxvalue="volumeN3705"/>
+        <!--<auxiliary auxtype="SensDet" auxvalue="volumeN3705"/>-->
     </volume>
     <volume name="box2_topRigh_logic">
         <materialref ref="G4_RUBBER_NEOPRENE"/>
         <solidref ref="coil_hose_det_solid"/>
-        <auxiliary auxtype="SensDet" auxvalue="volumeN3706"/>
+        <!--<auxiliary auxtype="SensDet" auxvalue="volumeN3706"/>-->
     </volume>
     <volume name="box3_topRigh_logic">
         <materialref ref="G4_RUBBER_NEOPRENE"/>
         <solidref ref="coil_hose_det_solid"/>
-        <auxiliary auxtype="SensDet" auxvalue="volumeN3707"/>
+        <!--<auxiliary auxtype="SensDet" auxvalue="volumeN3707"/>-->
     </volume>
     <volume name="box4_topRigh_logic">
         <materialref ref="G4_RUBBER_NEOPRENE"/>
         <solidref ref="coil_hose_det_solid"/>
-        <auxiliary auxtype="SensDet" auxvalue="volumeN3708"/>
+        <!--<auxiliary auxtype="SensDet" auxvalue="volumeN3708"/>-->
     </volume>
     <volume name="box1_botLeft_logic">
         <materialref ref="G4_RUBBER_NEOPRENE"/>
         <solidref ref="coil_hose_det_solid"/>
-        <auxiliary auxtype="SensDet" auxvalue="volumeN3709"/>
+        <!--<auxiliary auxtype="SensDet" auxvalue="volumeN3709"/>-->
     </volume>
     <volume name="box2_botLeft_logic">
         <materialref ref="G4_RUBBER_NEOPRENE"/>
         <solidref ref="coil_hose_det_solid"/>
-        <auxiliary auxtype="SensDet" auxvalue="volumeN3710"/>
+        <!--<auxiliary auxtype="SensDet" auxvalue="volumeN3710"/>-->
     </volume>
     <volume name="box3_botLeft_logic">
         <materialref ref="G4_RUBBER_NEOPRENE"/>
         <solidref ref="coil_hose_det_solid"/>
-        <auxiliary auxtype="SensDet" auxvalue="volumeN3711"/>
+        <!--<auxiliary auxtype="SensDet" auxvalue="volumeN3711"/>-->
     </volume>
     <volume name="box4_botLeft_logic">
         <materialref ref="G4_RUBBER_NEOPRENE"/>
         <solidref ref="coil_hose_det_solid"/>
-        <auxiliary auxtype="SensDet" auxvalue="volumeN3712"/>
+        <!--<auxiliary auxtype="SensDet" auxvalue="volumeN3712"/>-->
     </volume>
     <volume name="box1_botRigh_logic">
         <materialref ref="G4_RUBBER_NEOPRENE"/>
         <solidref ref="coil_hose_det_solid"/>
-        <auxiliary auxtype="SensDet" auxvalue="volumeN3713"/>
+        <!--<auxiliary auxtype="SensDet" auxvalue="volumeN3713"/>-->
     </volume>
     <volume name="box2_botRigh_logic">
         <materialref ref="G4_RUBBER_NEOPRENE"/>
         <solidref ref="coil_hose_det_solid"/>
-        <auxiliary auxtype="SensDet" auxvalue="volumeN3714"/>
+        <!--<auxiliary auxtype="SensDet" auxvalue="volumeN3714"/>-->
     </volume>
     <volume name="box3_botRigh_logic">
         <materialref ref="G4_RUBBER_NEOPRENE"/>
         <solidref ref="coil_hose_det_solid"/>
-        <auxiliary auxtype="SensDet" auxvalue="volumeN3715"/>
+        <!--<auxiliary auxtype="SensDet" auxvalue="volumeN3715"/>-->
     </volume>
     <volume name="box4_botRigh_logic">
         <materialref ref="G4_RUBBER_NEOPRENE"/>
         <solidref ref="coil_hose_det_solid"/>
-        <auxiliary auxtype="SensDet" auxvalue="volumeN3716"/>
+        <!--<auxiliary auxtype="SensDet" auxvalue="volumeN3716"/>-->
     </volume>
     <volume name="anchor_logic">
         <materialref ref="Vacuum"/>

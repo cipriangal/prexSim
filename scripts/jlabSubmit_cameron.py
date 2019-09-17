@@ -14,7 +14,7 @@ def main():
     #config = "happex2"
 
     #stage = "final_shorterIn"
-    stage = "HEAD"
+    stage = "2019"
     #varied = raw_input("Please enter an indicative name: ")#"thin"
     #geo = raw_input("Please enter the can geometry (sph or cyl): ")
     #offset = raw_input("Please enter the offset in mm (integers up to 360): ")

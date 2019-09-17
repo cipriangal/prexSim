@@ -136,12 +136,12 @@
     <volume name="inner_ladder_det_logic">
       <materialref ref="Shield"/>
       <solidref ref="inner_ladder_det_solid"/>
-      <auxiliary auxtype="SensDet" auxvalue="volumeN3801"/>
+      <!--<auxiliary auxtype="SensDet" auxvalue="volumeN3801"/>-->
     </volume>
     <volume name="outer_ladder_det_logic">
       <materialref ref="Shield"/>
       <solidref ref="outer_ladder_det_solid"/>
-      <auxiliary auxtype="SensDet" auxvalue="volumeN3802"/>
+      <!--<auxiliary auxtype="SensDet" auxvalue="volumeN3802"/>-->
     </volume>
 
     <volume name="logicTargetChamber">

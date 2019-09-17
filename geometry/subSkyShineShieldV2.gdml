@@ -112,13 +112,13 @@
     <volume name="bottom_det_giantShield_logic">
       <materialref ref="Vacuum"/>
       <solidref ref="det_solid"/>
-      <auxiliary auxtype="SensDet" auxvalue="volumeN4111"/>
+      <!--<auxiliary auxtype="SensDet" auxvalue="volumeN4111"/>-->
     </volume>
 
     <volume name="top_det_giantShield_logic">
       <materialref ref="Vacuum"/>
       <solidref ref="det_solid"/>
-      <auxiliary auxtype="SensDet" auxvalue="volumeN4112"/>
+      <!--<auxiliary auxtype="SensDet" auxvalue="volumeN4112"/>-->
     </volume>
 
 

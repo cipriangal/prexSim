@@ -158,25 +158,25 @@
     <volume name="logic_SEPT_elec">
       <materialref ref="matKryptonite"/>
       <solidref ref="solid_SEPT_elec"/>
-      <auxiliary auxtype="SensDet" auxvalue="volumeN1002"/>
+      <!--<auxiliary auxtype="SensDet" auxvalue="volumeN1002"/>-->
     </volume>
 
     <volume name="logic_upstreamRight_elec">
       <materialref ref="matKryptonite"/>
       <solidref ref="solid_upstreamRight_elec"/>
-      <auxiliary auxtype="SensDet" auxvalue="volumeN1003"/>
+      <!--<auxiliary auxtype="SensDet" auxvalue="volumeN1003"/>-->
     </volume>
 
     <volume name="logic_HRS_side_elec">
       <materialref ref="matKryptonite"/>
       <solidref ref="solid_HRS_side_elec"/>
-      <auxiliary auxtype="SensDet" auxvalue="volumeN1004"/>
+      <!--<auxiliary auxtype="SensDet" auxvalue="volumeN1004"/>-->
     </volume>
 
     <volume name="logic_HRS_underDipole_elec">
       <materialref ref="matKryptonite"/>
       <solidref ref="solid_HRS_underDipole_elec"/>
-      <auxiliary auxtype="SensDet" auxvalue="volumeN1005"/>
+      <!--<auxiliary auxtype="SensDet" auxvalue="volumeN1005"/>-->
     </volume>
 
     <volume name="logic_usRightIron_shield">
@@ -193,12 +193,12 @@
     <volume name="logic_W10mDet">
       <materialref ref="matKryptonite"/>
       <solidref ref="solid_W10mDet"/>
-      <auxiliary auxtype="SensDet" auxvalue="volumeN1101"/>
+      <!--<auxiliary auxtype="SensDet" auxvalue="volumeN1101"/>-->
     </volume>
     <volume name="logic_NW10mDet">
       <materialref ref="matKryptonite"/>
       <solidref ref="solid_NW10mDet"/>
-      <auxiliary auxtype="SensDet" auxvalue="volumeN1102"/>
+      <!--<auxiliary auxtype="SensDet" auxvalue="volumeN1102"/>-->
     </volume>
 
     <volume name="logicKripDetectors">

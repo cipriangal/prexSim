@@ -767,7 +767,7 @@
     <volume name="det03_logic">
       <materialref ref="Vacuum"/>
       <solidref ref="det03_solid"/>
-      <auxiliary auxtype="SensDet" auxvalue="volumeN2203"/>
+      <!--<auxiliary auxtype="SensDet" auxvalue="volumeN2203"/>-->
     </volume>
 
     <!-- <volume name="det04_logic">
@@ -815,25 +815,25 @@
     <volume name="det11_logic">
       <materialref ref="Vacuum"/>
       <solidref ref="det11_solid"/>
-      <auxiliary auxtype="SensDet" auxvalue="volumeN2211"/>
+      <!--<auxiliary auxtype="SensDet" auxvalue="volumeN2211"/>-->
     </volume>
 
     <volume name="det12_logic">
       <materialref ref="Vacuum"/>
       <solidref ref="det12_solid"/>
-      <auxiliary auxtype="SensDet" auxvalue="volumeN2212"/>
+      <!--<auxiliary auxtype="SensDet" auxvalue="volumeN2212"/>-->
     </volume>
 
     <volume name="detMol01_logic">
       <materialref ref="Vacuum"/>
       <solidref ref="detMol01_solid"/>
-      <auxiliary auxtype="SensDet" auxvalue="volumeN2401"/>
+      <!--<auxiliary auxtype="SensDet" auxvalue="volumeN2401"/>-->
     </volume>
 
     <volume name="detCpt01_logic">
       <materialref ref="Vacuum"/>
       <solidref ref="detCpt01_solid"/>
-      <auxiliary auxtype="SensDet" auxvalue="volumeN2411"/>
+      <!--<auxiliary auxtype="SensDet" auxvalue="volumeN2411"/>-->
     </volume>
 
     <volume name="gateValve_logic">
@@ -864,31 +864,31 @@
     <volume name="dumpIonChamber_beamL_logic">
       <materialref ref="G4_N"/>
       <solidref ref="dumpIonChamber_solid"/>
-      <auxiliary auxtype="SensDet" auxvalue="volumeN11002"/>
+      <!--<auxiliary auxtype="SensDet" auxvalue="volumeN11002"/>-->
     </volume>
 
     <volume name="dumpIonChamber_beamR_logic">
       <materialref ref="G4_N"/>
       <solidref ref="dumpIonChamber_solid"/>
-      <auxiliary auxtype="SensDet" auxvalue="volumeN11001"/>
+      <!--<auxiliary auxtype="SensDet" auxvalue="volumeN11001"/>-->
     </volume>
 
     <volume name="usDet_dumpShield_logic">
       <materialref ref="Vacuum"/>
       <solidref ref="usDet_dumpShield_solid1"/>
-      <auxiliary auxtype="SensDet" auxvalue="volumeN9001"/>
+      <!--<auxiliary auxtype="SensDet" auxvalue="volumeN9001"/>-->
     </volume>
 
     <volume name="dsDet_dumpShield_logic">
       <materialref ref="Vacuum"/>
       <solidref ref="dsDet_dumpShield_solid1"/>
-      <auxiliary auxtype="SensDet" auxvalue="volumeN9002"/>
+      <!--<auxiliary auxtype="SensDet" auxvalue="volumeN9002"/>-->
     </volume>
 
     <volume name="dumpDet_logic">
       <materialref ref="Vacuum"/>
       <solidref ref="dumpDet_solid1"/>
-      <auxiliary auxtype="SensDet" auxvalue="volumeN9003"/>
+      <!--<auxiliary auxtype="SensDet" auxvalue="volumeN9003"/>-->
     </volume>
 
     <!-- dump o-ring -->
