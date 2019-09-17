@@ -13,13 +13,14 @@ def main():
     #configuration = "moller"
     #configuration = "happex2"
 
-    stage = "new"
+    stage = "HEAD"
     varied = raw_input("Please enter the indicative name: ")#"off_thickness"
     #geo = raw_input("Please enter the can geometry (sph or cyl): ")
     offset = raw_input("Please enter the offset number (integers): ")
     units = raw_input("Please enter the units (2 characters: mm, ml, etc.): ") 
 
-    identifier = "cadSAMs"#raw_input("Please enter the identifier: ")
+    #identifier = "cadSAMs"#raw_input("Please enter the identifier: ")
+    identifier = raw_input("Please enter the identifier: ")
 
     #sourceDir = "/work/halla/parity/disk1/ciprian/prexSim"
     sourceDir = "/work/halla/parity/disk1/cameronc/masterPrexSim"
