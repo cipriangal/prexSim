@@ -1,7 +1,4 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<!DOCTYPE gdml [
-    <!ENTITY sams SYSTEM "subBeamPipe.xml">
-]>
 
 <gdml xmlns:gdml="http://cern.ch/2001/Schemas/GDML"
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -61,8 +58,7 @@
     <constant name="sam_can_thicker_wall_thickness" value="40*25.4/10000.0"/> <!-- New: 40 mils - Baseline was = 0.15 (should have been 0.1651) -->
     <constant name="sam_can_wall_thickness" value="10*25.4/10000.0"/> <!-- 10 mils -->
     <constant name="sam_can_thinner_wall_length" value="1*2.54"/> <!-- 1 inch -->
-    &sams;
-    <!-- <constant name="full_sam_r_outward_offset" value="3.5"/>--> <!-- FIXME 35mm offset radially : this is the tuned parameter for radial insertion of the quartz : 3.5 additional offset was used by PREX II -->
+    <constant name="full_sam_r_outward_offset" value="3.5"/> <!-- FIXME 35mm offset radially : this is the tuned parameter for radial insertion of the quartz : 3.5 additional offset was used by PREX II -->
     <constant name="sam_quartz_height" value="0.6"/> <!-- New: 6mm thick for PREXII - Baseline this = 13mm for dvcs-->
     <constant name="quartz_z_face_offset" value="1.2455"/> <!-- upstream z direction offset of quartz w.r.t. SAM insertion tube central axis - 1.2455 for 6 mm quartz used in PREX II, (Estimating) 1.5955 for 1.3 mm, also this really depends on light guide CAD -->
     <!--<constant name="quartz_z_face_offset" value="1.5955"/> --> <!-- 1.3mm thick quartz quess -->
@@ -1094,6 +1090,7 @@
       </physvol>
 
       <!-- SAMs -->
+      <!--
       <physvol name="sam_cans">
         <volumeref ref="sam_cans_logic"/>
         <positionref ref="pos_rel_sam_center"/>
@@ -1105,6 +1102,7 @@
         <positionref ref="pos_rel_quartz_center"/>
         <rotationref ref="x90"/>
       </physvol>
+      -->
 
 
 

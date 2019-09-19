@@ -8,8 +8,8 @@ def main():
     email = "cameronc@jlab.org"
 
     #config = "prex1"
-    #config = "crex5"
-    config = "prex2"
+    config = "crex5"
+    #config = "prex2"
     #config = "moller"
     #config = "happex2"
 
@@ -17,39 +17,40 @@ def main():
     stage = "2019"
     #varied = raw_input("Please enter an indicative name: ")#"thin"
     #geo = raw_input("Please enter the can geometry (sph or cyl): ")
-    #offset = raw_input("Please enter the offset in mm (integers up to 360): ")
+    offset = raw_input("Please enter the offset in mm (integers up to 360): ")
     #thickness = "6.0"#raw_input("Please enter the thickness in mm (integers up to 15): ")
     #thin_thickness = raw_input("Please enter the thin thickness in mils (integers from 10 to 65): ")
     #sph_thickness = raw_input("Please enter the sph thickness in mils (integers from 10 to 65): ")
     #thick_thickness = raw_input("Please enter the thick thickness in mils (integers from 10 to 65): ")
     #can_thinner_length = raw_input("Please enter the can thin length in mm (integers from 0 to 60, or up to 340): ")
-    identifier = raw_input("Please enter the identifier: ")
+    identifier = raw_input("Please enter the identifier: ") # v4 is the starting point now
     #identifier = "NOcadSAMs"#raw_input("Please enter the identifier: ")
 
+    f = open('../geometry/subBeamPipe.xml', 'w')
+    fileout = '    <constant name="full_sam_r_outward_offset" value="' + offset + '.0/10"/>\n'
+
+    f.write(fileout)
+    f.close()
     #f = open('../geometry/subBeamPipe_'+identifier+'.xml', 'w')
     #fileout = '    <constant name="sam_can_thicker_wall_thickness" value="' + thick_thickness + '*25.4/10000.0"/>\n    <constant name="sam_can_wall_thickness" value="' + thin_thickness + '*25.4/10000.0"/>\n    <constant name="sam_can_thinner_wall_length" value="' + can_thinner_length + '/10"/>\n    <constant name="full_sam_r_outward_offset" value="' + offset + '.0/10 + 0*0.75"/>\n    <constant name="sam_quartz_height" value="' + thickness + '/10"/>\n    <constant name="quartz_z_face_offset" value="1.2455"/>\n    <constant name="sam_can_face_thickness" value="' + sph_thickness + '*25.4/10000.0"/>\n    <constant name="sam_window_thickness" value="sam_can_face_thickness"/>\n    <constant name="sam_window_inner_r" value="sam_window_outer_r - sam_window_thickness"/>\n    <constant name="sam_bot_face_sep" value="sam_quartz_bot_face + 0*(sam_window_outer_r - sam_window_thickness) + 1.*sqrt((sam_window_inner_r - 0.1)**2 - quartz_z_face_offset**2 - (0.5*sam_quartz_width)**2)"/>\n    <constant name="sam_mid_dist" value="full_sam_r_outward_offset + sam_bot_face_sep + sam_can_length/2."/>\n    <constant name="sam_quartz_length" value="2.0 + sam_quartz_height - 1*0.75"/>\n    <constant name="sam_quartz_mid_dist" value="full_sam_r_outward_offset + sam_quartz_bot_face + sam_quartz_length/2."/>\n'
 
     #f.write(fileout)
     #f.close()
 
-    #sourceDir = "/work/halla/parity/disk1/ciprian/prexSim"
-    sourceDir = "/work/halla/parity/disk1/cameronc/HEADprexSim"
+    sourceDir = "/work/halla/parity/disk1/cameronc/crexSim"
     outDir = "/lustre/expphy/volatile/halla/parity/cameronc/prexSim/output/SAM_"+stage+"_tests"
     if not os.path.exists(outDir):
         os.makedirs(outDir)
-    nrEv   = 900000 #900000
+    nrEv   = 900000
     nrStart= 0
-    nrStop = 500 #60
-    ###format should be Name (removed _)
-    #"SAMs_noAl" #6inDonut_SAMs"  (spherical, cylindrical, noFace, noAl, noQ, noQnoAl)
-#</FIXME>
+    nrStop = 100
 
     print('Running ' + str(nrEv*(nrStop - nrStart)) + ' events...')
 
-    jobName=config + '_' + identifier + '_%03dkEv'%(nrEv/1000)
+    jobName=config + '_' + identifier + '_' + offset + '_%03dkEv'%(nrEv/1000)
 
     ###tar exec+geometry
-    make_tarfile(sourceDir,config,identifier)
+    make_tarfile(sourceDir)
 
     for jobNr in range(nrStart,nrStop): # repeat for jobNr jobs
         #print("Starting job setup for jobID: " + str(jobNr))
@@ -130,10 +131,11 @@ def createXMLfile(sourceDir,outDir,jobName,nrStart,nrStop,email):
 
     f.write("  <Name name=\""+jobName+"\"/>\n")
     f.write("  <OS name=\"centos7\"/>\n")
-    f.write("  <Memory space=\"3500\" unit=\"MB\"/>\n")
+    f.write("  <Memory space=\"1900\" unit=\"MB\"/>\n")
 
     f.write("  <Command><![CDATA[\n")
     f.write("    pwd\n")
+    f.write("    source /site/12gev_phys/softenv.csh 2.3\n")
     f.write("    tar -zxvf z_config.tar.gz\n")
     f.write("    ./prexsim preRun.mac myRun.mac\n")
     f.write("  ]]></Command>\n")
@@ -154,7 +156,7 @@ def createXMLfile(sourceDir,outDir,jobName,nrStart,nrStop,email):
     f.close()
     return 0
 
-def make_tarfile(sourceDir,config,ident):
+def make_tarfile(sourceDir):
     print "making geometry tarball"
     if os.path.isfile(sourceDir+"/scripts/z_config.tar.gz"):
         os.remove(sourceDir+"/scripts/z_config.tar.gz")

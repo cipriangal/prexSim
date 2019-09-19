@@ -50,6 +50,19 @@
     <!-- referenced from elog 2977 by Seamus where predicted relative shift is 46 cm -->
     <constant name="crex_target_center" value="-151.3"/>
 
+    <!-- Detector dimensions  -->
+    <constant name="det_thick" value="1"/>
+    <constant name="det_inner_r" value="length_mother/2+prex_target_center-det_thick"/>  <!-- as large as it can be... -->
+    <constant name="det_outer_r" value="length_mother/2+prex_target_center"/>
+
+    <!-- Beam-line Cylindical Detector dimensions  -->
+    <constant name="beam_cyl_det_thick" value="0.1"/>
+    <constant name="beam_cyl_det_inner_r" value="46.9"/>
+    <constant name="beam_cyl_det_outer_r" value="47"/>
+
+    <!-- Beam-line Cylindical Detector covers upto the septum pipe (lenght is 135.213)-->
+    <constant name="beam_cyl_det_length" value="3074.44+135.213"/>
+
     <!-- Target dimensions  -->
     <constant name="inner_rad_targ" value="0.0"/>
     <constant name="outer_rad_targ" value="4.0"/>
@@ -191,6 +204,21 @@
               value="center_sc+inner_r_sc+length_sc_attach/2"/> <!-- -27.028 cm -->
     <!-- Need to get a real number for this for actual attachment... -->
     <constant name="length_sc_attach_hole" value="outer_r_sc"/>
+
+    <!-- o-rings and o-ring detectors -->
+
+    <!--  <constant name="width_sc_oring" value="46"/>  -->
+    <!--  <constant name="height_sc_oring" value="25"/>  -->
+    <!--  <constant name="length_sc_oring" value="0.5"/>  -->
+    <!--  <constant name="thick_sc_oring" value="1"/>  -->
+
+    <constant name="width_sc_oring" value="47"/>
+    <constant name="height_sc_oring" value="26"/>
+    <constant name="length_sc_oring" value="2"/>
+    <constant name="thick_sc_oring" value="2"/>
+
+    <constant name="center_sc_oring" value="prex_target_center+outer_r_sc+deltaz_sc+.05"/>
+    <constant name="center_sc_oringDet" value="center_sc_oring+(length_sc_oring+0.5)/2"/>
 
     <!-- New dual Scattering chamber dimensions -->
     <constant name="y_offset_new_sc" value="15"/>
@@ -553,6 +581,8 @@
     <position unit="cm" name="scAttachShieldTrans_1" x="0" y="0" z="-1*length_sc_attach_shield/2"/>
 
     <position unit="cm" name="scOringTrans_1" x="0" y="0" z="0"/>
+    <position unit="cm" name="sc_oring_center" x="0" y="0" z="center_sc_oring"/>
+    <position unit="cm" name="sc_oringDet_center" x="0" y="0" z="center_sc_oringDet"/>
 
     <position unit="cm" name="collTrans_1"       x="0" y="0"     z="-1*(length_coll)/4"/>
     <position unit="cm" name="collTrans_2"       x="0" y="0"     z="(length_coll)/4"/>
@@ -644,6 +674,7 @@
     <position unit="cm" name="dDet_beamline_pos_2"       x="0" y="0"     z="center_targ+336.831"/>
     <position unit="cm" name="dDet_beamline_pos_3"       x="0" y="0"     z="center_targ+2757.199"/>
     <position unit="cm" name="dDet_beamline_pos_4"       x="0" y="0"     z="center_targ+3311.975"/>
+    <position unit="cm" name="beam_cyl_det_pos"       x="0" y="0"     z="center_targ+237.535-length_septum_pipe+beam_cyl_det_length/2"/>
 
     <position unit="cm" name="crex_det_pos" x="0" y="outer_r_new_sc+0.5" z="crex_target_center"/>  <!--changed x="height_new_sc/2.+1.0" to x=0 CAP and y="0" to y=outer_r_new_sc+0.5-->
 
@@ -1022,14 +1053,14 @@
       <rotationref ref="identity"/>
     </union>
 
+
     <!-- Target  -->
     <!--Assume 1.77g/cm3 Ca48 density gives a L of 0.6 cm-->
     <tube aunit="deg" startphi="0" deltaphi="360"
           lunit="cm" name="tubeTarget"
           rmin="inner_rad_targ"
           rmax="outer_rad_targ"
-          z="0.05" />
-    <!-- z="0.6" /> -->
+	  z="0.6" />
 
     <!-- Scattering Chamber -->
     <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="outScattChamber" rmin="0.0" rmax="outer_r_sc" z="height_sc" />
@@ -1488,6 +1519,18 @@
       <rotationref ref="scRot_13"/>  <!--changed from scRot_1 to 13 CAP-->
     </subtraction>
 
+    <!-- o-rings and o-ring detectors -->
+    <box lunit="cm" name="sc_oring_det_solid" x="width_sc_attach - 1.001*thick_sc_attach" y="height_sc_attach - 1.001*thick_sc_attach" z="0.5"/>
+
+    <box lunit="cm" name="sc_oring_o" x="width_sc_oring" y="height_sc_oring" z="length_sc_oring"/>
+    <box lunit="cm" name="sc_oring_i" x="width_sc_oring - thick_sc_oring" y="height_sc_oring - thick_sc_oring" z="1.5*length_sc_oring"/>
+
+    <subtraction name ="sc_oring_solid">
+      <first ref="sc_oring_o"/>
+      <second ref="sc_oring_i"/>
+      <positionref ref="scOringTrans_1"/>
+    </subtraction>
+
     <!-- Septum -->
     <box lunit="cm" name="septum_solid_0" x="width_septum" y="height_septum" z="length_septum"/>
 
@@ -1498,10 +1541,6 @@
           rmax="1.001*ro_septum_pipe"
           z="1.001*length_septum" />
     <box lunit="cm" name="sept_beam_hole_2" x="sept_pipe_cont_width" y="sept_pipe_cont_high" z="1.001*length_septum" />
-
-    <box lunit="cm" name="septum_pipe_us_det_solid" x="12" y="30" z="0.01"/>
-    <tube aunit="deg" lunit="cm" startphi="0" deltaphi="360"
-          name="septum_pipe_ds_det_solid" rmin="0" rmax="1.001*ro_septum_pipe" z="0.01"/>
 
     <subtraction name ="septum_solid_1">
       <first ref="septum_solid_0"/>
@@ -1526,7 +1565,6 @@
       <first ref="accept_0"/>
       <second ref="accept_sub"/>
     </subtraction>
-
 
     <!-- Beamline -->
     <polycone aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="septum_pipe_tube_old">
@@ -2464,6 +2502,14 @@
           lunit="cm" name="dDet_beamline_4"
           rmin="0" rmax="beamline[1,12]" z="0.1" />
 
+    <!-- Beam-line Cylindical detector outside the beamline : Rakitha Tue Nov 12 11:23:08 EST 2013 -->
+    <tube aunit="deg" startphi="0" deltaphi="360"
+          lunit="cm" name="beam_cyl_det"
+          rmin="beam_cyl_det_inner_r"
+          rmax="beam_cyl_det_outer_r"
+          z="beam_cyl_det_length" />
+
+
     <!-- Q1 dipole -->
     <tube aunit="deg" startphi="90" deltaphi="360"
           lunit="cm" name="Dipole_ip1_cut"
@@ -2778,10 +2824,12 @@
       <solidref ref="coll_shield_6"/>
     </volume>
 
+
     <volume name="coll_outsideW_shield_logic">
       <materialref ref="Tungsten"/>
       <solidref ref="sc_attach_outside_w"/>
     </volume>
+
 
     <volume name="coll_pig_shield">
       <materialref ref="PureLead"/>
@@ -2794,8 +2842,8 @@
     </volume>
 
     <volume name="target_logic">
-      <!-- <materialref ref="Calcium48"/> -->
-      <materialref ref="PureLead"/>
+      <materialref ref="Calcium48"/>
+      <!-- <materialref ref="PureLead"/> -->
       <solidref ref="tubeTarget"/>
     </volume>
 
@@ -2848,6 +2896,17 @@
       <!--<auxiliary auxtype="SensDet" auxvalue="volumeN3111"/>-->
     </volume>
 
+    <volume name="sc_oring_logic">
+      <materialref ref="Aluminum"/>
+      <solidref ref="sc_oring_solid"/>
+      <!--      <auxiliary auxtype="SensDet" auxvalue="planeDet"/> -->
+    </volume>
+    <volume name="sc_oringDet_logic">
+      <materialref ref="Vacuum"/>
+      <solidref ref="sc_oring_det_solid"/>
+      <!--      <auxiliary auxtype="SensDet" auxvalue="planeDet"/> -->
+    </volume>
+
     <volume name="septum_logic">
       <materialref ref="Iron"/>
       <solidref ref="septum_solid"/>
@@ -2859,18 +2918,6 @@
       <solidref ref="septum_pipe_tube_solid"/>
       <!-- <auxiliary auxtype="SensDet" auxvalue="volumeN5007"/> -->
     </volume>
-
-    <!-- <volume name="septum_pipe_us_det_logic">
-      <materialref ref="Vacuum"/>
-      <solidref ref="septum_pipe_us_det_solid"/>
-      <auxiliary auxtype="SensDet" auxvalue="volumeN2503"/>
-    </volume>
-
-    <volume name="septum_pipe_ds_det_logic">
-      <materialref ref="Vacuum"/>
-      <solidref ref="septum_pipe_ds_det_solid"/>
-      <auxiliary auxtype="SensDet" auxvalue="volumeN2504"/>
-    </volume> -->
 
     <volume name="beamtube_1_logic">
       <materialref ref="Aluminum"/>
@@ -3110,7 +3157,6 @@
       <!--<auxiliary auxtype="SensDet" auxvalue="volumeN11010"/>-->
     </volume>
 
-
     <volume name="logicMother">
       <materialref ref="Vacuum"/>
       <solidref ref="boxMother"/>
@@ -3155,16 +3201,6 @@
         <volumeref ref="septum_pipe_logic" />
         <position name="posbeamline" unit="cm" x="0" y="0" z="center_septum_pipe - 43"/>
       </physvol>
-
-      <!-- <physvol name="septum_pipe_us_det">
-        <volumeref ref="septum_pipe_us_det_logic"/>
-        <position name="pos_sept_us_det" unit="cm" x="0" y="0" z="center_septum_pipe - length_septum_pipe/2. - 0.01 + 12.5"/>
-      </physvol>
-
-      <physvol name="septum_pipe_ds_det">
-        <volumeref ref="septum_pipe_ds_det_logic"/>
-        <position name="pos_sept_ds_det" unit="cm" x="0" y="0" z="center_septum_pipe + length_septum_pipe/2. + 0.01"/>
-      </physvol> -->
 
       <physvol name="vacEnc_l">
         <volumeref ref="vac_enc_l_logic"/>
@@ -3226,6 +3262,7 @@
         <positionref ref="cylwall_center"/>
         <rotationref ref="scRot_6"/>
       </physvol>
+
       <physvol name="dipole_right">
         <volumeref ref="dipole_logic_2"/>
         <positionref ref="cylwall_center"/>
@@ -3305,11 +3342,6 @@
         <position unit="cm" name="tube_ion_chamb_7_pos" x="-100" y="0" z="2400"/>
         <rotation name="IonChamberRot7" unit="deg" x="90" y="0" z="0"/>
       </physvol>
-      <!-- <physvol name="tube_ion_chamb_8">
-        <volumeref ref="tube_ion_chamb_8_logic"/>
-        <position unit="cm" name="tube_ion_chamb_8_pos" x="-25" y="0" z="-160"/>
-        <rotation name="IonChamberRot8" unit="deg" x="90" y="0" z="0"/>
-      </physvol> -->
 
       <physvol>
         <file name="geometry/subKriptoniteDetectors.gdml"/>
@@ -3333,8 +3365,7 @@
       </physvol>
 
       <physvol>
-        <file name="geometry/subBeamPipe_p2_SAMs.gdml"/>
-        <!--<file name="geometry/subBeamPipe_p2_SAMs.gdml"/>-->
+        <file name="geometry/subBeamPipe_dvcs_SAMs.gdml"/>
         <positionref ref="dDet_beamline_pos_1"/>
       </physvol>
 

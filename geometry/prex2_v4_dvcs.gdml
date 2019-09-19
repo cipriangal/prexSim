@@ -3333,7 +3333,7 @@
       </physvol>
 
       <physvol>
-        <file name="geometry/subBeamPipe_p2_SAMs.gdml"/>
+        <file name="geometry/subBeamPipe_dvcs_SAMs.gdml"/>
         <!--<file name="geometry/subBeamPipe_p2_SAMs.gdml"/>-->
         <positionref ref="dDet_beamline_pos_1"/>
       </physvol>
