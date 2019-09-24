@@ -7,41 +7,27 @@ def main():
 #FIXME Update these
     email = "cameronc@jlab.org"
 
-    #configuration = "prexI"
-    #configuration = "crex5"
-    configuration = "prexII"
-    #configuration = "moller"
-    #configuration = "happex2"
+    stage = "2019"
+    name = raw_input("Please enter the job name to analyze: ")
 
-    stage = "HEAD"
-    varied = raw_input("Please enter the indicative name: ")#"off_thickness"
-    #geo = raw_input("Please enter the can geometry (sph or cyl): ")
-    offset = raw_input("Please enter the offset number (integers): ")
-    units = raw_input("Please enter the units (2 characters: mm, ml, etc.): ") 
-
-    #identifier = "cadSAMs"#raw_input("Please enter the identifier: ")
-    identifier = raw_input("Please enter the identifier: ")
-
-    #sourceDir = "/work/halla/parity/disk1/ciprian/prexSim"
-    sourceDir = "/work/halla/parity/disk1/cameronc/masterPrexSim"
-    sourceMasterDir = "/work/halla/parity/disk1/cameronc/masterPrexSim"
+    sourceDir = "/work/halla/parity/disk1/cameronc/crexSim"
     outputDir = "/lustre/expphy/volatile/halla/parity/cameronc/prexSim/output/SAM_"+stage+"_hallRad"
     nrEv=900000
 
-    jobName=configuration + '_' + identifier + '_' + varied + '_' + offset + units + '_%03dkEv'%(nrEv/1000)
-    listName='list_' + identifier + '_' + varied + '_' + offset + units
+    jobName=name + '_%03dkEv'%(nrEv/1000)
+    listName='list_' + name
 
     if not os.path.exists(outputDir+"/"+jobName+"/log"):
         os.makedirs(outputDir+"/"+jobName+"/log")
-    createXMLfile(sourceDir,outputDir,jobName,varied,stage,identifier,offset,units,listName,email)
+    createXMLfile(sourceDir,outputDir,name,jobName,listName,email)
 
     call(["cp",sourceDir+"/output/ls_mode.sh",
               outputDir+"/"+jobName+"/ls_mode.sh"])
-    call(["cp",sourceMasterDir+"/build/hallRad",
+    call(["cp",sourceDir+"/build/hallRad",
               outputDir+"/"+jobName+"/hallRad"])
-    print "All done for configuration ",configuration,"_",identifier,"for",offset
+    print "All done for configuration ",name
 
-def createXMLfile(sourceDir,outputDir,jobName,varied,stage,identifier,offset,units,listName,email):
+def createXMLfile(sourceDir,outputDir,name,jobName,listName,email):
 
     if not os.path.exists(sourceDir+"/output/jobs"):
         os.makedirs(sourceDir+"/output/jobs")
@@ -54,14 +40,14 @@ def createXMLfile(sourceDir,outputDir,jobName,varied,stage,identifier,offset,uni
 #    f.write("  <Track name=\"debug\"/>\n")
     f.write("  <Track name=\"analysis\"/>\n")
 
-    f.write("  <Name name=\""+identifier+"_hallRad\"/>\n")
+    f.write("  <Name name=\""+listName+"_hallRad\"/>\n")
     f.write("  <OS name=\"centos7\"/>\n")
     f.write("  <Memory space=\"3500\" unit=\"MB\"/>\n")
 
     f.write("  <Command><![CDATA[\n")
     f.write("    pwd\n")
-    f.write("    source /site/12gev_phys/softenv.csh 2.0\n")
-    f.write("    ./ls_mode.sh " + varied + " " + offset + " " + stage + " " + units + "\n")
+    f.write("    source /site/12gev_phys/softenv.csh 2.3\n")
+    f.write("    ./ls_mode.sh " + name + "\n")
     
     f.write("  ]]></Command>\n")
 

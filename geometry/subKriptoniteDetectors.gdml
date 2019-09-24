@@ -170,7 +170,7 @@
     <volume name="logic_HRS_side_elec">
       <materialref ref="matKryptonite"/>
       <solidref ref="solid_HRS_side_elec"/>
-      <!--<auxiliary auxtype="SensDet" auxvalue="volumeN1004"/>-->
+      <auxiliary auxtype="SensDet" auxvalue="volumeN1004"/>
     </volume>
 
     <volume name="logic_HRS_underDipole_elec">
