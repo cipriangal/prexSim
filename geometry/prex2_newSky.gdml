@@ -2840,10 +2840,10 @@
         <position name="target_chamber_center" unit="cm" x="0" y="0" z="prex_target_center"/>
       </physvol>
 
-      <physvol>
-        <file name="geometry/subCollShieldBlock.gdml"/>
-        <position name="coll_shield_pos" unit="cm" x="0" y="0" z="-46.324"/>
-      </physvol>
+      <!-- <physvol> -->
+      <!--   <file name="geometry/subCollShieldBlock.gdml"/> -->
+      <!--   <position name="coll_shield_pos" unit="cm" x="0" y="0" z="-46.324"/> -->
+      <!-- </physvol> -->
 
       <physvol>
         <file name="geometry/subSkyShineShieldV2.gdml"/>
