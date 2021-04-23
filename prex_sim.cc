@@ -28,13 +28,10 @@
 #include "G4UIQt.hh"
 #include "G4Qt.hh"
 #endif
-#ifdef G4UI_USE
+
 #include "G4UIExecutive.hh"
-#endif
-// visuals
-#ifdef G4VIS_USE
 #include "G4VisExecutive.hh"
-#endif
+
 
 #include <time.h>
 
@@ -95,6 +92,7 @@ int main(int argc, char** argv)
       G4cout << "Batch  mode"<< G4endl;
       G4cout << "==========================================================="<< G4endl;
 
+
       G4String command = "/control/execute ";
       G4String fileName = argv[1];
       G4String fileName2 = argv[2];
@@ -127,27 +125,26 @@ int main(int argc, char** argv)
       G4cout << "==========================================================="<< G4endl;
       G4cout << "Interactive mode"<< G4endl;
       G4cout << "==========================================================="<< G4endl;
+
+
       G4String command = "/control/execute ";
       G4String fileName = argv[1];
       UImanager->ApplyCommand(command+fileName);
-#ifdef G4UI_USE
+
       G4UIExecutive* ui = new G4UIExecutive(argc, argv);
-#ifdef G4VIS_USE
+
       G4VisManager* visManager = new G4VisExecutive;
       visManager->Initialize();
       UImanager->ApplyCommand("/control/macroPath macros");
       UImanager->ApplyCommand("/control/execute vis/vis.mac");
-#endif
+      //#endif
       if (ui->IsGUI()){
         UImanager->ApplyCommand("/control/macroPath macros");
         UImanager->ApplyCommand("/control/execute gui.mac");
       }
       ui->SessionStart();
       delete ui;
-#endif
-#ifdef G4VIS_USE
       delete visManager;
-#endif
     } else {
     G4cout << G4endl<< G4endl;
     G4cout << "==========================================================="<< G4endl;
