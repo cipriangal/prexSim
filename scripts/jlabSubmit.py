@@ -13,6 +13,7 @@ def main():
     #configuration = "prex2"
     configuration = "apex"
     #configuration = "happex2"
+    #configuration = "pvdis"
 
     sourceDir = "/work/halla/parity/disk1/ciprian/prexSim"
     outputDir = "/volatile/halla/parity/ciprian/farmOut/apex/12GeV_beampipe_6inDonut"
@@ -97,6 +98,12 @@ def createMacFiles(config,outDir,sourceDir,nrEv,jobNr,identifier):
         f.write("/prex/gun/setRasterY 4 mm\n")
         f.write("/moller/field/setConfiguration apex\n")
         f.write("/moller/det/setDetectorFileName geometry/apex"+identifier+".gdml\n")
+    elif config=="pvdis":
+    	f.write("/gun/energy 6 GeV\n")
+        f.write("/prex/gun/setRasterX 5 mm\n")
+        f.write("/prex/gun/setRasterY 5 mm\n")
+        f.write("/moller/field/setConfiguration pvdis\n")
+        f.write("/moller/det/setDetectorFileName geometry/pvdis"+identifier+".gdml\n")
 
     f.write("/moller/field/useQ1fringeField false\n")
 
