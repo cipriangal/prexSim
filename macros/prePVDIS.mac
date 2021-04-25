@@ -21,12 +21,10 @@
 #### beam energy
 /gun/energy 6. GeV
 #### Scale factor for fringe mag field
-/moller/field/setFieldScaleFactor 0. ##Should give out 0 Bfield
-####Limits for Fringe field ##These don't matter with scaleFactor 0
-/moller/field/setLowLim -74 cm
-/moller/field/setHighLim 74 cm
+/moller/field/setConfiguration pvdis
+/moller/field/useQ1fringeField false
 #### Geometry files
-/moller/det/setDetectorFileName geometry/pvdis.xml
+/moller/det/setDetectorFileName geometry/pvdis.gdml
 
 /moller/det/setShieldMaterial polyethylene
 /testhadr/CutsAll          0.7 mm
