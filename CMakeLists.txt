@@ -66,6 +66,9 @@ target_link_libraries(hallRad ${LINK_LIBRARIES})
 add_executable(hallRad_AJZ hallRadiation_AJZ.cc ${sources} ${headers})
 target_link_libraries(hallRad_AJZ ${LINK_LIBRARIES})
 
+add_executable(hallRad_pvdis hallRadiation_pvdis.cc ${sources} ${headers})
+target_link_libraries(hallRad_pvdis ${LINK_LIBRARIES})
+
 add_executable(redTree reduceTree.cc ${sources} ${headers})
 target_link_libraries(redTree ${LINK_LIBRARIES})
 
