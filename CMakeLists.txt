@@ -2,6 +2,8 @@
 # Setup the project
 #
 cmake_minimum_required(VERSION 2.6 FATAL_ERROR)
+set(CMAKE_CXX_STANDARD 14)
+
 SITE_NAME(mySite)
 message("On this thing: " ${mySite})
 if(${mySite} MATCHES "udc-*")
@@ -21,11 +23,12 @@ if(${mySite} MATCHES "ifarm*")
    endif()
    message("On ifarm using Geant4_dir: " ${Geant4_Dir})
 endif()
+
 option(WITH_GEANT4_UIVIS "Build example with Geant4 UI and Vis drivers" ON)
 if(WITH_GEANT4_UIVIS)
-find_package(Geant4 REQUIRED ui_all vis_all gdml)
+find_package(Geant4 4.10 REQUIRED ui_all vis_all gdml)
 else()
-find_package(Geant4 REQUIRED gdml)
+find_package(Geant4 4.10 REQUIRED gdml)
 endif()
 
 #----------------------------------------------------------------------------
@@ -59,7 +62,7 @@ target_link_libraries(prexsim ${LINK_LIBRARIES})
 add_executable(drawBfield drawBfield.cc ${sources} ${headers})
 target_link_libraries(drawBfield ${LINK_LIBRARIES})
 
-add_definitions(-std=c++11)
+##add_definitions(-std=c++11)
 add_executable(hallRad hallRadiation.cc ${sources} ${headers})
 target_link_libraries(hallRad ${LINK_LIBRARIES})
 
